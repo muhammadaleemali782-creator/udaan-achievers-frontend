@@ -8,7 +8,7 @@ export default function Courses() {
   const cats = ["All", "JEE", "NEET", "Foundation"];
 
   useEffect(() => {
-    api.get("/courses").then((r) => setCourses(r.data)).catch(() => {});
+    api.get("/courses").then((r) => setCourses(Array.isArray(r.data) ? r.data : [])).catch(() => {});
   }, []);
 
   const list = courses.filter((c) => filter === "All" || c.cat === filter);

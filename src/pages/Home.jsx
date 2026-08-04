@@ -1,21 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Play, Calendar, Target, MessageCircle, TrendingUp, Quote } from "lucide-react";
+import { ArrowRight, Play, Calendar, Target, MessageCircle, TrendingUp, Quote, Smartphone, MapPin, Search, Trophy } from "lucide-react";
 import api from "../api";
 import LiveTicker from "../components/LiveTicker";
 import CourseCard from "../components/CourseCard";
+
+const RANKERS = [
+  { rank: "AIR 143", name: "Sahil Pradhan", exam: "JEE Advanced 2026" },
+  { rank: "AIR 318", name: "Avanish Sharma", exam: "JEE Advanced 2026" },
+  { rank: "AIR 656", name: "Vishal Jha", exam: "JEE Advanced 2026" },
+  { rank: "AIR 88", name: "Aman Khatri", exam: "NEET UG 2026" },
+  { rank: "AIR 412", name: "Ritika Solanki", exam: "JEE Advanced 2026" },
+  { rank: "AIR 798", name: "Jatin Kumar", exam: "JEE Advanced 2026" },
+  { rank: "AIR 1029", name: "Anush Papnai", exam: "NEET UG 2026" },
+  { rank: "AIR 1221", name: "Parshant", exam: "JEE Advanced 2026" },
+];
+
+const CENTRES = ["Kota", "Patna", "New Delhi", "Noida", "Bareilly", "Kolkata", "Lucknow", "Kanpur", "Jaipur", "Indore"];
 
 export default function Home() {
   const [stats, setStats] = useState([]);
   const [batches, setBatches] = useState([]);
   const [courses, setCourses] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
+  const [centreSearch, setCentreSearch] = useState("");
 
   useEffect(() => {
-    api.get("/stats").then((r) => setStats(r.data)).catch(() => {});
-    api.get("/batches").then((r) => setBatches(r.data)).catch(() => {});
-    api.get("/courses").then((r) => setCourses(r.data.slice(0, 3))).catch(() => {});
-    api.get("/testimonials").then((r) => setTestimonials(r.data)).catch(() => {});
+    api.get("/stats").then((r) => setStats(Array.isArray(r.data) ? r.data : [])).catch(() => {});
+    api.get("/batches").then((r) => setBatches(Array.isArray(r.data) ? r.data : [])).catch(() => {});
+    api.get("/courses").then((r) => setCourses(Array.isArray(r.data) ? r.data.slice(0, 3) : [])).catch(() => {});
+    api.get("/testimonials").then((r) => setTestimonials(Array.isArray(r.data) ? r.data : [])).catch(() => {});
   }, []);
 
   const why = [
@@ -75,6 +89,32 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="bg-ink py-14 md:py-20">
+        <div className="max-w-6xl mx-auto px-4 md:px-8 grid md:grid-cols-2 gap-8 items-center">
+          <div>
+            <p className="font-mono text-xs tracking-wider mb-3 text-saffron">GET THE APP</p>
+            <h2 className="font-display text-3xl md:text-4xl text-white mb-4">Study on the move with the Udaan Achievers app</h2>
+            <p className="font-body text-white/60 mb-6 max-w-md">Download recorded lectures, join live classes and check your test rank — all from your phone.</p>
+            <div className="flex gap-3 flex-wrap">
+              <div className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white/10 border border-white/20">
+                <Smartphone size={18} className="text-white" />
+                <span className="font-body text-sm text-white">Google Play</span>
+              </div>
+              <div className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white/10 border border-white/20">
+                <Smartphone size={18} className="text-white" />
+                <span className="font-body text-sm text-white">App Store</span>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-2xl p-8 bg-[#0F2E63] border border-white/10 flex items-center justify-center">
+            <div className="w-40 h-72 rounded-3xl bg-[#0A2350] border-4 border-white/20 flex flex-col items-center justify-center gap-3">
+              <Smartphone size={40} className="text-saffron" />
+              <p className="font-mono text-[10px] text-white/50 tracking-wider">UDAAN APP</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section className="bg-white py-16 md:py-24">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <p className="font-mono text-xs tracking-wider mb-3 text-tealDark">BATCHES</p>
@@ -96,6 +136,53 @@ export default function Home() {
                 <p className="font-body text-sm mt-4 mb-5 text-charcoal">{t.text}</p>
                 <p className="font-display text-sm text-charcoal">{t.name}</p>
                 <p className="font-body text-xs mt-1 text-tealDark">{t.exam}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white py-16 md:py-24">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
+          <div className="flex items-center gap-2 mb-3">
+            <Trophy size={16} className="text-saffronDark" />
+            <p className="font-mono text-xs tracking-wider text-saffronDark">RANKERS WALL</p>
+          </div>
+          <h2 className="font-display text-3xl md:text-4xl mb-10 max-w-xl text-charcoal">Giving wings to a thousand dreams, a thousand more to go</h2>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {RANKERS.map((r, i) => (
+              <div key={i} className="rounded-xl p-4 text-center bg-paper border border-paperDark">
+                <div className="w-14 h-14 rounded-full mx-auto mb-3 bg-ink/10 flex items-center justify-center">
+                  <span className="font-display text-lg text-ink">{r.name[0]}</span>
+                </div>
+                <span className="font-mono text-xs font-medium px-2 py-1 rounded bg-saffron/10 text-saffronDark">{r.rank}</span>
+                <p className="font-body text-sm font-medium mt-2 text-charcoal">{r.name}</p>
+                <p className="font-body text-xs mt-0.5 text-muted">{r.exam}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-paper py-16 md:py-24">
+        <div className="max-w-6xl mx-auto px-4 md:px-8">
+          <p className="font-mono text-xs tracking-wider mb-3 text-tealDark">OFFLINE CENTRES</p>
+          <h2 className="font-display text-3xl md:text-4xl mb-2 text-charcoal">Find a Vidyapeeth centre near you</h2>
+          <p className="font-body text-sm mb-8 text-muted">Available in 50+ cities across India</p>
+          <div className="relative max-w-md mb-8">
+            <Search size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted" />
+            <input
+              value={centreSearch}
+              onChange={(e) => setCentreSearch(e.target.value)}
+              placeholder="Search your city"
+              className="w-full font-body text-sm pl-11 pr-4 py-3 rounded-full outline-none border border-paperDark bg-white"
+            />
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            {CENTRES.filter((c) => c.toLowerCase().includes(centreSearch.toLowerCase())).map((c) => (
+              <div key={c} className="rounded-xl p-4 flex items-center gap-2 bg-white border border-paperDark">
+                <MapPin size={16} className="text-tealDark flex-shrink-0" />
+                <span className="font-body text-sm text-charcoal">{c}</span>
               </div>
             ))}
           </div>

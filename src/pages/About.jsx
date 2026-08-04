@@ -12,7 +12,7 @@ const timeline = [
 
 export default function About() {
   const [stats, setStats] = useState([]);
-  useEffect(() => { api.get("/stats").then((r) => setStats(r.data)).catch(() => {}); }, []);
+  useEffect(() => { api.get("/stats").then((r) => setStats(Array.isArray(r.data) ? r.data : [])).catch(() => {}); }, []);
 
   return (
     <>

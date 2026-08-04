@@ -56,7 +56,7 @@ function AdminCourses() {
   const [editing, setEditing] = useState(null);
   const blank = { name: "", cat: "JEE", level: "", price: "", oldPrice: "", seats: "", rating: 4.5, students: "0", desc: "", lectures: [] };
 
-  const load = () => api.get("/courses").then((r) => setCourses(r.data)).catch(() => {});
+  const load = () => api.get("/courses").then((r) => setCourses(Array.isArray(r.data) ? r.data : [])).catch(() => {});
   useEffect(load, []);
 
   const submit = async (e) => {
@@ -137,7 +137,7 @@ function AdminBatches() {
   const [editing, setEditing] = useState(null);
   const blank = { time: "", subject: "", topic: "", teacher: "", tag: "JEE" };
 
-  const load = () => api.get("/batches").then((r) => setBatches(r.data)).catch(() => {});
+  const load = () => api.get("/batches").then((r) => setBatches(Array.isArray(r.data) ? r.data : [])).catch(() => {});
   useEffect(load, []);
 
   const submit = async (e) => {
@@ -195,7 +195,7 @@ function AdminTestimonials() {
   const [editing, setEditing] = useState(null);
   const blank = { name: "", exam: "", text: "" };
 
-  const load = () => api.get("/testimonials").then((r) => setItems(r.data)).catch(() => {});
+  const load = () => api.get("/testimonials").then((r) => setItems(Array.isArray(r.data) ? r.data : [])).catch(() => {});
   useEffect(load, []);
 
   const submit = async (e) => {
@@ -249,7 +249,7 @@ function AdminSite() {
   const [editingStat, setEditingStat] = useState(null);
 
   const load = () => {
-    api.get("/stats").then((r) => setStats(r.data)).catch(() => {});
+    api.get("/stats").then((r) => setStats(Array.isArray(r.data) ? r.data : [])).catch(() => {});
     api.get("/site-info").then((r) => setContact(r.data)).catch(() => {});
   };
   useEffect(load, []);
