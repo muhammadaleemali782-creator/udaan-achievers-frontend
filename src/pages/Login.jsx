@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { KeyRound, Lock, FileVideo, LogOut } from "lucide-react";
-import api, { studentHeaders, adminHeaders } from "../api";
+import { KeyRound, FileVideo, LogOut, Mail } from "lucide-react";
+import api, { studentHeaders } from "../api";
 import { AdminPanel } from "./Admin";
 
 function StudentPanel({ me, onLogout }) {
@@ -47,12 +47,10 @@ function StudentPanel({ me, onLogout }) {
 }
 
 export default function Login() {
-  const [mode, setMode] = useState("student"); // student | admin
-  const [studentId, setStudentId] = useState("");
-  const [name, setName] = useState("");
-  const [needsName, setNeedsName] = useState(false);
-  const [adminForm, setAdminForm] = useState({ username: "", password: "" });
+  const [view, setView] = useState("login"); // login | signup | forgot
+  const [form, setForm] = useState({ studentId: "", password: "", email: "", name: "" });
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
 
   const [studentMe, setStudentMe] = useState(null);
   const [adminAuthed, setAdminAuthed] = useState(!!localStorage.getItem("admin_token"));
@@ -70,44 +68,65 @@ export default function Login() {
     }
   };
 
-  const studentSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-    if (!studentId.trim()) { setError("Apna Student ID daalo"); return; }
-    try {
-      const res = await api.post("/auth/student/access", { studentId: studentId.trim(), name: name.trim() || undefined });
-      localStorage.setItem("student_token", res.data.token);
+  const handleAuthResponse = (data) => {
+    if (data.role === "admin") {
+      localStorage.setItem("admin_token", data.token);
+      setAdminAuthed(true);
+    } else {
+      localStorage.setItem("student_token", data.token);
       fetchMe();
-    } catch (err) {
-      const msg = err.response?.data?.error || "Kuch galat ho gaya";
-      if (msg.toLowerCase().includes("name")) setNeedsName(true);
-      setError(msg);
     }
   };
 
-  const adminSubmit = async (e) => {
+  const login = async (e) => {
     e.preventDefault();
-    setError("");
+    setError(""); setNotice("");
     try {
-      const res = await api.post("/auth/admin/login", adminForm);
-      localStorage.setItem("admin_token", res.data.token);
-      setAdminAuthed(true);
+      const res = await api.post("/auth/login", { studentId: form.studentId.trim(), password: form.password });
+      handleAuthResponse(res.data);
     } catch (err) {
-      setError(err.response?.data?.error || "Login failed");
+      setError(err.response?.data?.error || "Login nahi ho paya");
+    }
+  };
+
+  const signup = async (e) => {
+    e.preventDefault();
+    setError(""); setNotice("");
+    try {
+      const res = await api.post("/auth/signup", {
+        studentId: form.studentId.trim(),
+        password: form.password,
+        email: form.email.trim(),
+        name: form.name.trim(),
+      });
+      handleAuthResponse(res.data);
+    } catch (err) {
+      setError(err.response?.data?.error || "Account nahi ban paya");
+    }
+  };
+
+  const forgot = async (e) => {
+    e.preventDefault();
+    setError(""); setNotice("");
+    try {
+      await api.post("/auth/forgot-password", { email: form.email.trim() });
+      setNotice("Agar ye email registered hai, to reset link bhej diya gaya hai. Apna inbox check karo.");
+    } catch (err) {
+      setError(err.response?.data?.error || "Kuch galat ho gaya");
     }
   };
 
   const studentLogout = () => {
     localStorage.removeItem("student_token");
     setStudentMe(null);
-    setStudentId("");
-    setName("");
-    setNeedsName(false);
+    setForm({ studentId: "", password: "", email: "", name: "" });
   };
 
-  const adminLogout = () => setAdminAuthed(false);
+  const adminLogout = () => {
+    localStorage.removeItem("admin_token");
+    setAdminAuthed(false);
+  };
 
-  // Already logged in as admin -> show admin panel directly
   if (adminAuthed) {
     return (
       <section className="bg-paper py-10 md:py-14 min-h-[70vh]">
@@ -118,7 +137,6 @@ export default function Login() {
     );
   }
 
-  // Already logged in as student -> show student dashboard directly
   if (studentMe) {
     return (
       <section className="bg-paper py-12 md:py-16 min-h-[60vh]">
@@ -129,69 +147,51 @@ export default function Login() {
     );
   }
 
-  // Not logged in -> show combined login form with a toggle
   return (
     <section className="bg-paper py-16 md:py-20 min-h-[70vh] flex items-center">
       <div className="max-w-sm mx-auto px-4 w-full">
         <div className="rounded-2xl p-8 bg-white border border-paperDark shadow-sm">
-          <div className="flex gap-2 mb-6 p-1 rounded-full bg-paper">
-            <button
-              onClick={() => { setMode("student"); setError(""); }}
-              className={`flex-1 font-body text-sm py-2 rounded-full ${mode === "student" ? "bg-ink text-white" : "text-charcoal"}`}
-            >
-              Student
-            </button>
-            <button
-              onClick={() => { setMode("admin"); setError(""); }}
-              className={`flex-1 font-body text-sm py-2 rounded-full ${mode === "admin" ? "bg-ink text-white" : "text-charcoal"}`}
-            >
-              Admin
-            </button>
+          <div className="w-12 h-12 rounded-full bg-ink/10 flex items-center justify-center mx-auto mb-4">
+            {view === "forgot" ? <Mail size={22} className="text-ink" /> : <KeyRound size={22} className="text-ink" />}
           </div>
+          <h2 className="font-display text-2xl mb-6 text-center text-charcoal">
+            {view === "login" ? "Log in" : view === "signup" ? "Naya account banao" : "Password reset karo"}
+          </h2>
 
-          {mode === "student" ? (
-            <>
-              <div className="w-12 h-12 rounded-full bg-ink/10 flex items-center justify-center mx-auto mb-4">
-                <KeyRound size={22} className="text-ink" />
+          {view === "login" && (
+            <form onSubmit={login} className="flex flex-col gap-3">
+              <input required placeholder="ID" value={form.studentId} onChange={(e) => setForm({ ...form, studentId: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
+              <input required type="password" placeholder="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
+              {error && <p className="font-body text-xs text-red-600">{error}</p>}
+              <button type="submit" className="w-full font-body font-medium py-3 rounded-full bg-ink text-white">Log in</button>
+              <div className="flex justify-between mt-2">
+                <button type="button" onClick={() => { setView("signup"); setError(""); }} className="font-body text-xs text-tealDark">Naya ID banao</button>
+                <button type="button" onClick={() => { setView("forgot"); setError(""); }} className="font-body text-xs text-muted">Password bhool gaye?</button>
               </div>
-              <h2 className="font-display text-2xl mb-1 text-center text-charcoal">Apna Student ID daalo</h2>
-              <p className="font-body text-xs text-center text-muted mb-6">Koi password nahi chahiye. Pehli baar ID daaloge to naya account ban jayega.</p>
-              <form onSubmit={studentSubmit} className="flex flex-col gap-3">
-                <input
-                  required
-                  placeholder="Student ID (jaise apna phone number)"
-                  value={studentId}
-                  onChange={(e) => setStudentId(e.target.value)}
-                  className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink"
-                />
-                {needsName && (
-                  <input
-                    required
-                    placeholder="Tumhara naam (naya ID hai)"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink"
-                  />
-                )}
-                {error && <p className="font-body text-xs text-red-600">{error}</p>}
-                <button type="submit" className="w-full font-body font-medium py-3 rounded-full bg-ink text-white">
-                  Dashboard kholo
-                </button>
-              </form>
-            </>
-          ) : (
-            <>
-              <div className="w-12 h-12 rounded-full bg-ink/10 flex items-center justify-center mx-auto mb-4">
-                <Lock size={22} className="text-ink" />
-              </div>
-              <h2 className="font-display text-2xl mb-6 text-center text-charcoal">Admin login</h2>
-              <form onSubmit={adminSubmit} className="flex flex-col gap-3">
-                <input required placeholder="Username" value={adminForm.username} onChange={(e) => setAdminForm({ ...adminForm, username: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
-                <input required type="password" placeholder="Password" value={adminForm.password} onChange={(e) => setAdminForm({ ...adminForm, password: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
-                {error && <p className="font-body text-xs text-red-600">{error}</p>}
-                <button type="submit" className="w-full font-body font-medium py-3 rounded-full bg-ink text-white">Log in</button>
-              </form>
-            </>
+            </form>
+          )}
+
+          {view === "signup" && (
+            <form onSubmit={signup} className="flex flex-col gap-3">
+              <input required placeholder="Naam" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
+              <input required placeholder="Naya ID chuno" value={form.studentId} onChange={(e) => setForm({ ...form, studentId: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
+              <input required type="email" placeholder="Email (password reset ke liye)" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
+              <input required type="password" placeholder="Password banao" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
+              {error && <p className="font-body text-xs text-red-600">{error}</p>}
+              <button type="submit" className="w-full font-body font-medium py-3 rounded-full bg-ink text-white">Account banao</button>
+              <button type="button" onClick={() => { setView("login"); setError(""); }} className="font-body text-xs text-tealDark mt-2 text-center">Already ID hai? Log in karo</button>
+            </form>
+          )}
+
+          {view === "forgot" && (
+            <form onSubmit={forgot} className="flex flex-col gap-3">
+              <p className="font-body text-xs text-center text-muted mb-1">Apni registered email daalo, hum reset link bhej denge.</p>
+              <input required type="email" placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
+              {error && <p className="font-body text-xs text-red-600">{error}</p>}
+              {notice && <p className="font-body text-xs text-tealDark">{notice}</p>}
+              <button type="submit" className="w-full font-body font-medium py-3 rounded-full bg-ink text-white">Reset link bhejo</button>
+              <button type="button" onClick={() => { setView("login"); setError(""); setNotice(""); }} className="font-body text-xs text-tealDark mt-2 text-center">Wapas login pe jao</button>
+            </form>
           )}
         </div>
       </div>
