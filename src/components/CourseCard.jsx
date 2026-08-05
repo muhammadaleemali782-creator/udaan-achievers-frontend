@@ -1,6 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Star, Users } from "lucide-react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Star, Users, Check } from "lucide-react";
+import api, { studentHeaders } from "../api";
 
 function money(n) {
   const num = Number(n) || 0;
@@ -8,7 +9,26 @@ function money(n) {
 }
 
 export default function CourseCard({ course }) {
+  const navigate = useNavigate();
+  const [status, setStatus] = useState("idle"); // idle | loading | done
   const bar = course.cat === "JEE" ? "bg-ink" : course.cat === "NEET" ? "bg-teal" : "bg-saffron";
+
+  const handleEnroll = async () => {
+    const loggedIn = !!localStorage.getItem("student_token");
+    if (!loggedIn) {
+      navigate("/login");
+      return;
+    }
+    setStatus("loading");
+    try {
+      await api.post(`/enrollments/enroll/${course._id}`, {}, { headers: studentHeaders() });
+      setStatus("done");
+    } catch {
+      setStatus("idle");
+      navigate("/login");
+    }
+  };
+
   return (
     <div className="rounded-xl overflow-hidden flex flex-col bg-white border border-paperDark">
       <div className={`h-2 ${bar}`} />
@@ -30,9 +50,13 @@ export default function CourseCard({ course }) {
           </div>
           <span className="font-body text-xs text-saffronDark">{course.seats}</span>
         </div>
-        <Link to="/contact" className="font-body text-sm font-medium py-2.5 rounded-full w-full text-center bg-ink text-white block">
-          Enroll now
-        </Link>
+        <button
+          onClick={handleEnroll}
+          disabled={status === "loading" || status === "done"}
+          className="font-body text-sm font-medium py-2.5 rounded-full w-full text-center bg-ink text-white flex items-center justify-center gap-2 disabled:opacity-70"
+        >
+          {status === "done" ? (<><Check size={14} /> Enrolled</>) : status === "loading" ? "Enrolling…" : "Enroll now"}
+        </button>
       </div>
     </div>
   );

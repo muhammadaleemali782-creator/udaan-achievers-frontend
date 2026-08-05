@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Youtube, Instagram, ShieldCheck } from "lucide-react";
+import { Phone, Mail, MapPin, Youtube, Instagram } from "lucide-react";
 
 const NAV_ITEMS = [
   { to: "/", label: "Home" },
   { to: "/courses", label: "Courses" },
   { to: "/about", label: "About" },
-  { to: "/dashboard", label: "Dashboard" },
   { to: "/contact", label: "Contact" },
+  { to: "/login", label: "Login" },
 ];
 
 export default function Footer({ contact }) {
@@ -48,9 +48,6 @@ export default function Footer({ contact }) {
               <Youtube size={18} className="text-white/60" />
               <Instagram size={18} className="text-white/60" />
             </div>
-            <Link to="/admin" className="font-body text-white/30 text-xs mt-6 flex items-center gap-1">
-              <ShieldCheck size={12} /> Admin login
-            </Link>
           </div>
         </div>
         <div className="border-t border-[#26305A] pt-6">

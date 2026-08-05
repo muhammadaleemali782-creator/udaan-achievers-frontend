@@ -7,9 +7,8 @@ import Home from "./pages/Home";
 import Courses from "./pages/Courses";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
 import Lecture from "./pages/Lecture";
-import Admin from "./pages/Admin";
 
 export default function App() {
   const [contact, setContact] = useState(null);
@@ -26,9 +25,8 @@ export default function App() {
         <Route path="/courses" element={<Courses />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/lecture/:courseId" element={<Lecture />} />
-        <Route path="/admin" element={<Admin />} />
       </Routes>
       <Footer contact={contact} />
     </div>

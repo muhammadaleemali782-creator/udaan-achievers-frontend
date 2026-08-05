@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, ShieldCheck } from "lucide-react";
+import { Menu, X, UserCircle } from "lucide-react";
 
 const NAV_ITEMS = [
   { to: "/", label: "Home" },
   { to: "/courses", label: "Courses" },
   { to: "/about", label: "About" },
-  { to: "/dashboard", label: "Dashboard" },
   { to: "/contact", label: "Contact" },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { pathname } = useLocation();
+  const loggedIn = !!(localStorage.getItem("student_token") || localStorage.getItem("admin_token"));
 
   return (
     <header className="bg-ink sticky top-0 z-50">
@@ -31,11 +31,8 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden md:flex items-center gap-3">
-          <Link to="/admin" className="font-body text-xs flex items-center gap-1 px-3 py-2 rounded-full border border-white/20 text-white/70">
-            <ShieldCheck size={14} /> Admin
-          </Link>
-          <Link to="/dashboard" className="font-body text-sm font-medium px-5 py-2 rounded-full bg-saffron text-ink">
-            My Dashboard
+          <Link to="/login" className="font-body text-sm font-medium px-5 py-2 rounded-full flex items-center gap-2 bg-saffron text-ink">
+            <UserCircle size={16} /> {loggedIn ? "My Account" : "Login"}
           </Link>
         </div>
 
@@ -46,7 +43,7 @@ export default function Navbar() {
 
       {open && (
         <div className="md:hidden px-4 pb-4 flex flex-col gap-1 bg-ink">
-          {[...NAV_ITEMS, { to: "/admin", label: "Admin panel" }].map((item) => (
+          {[...NAV_ITEMS, { to: "/login", label: loggedIn ? "My Account" : "Login" }].map((item) => (
             <Link key={item.to} to={item.to} onClick={() => setOpen(false)} className={`font-body text-left py-3 border-b border-[#2A3557] text-sm ${pathname === item.to ? "text-saffron" : "text-[#D8D9E0]"}`}>
               {item.label}
             </Link>

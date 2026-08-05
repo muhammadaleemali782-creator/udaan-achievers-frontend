@@ -3,15 +3,15 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: "#123B7A",
-        paper: "#F7FAFC",
-        paperDark: "#E9F1F8",
-        saffron: "#22C55E",
-        saffronDark: "#15803D",
-        teal: "#2563EB",
-        tealDark: "#1D4ED8",
-        charcoal: "#1A2433",
-        muted: "#5B6B7F",
+        ink: "#0B1F4D",
+        paper: "#F7F8FA",
+        paperDark: "#E8ECF3",
+        saffron: "#14BF96",
+        saffronDark: "#0E9B79",
+        teal: "#1865F2",
+        tealDark: "#154BBF",
+        charcoal: "#21242C",
+        muted: "#5B6470",
       },
       fontFamily: {
         display: ["Fraunces", "serif"],

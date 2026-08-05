@@ -311,12 +311,9 @@ function AdminSite() {
   );
 }
 
-/* ---------------- MAIN ADMIN PAGE ---------------- */
-export default function Admin() {
-  const [authed, setAuthed] = useState(!!localStorage.getItem("admin_token"));
+/* ---------------- MAIN ADMIN PANEL (used inside Login.jsx after admin auth) ---------------- */
+export function AdminPanel({ onLogout }) {
   const [tab, setTab] = useState("courses");
-
-  if (!authed) return <AdminGate onAuth={() => setAuthed(true)} />;
 
   const tabs = [
     { id: "courses", label: "Courses" },
@@ -327,37 +324,35 @@ export default function Admin() {
 
   const logout = () => {
     localStorage.removeItem("admin_token");
-    setAuthed(false);
+    onLogout();
   };
 
   return (
-    <section className="bg-paper py-10 md:py-14 min-h-[70vh]">
-      <div className="max-w-5xl mx-auto px-4 md:px-8">
-        <div className="flex items-center justify-between mb-6">
-          <div>
-            <p className="font-mono text-xs text-tealDark">ADMIN PANEL</p>
-            <h1 className="font-display text-3xl text-charcoal">Manage your site</h1>
-          </div>
-          <button onClick={logout} className="font-body text-sm flex items-center gap-1 px-4 py-2 rounded-full border border-paperDark text-charcoal">
-            <LogOut size={14} /> Log out
-          </button>
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <p className="font-mono text-xs text-tealDark">ADMIN PANEL</p>
+          <h1 className="font-display text-3xl text-charcoal">Manage your site</h1>
         </div>
-
-        <div className="flex gap-2 mb-6 overflow-x-auto">
-          {tabs.map((t) => (
-            <button key={t.id} onClick={() => setTab(t.id)} className={`font-body text-sm px-4 py-2 rounded-full flex-shrink-0 border border-paperDark ${tab === t.id ? "bg-ink text-white" : "bg-white text-charcoal"}`}>
-              {t.label}
-            </button>
-          ))}
-        </div>
-
-        <div className="rounded-xl p-5 md:p-6 bg-white border border-paperDark">
-          {tab === "courses" && <AdminCourses />}
-          {tab === "batches" && <AdminBatches />}
-          {tab === "testimonials" && <AdminTestimonials />}
-          {tab === "site" && <AdminSite />}
-        </div>
+        <button onClick={logout} className="font-body text-sm flex items-center gap-1 px-4 py-2 rounded-full border border-paperDark text-charcoal">
+          <LogOut size={14} /> Log out
+        </button>
       </div>
-    </section>
+
+      <div className="flex gap-2 mb-6 overflow-x-auto">
+        {tabs.map((t) => (
+          <button key={t.id} onClick={() => setTab(t.id)} className={`font-body text-sm px-4 py-2 rounded-full flex-shrink-0 border border-paperDark ${tab === t.id ? "bg-ink text-white" : "bg-white text-charcoal"}`}>
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="rounded-xl p-5 md:p-6 bg-white border border-paperDark">
+        {tab === "courses" && <AdminCourses />}
+        {tab === "batches" && <AdminBatches />}
+        {tab === "testimonials" && <AdminTestimonials />}
+        {tab === "site" && <AdminSite />}
+      </div>
+    </div>
   );
 }
