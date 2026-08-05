@@ -89,27 +89,27 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-ink py-14 md:py-20">
+      <section className="bg-paper py-14 md:py-20">
         <div className="max-w-6xl mx-auto px-4 md:px-8 grid md:grid-cols-2 gap-8 items-center">
           <div>
-            <p className="font-mono text-xs tracking-wider mb-3 text-saffron">GET THE APP</p>
-            <h2 className="font-display text-3xl md:text-4xl text-white mb-4">Study on the move with the Udaan Achievers app</h2>
-            <p className="font-body text-white/60 mb-6 max-w-md">Download recorded lectures, join live classes and check your test rank — all from your phone.</p>
+            <p className="font-mono text-xs tracking-wider mb-3 text-tealDark">GET THE APP</p>
+            <h2 className="font-display text-3xl md:text-4xl mb-4 text-charcoal">Study on the move with the Udaan Achievers app</h2>
+            <p className="font-body mb-6 max-w-md text-muted">Download recorded lectures, join live classes and check your test rank — all from your phone.</p>
             <div className="flex gap-3 flex-wrap">
-              <div className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white/10 border border-white/20">
-                <Smartphone size={18} className="text-white" />
-                <span className="font-body text-sm text-white">Google Play</span>
+              <div className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white border border-paperDark">
+                <Smartphone size={18} className="text-ink" />
+                <span className="font-body text-sm text-charcoal">Google Play</span>
               </div>
-              <div className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white/10 border border-white/20">
-                <Smartphone size={18} className="text-white" />
-                <span className="font-body text-sm text-white">App Store</span>
+              <div className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-white border border-paperDark">
+                <Smartphone size={18} className="text-ink" />
+                <span className="font-body text-sm text-charcoal">App Store</span>
               </div>
             </div>
           </div>
-          <div className="rounded-2xl p-8 bg-[#0F2E63] border border-white/10 flex items-center justify-center">
-            <div className="w-40 h-72 rounded-3xl bg-[#0A2350] border-4 border-white/20 flex flex-col items-center justify-center gap-3">
-              <Smartphone size={40} className="text-saffron" />
-              <p className="font-mono text-[10px] text-white/50 tracking-wider">UDAAN APP</p>
+          <div className="rounded-2xl p-8 bg-white border border-paperDark flex items-center justify-center">
+            <div className="w-40 h-72 rounded-3xl bg-paperDark border-4 border-white flex flex-col items-center justify-center gap-3">
+              <Smartphone size={40} className="text-ink" />
+              <p className="font-mono text-[10px] tracking-wider text-muted">UDAAN APP</p>
             </div>
           </div>
         </div>

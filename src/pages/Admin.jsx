@@ -57,7 +57,7 @@ function AdminCourses() {
   const blank = { name: "", cat: "JEE", level: "", price: "", oldPrice: "", seats: "", rating: 4.5, students: "0", desc: "", lectures: [] };
 
   const load = () => api.get("/courses").then((r) => setCourses(Array.isArray(r.data) ? r.data : [])).catch(() => {});
-  useEffect(load, []);
+  useEffect(() => { load(); }, []);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -138,7 +138,7 @@ function AdminBatches() {
   const blank = { time: "", subject: "", topic: "", teacher: "", tag: "JEE" };
 
   const load = () => api.get("/batches").then((r) => setBatches(Array.isArray(r.data) ? r.data : [])).catch(() => {});
-  useEffect(load, []);
+  useEffect(() => { load(); }, []);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -196,7 +196,7 @@ function AdminTestimonials() {
   const blank = { name: "", exam: "", text: "" };
 
   const load = () => api.get("/testimonials").then((r) => setItems(Array.isArray(r.data) ? r.data : [])).catch(() => {});
-  useEffect(load, []);
+  useEffect(() => { load(); }, []);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -252,7 +252,7 @@ function AdminSite() {
     api.get("/stats").then((r) => setStats(Array.isArray(r.data) ? r.data : [])).catch(() => {});
     api.get("/site-info").then((r) => setContact(r.data)).catch(() => {});
   };
-  useEffect(load, []);
+  useEffect(() => { load(); }, []);
 
   const saveStat = async (e) => {
     e.preventDefault();
