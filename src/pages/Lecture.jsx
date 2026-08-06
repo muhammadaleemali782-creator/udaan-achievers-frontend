@@ -27,7 +27,7 @@ export default function Lecture() {
   return (
     <section className="bg-[#0B1226] py-8 md:py-10 min-h-[70vh]">
       <div className="max-w-6xl mx-auto px-4 md:px-8">
-        <button onClick={() => navigate("/dashboard")} className="font-body text-white/60 text-sm flex items-center gap-1 mb-4">
+        <button onClick={() => navigate("/login")} className="font-body text-white/60 text-sm flex items-center gap-1 mb-4">
           <ChevronLeft size={16} /> Back to dashboard
         </button>
         <div className="grid lg:grid-cols-3 gap-6">

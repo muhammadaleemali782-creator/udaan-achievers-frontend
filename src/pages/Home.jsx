@@ -4,6 +4,7 @@ import { ArrowRight, Play, Calendar, Target, MessageCircle, TrendingUp, Quote, S
 import api from "../api";
 import LiveTicker from "../components/LiveTicker";
 import CourseCard from "../components/CourseCard";
+import BannerCarousel from "../components/BannerCarousel";
 
 const RANKERS = [
   { rank: "AIR 143", name: "Sahil Pradhan", exam: "JEE Advanced 2026" },
@@ -23,6 +24,8 @@ export default function Home() {
   const [batches, setBatches] = useState([]);
   const [courses, setCourses] = useState([]);
   const [testimonials, setTestimonials] = useState([]);
+  const [banners, setBanners] = useState([]);
+  const [site, setSite] = useState(null);
   const [centreSearch, setCentreSearch] = useState("");
 
   useEffect(() => {
@@ -30,6 +33,8 @@ export default function Home() {
     api.get("/batches").then((r) => setBatches(Array.isArray(r.data) ? r.data : [])).catch(() => {});
     api.get("/courses").then((r) => setCourses(Array.isArray(r.data) ? r.data.slice(0, 3) : [])).catch(() => {});
     api.get("/testimonials").then((r) => setTestimonials(Array.isArray(r.data) ? r.data : [])).catch(() => {});
+    api.get("/banners").then((r) => setBanners(Array.isArray(r.data) ? r.data : [])).catch(() => {});
+    api.get("/site-info").then((r) => setSite(r.data)).catch(() => {});
   }, []);
 
   const why = [
@@ -41,21 +46,25 @@ export default function Home() {
 
   return (
     <>
-      <section className="bg-ink pt-14 pb-16 md:pt-20 md:pb-24">
-        <div className="max-w-6xl mx-auto px-4 md:px-8 grid md:grid-cols-2 gap-10 items-center">
+      <section
+        className="pt-14 pb-16 md:pt-20 md:pb-24 relative bg-ink"
+        style={site?.heroImage ? { backgroundImage: `linear-gradient(rgba(11,31,77,0.88), rgba(11,31,77,0.92)), url(${site.heroImage})`, backgroundSize: "cover", backgroundPosition: "center" } : undefined}
+      >
+        <div className="max-w-6xl mx-auto px-4 md:px-8 grid md:grid-cols-2 gap-10 items-center relative">
           <div>
-            <span className="font-mono text-xs font-medium px-2 py-1 rounded bg-saffron/10 text-saffron">Admissions open · Batch starts 18 Aug</span>
+            <span className="font-mono text-xs font-medium px-2 py-1 rounded bg-saffron/10 text-saffron">{site?.heroBadge || "Admissions open · Batch starts 18 Aug"}</span>
             <h1 className="font-display text-white text-4xl md:text-6xl leading-[1.05] mt-5 mb-6">
-              Your rank isn't luck.<br />It's a <span className="text-saffron">timetable</span> you kept.
+              {site?.heroTitleLine1 || "Your rank isn't luck."}<br />
+              {site?.heroTitleLine2 || "It's a"} <span className="text-saffron">{site?.heroTitleHighlight || "timetable"}</span> {site?.heroTitleLine3 || "you kept."}
             </h1>
             <p className="font-body text-white/70 text-base md:text-lg mb-8 max-w-md">
-              Live classes, weekly tests and doubt support for JEE, NEET and board exams.
+              {site?.heroSubtitle || "Live classes, weekly tests and doubt support for JEE, NEET and board exams."}
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link to="/courses" className="font-body font-medium px-6 py-3 rounded-full flex items-center justify-center gap-2 bg-saffron text-ink">
                 Explore courses <ArrowRight size={16} />
               </Link>
-              <Link to="/dashboard" className="font-body font-medium px-6 py-3 rounded-full flex items-center justify-center gap-2 text-white border border-white/25">
+              <Link to="/login" className="font-body font-medium px-6 py-3 rounded-full flex items-center justify-center gap-2 text-white border border-white/25">
                 <Play size={16} /> Watch a free class
               </Link>
             </div>
@@ -72,6 +81,7 @@ export default function Home() {
       </section>
 
       <LiveTicker batches={batches} />
+      <BannerCarousel banners={banners} />
 
       <section className="bg-paper py-16 md:py-24">
         <div className="max-w-6xl mx-auto px-4 md:px-8">

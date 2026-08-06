@@ -15,6 +15,10 @@ function Field({ label, ...props }) {
   );
 }
 
+function EmptyRow({ text }) {
+  return <p className="font-body text-sm text-center py-6 text-muted">{text}</p>;
+}
+
 /* ---------------- LOGIN GATE ---------------- */
 function AdminGate({ onAuth }) {
   const [form, setForm] = useState({ username: "", password: "" });
@@ -243,6 +247,61 @@ function AdminTestimonials() {
 }
 
 /* ---------------- STATS + CONTACT TAB ---------------- */
+function AdminBanners() {
+  const [banners, setBanners] = useState([]);
+  const [editing, setEditing] = useState(null);
+  const blank = { image: "", title: "", link: "/courses", order: 0 };
+
+  const load = () => api.get("/banners").then((r) => setBanners(Array.isArray(r.data) ? r.data : [])).catch(() => {});
+  useEffect(() => { load(); }, []);
+
+  const submit = async (e) => {
+    e.preventDefault();
+    if (editing._id) await api.put(`/banners/${editing._id}`, editing, { headers: adminHeaders() });
+    else await api.post("/banners", editing, { headers: adminHeaders() });
+    setEditing(null);
+    load();
+  };
+  const remove = async (id) => { await api.delete(`/banners/${id}`, { headers: adminHeaders() }); load(); };
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-4">
+        <p className="font-body text-sm font-medium text-charcoal">Homepage banner slider ({banners.length})</p>
+        <button onClick={() => setEditing({ ...blank })} className="font-body text-xs font-medium flex items-center gap-1 px-3 py-2 rounded-full bg-ink text-white"><Plus size={14} /> Add banner</button>
+      </div>
+      <p className="font-body text-xs text-muted mb-4">Image ka URL daalo (koi bhi image-hosting site jaise imgur, ya apni website ki koi image link).</p>
+      {editing && (
+        <form onSubmit={submit} className="rounded-xl p-4 mb-5 grid gap-3 bg-paper border border-paperDark">
+          <Field label="Image URL" required value={editing.image} onChange={(e) => setEditing({ ...editing, image: e.target.value })} placeholder="https://..." />
+          <Field label="Title (banner ke neeche dikhega, optional)" value={editing.title} onChange={(e) => setEditing({ ...editing, title: e.target.value })} />
+          <Field label="Click karne pe kahan jaaye (link)" value={editing.link} onChange={(e) => setEditing({ ...editing, link: e.target.value })} placeholder="/courses" />
+          <Field label="Order (chhota number pehle dikhega)" type="number" value={editing.order} onChange={(e) => setEditing({ ...editing, order: e.target.value })} />
+          <div className="flex gap-2 mt-1">
+            <button type="submit" className="font-body text-sm font-medium flex items-center gap-1 px-4 py-2 rounded-full bg-teal text-white"><Save size={14} /> Save</button>
+            <button type="button" onClick={() => setEditing(null)} className="font-body text-sm px-4 py-2 rounded-full border border-paperDark text-charcoal">Cancel</button>
+          </div>
+        </form>
+      )}
+      <div className="flex flex-col gap-2">
+        {banners.length === 0 && <EmptyRow text="Koi banner nahi hai abhi." />}
+        {banners.map((b) => (
+          <div key={b._id} className="flex items-center justify-between rounded-lg px-4 py-3 bg-white border border-paperDark">
+            <div className="flex items-center gap-3">
+              <img src={b.image} alt="" className="w-16 h-10 object-cover rounded" />
+              <p className="font-body text-sm text-charcoal">{b.title || "(no title)"}</p>
+            </div>
+            <div className="flex gap-2">
+              <button onClick={() => setEditing({ ...b })} className="p-2 rounded-full bg-paper"><Pencil size={14} className="text-charcoal" /></button>
+              <button onClick={() => remove(b._id)} className="p-2 rounded-full bg-red-100"><Trash2 size={14} className="text-red-600" /></button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function AdminSite() {
   const [stats, setStats] = useState([]);
   const [contact, setContact] = useState({ phone: "", email: "", address: "" });
@@ -307,6 +366,26 @@ function AdminSite() {
         </div>
         <button onClick={saveContact} className="font-body text-sm font-medium flex items-center gap-1 px-4 py-2 rounded-full bg-teal text-white"><Save size={14} /> Save contact</button>
       </div>
+
+      <div>
+        <p className="font-body text-sm font-medium mb-1 text-charcoal">Homepage hero section</p>
+        <p className="font-body text-xs mb-4 text-muted">Ye sab homepage ke sabse upar wale banner me dikhta hai.</p>
+        <div className="grid gap-3 mb-3">
+          <Field label="Badge text (chhota tag upar)" value={contact.heroBadge || ""} onChange={(e) => setContact({ ...contact, heroBadge: e.target.value })} />
+          <div className="grid sm:grid-cols-2 gap-3">
+            <Field label="Title line 1" value={contact.heroTitleLine1 || ""} onChange={(e) => setContact({ ...contact, heroTitleLine1: e.target.value })} />
+            <Field label="Title line 2" value={contact.heroTitleLine2 || ""} onChange={(e) => setContact({ ...contact, heroTitleLine2: e.target.value })} />
+            <Field label="Highlighted word (green)" value={contact.heroTitleHighlight || ""} onChange={(e) => setContact({ ...contact, heroTitleHighlight: e.target.value })} />
+            <Field label="Title line 3" value={contact.heroTitleLine3 || ""} onChange={(e) => setContact({ ...contact, heroTitleLine3: e.target.value })} />
+          </div>
+          <div>
+            <label className="font-body text-xs font-medium block mb-1 text-charcoal">Subtitle</label>
+            <textarea rows={2} value={contact.heroSubtitle || ""} onChange={(e) => setContact({ ...contact, heroSubtitle: e.target.value })} className="w-full font-body text-sm px-3 py-2 rounded-lg outline-none border border-paperDark" />
+          </div>
+          <Field label="Background image URL (khali chhod do to plain color rahega)" value={contact.heroImage || ""} onChange={(e) => setContact({ ...contact, heroImage: e.target.value })} placeholder="https://..." />
+        </div>
+        <button onClick={saveContact} className="font-body text-sm font-medium flex items-center gap-1 px-4 py-2 rounded-full bg-teal text-white"><Save size={14} /> Save hero section</button>
+      </div>
     </div>
   );
 }
@@ -319,7 +398,8 @@ export function AdminPanel({ onLogout }) {
     { id: "courses", label: "Courses" },
     { id: "batches", label: "Timetable" },
     { id: "testimonials", label: "Testimonials" },
-    { id: "site", label: "Stats & Contact" },
+    { id: "banners", label: "Banners" },
+    { id: "site", label: "Hero, Stats & Contact" },
   ];
 
   const logout = () => {
@@ -351,6 +431,7 @@ export function AdminPanel({ onLogout }) {
         {tab === "courses" && <AdminCourses />}
         {tab === "batches" && <AdminBatches />}
         {tab === "testimonials" && <AdminTestimonials />}
+        {tab === "banners" && <AdminBanners />}
         {tab === "site" && <AdminSite />}
       </div>
     </div>

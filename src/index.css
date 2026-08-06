@@ -3,5 +3,15 @@
 @tailwind utilities;
 
 body {
-  background-color: #FBF8F2;
+  background-color: #F7F8FA;
+}
+
+button, a {
+  transition: transform 0.12s ease, opacity 0.12s ease, box-shadow 0.12s ease;
+}
+button:active, a:active {
+  transform: scale(0.96);
+}
+button:disabled {
+  cursor: not-allowed;
 }
