@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { KeyRound, FileVideo, LogOut, Mail } from "lucide-react";
 import api, { studentHeaders } from "../api";
 import { AdminPanel } from "./Admin";
+import LoadingButton from "../components/LoadingButton";
 
 function StudentPanel({ me, onLogout }) {
   const navigate = useNavigate();
@@ -51,6 +52,7 @@ export default function Login() {
   const [form, setForm] = useState({ studentId: "", password: "", email: "", name: "" });
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [studentMe, setStudentMe] = useState(null);
   const [adminAuthed, setAdminAuthed] = useState(!!localStorage.getItem("admin_token"));
@@ -80,18 +82,20 @@ export default function Login() {
 
   const login = async (e) => {
     e.preventDefault();
-    setError(""); setNotice("");
+    setError(""); setNotice(""); setLoading(true);
     try {
       const res = await api.post("/auth/login", { studentId: form.studentId.trim(), password: form.password });
       handleAuthResponse(res.data);
     } catch (err) {
       setError(err.response?.data?.error || "Login nahi ho paya");
+    } finally {
+      setLoading(false);
     }
   };
 
   const signup = async (e) => {
     e.preventDefault();
-    setError(""); setNotice("");
+    setError(""); setNotice(""); setLoading(true);
     try {
       const res = await api.post("/auth/signup", {
         studentId: form.studentId.trim(),
@@ -102,17 +106,21 @@ export default function Login() {
       handleAuthResponse(res.data);
     } catch (err) {
       setError(err.response?.data?.error || "Account nahi ban paya");
+    } finally {
+      setLoading(false);
     }
   };
 
   const forgot = async (e) => {
     e.preventDefault();
-    setError(""); setNotice("");
+    setError(""); setNotice(""); setLoading(true);
     try {
       await api.post("/auth/forgot-password", { email: form.email.trim() });
       setNotice("Agar ye email registered hai, to reset link bhej diya gaya hai. Apna inbox check karo.");
     } catch (err) {
       setError(err.response?.data?.error || "Kuch galat ho gaya");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -163,7 +171,7 @@ export default function Login() {
               <input required placeholder="ID" value={form.studentId} onChange={(e) => setForm({ ...form, studentId: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
               <input required type="password" placeholder="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
               {error && <p className="font-body text-xs text-red-600">{error}</p>}
-              <button type="submit" className="w-full font-body font-medium py-3 rounded-full bg-ink text-white">Log in</button>
+              <LoadingButton type="submit" loading={loading} className="w-full font-body font-medium py-3 rounded-full bg-ink text-white">Log in</LoadingButton>
               <div className="flex justify-between mt-2">
                 <button type="button" onClick={() => { setView("signup"); setError(""); }} className="font-body text-xs text-tealDark">Naya ID banao</button>
                 <button type="button" onClick={() => { setView("forgot"); setError(""); }} className="font-body text-xs text-muted">Password bhool gaye?</button>
@@ -178,7 +186,7 @@ export default function Login() {
               <input required type="email" placeholder="Email (password reset ke liye)" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
               <input required type="password" placeholder="Password banao" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
               {error && <p className="font-body text-xs text-red-600">{error}</p>}
-              <button type="submit" className="w-full font-body font-medium py-3 rounded-full bg-ink text-white">Account banao</button>
+              <LoadingButton type="submit" loading={loading} className="w-full font-body font-medium py-3 rounded-full bg-ink text-white">Account banao</LoadingButton>
               <button type="button" onClick={() => { setView("login"); setError(""); }} className="font-body text-xs text-tealDark mt-2 text-center">Already ID hai? Log in karo</button>
             </form>
           )}
@@ -189,7 +197,7 @@ export default function Login() {
               <input required type="email" placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
               {error && <p className="font-body text-xs text-red-600">{error}</p>}
               {notice && <p className="font-body text-xs text-tealDark">{notice}</p>}
-              <button type="submit" className="w-full font-body font-medium py-3 rounded-full bg-ink text-white">Reset link bhejo</button>
+              <LoadingButton type="submit" loading={loading} className="w-full font-body font-medium py-3 rounded-full bg-ink text-white">Reset link bhejo</LoadingButton>
               <button type="button" onClick={() => { setView("login"); setError(""); setNotice(""); }} className="font-body text-xs text-tealDark mt-2 text-center">Wapas login pe jao</button>
             </form>
           )}

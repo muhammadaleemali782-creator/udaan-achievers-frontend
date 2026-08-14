@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
-import api from "./api";
+import { useCachedData } from "./hooks/useCachedData";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -12,11 +12,21 @@ import ResetPassword from "./pages/ResetPassword";
 import Lecture from "./pages/Lecture";
 
 export default function App() {
-  const [contact, setContact] = useState(null);
-  const { pathname } = useLocation();
+  const contact = useCachedData("/site-info", { phone: "", email: "", address: "" });
+  const { pathname, hash } = useLocation();
 
-  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
-  useEffect(() => { api.get("/site-info").then((r) => setContact(r.data)).catch(() => {}); }, []);
+  useEffect(() => {
+    if (hash) {
+      // give the page a moment to render before scrolling to the section
+      const id = hash.replace("#", "");
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, [pathname, hash]);
 
   return (
     <div className="font-body min-h-screen bg-paper">

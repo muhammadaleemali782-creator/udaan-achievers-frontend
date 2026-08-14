@@ -1,20 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { CheckCircle2, Phone, Mail, MapPin } from "lucide-react";
-import api from "../api";
+import { useCachedData } from "../hooks/useCachedData";
 
 export default function Contact() {
-  const [courses, setCourses] = useState([]);
-  const [contact, setContact] = useState({ phone: "", email: "", address: "" });
+  const courses = useCachedData("/courses", []);
+  const contact = useCachedData("/site-info", { phone: "", email: "", address: "" });
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({ name: "", phone: "", email: "", course: "" });
 
   useEffect(() => {
-    api.get("/courses").then((r) => {
-      setCourses(r.data);
-      if (r.data[0]) setForm((f) => ({ ...f, course: r.data[0].name }));
-    }).catch(() => {});
-    api.get("/site-info").then((r) => setContact(r.data)).catch(() => {});
-  }, []);
+    if (courses[0] && !form.course) setForm((f) => ({ ...f, course: courses[0].name }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [courses]);
 
   // NOTE: this demo form doesn't send anywhere yet — wire it to a
   // "leads" endpoint on your backend (or an email service) when ready.

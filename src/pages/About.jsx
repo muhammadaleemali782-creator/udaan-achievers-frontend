@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
-import api from "../api";
+import { useCachedData } from "../hooks/useCachedData";
 
 const timeline = [
   { year: "2016", text: "Started as a single physics classroom in Kanpur with 30 students." },
@@ -11,8 +11,7 @@ const timeline = [
 ];
 
 export default function About() {
-  const [stats, setStats] = useState([]);
-  useEffect(() => { api.get("/stats").then((r) => setStats(Array.isArray(r.data) ? r.data : [])).catch(() => {}); }, []);
+  const stats = useCachedData("/stats", []);
 
   return (
     <>

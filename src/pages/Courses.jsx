@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
-import api from "../api";
+import { useSearchParams } from "react-router-dom";
+import { useCachedData } from "../hooks/useCachedData";
 import CourseCard from "../components/CourseCard";
 
 export default function Courses() {
-  const [courses, setCourses] = useState([]);
-  const [filter, setFilter] = useState("All");
+  const [searchParams] = useSearchParams();
+  const courses = useCachedData("/courses", []);
+  const [filter, setFilter] = useState(searchParams.get("cat") || "All");
   const cats = ["All", "JEE", "NEET", "Foundation"];
 
   useEffect(() => {
-    api.get("/courses").then((r) => setCourses(Array.isArray(r.data) ? r.data : [])).catch(() => {});
-  }, []);
+    const cat = searchParams.get("cat");
+    if (cat) setFilter(cat);
+  }, [searchParams]);
 
   const list = courses.filter((c) => filter === "All" || c.cat === filter);
 

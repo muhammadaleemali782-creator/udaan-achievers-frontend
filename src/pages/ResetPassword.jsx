@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { Lock, CheckCircle2 } from "lucide-react";
 import api from "../api";
+import LoadingButton from "../components/LoadingButton";
 
 export default function ResetPassword() {
   const [params] = useSearchParams();
@@ -12,17 +13,21 @@ export default function ResetPassword() {
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState("");
   const [done, setDone] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const submit = async (e) => {
     e.preventDefault();
     setError("");
     if (password !== confirm) { setError("Dono password same nahi hain"); return; }
     if (password.length < 4) { setError("Password thoda lamba rakho"); return; }
+    setLoading(true);
     try {
       await api.post("/auth/reset-password", { token, newPassword: password });
       setDone(true);
     } catch (err) {
       setError(err.response?.data?.error || "Kuch galat ho gaya");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -55,7 +60,7 @@ export default function ResetPassword() {
                 <input required type="password" placeholder="Naya password" value={password} onChange={(e) => setPassword(e.target.value)} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
                 <input required type="password" placeholder="Naya password dubara" value={confirm} onChange={(e) => setConfirm(e.target.value)} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
                 {error && <p className="font-body text-xs text-red-600">{error}</p>}
-                <button type="submit" className="w-full font-body font-medium py-3 rounded-full bg-ink text-white">Password badlo</button>
+                <LoadingButton type="submit" loading={loading} className="w-full font-body font-medium py-3 rounded-full bg-ink text-white">Password badlo</LoadingButton>
               </form>
             </>
           )}

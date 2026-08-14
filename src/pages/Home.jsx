@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Play, Calendar, Target, MessageCircle, TrendingUp, Quote, Smartphone, MapPin, Search, Trophy } from "lucide-react";
-import api from "../api";
+import { useCachedData } from "../hooks/useCachedData";
 import LiveTicker from "../components/LiveTicker";
 import CourseCard from "../components/CourseCard";
 import BannerCarousel from "../components/BannerCarousel";
@@ -20,22 +20,14 @@ const RANKERS = [
 const CENTRES = ["Kota", "Patna", "New Delhi", "Noida", "Bareilly", "Kolkata", "Lucknow", "Kanpur", "Jaipur", "Indore"];
 
 export default function Home() {
-  const [stats, setStats] = useState([]);
-  const [batches, setBatches] = useState([]);
-  const [courses, setCourses] = useState([]);
-  const [testimonials, setTestimonials] = useState([]);
-  const [banners, setBanners] = useState([]);
-  const [site, setSite] = useState(null);
+  const stats = useCachedData("/stats", []);
+  const batches = useCachedData("/batches", []);
+  const allCourses = useCachedData("/courses", []);
+  const courses = allCourses.slice(0, 3);
+  const testimonials = useCachedData("/testimonials", []);
+  const banners = useCachedData("/banners", []);
+  const site = useCachedData("/site-info", {});
   const [centreSearch, setCentreSearch] = useState("");
-
-  useEffect(() => {
-    api.get("/stats").then((r) => setStats(Array.isArray(r.data) ? r.data : [])).catch(() => {});
-    api.get("/batches").then((r) => setBatches(Array.isArray(r.data) ? r.data : [])).catch(() => {});
-    api.get("/courses").then((r) => setCourses(Array.isArray(r.data) ? r.data.slice(0, 3) : [])).catch(() => {});
-    api.get("/testimonials").then((r) => setTestimonials(Array.isArray(r.data) ? r.data : [])).catch(() => {});
-    api.get("/banners").then((r) => setBanners(Array.isArray(r.data) ? r.data : [])).catch(() => {});
-    api.get("/site-info").then((r) => setSite(r.data)).catch(() => {});
-  }, []);
 
   const why = [
     { icon: Calendar, title: "A fixed daily timetable", text: "Live classes at the same time every day so your brain builds a study rhythm." },
@@ -168,7 +160,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-paper py-16 md:py-24">
+      <section id="centres" className="bg-paper py-16 md:py-24">
         <div className="max-w-6xl mx-auto px-4 md:px-8">
           <p className="font-mono text-xs tracking-wider mb-3 text-tealDark">OFFLINE CENTRES</p>
           <h2 className="font-display text-3xl md:text-4xl mb-2 text-charcoal">Find a Vidyapeeth centre near you</h2>

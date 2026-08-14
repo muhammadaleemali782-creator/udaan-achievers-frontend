@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Lock, LogOut, Plus, Pencil, Trash2, Save } from "lucide-react";
+import { LogOut, Plus, Pencil, Trash2, Save } from "lucide-react";
+import LoadingButton from "../components/LoadingButton";
 import api, { adminHeaders } from "../api";
 
 function money(n) {
@@ -19,45 +20,12 @@ function EmptyRow({ text }) {
   return <p className="font-body text-sm text-center py-6 text-muted">{text}</p>;
 }
 
-/* ---------------- LOGIN GATE ---------------- */
-function AdminGate({ onAuth }) {
-  const [form, setForm] = useState({ username: "", password: "" });
-  const [err, setErr] = useState("");
-
-  const submit = async (e) => {
-    e.preventDefault();
-    setErr("");
-    try {
-      const res = await api.post("/auth/admin/login", form);
-      localStorage.setItem("admin_token", res.data.token);
-      onAuth();
-    } catch (error) {
-      setErr(error.response?.data?.error || "Login failed");
-    }
-  };
-
-  return (
-    <section className="bg-paper py-20 min-h-[60vh] flex items-center">
-      <div className="max-w-sm mx-auto px-4 w-full">
-        <div className="rounded-xl p-8 bg-white border border-paperDark">
-          <Lock size={24} className="mb-3 text-ink" />
-          <h2 className="font-display text-2xl mb-4 text-charcoal">Admin login</h2>
-          <form onSubmit={submit} className="flex flex-col gap-3">
-            <input required placeholder="Username" value={form.username} onChange={(e) => setForm({ ...form, username: e.target.value })} className="w-full font-body text-sm px-4 py-2.5 rounded-lg outline-none border border-paperDark" />
-            <input required type="password" placeholder="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} className="w-full font-body text-sm px-4 py-2.5 rounded-lg outline-none border border-paperDark" />
-            {err && <p className="font-body text-xs text-red-600">{err}</p>}
-            <button type="submit" className="w-full font-body font-medium py-2.5 rounded-full bg-ink text-white">Log in</button>
-          </form>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* ---------------- COURSES TAB ---------------- */
 function AdminCourses() {
   const [courses, setCourses] = useState([]);
   const [editing, setEditing] = useState(null);
+  const [saving, setSaving] = useState(false);
   const blank = { name: "", cat: "JEE", level: "", price: "", oldPrice: "", seats: "", rating: 4.5, students: "0", desc: "", lectures: [] };
 
   const load = () => api.get("/courses").then((r) => setCourses(Array.isArray(r.data) ? r.data : [])).catch(() => {});
@@ -65,14 +33,19 @@ function AdminCourses() {
 
   const submit = async (e) => {
     e.preventDefault();
+    setSaving(true);
     const payload = { ...editing, lectures: Array.isArray(editing.lectures) ? editing.lectures : String(editing.lectures).split(",").map((s) => s.trim()).filter(Boolean) };
-    if (editing._id) {
-      await api.put(`/courses/${editing._id}`, payload, { headers: adminHeaders() });
-    } else {
-      await api.post("/courses", payload, { headers: adminHeaders() });
+    try {
+      if (editing._id) {
+        await api.put(`/courses/${editing._id}`, payload, { headers: adminHeaders() });
+      } else {
+        await api.post("/courses", payload, { headers: adminHeaders() });
+      }
+      setEditing(null);
+      load();
+    } finally {
+      setSaving(false);
     }
-    setEditing(null);
-    load();
   };
 
   const remove = async (id) => {
@@ -111,7 +84,7 @@ function AdminCourses() {
             <input value={Array.isArray(editing.lectures) ? editing.lectures.join(", ") : editing.lectures} onChange={(e) => setEditing({ ...editing, lectures: e.target.value })} className="w-full font-body text-sm px-3 py-2 rounded-lg outline-none border border-paperDark" />
           </div>
           <div className="sm:col-span-2 flex gap-2 mt-1">
-            <button type="submit" className="font-body text-sm font-medium flex items-center gap-1 px-4 py-2 rounded-full bg-teal text-white"><Save size={14} /> Save</button>
+            <LoadingButton type="submit" loading={saving} className="font-body text-sm font-medium px-4 py-2 rounded-full bg-teal text-white"><Save size={14} /> Save</LoadingButton>
             <button type="button" onClick={() => setEditing(null)} className="font-body text-sm px-4 py-2 rounded-full border border-paperDark text-charcoal">Cancel</button>
           </div>
         </form>
@@ -139,6 +112,7 @@ function AdminCourses() {
 function AdminBatches() {
   const [batches, setBatches] = useState([]);
   const [editing, setEditing] = useState(null);
+  const [saving, setSaving] = useState(false);
   const blank = { time: "", subject: "", topic: "", teacher: "", tag: "JEE" };
 
   const load = () => api.get("/batches").then((r) => setBatches(Array.isArray(r.data) ? r.data : [])).catch(() => {});
@@ -146,10 +120,15 @@ function AdminBatches() {
 
   const submit = async (e) => {
     e.preventDefault();
-    if (editing._id) await api.put(`/batches/${editing._id}`, editing, { headers: adminHeaders() });
-    else await api.post("/batches", editing, { headers: adminHeaders() });
-    setEditing(null);
-    load();
+    setSaving(true);
+    try {
+      if (editing._id) await api.put(`/batches/${editing._id}`, editing, { headers: adminHeaders() });
+      else await api.post("/batches", editing, { headers: adminHeaders() });
+      setEditing(null);
+      load();
+    } finally {
+      setSaving(false);
+    }
   };
 
   const remove = async (id) => { await api.delete(`/batches/${id}`, { headers: adminHeaders() }); load(); };
@@ -173,7 +152,7 @@ function AdminBatches() {
             </select>
           </div>
           <div className="sm:col-span-2 flex gap-2 mt-1">
-            <button type="submit" className="font-body text-sm font-medium flex items-center gap-1 px-4 py-2 rounded-full bg-teal text-white"><Save size={14} /> Save</button>
+            <LoadingButton type="submit" loading={saving} className="font-body text-sm font-medium px-4 py-2 rounded-full bg-teal text-white"><Save size={14} /> Save</LoadingButton>
             <button type="button" onClick={() => setEditing(null)} className="font-body text-sm px-4 py-2 rounded-full border border-paperDark text-charcoal">Cancel</button>
           </div>
         </form>
@@ -197,6 +176,7 @@ function AdminBatches() {
 function AdminTestimonials() {
   const [items, setItems] = useState([]);
   const [editing, setEditing] = useState(null);
+  const [saving, setSaving] = useState(false);
   const blank = { name: "", exam: "", text: "" };
 
   const load = () => api.get("/testimonials").then((r) => setItems(Array.isArray(r.data) ? r.data : [])).catch(() => {});
@@ -204,10 +184,15 @@ function AdminTestimonials() {
 
   const submit = async (e) => {
     e.preventDefault();
-    if (editing._id) await api.put(`/testimonials/${editing._id}`, editing, { headers: adminHeaders() });
-    else await api.post("/testimonials", editing, { headers: adminHeaders() });
-    setEditing(null);
-    load();
+    setSaving(true);
+    try {
+      if (editing._id) await api.put(`/testimonials/${editing._id}`, editing, { headers: adminHeaders() });
+      else await api.post("/testimonials", editing, { headers: adminHeaders() });
+      setEditing(null);
+      load();
+    } finally {
+      setSaving(false);
+    }
   };
   const remove = async (id) => { await api.delete(`/testimonials/${id}`, { headers: adminHeaders() }); load(); };
 
@@ -226,7 +211,7 @@ function AdminTestimonials() {
             <textarea required rows={2} value={editing.text} onChange={(e) => setEditing({ ...editing, text: e.target.value })} className="w-full font-body text-sm px-3 py-2 rounded-lg outline-none border border-paperDark" />
           </div>
           <div className="flex gap-2">
-            <button type="submit" className="font-body text-sm font-medium flex items-center gap-1 px-4 py-2 rounded-full bg-teal text-white"><Save size={14} /> Save</button>
+            <LoadingButton type="submit" loading={saving} className="font-body text-sm font-medium px-4 py-2 rounded-full bg-teal text-white"><Save size={14} /> Save</LoadingButton>
             <button type="button" onClick={() => setEditing(null)} className="font-body text-sm px-4 py-2 rounded-full border border-paperDark text-charcoal">Cancel</button>
           </div>
         </form>
@@ -250,6 +235,7 @@ function AdminTestimonials() {
 function AdminBanners() {
   const [banners, setBanners] = useState([]);
   const [editing, setEditing] = useState(null);
+  const [saving, setSaving] = useState(false);
   const blank = { image: "", title: "", link: "/courses", order: 0 };
 
   const load = () => api.get("/banners").then((r) => setBanners(Array.isArray(r.data) ? r.data : [])).catch(() => {});
@@ -257,10 +243,15 @@ function AdminBanners() {
 
   const submit = async (e) => {
     e.preventDefault();
-    if (editing._id) await api.put(`/banners/${editing._id}`, editing, { headers: adminHeaders() });
-    else await api.post("/banners", editing, { headers: adminHeaders() });
-    setEditing(null);
-    load();
+    setSaving(true);
+    try {
+      if (editing._id) await api.put(`/banners/${editing._id}`, editing, { headers: adminHeaders() });
+      else await api.post("/banners", editing, { headers: adminHeaders() });
+      setEditing(null);
+      load();
+    } finally {
+      setSaving(false);
+    }
   };
   const remove = async (id) => { await api.delete(`/banners/${id}`, { headers: adminHeaders() }); load(); };
 
@@ -278,7 +269,7 @@ function AdminBanners() {
           <Field label="Click karne pe kahan jaaye (link)" value={editing.link} onChange={(e) => setEditing({ ...editing, link: e.target.value })} placeholder="/courses" />
           <Field label="Order (chhota number pehle dikhega)" type="number" value={editing.order} onChange={(e) => setEditing({ ...editing, order: e.target.value })} />
           <div className="flex gap-2 mt-1">
-            <button type="submit" className="font-body text-sm font-medium flex items-center gap-1 px-4 py-2 rounded-full bg-teal text-white"><Save size={14} /> Save</button>
+            <LoadingButton type="submit" loading={saving} className="font-body text-sm font-medium px-4 py-2 rounded-full bg-teal text-white"><Save size={14} /> Save</LoadingButton>
             <button type="button" onClick={() => setEditing(null)} className="font-body text-sm px-4 py-2 rounded-full border border-paperDark text-charcoal">Cancel</button>
           </div>
         </form>
@@ -306,6 +297,9 @@ function AdminSite() {
   const [stats, setStats] = useState([]);
   const [contact, setContact] = useState({ phone: "", email: "", address: "" });
   const [editingStat, setEditingStat] = useState(null);
+  const [savingStat, setSavingStat] = useState(false);
+  const [savingContact, setSavingContact] = useState(false);
+  const [savingHero, setSavingHero] = useState(false);
 
   const load = () => {
     api.get("/stats").then((r) => setStats(Array.isArray(r.data) ? r.data : [])).catch(() => {});
@@ -315,16 +309,36 @@ function AdminSite() {
 
   const saveStat = async (e) => {
     e.preventDefault();
-    if (editingStat._id) await api.put(`/stats/${editingStat._id}`, editingStat, { headers: adminHeaders() });
-    else await api.post("/stats", editingStat, { headers: adminHeaders() });
-    setEditingStat(null);
-    load();
+    setSavingStat(true);
+    try {
+      if (editingStat._id) await api.put(`/stats/${editingStat._id}`, editingStat, { headers: adminHeaders() });
+      else await api.post("/stats", editingStat, { headers: adminHeaders() });
+      setEditingStat(null);
+      load();
+    } finally {
+      setSavingStat(false);
+    }
   };
   const removeStat = async (id) => { await api.delete(`/stats/${id}`, { headers: adminHeaders() }); load(); };
 
   const saveContact = async () => {
-    await api.put("/site-info", contact, { headers: adminHeaders() });
-    load();
+    setSavingContact(true);
+    try {
+      await api.put("/site-info", contact, { headers: adminHeaders() });
+      load();
+    } finally {
+      setSavingContact(false);
+    }
+  };
+
+  const saveHero = async () => {
+    setSavingHero(true);
+    try {
+      await api.put("/site-info", contact, { headers: adminHeaders() });
+      load();
+    } finally {
+      setSavingHero(false);
+    }
   };
 
   return (
@@ -338,7 +352,7 @@ function AdminSite() {
           <form onSubmit={saveStat} className="rounded-lg p-3 mb-3 flex gap-2 bg-paper border border-paperDark">
             <input required placeholder="Value e.g. 2.4L+" value={editingStat.value} onChange={(e) => setEditingStat({ ...editingStat, value: e.target.value })} className="w-32 font-mono text-sm px-2 py-1 rounded outline-none border border-paperDark" />
             <input required placeholder="Label" value={editingStat.label} onChange={(e) => setEditingStat({ ...editingStat, label: e.target.value })} className="flex-1 font-body text-sm px-2 py-1 rounded outline-none border border-paperDark" />
-            <button type="submit" className="font-body text-xs px-3 rounded-full bg-teal text-white">Save</button>
+            <LoadingButton type="submit" loading={savingStat} className="font-body text-xs px-3 rounded-full bg-teal text-white">Save</LoadingButton>
             <button type="button" onClick={() => setEditingStat(null)} className="font-body text-xs px-3 rounded-full border border-paperDark">Cancel</button>
           </form>
         )}
@@ -364,7 +378,7 @@ function AdminSite() {
             <Field label="Address" value={contact.address} onChange={(e) => setContact({ ...contact, address: e.target.value })} />
           </div>
         </div>
-        <button onClick={saveContact} className="font-body text-sm font-medium flex items-center gap-1 px-4 py-2 rounded-full bg-teal text-white"><Save size={14} /> Save contact</button>
+        <LoadingButton onClick={saveContact} loading={savingContact} className="font-body text-sm font-medium px-4 py-2 rounded-full bg-teal text-white"><Save size={14} /> Save contact</LoadingButton>
       </div>
 
       <div>
@@ -384,7 +398,7 @@ function AdminSite() {
           </div>
           <Field label="Background image URL (khali chhod do to plain color rahega)" value={contact.heroImage || ""} onChange={(e) => setContact({ ...contact, heroImage: e.target.value })} placeholder="https://..." />
         </div>
-        <button onClick={saveContact} className="font-body text-sm font-medium flex items-center gap-1 px-4 py-2 rounded-full bg-teal text-white"><Save size={14} /> Save hero section</button>
+        <LoadingButton onClick={saveHero} loading={savingHero} className="font-body text-sm font-medium px-4 py-2 rounded-full bg-teal text-white"><Save size={14} /> Save hero section</LoadingButton>
       </div>
     </div>
   );
