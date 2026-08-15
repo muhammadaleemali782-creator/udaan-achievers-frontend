@@ -3,25 +3,18 @@ export default {
   theme: {
     extend: {
       colors: {
-        // old semantic tokens — remapped to the new navy/teal palette so
-        // every existing page re-themes automatically, no per-file edits.
-        ink: "#020617",
+        // old semantic tokens — remapped so every existing page (Courses,
+        // About, Contact, Login, Admin) automatically re-themes to match
+        // the new slate/cyan design language, no per-file edits needed.
+        ink: "#0F172A",
         paper: "#F8FAFC",
         paperDark: "#E2E8F0",
-        saffron: "#0D9488",
-        saffronDark: "#0B7A70",
-        teal: "#0D9488",
-        tealDark: "#0B7A70",
-        charcoal: "#020617",
+        saffron: "#06B6D4",
+        saffronDark: "#0891B2",
+        teal: "#06B6D4",
+        tealDark: "#0891B2",
+        charcoal: "#0F172A",
         muted: "#64748B",
-        // literal brand.* tokens matching the supplied design file exactly
-        brand: {
-          navy: "#020617",
-          teal: "#0D9488",
-          slate: "#64748B",
-          light: "#F8FAFC",
-          border: "#E2E8F0",
-        },
       },
       fontFamily: {
         display: ["Inter", "sans-serif"],
@@ -29,23 +22,13 @@ export default {
         mono: ["JetBrains Mono", "monospace"],
         sans: ["Inter", "sans-serif"],
       },
-      borderRadius: {
-        "3xl": "1.5rem",
-        "4xl": "2rem",
-        "5xl": "2.5rem",
-      },
       animation: {
-        marquee: "marquee 25s linear infinite",
-        "pulse-subtle": "pulse-subtle 3s ease-in-out infinite",
+        fadeIn: "fadeIn 0.35s ease both",
       },
       keyframes: {
-        marquee: {
-          "0%": { transform: "translateX(0%)" },
-          "100%": { transform: "translateX(-50%)" },
-        },
-        "pulse-subtle": {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.8" },
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
         },
       },
     },

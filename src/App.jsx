@@ -18,7 +18,7 @@ import Refund from "./pages/Refund";
 // clear the fixed navbar (pt-32 / lg:pt-56) — so it renders with no wrapper.
 // Every other page just needs the navbar's height (h-20) cleared.
 function Page({ children }) {
-  return <div className="pt-20">{children}</div>;
+  return <div className="pt-28 lg:pt-32 animate-fadeIn">{children}</div>;
 }
 
 export default function App() {
@@ -38,7 +38,7 @@ export default function App() {
   }, [pathname, hash]);
 
   return (
-    <div className="font-body min-h-screen bg-paper">
+    <div className="font-body min-h-screen">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

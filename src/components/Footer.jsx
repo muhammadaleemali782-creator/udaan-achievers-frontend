@@ -1,77 +1,66 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Phone, Mail, MapPin, Smartphone } from "lucide-react";
 
 export default function Footer({ contact }) {
-  const c = contact || { phone: "", email: "", address: "" };
+  const c = contact || { phone: "+91 98765 43210", email: "admissions@udaanachievers.com", address: "Kareli, Prayagraj, Uttar Pradesh, India" };
 
   return (
-    <footer className="bg-white pt-32 pb-16 border-t border-brand-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-16 mb-24">
-          <div className="lg:col-span-2">
-            <Link to="/" className="flex items-center space-x-3 mb-10">
-              <div className="w-10 h-10 bg-brand-navy rounded-xl flex items-center justify-center">
-                <i className="fa-solid fa-plane-up text-white text-sm"></i>
-              </div>
-              <span className="text-3xl font-black tracking-tighter uppercase italic">Udaan</span>
+    <footer className="bg-white border-t border-slate-200/80 pt-16 pb-12 text-slate-600">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="space-y-4">
+            <Link to="/" className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-cyan-500 rounded-lg flex items-center justify-center text-white font-black text-lg">U</div>
+              <h2 className="font-bold text-slate-900 text-base">UDAAN ACHIEVERS</h2>
             </Link>
-            <p className="text-brand-slate text-lg max-w-md leading-relaxed mb-6">Redefining competitive exam prep through discipline, data, and daily consistency. Your AIR is our mission.</p>
-            {(c.phone || c.email || c.address) && (
-              <div className="text-brand-slate text-sm space-y-1 mb-10">
-                {c.phone && <p><i className="fa-solid fa-phone mr-2 text-brand-teal"></i>{c.phone}</p>}
-                {c.email && <p><i className="fa-solid fa-envelope mr-2 text-brand-teal"></i>{c.email}</p>}
-                {c.address && <p><i className="fa-solid fa-location-dot mr-2 text-brand-teal"></i>{c.address}</p>}
-              </div>
-            )}
-            <div className="flex space-x-4">
-              <a href="#" className="w-12 h-12 rounded-2xl border border-brand-border flex items-center justify-center text-brand-navy hover:text-brand-teal hover:border-brand-teal transition-all">
-                <i className="fa-brands fa-instagram text-xl"></i>
-              </a>
-              <a href="#" className="w-12 h-12 rounded-2xl border border-brand-border flex items-center justify-center text-brand-navy hover:text-brand-teal hover:border-brand-teal transition-all">
-                <i className="fa-brands fa-twitter text-xl"></i>
-              </a>
-              <a href="#" className="w-12 h-12 rounded-2xl border border-brand-border flex items-center justify-center text-brand-navy hover:text-brand-teal hover:border-brand-teal transition-all">
-                <i className="fa-brands fa-youtube text-xl"></i>
-              </a>
+            <p className="text-xs text-slate-500 leading-relaxed">
+              Redefining competitive examination prep through dimensional consistency, acoustic language training, and active mentorship. Your AIR is our mission.
+            </p>
+            <div className="space-y-2 text-xs font-semibold text-slate-700">
+              <p className="flex items-center gap-2"><Phone size={14} className="text-cyan-600" /> {c.phone}</p>
+              <p className="flex items-center gap-2"><Mail size={14} className="text-cyan-600" /> {c.email}</p>
+              <p className="flex items-center gap-2"><MapPin size={14} className="text-cyan-600" /> {c.address}</p>
             </div>
           </div>
 
-          <div>
-            <h4 className="text-[10px] font-black tracking-[0.3em] text-brand-navy uppercase mb-10">The Programs</h4>
-            <ul className="space-y-4 font-bold text-sm text-brand-slate">
-              <li><Link to="/courses?cat=JEE" className="hover:text-brand-teal transition-colors">JEE Main & Adv</Link></li>
-              <li><Link to="/courses?cat=NEET" className="hover:text-brand-teal transition-colors">NEET UG Specialist</Link></li>
-              <li><Link to="/courses?cat=Foundation" className="hover:text-brand-teal transition-colors">Early Foundation</Link></li>
-              <li><Link to="/courses" className="hover:text-brand-teal transition-colors">Ranker Batch (Drop)</Link></li>
+          <div className="space-y-3">
+            <h4 className="font-bold text-slate-900 text-xs uppercase tracking-wider">PROGRAMS</h4>
+            <ul className="space-y-2 text-xs font-medium text-slate-600">
+              <li><Link to="/courses?cat=JEE" className="hover:text-cyan-600">JEE Main & Adv</Link></li>
+              <li><Link to="/courses?cat=NEET" className="hover:text-cyan-600">NEET UG Medical</Link></li>
+              <li><Link to="/contact" className="hover:text-cyan-600">Spoken English Studio</Link></li>
+              <li><Link to="/courses?cat=Foundation" className="hover:text-cyan-600">Early Foundation (8–10)</Link></li>
+              <li><Link to="/courses" className="hover:text-cyan-600">Ranker Dropper Batch</Link></li>
             </ul>
           </div>
 
-          <div>
-            <h4 className="text-[10px] font-black tracking-[0.3em] text-brand-navy uppercase mb-10">Company</h4>
-            <ul className="space-y-4 font-bold text-sm text-brand-slate">
-              <li><Link to="/#results" className="hover:text-brand-teal transition-colors">Our Results</Link></li>
-              <li><Link to="/#centres" className="hover:text-brand-teal transition-colors">Offline Hubs</Link></li>
-              <li><Link to="/contact" className="hover:text-brand-teal transition-colors">Mentorship</Link></li>
-              <li><Link to="/contact" className="hover:text-brand-teal transition-colors">Careers</Link></li>
+          <div className="space-y-3">
+            <h4 className="font-bold text-slate-900 text-xs uppercase tracking-wider">METHODOLOGY & CENTERS</h4>
+            <ul className="space-y-2 text-xs font-medium text-slate-600">
+              <li><Link to="/#journey" className="hover:text-cyan-600">3D Learning Sandbox</Link></li>
+              <li><Link to="/contact" className="hover:text-cyan-600">24/7 Doubt Matrix</Link></li>
+              <li><Link to="/contact" className="hover:text-cyan-600">National Scholarship Test</Link></li>
+              <li><Link to="/contact" className="hover:text-cyan-600">Offline Smart Hubs</Link></li>
+              <li><Link to="/contact" className="hover:text-cyan-600">Careers for Mentors</Link></li>
             </ul>
           </div>
 
-          <div>
-            <h4 className="text-[10px] font-black tracking-[0.3em] text-brand-navy uppercase mb-10">Resources</h4>
-            <ul className="space-y-4 font-bold text-sm text-brand-slate">
-              <li><Link to="/contact" className="hover:text-brand-teal transition-colors">Student Help</Link></li>
-              <li><Link to="/privacy" className="hover:text-brand-teal transition-colors">Privacy Policy</Link></li>
-              <li><Link to="/refund" className="hover:text-brand-teal transition-colors">Refund Policy</Link></li>
-              <li><Link to="/terms" className="hover:text-brand-teal transition-colors">Terms of Use</Link></li>
-            </ul>
+          <div className="space-y-3">
+            <h4 className="font-bold text-slate-900 text-xs uppercase tracking-wider">DIGITAL ECOSYSTEM</h4>
+            <p className="text-xs text-slate-500">Download the Udaan Achievers app on iOS and Android for live lecture access and analytics.</p>
+            <Link to="/contact" className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 flex items-center gap-2">
+              <Smartphone size={20} className="text-cyan-600" /> AVAILABLE ON <br /> iOS & Google Play
+            </Link>
           </div>
         </div>
 
-        <div className="pt-16 border-t border-brand-border flex flex-col md:flex-row justify-between items-center text-[10px] font-black tracking-[0.2em] text-brand-slate uppercase">
-          <p>© 2026 Udaan Achievers. Built for Top Ranks.</p>
-          <div className="flex space-x-8 mt-8 md:mt-0">
-            <span>Udaan Educational Labs</span>
-            <span>India's Rank Factory</span>
+        <div className="pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
+          <p>© 2026 Udaan Achievers. Built for Top Ranks & Confident Voices.</p>
+          <div className="flex gap-6 font-medium">
+            <Link to="/privacy" className="hover:text-slate-600">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-slate-600">Terms of Admission</Link>
+            <Link to="/refund" className="hover:text-slate-600">Refund Guarantee</Link>
           </div>
         </div>
       </div>
