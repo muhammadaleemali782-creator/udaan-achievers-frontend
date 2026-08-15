@@ -2,16 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background-color: #F9F8FF;
+  background-color: #F8FAFC;
+  font-family: 'Inter', sans-serif;
+  color: #020617;
 }
 
 button, a {
   transition: transform 0.12s ease, opacity 0.12s ease, box-shadow 0.12s ease;
 }
 button:active, a:active {
-  transform: scale(0.96);
+  transform: scale(0.97);
 }
 button:disabled {
   cursor: not-allowed;
+}
+
+.premium-shadow {
+  box-shadow: 0 10px 30px -10px rgba(2, 6, 23, 0.05), 0 4px 6px -4px rgba(2, 6, 23, 0.05);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #020617 0%, #0D9488 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.nav-item {
+  position: relative;
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-item:hover {
+  color: #0D9488;
+}
+.nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #0D9488;
+  transition: width 0.3s;
+}
+.nav-item:hover::after {
+  width: 100%;
 }

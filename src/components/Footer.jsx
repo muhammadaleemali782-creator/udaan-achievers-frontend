@@ -1,57 +1,78 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Youtube, Instagram } from "lucide-react";
-
-const NAV_ITEMS = [
-  { to: "/", label: "Home" },
-  { to: "/courses", label: "Courses" },
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Contact" },
-  { to: "/login", label: "Login" },
-];
 
 export default function Footer({ contact }) {
-  const c = contact || { phone: "+91 98765 43210", email: "hello@udaanachievers.in", address: "Civil Lines, Kanpur, Uttar Pradesh" };
+  const c = contact || { phone: "", email: "", address: "" };
+
   return (
-    <footer className="bg-[#0F1830] pt-14 pb-8">
-      <div className="max-w-6xl mx-auto px-4 md:px-8">
-        <div className="grid sm:grid-cols-2 md:grid-cols-5 gap-8 mb-10">
-          <div>
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-full flex items-center justify-center font-display font-semibold bg-saffron text-ink">U</div>
-              <span className="font-display text-white text-lg">Udaan Achievers</span>
+    <footer className="bg-white pt-32 pb-16 border-t border-brand-border">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-16 mb-24">
+          <div className="lg:col-span-2">
+            <Link to="/" className="flex items-center space-x-3 mb-10">
+              <div className="w-10 h-10 bg-brand-navy rounded-xl flex items-center justify-center">
+                <i className="fa-solid fa-plane-up text-white text-sm"></i>
+              </div>
+              <span className="text-3xl font-black tracking-tighter uppercase italic">Udaan</span>
+            </Link>
+            <p className="text-brand-slate text-lg max-w-md leading-relaxed mb-6">Redefining competitive exam prep through discipline, data, and daily consistency. Your AIR is our mission.</p>
+            {(c.phone || c.email || c.address) && (
+              <div className="text-brand-slate text-sm space-y-1 mb-10">
+                {c.phone && <p><i className="fa-solid fa-phone mr-2 text-brand-teal"></i>{c.phone}</p>}
+                {c.email && <p><i className="fa-solid fa-envelope mr-2 text-brand-teal"></i>{c.email}</p>}
+                {c.address && <p><i className="fa-solid fa-location-dot mr-2 text-brand-teal"></i>{c.address}</p>}
+              </div>
+            )}
+            <div className="flex space-x-4">
+              <a href="#" className="w-12 h-12 rounded-2xl border border-brand-border flex items-center justify-center text-brand-navy hover:text-brand-teal hover:border-brand-teal transition-all">
+                <i className="fa-brands fa-instagram text-xl"></i>
+              </a>
+              <a href="#" className="w-12 h-12 rounded-2xl border border-brand-border flex items-center justify-center text-brand-navy hover:text-brand-teal hover:border-brand-teal transition-all">
+                <i className="fa-brands fa-twitter text-xl"></i>
+              </a>
+              <a href="#" className="w-12 h-12 rounded-2xl border border-brand-border flex items-center justify-center text-brand-navy hover:text-brand-teal hover:border-brand-teal transition-all">
+                <i className="fa-brands fa-youtube text-xl"></i>
+              </a>
             </div>
-            <p className="font-body text-white/50 text-sm">Structured coaching for JEE, NEET and board exams.</p>
           </div>
+
           <div>
-            <p className="font-body text-white text-sm font-medium mb-3">Explore</p>
-            {NAV_ITEMS.map((item) => (
-              <Link key={item.to} to={item.to} className="font-body text-white/50 text-sm block mb-2">{item.label}</Link>
-            ))}
+            <h4 className="text-[10px] font-black tracking-[0.3em] text-brand-navy uppercase mb-10">The Programs</h4>
+            <ul className="space-y-4 font-bold text-sm text-brand-slate">
+              <li><Link to="/courses?cat=JEE" className="hover:text-brand-teal transition-colors">JEE Main & Adv</Link></li>
+              <li><Link to="/courses?cat=NEET" className="hover:text-brand-teal transition-colors">NEET UG Specialist</Link></li>
+              <li><Link to="/courses?cat=Foundation" className="hover:text-brand-teal transition-colors">Early Foundation</Link></li>
+              <li><Link to="/courses" className="hover:text-brand-teal transition-colors">Ranker Batch (Drop)</Link></li>
+            </ul>
           </div>
+
           <div>
-            <p className="font-body text-white text-sm font-medium mb-3">Free Resources</p>
-            <p className="font-body text-white/50 text-sm block mb-2">Class 10 Sample Papers</p>
-            <p className="font-body text-white/50 text-sm block mb-2">JEE Previous Year Papers</p>
-            <p className="font-body text-white/50 text-sm block mb-2">NEET Study Modules</p>
-            <p className="font-body text-white/50 text-sm block">Free Study Material</p>
+            <h4 className="text-[10px] font-black tracking-[0.3em] text-brand-navy uppercase mb-10">Company</h4>
+            <ul className="space-y-4 font-bold text-sm text-brand-slate">
+              <li><Link to="/#results" className="hover:text-brand-teal transition-colors">Our Results</Link></li>
+              <li><Link to="/#centres" className="hover:text-brand-teal transition-colors">Offline Hubs</Link></li>
+              <li><Link to="/contact" className="hover:text-brand-teal transition-colors">Mentorship</Link></li>
+              <li><Link to="/contact" className="hover:text-brand-teal transition-colors">Careers</Link></li>
+            </ul>
           </div>
+
           <div>
-            <p className="font-body text-white text-sm font-medium mb-3">Contact</p>
-            <p className="font-body text-white/50 text-sm mb-2 flex items-center gap-2"><Phone size={14} /> {c.phone}</p>
-            <p className="font-body text-white/50 text-sm mb-2 flex items-center gap-2"><Mail size={14} /> {c.email}</p>
-            <p className="font-body text-white/50 text-sm flex items-center gap-2"><MapPin size={14} /> {c.address}</p>
-          </div>
-          <div>
-            <p className="font-body text-white text-sm font-medium mb-3">Follow</p>
-            <div className="flex gap-3">
-              <Youtube size={18} className="text-white/60" />
-              <Instagram size={18} className="text-white/60" />
-            </div>
+            <h4 className="text-[10px] font-black tracking-[0.3em] text-brand-navy uppercase mb-10">Resources</h4>
+            <ul className="space-y-4 font-bold text-sm text-brand-slate">
+              <li><Link to="/contact" className="hover:text-brand-teal transition-colors">Student Help</Link></li>
+              <li><Link to="/privacy" className="hover:text-brand-teal transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/refund" className="hover:text-brand-teal transition-colors">Refund Policy</Link></li>
+              <li><Link to="/terms" className="hover:text-brand-teal transition-colors">Terms of Use</Link></li>
+            </ul>
           </div>
         </div>
-        <div className="border-t border-[#26305A] pt-6">
-          <p className="font-body text-white/40 text-xs text-center">© 2026 Udaan Achievers. All rights reserved.</p>
+
+        <div className="pt-16 border-t border-brand-border flex flex-col md:flex-row justify-between items-center text-[10px] font-black tracking-[0.2em] text-brand-slate uppercase">
+          <p>© 2026 Udaan Achievers. Built for Top Ranks.</p>
+          <div className="flex space-x-8 mt-8 md:mt-0">
+            <span>Udaan Educational Labs</span>
+            <span>India's Rank Factory</span>
+          </div>
         </div>
       </div>
     </footer>

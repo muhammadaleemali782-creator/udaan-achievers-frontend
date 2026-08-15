@@ -10,6 +10,16 @@ import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import ResetPassword from "./pages/ResetPassword";
 import Lecture from "./pages/Lecture";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
+import Refund from "./pages/Refund";
+
+// The homepage's hero already has its own large top padding designed to
+// clear the fixed navbar (pt-32 / lg:pt-56) — so it renders with no wrapper.
+// Every other page just needs the navbar's height (h-20) cleared.
+function Page({ children }) {
+  return <div className="pt-20">{children}</div>;
+}
 
 export default function App() {
   const contact = useCachedData("/site-info", { phone: "", email: "", address: "" });
@@ -17,12 +27,11 @@ export default function App() {
 
   useEffect(() => {
     if (hash) {
-      // give the page a moment to render before scrolling to the section
       const id = hash.replace("#", "");
       setTimeout(() => {
         const el = document.getElementById(id);
         if (el) el.scrollIntoView({ behavior: "smooth" });
-      }, 100);
+      }, 150);
     } else {
       window.scrollTo(0, 0);
     }
@@ -33,12 +42,15 @@ export default function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/courses" element={<Courses />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
-        <Route path="/lecture/:courseId" element={<Lecture />} />
+        <Route path="/courses" element={<Page><Courses /></Page>} />
+        <Route path="/about" element={<Page><About /></Page>} />
+        <Route path="/contact" element={<Page><Contact /></Page>} />
+        <Route path="/login" element={<Page><Login /></Page>} />
+        <Route path="/reset-password" element={<Page><ResetPassword /></Page>} />
+        <Route path="/lecture/:courseId" element={<Page><Lecture /></Page>} />
+        <Route path="/privacy" element={<Page><Privacy /></Page>} />
+        <Route path="/terms" element={<Page><Terms /></Page>} />
+        <Route path="/refund" element={<Page><Refund /></Page>} />
       </Routes>
       <Footer contact={contact} />
     </div>
