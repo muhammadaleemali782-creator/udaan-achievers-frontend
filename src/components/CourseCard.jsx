@@ -1,62 +1,94 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Star, Users, Check } from "lucide-react";
-import api, { studentHeaders } from "../api";
-
-function money(n) {
-  const num = Number(n) || 0;
-  return "₹" + num.toLocaleString("en-IN");
-}
+import React from "react";
+import { Link } from "react-router-dom";
+import { BookOpen, Star, ArrowUpRight } from "lucide-react";
 
 export default function CourseCard({ course }) {
-  const navigate = useNavigate();
-  const [status, setStatus] = useState("idle"); // idle | loading | done
-  const bar = course.cat === "JEE" ? "bg-ink" : course.cat === "NEET" ? "bg-teal" : "bg-saffron";
-
-  const handleEnroll = async () => {
-    const loggedIn = !!localStorage.getItem("student_token");
-    if (!loggedIn) {
-      navigate("/login");
-      return;
-    }
-    setStatus("loading");
-    try {
-      await api.post(`/enrollments/enroll/${course._id}`, {}, { headers: studentHeaders() });
-      setStatus("done");
-    } catch {
-      setStatus("idle");
-      navigate("/login");
-    }
-  };
+  const isFlagship = course.cat === "WCNA Program";
 
   return (
-    <div className="rounded-xl overflow-hidden flex flex-col bg-white border border-paperDark">
-      <div className={`h-2 ${bar}`} />
-      <div className="p-5 flex flex-col flex-1">
-        <div className="flex items-center justify-between mb-3">
-          <span className="font-mono text-xs font-medium px-2 py-1 rounded bg-paperDark text-charcoal">{course.cat}</span>
-          <span className="font-body text-xs text-muted">{course.level}</span>
+    <div className={`rounded-2xl overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1.5 ${
+      isFlagship
+        ? "bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 text-white border-2 border-emerald-500/50 shadow-2xl"
+        : "bg-white border border-paperDark shadow-sm hover:shadow-md"
+    }`}>
+      {/* Visual Cover Thumbnail */}
+      <div className="relative aspect-[4/5] bg-slate-950 overflow-hidden">
+        <img
+          src={course.image || "/books/wcna_master_course.jpg"}
+          alt={course.name}
+          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+          onError={(e) => { e.target.src = "/books/wcna_master_course.jpg"; }}
+        />
+        <div className="absolute top-3 left-3 flex flex-col gap-1">
+          <span className="px-2.5 py-1 rounded-md bg-slate-950/85 backdrop-blur text-emerald-300 text-[10px] font-extrabold tracking-wider uppercase border border-emerald-400/30">
+            {course.tag || course.cat}
+          </span>
         </div>
-        <h3 className="font-display text-xl mb-2 text-charcoal">{course.name}</h3>
-        <p className="font-body text-sm mb-4 flex-1 text-muted">{course.desc}</p>
-        <div className="flex items-center gap-3 mb-4 font-body text-xs text-muted">
-          <span className="flex items-center gap-1"><Star size={13} className="fill-saffron text-saffron" /> {course.rating}</span>
-          <span className="flex items-center gap-1"><Users size={13} /> {course.students}</span>
-        </div>
-        <div className="flex items-end justify-between mb-4">
-          <div>
-            <span className="font-mono text-lg font-semibold text-charcoal">{money(course.price)}</span>
-            <span className="font-mono text-sm line-through ml-2 text-muted">{money(course.oldPrice)}</span>
+        {course.oldPrice > course.price && (
+          <span className="absolute top-3 right-3 px-2 py-0.5 rounded-md bg-rose-600 text-white text-[10px] font-black">
+            SAVE {Math.round(((course.oldPrice - course.price) / course.oldPrice) * 100)}%
+          </span>
+        )}
+      </div>
+
+      {/* Card Content */}
+      <div className="p-5 flex-1 flex flex-col justify-between">
+        <div>
+          <div className="flex items-center justify-between text-xs text-muted mb-2 font-mono">
+            <span className="flex items-center gap-1 text-emerald-600 font-bold">
+              <Star size={12} fill="currentColor" /> {course.rating || 4.9}
+            </span>
+            <span>{course.level || "Study Material"}</span>
           </div>
-          <span className="font-body text-xs text-saffronDark">{course.seats}</span>
+
+          <h3 className={`font-display text-base mb-2 line-clamp-2 ${isFlagship ? "text-white" : "text-charcoal"}`}>
+            {course.name}
+          </h3>
+
+          <p className="font-body text-xs text-muted line-clamp-2 leading-relaxed mb-4">
+            {course.desc}
+          </p>
+
+          {/* Key Topics Pills */}
+          {course.lectures && course.lectures.length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mb-4">
+              {course.lectures.slice(0, 3).map((lec, idx) => (
+                <span key={idx} className="font-body text-[10px] px-2 py-0.5 rounded-md bg-paper border border-paperDark text-muted">
+                  ✓ {lec}
+                </span>
+              ))}
+              {course.lectures.length > 3 && (
+                <span className="font-body text-[10px] px-2 py-0.5 rounded-md bg-paper border border-paperDark text-muted">
+                  +{course.lectures.length - 3} more
+                </span>
+              )}
+            </div>
+          )}
         </div>
-        <button
-          onClick={handleEnroll}
-          disabled={status === "loading" || status === "done"}
-          className="font-body text-sm font-medium py-2.5 rounded-full w-full text-center bg-ink text-white flex items-center justify-center gap-2 disabled:opacity-70"
-        >
-          {status === "done" ? (<><Check size={14} /> Enrolled</>) : status === "loading" ? "Enrolling…" : "Enroll now"}
-        </button>
+
+        {/* Pricing & CTA */}
+        <div className="pt-4 border-t border-paperDark flex items-center justify-between">
+          <div>
+            <div className="flex items-baseline gap-1.5">
+              <span className="font-display text-lg font-bold text-emerald-600">
+                ₹{Number(course.price).toLocaleString()}
+              </span>
+              {course.oldPrice > 0 && (
+                <span className="font-body text-xs line-through text-muted">
+                  ₹{Number(course.oldPrice).toLocaleString()}
+                </span>
+              )}
+            </div>
+            <p className="font-mono text-[10px] text-muted">{course.seats || "Available"}</p>
+          </div>
+
+          <Link
+            to="/login"
+            className="font-body text-xs font-semibold flex items-center gap-1 px-4 py-2 rounded-full bg-ink text-white hover:opacity-90 transition-opacity"
+          >
+            Enroll / Buy <ArrowUpRight size={12} />
+          </Link>
+        </div>
       </div>
     </div>
   );
