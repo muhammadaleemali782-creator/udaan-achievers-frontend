@@ -18,40 +18,36 @@ export default function MobileGurukulView() {
       title: "AYURVEDA",
       subtitle: "THE SCIENCE OF LIFE",
       tag: "COMIC BOOK",
-      footer1: "Ancient Healing",
-      footer2: "Modern Understanding",
       image: "/books/ayurveda_comic_cover.jpg",
-      color: "from-amber-700/20 via-emerald-800/30 to-amber-900/40"
+      leftNeighbor: "/books/ncert_science_comic.jpg",
+      rightNeighbor: "/books/math_comic_cover.jpg"
     },
     {
       id: "ncert",
       title: "NCERT SCIENCE",
       subtitle: "PHYSICS · CHEMISTRY · BIO",
       tag: "COMIC BOOK",
-      footer1: "Interactive Labs",
-      footer2: "Concept Mastery",
       image: "/books/ncert_science_comic.jpg",
-      color: "from-sky-700/20 via-blue-800/30 to-sky-900/40"
+      leftNeighbor: "/books/human_anatomy_comic.jpg",
+      rightNeighbor: "/books/ayurveda_comic_cover.jpg"
     },
     {
       id: "maths",
       title: "MATHEMATICS",
       subtitle: "MADE EASY",
       tag: "COMIC BOOK",
-      footer1: "Formulas & Tricks",
-      footer2: "Speed Problem Solving",
       image: "/books/math_comic_cover.jpg",
-      color: "from-purple-700/20 via-amber-800/30 to-purple-900/40"
+      leftNeighbor: "/books/ayurveda_comic_cover.jpg",
+      rightNeighbor: "/books/human_anatomy_comic.jpg"
     },
     {
       id: "anatomy",
       title: "HUMAN ANATOMY",
       subtitle: "BODY SYSTEMS",
       tag: "COMIC BOOK",
-      footer1: "Physiology & Organs",
-      footer2: "3D Visual Guides",
       image: "/books/human_anatomy_comic.jpg",
-      color: "from-rose-700/20 via-red-800/30 to-rose-900/40"
+      leftNeighbor: "/books/math_comic_cover.jpg",
+      rightNeighbor: "/books/ncert_science_comic.jpg"
     }
   ];
 
@@ -67,27 +63,35 @@ export default function MobileGurukulView() {
     setOpenAccordion(openAccordion === key ? null : key);
   };
 
+  const currentBook = books[activeBookIdx];
+  const prevBookImg = books[(activeBookIdx - 1 + books.length) % books.length].image;
+  const nextBookImg = books[(activeBookIdx + 1) % books.length].image;
+
   return (
-    <div className="md:hidden min-h-screen bg-[#FAF7F0] text-[#243324] font-sans antialiased pb-12 select-none">
+    <div className="md:hidden min-h-screen bg-[#FBF9F4] text-[#243324] font-sans antialiased pb-8 select-none">
       
-      {/* 1. TOP MOBILE APP HEADER */}
-      <header className="sticky top-0 z-50 bg-[#FAF7F0]/95 backdrop-blur-md border-b border-[#E8E2D2] px-4 py-3 flex items-center justify-between">
+      {/* ================= 1. TOP HEADER ================= */}
+      <header className="sticky top-0 z-50 bg-[#FBF9F4]/95 backdrop-blur-md border-b border-[#E8E2D2] px-4 py-3 flex items-center justify-between">
         {/* Brand Logo & Name */}
         <Link to="/" className="flex items-center gap-2.5">
           <div className="w-10 h-10 flex items-center justify-center">
-            <img src="/images/gurukul_logo.png" alt="Gurukul Logo" className="w-9 h-9 object-contain" />
+            <img 
+              src="/images/gurukul_logo.png" 
+              alt="Gurukul Logo" 
+              className="w-10 h-10 object-contain" 
+            />
           </div>
           <div>
-            <h1 className="font-serif text-xl font-black text-[#1F3322] tracking-wider leading-none">
+            <h1 style={{ fontFamily: "'Cinzel', serif" }} className="text-xl font-bold text-[#1F3322] tracking-wider leading-none">
               GURUKUL
             </h1>
-            <p className="font-serif text-[11px] text-[#556950] font-medium tracking-tight">
-              Powered by <span className="text-[#3A5038] font-bold">Educa Veda</span>
+            <p style={{ fontFamily: "'Playfair Display', serif" }} className="text-[11px] text-[#556950] font-normal tracking-tight">
+              Powered by <span className="text-[#3A5038] font-semibold">Educa Veda</span>
             </p>
           </div>
         </Link>
 
-        {/* Menu Hamburger Button */}
+        {/* Menu Hamburger Button with rounded borders */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
           className="w-10 h-10 rounded-xl border border-[#D5CDBC] bg-white flex items-center justify-center text-[#2A3F2D] shadow-xs active:scale-95 transition-transform"
@@ -97,9 +101,9 @@ export default function MobileGurukulView() {
         </button>
       </header>
 
-      {/* Mobile Drawer Menu */}
+      {/* Drawer Menu */}
       {menuOpen && (
-        <div className="bg-[#FAF7F0] border-b border-[#E8E2D2] px-5 py-6 space-y-4 animate-fadeIn shadow-lg">
+        <div className="bg-[#FBF9F4] border-b border-[#E8E2D2] px-5 py-6 space-y-4 animate-fadeIn shadow-lg">
           <Link
             to="/courses"
             onClick={() => setMenuOpen(false)}
@@ -127,118 +131,121 @@ export default function MobileGurukulView() {
         </div>
       )}
 
-      {/* 2. HERO SECTION */}
-      <section className="relative px-4 pt-6 pb-8 text-center overflow-hidden">
+      {/* ================= 2. HERO SECTION ================= */}
+      <section className="relative px-4 pt-4 pb-8 text-center overflow-hidden">
         
-        {/* Real Mortar & Pestle with Herbs Hero Illustration */}
-        <div className="relative mx-auto w-52 h-32 mb-4 flex items-center justify-center">
+        {/* Top Botanical Herbs & Mortar Visual from Ref Image */}
+        <div className="relative mx-auto w-64 h-36 mb-4 flex items-center justify-center">
           <img
-            src="/images/mortar_pestle.png"
-            alt="Ayurvedic Herbs and Mortar"
-            className="w-full h-full object-contain filter drop-shadow-md"
+            src="/images/mortar_pestle_real.png"
+            alt="Ayurvedic Herbs, Mortar and Botanical Oil"
+            className="w-full h-full object-contain filter drop-shadow-sm"
           />
         </div>
 
-        {/* Headings */}
-        <p className="font-serif italic text-base text-[#384D35] mb-0.5 font-semibold tracking-wide">
+        {/* Classical Italic Headings */}
+        <p style={{ fontFamily: "'Playfair Display', serif" }} className="italic text-base text-[#2E412E] font-medium tracking-wide leading-tight">
           Ancient Wisdom.
         </p>
-        <p className="font-serif italic text-base text-[#384D35] mb-3 font-semibold tracking-wide">
+        <p style={{ fontFamily: "'Playfair Display', serif" }} className="italic text-base text-[#2E412E] font-medium tracking-wide mb-3 leading-tight">
           Modern Education.
         </p>
 
-        <h2 className="font-serif text-4xl font-black text-[#182C1B] tracking-widest mb-1 uppercase">
+        {/* GURUKUL Title */}
+        <h2 style={{ fontFamily: "'Cinzel', serif" }} className="text-4xl font-extrabold text-[#192D1D] tracking-[0.18em] mb-1.5 uppercase">
           GURUKUL
         </h2>
 
-        <p className="font-serif text-sm text-[#4E624A] font-bold tracking-wider mb-3">
+        {/* Learn. Practice. Achieve. */}
+        <p style={{ fontFamily: "'Playfair Display', serif" }} className="text-sm text-[#3E523A] font-bold tracking-wider mb-3">
           Learn. Practice. Achieve.
         </p>
 
-        <p className="font-sans text-xs text-[#526450] max-w-xs mx-auto leading-relaxed mb-6">
+        {/* Description */}
+        <p className="text-xs text-[#526450] max-w-xs mx-auto leading-relaxed mb-6 font-normal">
           A complete learning platform that blends the timeless knowledge of Ayurveda with modern education and technology.
         </p>
 
-        {/* 6 Feature Grid Cards (2 rows of 3) */}
-        <div className="grid grid-cols-3 gap-2.5 max-w-sm mx-auto">
+        {/* 6 Feature Grid Cards (2 rows of 3 compact cards with golden/olive tinted icons) */}
+        <div className="grid grid-cols-3 gap-2 max-w-xs sm:max-w-sm mx-auto">
           
-          <div className="bg-white rounded-2xl p-2.5 border border-[#E6DFC9] shadow-xs flex flex-col items-center justify-center text-center gap-1.5 min-h-[82px]">
-            <div className="w-7 h-7 rounded-full bg-[#F5F2E9] flex items-center justify-center text-[#B28228]">
-              <UserCheck size={15} />
+          <div className="bg-white rounded-2xl p-2.5 border border-[#E8E2D0] shadow-xs flex flex-col items-center justify-center text-center gap-1 min-h-[78px]">
+            <div className="w-6 h-6 rounded-full bg-[#F6F4ED] flex items-center justify-center text-[#B28228]">
+              <UserCheck size={14} />
             </div>
-            <span className="font-serif text-[10px] font-bold text-[#2A3E2C] leading-tight">
-              Expert Mentorship
+            <span style={{ fontFamily: "'Playfair Display', serif" }} className="text-[10px] font-semibold text-[#273B2A] leading-tight">
+              Expert<br />Mentorship
             </span>
           </div>
 
-          <div className="bg-white rounded-2xl p-2.5 border border-[#E6DFC9] shadow-xs flex flex-col items-center justify-center text-center gap-1.5 min-h-[82px]">
-            <div className="w-7 h-7 rounded-full bg-[#F5F2E9] flex items-center justify-center text-[#B28228]">
-              <BookOpen size={15} />
+          <div className="bg-white rounded-2xl p-2.5 border border-[#E8E2D0] shadow-xs flex flex-col items-center justify-center text-center gap-1 min-h-[78px]">
+            <div className="w-6 h-6 rounded-full bg-[#F6F4ED] flex items-center justify-center text-[#B28228]">
+              <BookOpen size={14} />
             </div>
-            <span className="font-serif text-[10px] font-bold text-[#2A3E2C] leading-tight">
-              Premium Study Material
+            <span style={{ fontFamily: "'Playfair Display', serif" }} className="text-[10px] font-semibold text-[#273B2A] leading-tight">
+              Premium<br />Study Material
             </span>
           </div>
 
-          <div className="bg-white rounded-2xl p-2.5 border border-[#E6DFC9] shadow-xs flex flex-col items-center justify-center text-center gap-1.5 min-h-[82px]">
-            <div className="w-7 h-7 rounded-full bg-[#F5F2E9] flex items-center justify-center text-[#B28228]">
-              <CheckSquare size={15} />
+          <div className="bg-white rounded-2xl p-2.5 border border-[#E8E2D0] shadow-xs flex flex-col items-center justify-center text-center gap-1 min-h-[78px]">
+            <div className="w-6 h-6 rounded-full bg-[#F6F4ED] flex items-center justify-center text-[#B28228]">
+              <CheckSquare size={14} />
             </div>
-            <span className="font-serif text-[10px] font-bold text-[#2A3E2C] leading-tight">
-              Test Series &amp; Practice
+            <span style={{ fontFamily: "'Playfair Display', serif" }} className="text-[10px] font-semibold text-[#273B2A] leading-tight">
+              Test Series &amp;<br />Practice
             </span>
           </div>
 
-          <div className="bg-white rounded-2xl p-2.5 border border-[#E6DFC9] shadow-xs flex flex-col items-center justify-center text-center gap-1.5 min-h-[82px]">
-            <div className="w-7 h-7 rounded-full bg-[#F5F2E9] flex items-center justify-center text-[#B28228]">
-              <TrendingUp size={15} />
+          <div className="bg-white rounded-2xl p-2.5 border border-[#E8E2D0] shadow-xs flex flex-col items-center justify-center text-center gap-1 min-h-[78px]">
+            <div className="w-6 h-6 rounded-full bg-[#F6F4ED] flex items-center justify-center text-[#B28228]">
+              <TrendingUp size={14} />
             </div>
-            <span className="font-serif text-[10px] font-bold text-[#2A3E2C] leading-tight">
-              Progress Tracking
+            <span style={{ fontFamily: "'Playfair Display', serif" }} className="text-[10px] font-semibold text-[#273B2A] leading-tight">
+              Progress<br />Tracking
             </span>
           </div>
 
-          <div className="bg-white rounded-2xl p-2.5 border border-[#E6DFC9] shadow-xs flex flex-col items-center justify-center text-center gap-1.5 min-h-[82px]">
-            <div className="w-7 h-7 rounded-full bg-[#F5F2E9] flex items-center justify-center text-[#B28228]">
-              <Award size={15} />
+          <div className="bg-white rounded-2xl p-2.5 border border-[#E8E2D0] shadow-xs flex flex-col items-center justify-center text-center gap-1 min-h-[78px]">
+            <div className="w-6 h-6 rounded-full bg-[#F6F4ED] flex items-center justify-center text-[#B28228]">
+              <Award size={14} />
             </div>
-            <span className="font-serif text-[10px] font-bold text-[#2A3E2C] leading-tight">
-              Certificate of Excellence
+            <span style={{ fontFamily: "'Playfair Display', serif" }} className="text-[10px] font-semibold text-[#273B2A] leading-tight">
+              Certificate of<br />Excellence
             </span>
           </div>
 
-          <div className="bg-white rounded-2xl p-2.5 border border-[#E6DFC9] shadow-xs flex flex-col items-center justify-center text-center gap-1.5 min-h-[82px]">
-            <div className="w-7 h-7 rounded-full bg-[#F5F2E9] flex items-center justify-center text-[#B28228]">
-              <Clock size={15} />
+          <div className="bg-white rounded-2xl p-2.5 border border-[#E8E2D0] shadow-xs flex flex-col items-center justify-center text-center gap-1 min-h-[78px]">
+            <div className="w-6 h-6 rounded-full bg-[#F6F4ED] flex items-center justify-center text-[#B28228]">
+              <Clock size={14} />
             </div>
-            <span className="font-serif text-[10px] font-bold text-[#2A3E2C] leading-tight">
-              Smart Analytics
+            <span style={{ fontFamily: "'Playfair Display', serif" }} className="text-[10px] font-semibold text-[#273B2A] leading-tight">
+              Smart<br />Analytics
             </span>
           </div>
 
         </div>
       </section>
 
-      {/* 3. "EXPLORE OUR BOOKS" 3D COMIC CAROUSEL */}
-      <section className="px-4 py-8 text-center">
+      {/* ================= 3. "EXPLORE OUR BOOKS" 3D COMIC CAROUSEL ================= */}
+      <section className="px-3 py-6 text-center overflow-hidden">
         
         {/* Section Heading with Leaf Ornaments */}
-        <div className="flex items-center justify-center gap-2 mb-1.5">
+        <div className="flex items-center justify-center gap-2 mb-1">
           <span className="text-[#647C56] text-sm">🌿</span>
-          <h3 className="font-serif text-2xl font-black text-[#1A2E1D]">
+          <h3 style={{ fontFamily: "'Playfair Display', serif" }} className="text-2xl font-bold text-[#1A2E1D]">
             Explore Our Books
           </h3>
           <span className="text-[#647C56] text-sm">🌿</span>
         </div>
 
-        <p className="font-sans text-xs text-[#526450] max-w-xs mx-auto mb-6">
+        <p className="text-xs text-[#526450] max-w-xs mx-auto mb-6">
           Comics that make learning powerful, interactive &amp; unforgettable!
         </p>
 
-        {/* 3D Carousel Viewport */}
-        <div className="relative max-w-xs mx-auto flex items-center justify-center py-2">
+        {/* 3D Carousel Stage with 3 Visible Books */}
+        <div className="relative max-w-xs sm:max-w-sm mx-auto flex items-center justify-center py-2 min-h-[260px]">
           
-          {/* Left Navigation Arrow */}
+          {/* Left Arrow Button */}
           <button
             onClick={prevBook}
             className="absolute left-0 z-30 w-8 h-8 rounded-full bg-white/95 border border-[#D5CDBC] shadow-md flex items-center justify-center text-[#2A3E2C] active:scale-90 transition-transform"
@@ -247,32 +254,50 @@ export default function MobileGurukulView() {
             <ChevronLeft size={18} />
           </button>
 
+          {/* Left Peeking Perspective Book */}
+          <div className="absolute -left-6 z-10 w-28 scale-[0.82] opacity-60 transform -rotate-6 transition-all duration-300 pointer-events-none">
+            <div className="rounded-xl overflow-hidden shadow-lg border border-[#1A2E1D]/40 bg-[#1A2E1D]">
+              <img
+                src={prevBookImg}
+                alt="Previous Book"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+          </div>
+
           {/* Active Center 3D Comic Book with Swirling Golden Aura */}
-          <div className="relative z-20 w-52 sm:w-56 mx-auto">
+          <div className="relative z-20 w-44 sm:w-48 mx-auto">
             
             {/* Swirling Golden Aura Ring */}
-            <div className="absolute -inset-4 rounded-full border-2 border-[#EAB308]/60 blur-xs animate-spin [animation-duration:12s] pointer-events-none"></div>
-            <div className="absolute -inset-2 rounded-full border border-[#EAB308]/40 blur-xs pointer-events-none"></div>
+            <div className="absolute -inset-3 rounded-full border border-[#EAB308]/50 blur-xs animate-spin [animation-duration:10s] pointer-events-none"></div>
+            <div className="absolute -inset-1.5 rounded-full border border-[#EAB308]/30 blur-xs pointer-events-none"></div>
 
             {/* 3D Book Container */}
             <div className="comic-book-container">
               <div className={`comic-book-card-3d rounded-2xl overflow-hidden shadow-2xl border-2 border-[#182B1B] bg-[#182B1B] ${isRotating ? "animate-float3dIdle" : ""}`}>
-                
                 <div className="comic-spine-effect"></div>
-                
                 <img
-                  src={books[activeBookIdx].image}
-                  alt={books[activeBookIdx].title}
+                  src={currentBook.image}
+                  alt={currentBook.title}
                   className="w-full h-auto object-cover"
-                  onError={(e) => { e.target.src = "/books/ayurveda_comic_cover.jpg"; }}
                 />
-
               </div>
             </div>
 
           </div>
 
-          {/* Right Navigation Arrow */}
+          {/* Right Peeking Perspective Book */}
+          <div className="absolute -right-6 z-10 w-28 scale-[0.82] opacity-60 transform rotate-6 transition-all duration-300 pointer-events-none">
+            <div className="rounded-xl overflow-hidden shadow-lg border border-[#1A2E1D]/40 bg-[#1A2E1D]">
+              <img
+                src={nextBookImg}
+                alt="Next Book"
+                className="w-full h-auto object-cover"
+              />
+            </div>
+          </div>
+
+          {/* Right Arrow Button */}
           <button
             onClick={nextBook}
             className="absolute right-0 z-30 w-8 h-8 rounded-full bg-white/95 border border-[#D5CDBC] shadow-md flex items-center justify-center text-[#2A3E2C] active:scale-90 transition-transform"
@@ -284,10 +309,10 @@ export default function MobileGurukulView() {
         </div>
 
         {/* 3D Rotating Book Interactive Pill */}
-        <div className="mt-4 flex items-center justify-center">
+        <div className="mt-3 flex items-center justify-center">
           <button
             onClick={() => setIsRotating(!isRotating)}
-            className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/90 border border-[#D5CDBC] text-[#344936] text-xs font-serif font-bold shadow-xs active:scale-95 transition-all"
+            className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white border border-[#D5CDBC] text-[#344936] text-xs font-serif font-bold shadow-xs active:scale-95 transition-all"
           >
             <RotateCw size={13} className={isRotating ? "animate-spin [animation-duration:8s]" : ""} />
             <span>3D Rotating Book</span>
@@ -310,69 +335,69 @@ export default function MobileGurukulView() {
 
       </section>
 
-      {/* 4. "WHY GURUKUL?" 4 FEATURE CARDS */}
+      {/* ================= 4. "WHY GURUKUL?" 4 FEATURE CARDS ================= */}
       <section className="px-4 py-6">
-        <h3 className="font-serif text-2xl font-black text-center text-[#1A2E1D] mb-5">
+        <h3 style={{ fontFamily: "'Playfair Display', serif" }} className="text-2xl font-bold text-center text-[#1A2E1D] mb-5">
           Why Gurukul?
         </h3>
 
-        <div className="grid grid-cols-2 gap-3 max-w-sm mx-auto">
+        <div className="grid grid-cols-2 gap-3 max-w-xs sm:max-w-sm mx-auto">
           
           {/* Card 1: Ayurvedic Wisdom */}
-          <div className="bg-white rounded-2xl p-3.5 border border-[#E6DFC9] shadow-xs flex flex-col justify-between">
+          <div className="bg-white rounded-2xl p-3.5 border border-[#E8E2D0] shadow-xs flex flex-col justify-between">
             <div>
-              <div className="w-9 h-9 rounded-full bg-[#EDF3E7] flex items-center justify-center text-lg mb-2.5">
+              <div className="w-8 h-8 rounded-full bg-[#EDF3E7] flex items-center justify-center text-base mb-2.5">
                 🌿
               </div>
-              <h4 className="font-serif text-xs font-bold text-[#1A2E1D] mb-1 leading-snug">
+              <h4 style={{ fontFamily: "'Playfair Display', serif" }} className="text-xs font-bold text-[#1A2E1D] mb-1 leading-snug">
                 Ayurvedic Wisdom
               </h4>
-              <p className="font-sans text-[10px] text-[#556754] leading-relaxed">
+              <p className="text-[10px] text-[#556754] leading-relaxed">
                 Dive into the ancient knowledge of Ayurveda and holistic healing.
               </p>
             </div>
           </div>
 
           {/* Card 2: Interactive Learning */}
-          <div className="bg-white rounded-2xl p-3.5 border border-[#E6DFC9] shadow-xs flex flex-col justify-between">
+          <div className="bg-white rounded-2xl p-3.5 border border-[#E8E2D0] shadow-xs flex flex-col justify-between">
             <div>
-              <div className="w-9 h-9 rounded-full bg-[#EDF3E7] flex items-center justify-center text-lg mb-2.5">
+              <div className="w-8 h-8 rounded-full bg-[#EDF3E7] flex items-center justify-center text-base mb-2.5">
                 💡
               </div>
-              <h4 className="font-serif text-xs font-bold text-[#1A2E1D] mb-1 leading-snug">
+              <h4 style={{ fontFamily: "'Playfair Display', serif" }} className="text-xs font-bold text-[#1A2E1D] mb-1 leading-snug">
                 Interactive Learning
               </h4>
-              <p className="font-sans text-[10px] text-[#556754] leading-relaxed">
+              <p className="text-[10px] text-[#556754] leading-relaxed">
                 Comics, animations &amp; smart notes for better understanding.
               </p>
             </div>
           </div>
 
           {/* Card 3: Test & Improve */}
-          <div className="bg-white rounded-2xl p-3.5 border border-[#E6DFC9] shadow-xs flex flex-col justify-between">
+          <div className="bg-white rounded-2xl p-3.5 border border-[#E8E2D0] shadow-xs flex flex-col justify-between">
             <div>
-              <div className="w-9 h-9 rounded-full bg-[#EDF3E7] flex items-center justify-center text-lg mb-2.5">
+              <div className="w-8 h-8 rounded-full bg-[#EDF3E7] flex items-center justify-center text-base mb-2.5">
                 📋
               </div>
-              <h4 className="font-serif text-xs font-bold text-[#1A2E1D] mb-1 leading-snug">
+              <h4 style={{ fontFamily: "'Playfair Display', serif" }} className="text-xs font-bold text-[#1A2E1D] mb-1 leading-snug">
                 Test &amp; Improve
               </h4>
-              <p className="font-sans text-[10px] text-[#556754] leading-relaxed">
+              <p className="text-[10px] text-[#556754] leading-relaxed">
                 Take tests, analyze performance and improve your score.
               </p>
             </div>
           </div>
 
           {/* Card 4: Track Progress */}
-          <div className="bg-white rounded-2xl p-3.5 border border-[#E6DFC9] shadow-xs flex flex-col justify-between">
+          <div className="bg-white rounded-2xl p-3.5 border border-[#E8E2D0] shadow-xs flex flex-col justify-between">
             <div>
-              <div className="w-9 h-9 rounded-full bg-[#EDF3E7] flex items-center justify-center text-lg mb-2.5">
+              <div className="w-8 h-8 rounded-full bg-[#EDF3E7] flex items-center justify-center text-base mb-2.5">
                 📈
               </div>
-              <h4 className="font-serif text-xs font-bold text-[#1A2E1D] mb-1 leading-snug">
+              <h4 style={{ fontFamily: "'Playfair Display', serif" }} className="text-xs font-bold text-[#1A2E1D] mb-1 leading-snug">
                 Track Progress
               </h4>
-              <p className="font-sans text-[10px] text-[#556754] leading-relaxed">
+              <p className="text-[10px] text-[#556754] leading-relaxed">
                 Monitor your learning journey and achieve your goals.
               </p>
             </div>
@@ -381,21 +406,21 @@ export default function MobileGurukulView() {
         </div>
       </section>
 
-      {/* 5. "START YOUR LEARNING JOURNEY" CTA CARD */}
+      {/* ================= 5. "START YOUR LEARNING JOURNEY" CTA CARD ================= */}
       <section className="px-4 py-4">
-        <div className="max-w-sm mx-auto rounded-3xl bg-[#F0EAD8] border border-[#DDD3BC] p-5 relative overflow-hidden shadow-xs">
+        <div className="max-w-xs sm:max-w-sm mx-auto rounded-3xl bg-[#F0EAD8] border border-[#DDD3BC] p-5 relative overflow-hidden shadow-xs">
           
           <div className="relative z-10 max-w-[62%] space-y-2">
-            <h3 className="font-serif text-base font-black text-[#1A2E1D] leading-snug">
+            <h3 style={{ fontFamily: "'Playfair Display', serif" }} className="text-base font-bold text-[#1A2E1D] leading-snug">
               Start Your Learning Journey
             </h3>
-            <p className="font-sans text-[10px] text-[#4E624A] leading-relaxed">
+            <p className="text-[10px] text-[#4E624A] leading-relaxed">
               Join thousands of learners and unlock the power of ancient wisdom with modern education.
             </p>
             <div className="pt-1.5">
               <Link
                 to="/courses"
-                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#4E5E3D] hover:bg-[#3D4D2E] text-white font-serif text-xs font-bold shadow-md active:scale-95 transition-all"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-[#4E5E3D] hover:bg-[#3D4D2E] text-white text-xs font-bold shadow-md active:scale-95 transition-all"
               >
                 <span>Get Started Now</span>
                 <ArrowRight size={12} />
@@ -403,10 +428,10 @@ export default function MobileGurukulView() {
             </div>
           </div>
 
-          {/* Right Mortar & Herbs Artwork */}
-          <div className="absolute -right-3 -bottom-3 w-32 h-32 pointer-events-none opacity-90">
+          {/* Right Mortar & Herbs Artwork from Reference Image */}
+          <div className="absolute -right-2 -bottom-2 w-32 h-32 pointer-events-none opacity-95">
             <img
-              src="/images/mortar_pestle.png"
+              src="/images/cta_mortar_herbs.png"
               alt="Herbs"
               className="w-full h-full object-contain filter drop-shadow-sm"
             />
@@ -415,16 +440,16 @@ export default function MobileGurukulView() {
         </div>
       </section>
 
-      {/* 6. TESTIMONIAL CARD */}
+      {/* ================= 6. TESTIMONIAL CARD ================= */}
       <section className="px-4 py-4">
-        <div className="max-w-sm mx-auto bg-white rounded-3xl p-5 border border-[#E6DFC9] shadow-xs relative">
+        <div className="max-w-xs sm:max-w-sm mx-auto bg-white rounded-3xl p-5 border border-[#E8E2D0] shadow-xs relative">
           
           {/* Quote Symbol */}
           <span className="text-[#B28228] font-serif text-2xl font-black block leading-none mb-1.5">
             ❝
           </span>
 
-          <p className="font-serif text-xs text-[#2A3E2C] leading-relaxed font-medium mb-2.5">
+          <p style={{ fontFamily: "'Playfair Display', serif" }} className="text-xs text-[#2A3E2C] leading-relaxed font-normal mb-2.5">
             Gurukul made learning Ayurveda so interesting and easy through comics. Highly recommended!
           </p>
 
@@ -433,24 +458,28 @@ export default function MobileGurukulView() {
             ★★★★★
           </div>
 
-          {/* Student Info & Avatar */}
+          {/* Student Info & Avatar from Ref Image */}
           <div className="flex items-center justify-between pt-2 border-t border-[#F2ECE0]">
             <div>
-              <p className="font-serif text-[11px] font-bold text-[#1A2E1D]">
+              <p className="text-[11px] font-bold text-[#1A2E1D]">
                 — Aarav Sharma, Student
               </p>
             </div>
             <div className="w-8 h-8 rounded-full overflow-hidden border border-[#A5BD96]">
-              <img src="/images/student_avatar.png" alt="Aarav Sharma" className="w-full h-full object-cover" />
+              <img 
+                src="/images/student_avatar.png" 
+                alt="Aarav Sharma" 
+                className="w-full h-full object-cover" 
+              />
             </div>
           </div>
 
         </div>
       </section>
 
-      {/* 7. "STAY CONNECTED" SOCIAL MEDIA ICONS */}
+      {/* ================= 7. "STAY CONNECTED" SOCIAL MEDIA ICONS ================= */}
       <section className="px-4 py-6 text-center">
-        <h4 className="font-serif text-sm font-bold text-[#2A3E2C] mb-3.5">
+        <h4 style={{ fontFamily: "'Playfair Display', serif" }} className="text-sm font-bold text-[#2A3E2C] mb-3.5">
           Stay Connected
         </h4>
 
@@ -460,7 +489,7 @@ export default function MobileGurukulView() {
             href="https://youtube.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-10 h-10 rounded-full bg-white border border-[#E6DFC9] shadow-sm flex items-center justify-center text-[#FF0000] active:scale-95 transition-transform"
+            className="w-10 h-10 rounded-full bg-white border border-[#E8E2D0] shadow-sm flex items-center justify-center text-[#FF0000] active:scale-95 transition-transform"
             aria-label="YouTube"
           >
             <span className="font-bold text-base">▶</span>
@@ -471,7 +500,7 @@ export default function MobileGurukulView() {
             href="https://telegram.org"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-10 h-10 rounded-full bg-white border border-[#E6DFC9] shadow-sm flex items-center justify-center text-[#0088CC] active:scale-95 transition-transform"
+            className="w-10 h-10 rounded-full bg-white border border-[#E8E2D0] shadow-sm flex items-center justify-center text-[#0088CC] active:scale-95 transition-transform"
             aria-label="Telegram"
           >
             <span className="font-bold text-sm">✈</span>
@@ -482,7 +511,7 @@ export default function MobileGurukulView() {
             href="https://instagram.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-10 h-10 rounded-full bg-white border border-[#E6DFC9] shadow-sm flex items-center justify-center text-[#E1306C] active:scale-95 transition-transform"
+            className="w-10 h-10 rounded-full bg-white border border-[#E8E2D0] shadow-sm flex items-center justify-center text-[#E1306C] active:scale-95 transition-transform"
             aria-label="Instagram"
           >
             <span className="font-bold text-base">📸</span>
@@ -493,7 +522,7 @@ export default function MobileGurukulView() {
             href="https://facebook.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-10 h-10 rounded-full bg-white border border-[#E6DFC9] shadow-sm flex items-center justify-center text-[#1877F2] active:scale-95 transition-transform"
+            className="w-10 h-10 rounded-full bg-white border border-[#E8E2D0] shadow-sm flex items-center justify-center text-[#1877F2] active:scale-95 transition-transform"
             aria-label="Facebook"
           >
             <span className="font-bold text-base">f</span>
@@ -501,30 +530,31 @@ export default function MobileGurukulView() {
         </div>
       </section>
 
-      {/* 8. FOOTER WITH ACCORDIONS */}
+      {/* ================= 8. FOOTER WITH ACCORDIONS ================= */}
       <footer className="px-4 pt-5 pb-6 border-t border-[#E8E2D2] text-center">
         
         {/* Brand */}
         <div className="flex items-center justify-center gap-2 mb-5">
           <img src="/images/gurukul_logo.png" alt="Logo" className="w-8 h-8 object-contain" />
           <div className="text-left">
-            <h4 className="font-serif text-lg font-black text-[#1F3322] leading-none">
+            <h4 style={{ fontFamily: "'Cinzel', serif" }} className="text-lg font-bold text-[#1F3322] leading-none">
               GURUKUL
             </h4>
-            <p className="font-serif text-[10px] text-[#556950] font-medium">
-              Powered by <span className="font-bold text-[#3A5038]">Educa Veda</span>
+            <p style={{ fontFamily: "'Playfair Display', serif" }} className="text-[10px] text-[#556950] font-normal">
+              Powered by <span className="font-semibold text-[#3A5038]">Educa Veda</span>
             </p>
           </div>
         </div>
 
         {/* Accordions */}
-        <div className="max-w-sm mx-auto space-y-1.5 mb-6 text-left">
+        <div className="max-w-xs sm:max-w-sm mx-auto space-y-1.5 mb-6 text-left">
           
           {/* Quick Links */}
           <div className="border-b border-[#E8E2D2] pb-1.5">
             <button
               onClick={() => toggleAccordion("quick")}
-              className="w-full flex items-center justify-between font-serif text-xs font-bold text-[#1A2E1D] py-1"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+              className="w-full flex items-center justify-between text-xs font-bold text-[#1A2E1D] py-1"
             >
               <span>Quick Links</span>
               {openAccordion === "quick" ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -542,7 +572,8 @@ export default function MobileGurukulView() {
           <div className="border-b border-[#E8E2D2] pb-1.5">
             <button
               onClick={() => toggleAccordion("resources")}
-              className="w-full flex items-center justify-between font-serif text-xs font-bold text-[#1A2E1D] py-1"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+              className="w-full flex items-center justify-between text-xs font-bold text-[#1A2E1D] py-1"
             >
               <span>Resources</span>
               {openAccordion === "resources" ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -559,7 +590,8 @@ export default function MobileGurukulView() {
           <div className="border-b border-[#E8E2D2] pb-1.5">
             <button
               onClick={() => toggleAccordion("company")}
-              className="w-full flex items-center justify-between font-serif text-xs font-bold text-[#1A2E1D] py-1"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+              className="w-full flex items-center justify-between text-xs font-bold text-[#1A2E1D] py-1"
             >
               <span>Company</span>
               {openAccordion === "company" ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -576,7 +608,8 @@ export default function MobileGurukulView() {
           <div className="border-b border-[#E8E2D2] pb-1.5">
             <button
               onClick={() => toggleAccordion("support")}
-              className="w-full flex items-center justify-between font-serif text-xs font-bold text-[#1A2E1D] py-1"
+              style={{ fontFamily: "'Playfair Display', serif" }}
+              className="w-full flex items-center justify-between text-xs font-bold text-[#1A2E1D] py-1"
             >
               <span>Support</span>
               {openAccordion === "support" ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
@@ -592,7 +625,7 @@ export default function MobileGurukulView() {
         </div>
 
         {/* Copyright & Legal */}
-        <p className="font-sans text-[10px] text-[#7A8A78] mb-1">
+        <p className="text-[10px] text-[#7A8A78] mb-1">
           © 2025 Gurukul. All Rights Reserved.
         </p>
         <div className="flex items-center justify-center gap-3 text-[10px] text-[#7A8A78]">
