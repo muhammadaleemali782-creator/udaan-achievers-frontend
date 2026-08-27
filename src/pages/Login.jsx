@@ -36,6 +36,27 @@ function StudentPanel({ me, onLogout }) {
           </button>
         </div>
       </div>
+
+      <p className="font-body text-sm font-medium mb-4 text-charcoal">Your enrolled courses</p>
+      {!me.enrolledCourses || me.enrolledCourses.length === 0 ? (
+        <div className="rounded-xl p-8 text-center bg-white border border-paperDark">
+          <p className="font-body text-sm text-muted mb-4">Tumne abhi tak koi course enroll nahi kiya.</p>
+          <button onClick={() => navigate("/courses")} className="font-body text-sm font-medium px-5 py-2.5 rounded-full bg-ink text-white">Courses dekho</button>
+        </div>
+      ) : (
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {me.enrolledCourses.map((c) => (
+            <div key={c._id} className="rounded-xl overflow-hidden bg-white border border-paperDark">
+              <div className="h-24 flex items-center justify-center bg-ink">
+                <FileVideo size={26} className="text-emerald-400" />
+              </div>
+              <div className="p-4">
+                <p className="font-display text-sm mb-3 text-charcoal">{c.name}</p>
+                <button onClick={() => navigate(`/lecture/${c._id}`)} className="font-body text-xs font-medium px-4 py-2 rounded-full w-full bg-ink text-white">
+                  Resume lecture
+                </button>
+              </div>
+            </div>
           ))}
         </div>
       )}
@@ -44,7 +65,7 @@ function StudentPanel({ me, onLogout }) {
 }
 
 export default function Login() {
-  const [view, setView] = useState("login"); // login | signup | forgot
+  const [view, setView] = useState("login");
   const [form, setForm] = useState({ studentId: "", password: "", email: "", name: "" });
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
@@ -66,24 +87,21 @@ export default function Login() {
     }
   };
 
-  const handleAuthResponse = (data) => {
-    if (data.role === "admin") {
-      localStorage.setItem("admin_token", data.token);
-      setAdminAuthed(true);
-    } else {
-      localStorage.setItem("student_token", data.token);
-      fetchMe();
-    }
-  };
-
   const login = async (e) => {
     e.preventDefault();
-    setError(""); setNotice(""); setLoading(true);
+    setError("");
+    setLoading(true);
     try {
-      const res = await api.post("/auth/login", { studentId: form.studentId.trim(), password: form.password });
-      handleAuthResponse(res.data);
+      const res = await api.post("/auth/login", { studentId: form.studentId, password: form.password });
+      if (res.data.role === "admin") {
+        localStorage.setItem("admin_token", res.data.token);
+        setAdminAuthed(true);
+      } else {
+        localStorage.setItem("student_token", res.data.token);
+        fetchMe();
+      }
     } catch (err) {
-      setError(err.response?.data?.error || "Login nahi ho paya");
+      setError(err.response?.data?.error || "Galat ID ya password");
     } finally {
       setLoading(false);
     }
@@ -91,17 +109,14 @@ export default function Login() {
 
   const signup = async (e) => {
     e.preventDefault();
-    setError(""); setNotice(""); setLoading(true);
+    setError("");
+    setLoading(true);
     try {
-      const res = await api.post("/auth/signup", {
-        studentId: form.studentId.trim(),
-        password: form.password,
-        email: form.email.trim(),
-        name: form.name.trim(),
-      });
-      handleAuthResponse(res.data);
+      const res = await api.post("/auth/signup", form);
+      localStorage.setItem("student_token", res.data.token);
+      fetchMe();
     } catch (err) {
-      setError(err.response?.data?.error || "Account nahi ban paya");
+      setError(err.response?.data?.error || "Account nahi ban paya, dubara try karo");
     } finally {
       setLoading(false);
     }
@@ -109,10 +124,12 @@ export default function Login() {
 
   const forgot = async (e) => {
     e.preventDefault();
-    setError(""); setNotice(""); setLoading(true);
+    setError("");
+    setNotice("");
+    setLoading(true);
     try {
-      await api.post("/auth/forgot-password", { email: form.email.trim() });
-      setNotice("Agar ye email registered hai, to reset link bhej diya gaya hai. Apna inbox check karo.");
+      await api.post("/auth/forgot-password", { email: form.email });
+      setNotice("Password reset link bhej diya gaya hai. Apna email ya EDUCA Mailbox check karo.");
     } catch (err) {
       setError(err.response?.data?.error || "Kuch galat ho gaya");
     } finally {
@@ -164,7 +181,7 @@ export default function Login() {
 
           {view === "login" && (
             <form onSubmit={login} className="flex flex-col gap-3">
-              <input required placeholder="ID" value={form.studentId} onChange={(e) => setForm({ ...form, studentId: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
+              <input required placeholder="ID / Username" value={form.studentId} onChange={(e) => setForm({ ...form, studentId: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
               <input required type="password" placeholder="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
               {error && <p className="font-body text-xs text-red-600">{error}</p>}
               <LoadingButton type="submit" loading={loading} className="w-full font-body font-medium py-3 rounded-full bg-ink text-white">Log in</LoadingButton>
@@ -178,8 +195,8 @@ export default function Login() {
           {view === "signup" && (
             <form onSubmit={signup} className="flex flex-col gap-3">
               <input required placeholder="Naam" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
-              <input required placeholder="Naya ID chuno" value={form.studentId} onChange={(e) => setForm({ ...form, studentId: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
-              <input required type="email" placeholder="Email (password reset ke liye)" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
+              <input required placeholder="Naya ID chuno (eg: STU101)" value={form.studentId} onChange={(e) => setForm({ ...form, studentId: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
+              <input type="email" placeholder="Recovery Email (Optional)" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
               <input required type="password" placeholder="Password banao" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} className="w-full font-body text-sm px-4 py-3 rounded-lg outline-none border border-paperDark focus:border-ink" />
               {error && <p className="font-body text-xs text-red-600">{error}</p>}
               <LoadingButton type="submit" loading={loading} className="w-full font-body font-medium py-3 rounded-full bg-ink text-white">Account banao</LoadingButton>
