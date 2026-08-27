@@ -189,7 +189,9 @@ const TESTIMONIALS = [
 
 export default function Home() {
   return (
-    <div className="space-y-20 pb-20 overflow-hidden font-sans">
+    <>
+      <MobileGurukulView />
+      <div className="hidden md:block space-y-20 pb-20 overflow-hidden font-sans">
 
       {/* 1. HERO SECTION */}
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white pt-12 pb-20 px-4 sm:px-6 lg:px-8 border-b border-emerald-900/40">
