@@ -1,68 +1,80 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, Smartphone } from "lucide-react";
 
-export default function Footer({ contact }) {
-  const c = contact || { phone: "+91 98765 43210", email: "admissions@udaanachievers.com", address: "Kareli, Prayagraj, Uttar Pradesh, India" };
-
+export default function Footer() {
   return (
-    <footer className="bg-white border-t border-slate-200/80 pt-16 pb-12 text-slate-600">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          <div className="space-y-4">
-            <Link to="/" className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-cyan-500 rounded-lg flex items-center justify-center text-white font-black text-lg">U</div>
-              <h2 className="font-bold text-slate-900 text-base">UDAAN ACHIEVERS</h2>
-            </Link>
-            <p className="text-xs text-slate-500 leading-relaxed">
-              Redefining competitive examination prep through dimensional consistency, acoustic language training, and active mentorship. Your AIR is our mission.
+    <footer className="bg-slate-950 text-white border-t border-slate-800 pt-14 pb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+          
+          {/* Brand Col */}
+          <div className="space-y-4 md:col-span-2">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-xl">
+                🪔
+              </div>
+              <div>
+                <span className="font-display font-black text-2xl tracking-tight text-white">
+                  GURUKUL
+                </span>
+                <p className="font-mono text-xs text-emerald-400 font-bold tracking-wider uppercase">
+                  Powered by Educa Veda
+                </p>
+              </div>
+            </div>
+            <p className="text-slate-400 text-xs sm:text-sm max-w-md leading-relaxed">
+              Official institute for WCNA (Wellness Consultancy of Naturopathy &amp; Ayurveda) education. Empowering students with 10 comic-illustrated curriculum books, clinical internships, and professional certification.
             </p>
-            <div className="space-y-2 text-xs font-semibold text-slate-700">
-              <p className="flex items-center gap-2"><Phone size={14} className="text-cyan-600" /> {c.phone}</p>
-              <p className="flex items-center gap-2"><Mail size={14} className="text-cyan-600" /> {c.email}</p>
-              <p className="flex items-center gap-2"><MapPin size={14} className="text-cyan-600" /> {c.address}</p>
+            <div className="flex items-center gap-3 pt-2">
+              <span className="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-emerald-400 text-xs font-bold">
+                ✓ 18-Month WCNA Program
+              </span>
+              <span className="px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-emerald-400 text-xs font-bold">
+                ✓ 10 Study Manuals
+              </span>
             </div>
           </div>
 
+          {/* Quick Links */}
           <div className="space-y-3">
-            <h4 className="font-bold text-slate-900 text-xs uppercase tracking-wider">PROGRAMS</h4>
-            <ul className="space-y-2 text-xs font-medium text-slate-600">
-              <li><Link to="/courses?cat=JEE" className="hover:text-cyan-600">JEE Main & Adv</Link></li>
-              <li><Link to="/courses?cat=NEET" className="hover:text-cyan-600">NEET UG Medical</Link></li>
-              <li><Link to="/contact" className="hover:text-cyan-600">Spoken English Studio</Link></li>
-              <li><Link to="/courses?cat=Foundation" className="hover:text-cyan-600">Early Foundation (8–10)</Link></li>
-              <li><Link to="/courses" className="hover:text-cyan-600">Ranker Dropper Batch</Link></li>
+            <h4 className="font-mono text-xs font-bold text-slate-300 uppercase tracking-wider">
+              Curriculum &amp; Books
+            </h4>
+            <ul className="space-y-2 text-xs text-slate-400">
+              <li><Link to="/courses" className="hover:text-emerald-400 transition-colors">WCNA Master Course</Link></li>
+              <li><Link to="/courses" className="hover:text-emerald-400 transition-colors">Book 1: Wellness Coaching</Link></li>
+              <li><Link to="/courses" className="hover:text-emerald-400 transition-colors">Book 2: Naturopathy Basics</Link></li>
+              <li><Link to="/courses" className="hover:text-emerald-400 transition-colors">Book 3: Ayurveda Basics</Link></li>
+              <li><Link to="/courses" className="hover:text-emerald-400 transition-colors">Book 8: Managing Diseases</Link></li>
+              <li><Link to="/courses" className="hover:text-emerald-400 transition-colors">Book 10: Client Communication</Link></li>
             </ul>
           </div>
 
+          {/* Institutional Links */}
           <div className="space-y-3">
-            <h4 className="font-bold text-slate-900 text-xs uppercase tracking-wider">METHODOLOGY & CENTERS</h4>
-            <ul className="space-y-2 text-xs font-medium text-slate-600">
-              <li><Link to="/#journey" className="hover:text-cyan-600">3D Learning Sandbox</Link></li>
-              <li><Link to="/contact" className="hover:text-cyan-600">24/7 Doubt Matrix</Link></li>
-              <li><Link to="/contact" className="hover:text-cyan-600">National Scholarship Test</Link></li>
-              <li><Link to="/contact" className="hover:text-cyan-600">Offline Smart Hubs</Link></li>
-              <li><Link to="/contact" className="hover:text-cyan-600">Careers for Mentors</Link></li>
+            <h4 className="font-mono text-xs font-bold text-slate-300 uppercase tracking-wider">
+              Student Portals
+            </h4>
+            <ul className="space-y-2 text-xs text-slate-400">
+              <li><Link to="/login" className="hover:text-emerald-400 transition-colors">Student Login &amp; Signup</Link></li>
+              <li><a href="https://messages-frontend-brown.vercel.app" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 transition-colors">EDUCA Mailbox Login ↗</a></li>
+              <li><Link to="/about" className="hover:text-emerald-400 transition-colors">About Faculty &amp; Mentors</Link></li>
+              <li><Link to="/contact" className="hover:text-emerald-400 transition-colors">Admissions &amp; Support</Link></li>
+              <li><Link to="/privacy" className="hover:text-emerald-400 transition-colors">Privacy Policy</Link></li>
+              <li><Link to="/terms" className="hover:text-emerald-400 transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
 
-          <div className="space-y-3">
-            <h4 className="font-bold text-slate-900 text-xs uppercase tracking-wider">DIGITAL ECOSYSTEM</h4>
-            <p className="text-xs text-slate-500">Download the Udaan Achievers app on iOS and Android for live lecture access and analytics.</p>
-            <Link to="/contact" className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs font-bold text-slate-800 flex items-center gap-2">
-              <Smartphone size={20} className="text-cyan-600" /> AVAILABLE ON <br /> iOS & Google Play
-            </Link>
-          </div>
         </div>
 
-        <div className="pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-4">
-          <p>© 2026 Udaan Achievers. Built for Top Ranks & Confident Voices.</p>
-          <div className="flex gap-6 font-medium">
-            <Link to="/privacy" className="hover:text-slate-600">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-slate-600">Terms of Admission</Link>
-            <Link to="/refund" className="hover:text-slate-600">Refund Guarantee</Link>
-          </div>
+        <div className="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+          <p>© 2026 GURUKUL · Powered by EDUCA VEDA. All Rights Reserved.</p>
+          <p className="font-mono text-[11px] text-emerald-500 font-semibold">
+            Empower Yourself · Heal Others · Create Impact
+          </p>
         </div>
+
       </div>
     </footer>
   );
