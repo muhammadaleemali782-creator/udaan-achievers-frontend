@@ -65,7 +65,7 @@ function StudentPanel({ me, onLogout }) {
 }
 
 export default function Login() {
-  const [view, setView] = useState("login");
+  const [view, setView] = useState("login"); // gurukul-build-v3
   const [form, setForm] = useState({ studentId: "", password: "", email: "", name: "" });
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
