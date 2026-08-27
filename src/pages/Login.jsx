@@ -7,39 +7,35 @@ import LoadingButton from "../components/LoadingButton";
 
 function StudentPanel({ me, onLogout }) {
   const navigate = useNavigate();
+  const officialMail = me.educaEmail || `${me.studentId}@educaveda.com`;
+
   return (
     <div>
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
         <div>
           <p className="font-mono text-xs text-tealDark">WELCOME BACK</p>
           <h1 className="font-display text-3xl md:text-4xl text-charcoal">{me.name}</h1>
-          <p className="font-mono text-xs text-muted mt-1">ID: {me.studentId}</p>
+          <div className="flex flex-wrap items-center gap-3 mt-2">
+            <span className="font-mono text-xs text-muted">ID: {me.studentId}</span>
+            <span className="font-mono text-xs px-2.5 py-0.5 rounded-full bg-tealDark/10 text-tealDark font-semibold">
+              📬 {officialMail}
+            </span>
+          </div>
         </div>
-        <button onClick={onLogout} className="font-body text-sm flex items-center gap-1 px-4 py-2 rounded-full border border-paperDark text-charcoal">
-          <LogOut size={14} /> Log out
-        </button>
+        <div className="flex items-center gap-2">
+          <a 
+            href="https://messages-frontend-brown.vercel.app" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="font-body text-xs font-semibold flex items-center gap-1.5 px-4 py-2 rounded-full bg-ink text-white shadow-sm hover:opacity-90"
+          >
+            📬 Open Mailbox ↗
+          </a>
+          <button onClick={onLogout} className="font-body text-xs flex items-center gap-1 px-4 py-2 rounded-full border border-paperDark text-charcoal hover:bg-paperDark">
+            <LogOut size={13} /> Log out
+          </button>
+        </div>
       </div>
-
-      <p className="font-body text-sm font-medium mb-4 text-charcoal">Your courses</p>
-      {!me.enrolledCourses || me.enrolledCourses.length === 0 ? (
-        <div className="rounded-xl p-8 text-center bg-white border border-paperDark">
-          <p className="font-body text-sm text-muted mb-4">Tumne abhi tak koi course enroll nahi kiya.</p>
-          <button onClick={() => navigate("/courses")} className="font-body text-sm font-medium px-5 py-2.5 rounded-full bg-ink text-white">Courses dekho</button>
-        </div>
-      ) : (
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {me.enrolledCourses.map((c) => (
-            <div key={c._id} className="rounded-xl overflow-hidden bg-white border border-paperDark">
-              <div className="h-24 flex items-center justify-center bg-ink">
-                <FileVideo size={26} className="text-saffron" />
-              </div>
-              <div className="p-4">
-                <p className="font-display text-sm mb-3 text-charcoal">{c.name}</p>
-                <button onClick={() => navigate(`/lecture/${c._id}`)} className="font-body text-xs font-medium px-4 py-2 rounded-full w-full bg-ink text-white">
-                  Resume lecture
-                </button>
-              </div>
-            </div>
           ))}
         </div>
       )}
