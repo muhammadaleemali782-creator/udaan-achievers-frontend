@@ -1,3 +1,4 @@
+import MobileGurukulView from "../components/MobileGurukulView";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -424,5 +425,6 @@ export default function Home() {
       </section>
 
     </div>
+    </>
   );
 }
