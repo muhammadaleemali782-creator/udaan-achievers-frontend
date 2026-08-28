@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
-  Menu, X, Bell, ChevronLeft, ChevronRight, ArrowRight, ExternalLink
+  Menu, X, Bell, ChevronLeft, ChevronRight, ExternalLink
 } from "lucide-react";
 
 export default function MobileGurukulView() {
   const [activeBookIdx, setActiveBookIdx] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const books = [
     {
@@ -44,10 +45,10 @@ export default function MobileGurukulView() {
   };
 
   return (
-    <div className="md:hidden min-h-screen bg-[#FBF9F4] text-[#223525] font-sans antialiased select-none pb-12">
+    <div className="md:hidden min-h-screen bg-[#FBFAF6] text-[#223525] font-sans antialiased select-none pb-12">
       
-      {/* ================= 1. TOP STATUS & NAV BAR ================= */}
-      <header className="sticky top-0 z-50 bg-[#FBF9F4]/98 backdrop-blur-md border-b border-[#EAE3D2] px-4 py-3 flex items-center justify-between">
+      {/* ================= 1. TOP STATUS & NAV BAR (SEAMLESS - NO BORDER) ================= */}
+      <header className="sticky top-0 z-50 bg-[#FBFAF6] px-4 pt-3 pb-1 flex items-center justify-between border-none shadow-none">
         {/* Left: Clean Hamburger Menu Icon */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
@@ -72,13 +73,13 @@ export default function MobileGurukulView() {
           aria-label="Notifications"
         >
           <Bell size={22} />
-          <span className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-[#E57A24] ring-2 ring-[#FBF9F4]"></span>
+          <span className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-[#E57A24] ring-2 ring-[#FBFAF6]"></span>
         </button>
       </header>
 
       {/* Drawer Menu */}
       {menuOpen && (
-        <div className="bg-[#FBF9F4] border-b border-[#EAE3D2] px-5 py-5 space-y-3.5 animate-fadeIn shadow-lg">
+        <div className="bg-[#FBFAF6] border-b border-[#EAE3D2] px-5 py-5 space-y-3.5 animate-fadeIn shadow-lg">
           <Link
             to="/courses"
             onClick={() => setMenuOpen(false)}
@@ -106,37 +107,35 @@ export default function MobileGurukulView() {
         </div>
       )}
 
-      {/* ================= 2. HERO SECTION (FULL-BLEED BOTANICAL ARTWORK) ================= */}
+      {/* ================= 2. SEAMLESS HERO + 5-FEATURE SECTION (ZERO SEAMS, ZERO CUTS) ================= */}
       <section className="relative w-full overflow-hidden">
-        {/* Full-Bleed Rich Botanical Manuscript Banner from Mockup */}
         <div className="w-full relative">
           <img
-            src="/images/hero_full_banner.jpg"
-            alt="Ancient Wisdom Modern Education - GURUKUL"
+            src="/images/hero_seamless_section.jpg"
+            alt="Ancient Wisdom Modern Education - GURUKUL with Feature Cards"
             className="w-full h-auto object-cover block"
           />
-          {/* Clickable Overlay on 'Explore Books' button inside banner */}
+
+          {/* Interactive Clickable Hotspot: 'Explore Books' Button */}
           <Link
             to="/courses"
-            className="absolute bottom-4 left-1/2 -translate-x-1/2 w-44 h-10 rounded-full opacity-0 cursor-pointer"
+            className="absolute top-[65%] left-1/2 -translate-x-1/2 w-44 h-10 rounded-full cursor-pointer z-10"
             aria-label="Explore Books"
           />
+
+          {/* Interactive Clickable Hotspots: 5 Feature Badges in the Floating Bar */}
+          <div className="absolute bottom-[2%] left-0 right-0 h-[18%] flex z-10">
+            <button onClick={() => navigate("/courses")} className="flex-1 cursor-pointer" aria-label="Mentorship" />
+            <button onClick={() => navigate("/courses")} className="flex-1 cursor-pointer" aria-label="Study Material" />
+            <button onClick={() => navigate("/courses")} className="flex-1 cursor-pointer" aria-label="Test Series" />
+            <button onClick={() => navigate("/login")} className="flex-1 cursor-pointer" aria-label="Progress" />
+            <button onClick={() => navigate("/about")} className="flex-1 cursor-pointer" aria-label="Certificate" />
+          </div>
         </div>
       </section>
 
-      {/* ================= 3. 5-FEATURE FLOATING BAR ================= */}
-      <section className="px-3.5 -mt-3 relative z-20">
-        <div className="rounded-2xl overflow-hidden shadow-sm border border-[#E8E2D0] bg-white">
-          <img
-            src="/images/five_features_bar.jpg"
-            alt="Mentorship · Study Material · Test Series · Progress · Certificate"
-            className="w-full h-auto object-cover block"
-          />
-        </div>
-      </section>
-
-      {/* ================= 4. "EXPLORE OUR BOOKS" HORIZONTAL CAROUSEL ================= */}
-      <section className="px-3 pt-6 pb-4 text-center overflow-hidden">
+      {/* ================= 3. "EXPLORE OUR BOOKS" NUMBERED COMIC CAROUSEL ================= */}
+      <section className="px-3 pt-5 pb-4 text-center overflow-hidden">
         
         {/* Section Heading with Leaf Ornaments */}
         <div className="flex items-center justify-center gap-2 mb-0.5">
@@ -228,11 +227,11 @@ export default function MobileGurukulView() {
 
       </section>
 
-      {/* ================= 5. "WHY GURUKUL?" SECTION (4 CARDS ROW) ================= */}
-      <section className="px-3 pt-4 pb-6">
+      {/* ================= 4. "WHY GURUKUL?" SECTION ================= */}
+      <section className="px-3 pt-3 pb-6">
         <div className="rounded-2xl overflow-hidden shadow-xs border border-[#E8E2D0] bg-white">
           <img
-            src="/images/why_gurukul_cards.jpg"
+            src="/images/why_gurukul_section.jpg"
             alt="Why Gurukul? Ayurvedic Wisdom · Interactive Learning · Test & Improve · Track Your Progress"
             className="w-full h-auto object-cover block"
           />
