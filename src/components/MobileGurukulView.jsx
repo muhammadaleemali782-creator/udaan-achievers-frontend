@@ -60,7 +60,7 @@ export default function MobileGurukulView() {
   return (
     <div className="md:hidden min-h-screen bg-[#FBFAF6] text-[#223525] font-sans antialiased select-none pb-10">
       
-      {/* ================= 1. 3X ULTRA-HD BOTANICAL HEADER & HERO & 5-FEATURE BAR ================= */}
+      {/* ================= 1. CLEAN BOTANICAL HEADER & HERO & 5-FEATURE BAR ================= */}
       <section className="relative w-full overflow-hidden">
         <div className="w-full relative">
           <img
@@ -93,12 +93,12 @@ export default function MobileGurukulView() {
           {/* Touch Hotspot: 'Explore Books' Button */}
           <Link
             to="/courses"
-            className="absolute top-[62%] left-1/2 -translate-x-1/2 w-44 h-11 rounded-full cursor-pointer z-20"
+            className="absolute top-[68%] left-1/2 -translate-x-1/2 w-44 h-11 rounded-full cursor-pointer z-20"
             aria-label="Explore Books"
           />
 
           {/* Touch Hotspots: 5 Feature Badges */}
-          <div className="absolute bottom-[1.5%] left-0 right-0 h-[18%] flex z-20">
+          <div className="absolute bottom-[2%] left-0 right-0 h-[20%] flex z-20">
             <button onClick={() => navigate("/courses")} className="flex-1 cursor-pointer" aria-label="Mentorship" />
             <button onClick={() => navigate("/courses")} className="flex-1 cursor-pointer" aria-label="Study Material" />
             <button onClick={() => navigate("/courses")} className="flex-1 cursor-pointer" aria-label="Test Series" />
@@ -143,7 +143,7 @@ export default function MobileGurukulView() {
       )}
 
       {/* ================= 2. "EXPLORE OUR BOOKS" HORIZONTAL CAROUSEL ================= */}
-      <section className="pt-4 pb-3 text-center overflow-hidden">
+      <section className="pt-5 pb-3 text-center overflow-hidden">
         
         {/* Section Heading with Leaf Ornaments */}
         <div className="flex items-center justify-center gap-2 mb-0.5 px-4">
@@ -242,7 +242,7 @@ export default function MobileGurukulView() {
 
       </section>
 
-      {/* ================= 3. "WHY GURUKUL?" 4 CRISP CARDS ================= */}
+      {/* ================= 3. "WHY GURUKUL?" 4 CARDS SECTION ================= */}
       <section className="pt-2 pb-6 px-3">
         <div
           className="flex items-center gap-2.5 overflow-x-auto scrollbar-none py-2 px-1"
