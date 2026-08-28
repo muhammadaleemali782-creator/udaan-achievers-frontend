@@ -98,7 +98,6 @@ export default function MobileGurukulView() {
 
         {/* Center: Brand Logo + Typography */}
         <Link to="/" className="flex items-center gap-2">
-          {/* Botanical Lotus Emblem */}
           <div className="w-8 h-8 flex items-center justify-center">
             <span className="text-2xl leading-none">🪔</span>
           </div>
@@ -157,15 +156,18 @@ export default function MobileGurukulView() {
         </div>
       )}
 
-      {/* ================= 2. HERO SECTION WITH REAL CRISP TYPOGRAPHY ================= */}
-      <section className="relative px-4 pt-4 pb-4 text-center overflow-hidden">
+      {/* ================= 2. HERO SECTION (RICH BOTANICAL ARTWORK + CRISP VECTOR TYPOGRAPHY) ================= */}
+      <section className="relative px-4 pt-3 pb-4 text-center overflow-hidden">
         
-        {/* Real Sanskrit & Botanical Background Graphic */}
-        <div className="absolute inset-0 z-0 opacity-20 pointer-events-none bg-[radial-gradient(#385238_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        {/* Botanical Artwork Background */}
+        <div 
+          className="absolute inset-0 z-0 bg-contain bg-no-repeat bg-center opacity-30 pointer-events-none"
+          style={{ backgroundImage: "url('/images/botanical_hero_art.jpg')" }}
+        />
 
         <div className="relative z-10">
           {/* Ancient Wisdom. Modern Education. */}
-          <p style={{ fontFamily: "'Playfair Display', serif" }} className="italic text-xs text-[#7A5B3E] font-bold tracking-wide mb-1">
+          <p style={{ fontFamily: "'Playfair Display', serif" }} className="italic text-xs sm:text-sm text-[#7A5B3E] font-bold tracking-wide mb-1">
             Ancient Wisdom. Modern Education.
           </p>
 
@@ -182,7 +184,7 @@ export default function MobileGurukulView() {
           </div>
 
           {/* Description */}
-          <p className="text-xs text-[#485C46] max-w-xs mx-auto leading-relaxed mb-4 font-normal">
+          <p className="text-xs text-[#3D523C] max-w-xs mx-auto leading-relaxed mb-4 font-medium">
             A complete learning platform that blends the timeless knowledge of Ayurveda with modern education and technology.
           </p>
 
@@ -196,8 +198,8 @@ export default function MobileGurukulView() {
           </Link>
         </div>
 
-        {/* 5-Feature Floating Bar (Crisp Native React Card with SVG Icons) */}
-        <div className="relative z-20 mt-2 max-w-sm mx-auto bg-white/98 rounded-2xl p-2.5 border border-[#E6E0CF] shadow-xs flex items-center justify-between">
+        {/* 5-Feature Floating Bar (Crisp Native React Card with Vector SVG Icons) */}
+        <div className="relative z-20 mt-1 max-w-sm mx-auto bg-white rounded-2xl p-2.5 border border-[#E6E0CF] shadow-sm flex items-center justify-between">
           
           <button onClick={() => navigate("/courses")} className="flex-1 flex flex-col items-center gap-1 text-center cursor-pointer active:scale-95 transition-transform">
             <div className="w-7 h-7 rounded-full bg-[#EEF5E8] flex items-center justify-center text-[#3B6632]">
