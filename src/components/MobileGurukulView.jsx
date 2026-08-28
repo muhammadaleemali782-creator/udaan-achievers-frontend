@@ -83,10 +83,10 @@ export default function MobileGurukulView() {
   };
 
   return (
-    <div className="md:hidden min-h-screen bg-[#FBFAF6] text-[#223525] font-sans antialiased select-none pb-12">
+    <div className="md:hidden min-h-screen bg-[#FAF8F2] text-[#223525] font-sans antialiased select-none pb-12">
       
       {/* ================= 1. CRISP TOP STATUS & NAV BAR ================= */}
-      <header className="sticky top-0 z-50 bg-[#FBFAF6]/98 backdrop-blur-md px-4 py-2.5 flex items-center justify-between border-none">
+      <header className="sticky top-0 z-50 bg-[#FAF8F2]/98 backdrop-blur-md px-4 py-2.5 flex items-center justify-between border-none">
         {/* Left: Clean Hamburger Icon */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
@@ -118,13 +118,13 @@ export default function MobileGurukulView() {
           aria-label="Notifications"
         >
           <Bell size={22} />
-          <span className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-[#E57A24] ring-2 ring-[#FBFAF6]"></span>
+          <span className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-[#E57A24] ring-2 ring-[#FAF8F2]"></span>
         </button>
       </header>
 
       {/* Drawer Menu */}
       {menuOpen && (
-        <div className="bg-[#FBFAF6] border-b border-[#EAE3D2] px-5 py-5 space-y-3.5 animate-fadeIn shadow-lg">
+        <div className="bg-[#FAF8F2] border-b border-[#EAE3D2] px-5 py-5 space-y-3.5 animate-fadeIn shadow-lg">
           <div className="flex items-center justify-between pb-2 border-b border-[#EAE3D2]">
             <span className="font-serif font-bold text-sm text-[#1C3220]">Menu</span>
             <button onClick={() => setMenuOpen(false)}><X size={20} /></button>
@@ -156,14 +156,11 @@ export default function MobileGurukulView() {
         </div>
       )}
 
-      {/* ================= 2. HERO SECTION (RICH BOTANICAL ARTWORK + CRISP VECTOR TYPOGRAPHY) ================= */}
-      <section className="relative px-4 pt-3 pb-4 text-center overflow-hidden">
+      {/* ================= 2. HERO SECTION WITH PURE CRISP VECTOR TYPOGRAPHY ================= */}
+      <section className="relative px-4 pt-4 pb-4 text-center overflow-hidden">
         
-        {/* Botanical Artwork Background */}
-        <div 
-          className="absolute inset-0 z-0 bg-contain bg-no-repeat bg-center opacity-30 pointer-events-none"
-          style={{ backgroundImage: "url('/images/botanical_hero_art.jpg')" }}
-        />
+        {/* Subtle Warm Parchment Texture */}
+        <div className="absolute inset-0 z-0 opacity-15 pointer-events-none bg-[radial-gradient(#2A442A_1px,transparent_1px)] [background-size:18px_18px]"></div>
 
         <div className="relative z-10">
           {/* Ancient Wisdom. Modern Education. */}
@@ -172,7 +169,7 @@ export default function MobileGurukulView() {
           </p>
 
           {/* GURUKUL Title */}
-          <h2 style={{ fontFamily: "'Cinzel', serif" }} className="text-3xl sm:text-4xl font-extrabold text-[#193620] tracking-[0.18em] my-1 uppercase">
+          <h2 style={{ fontFamily: "'Cinzel', serif" }} className="text-4xl font-black text-[#193620] tracking-[0.18em] my-1 uppercase drop-shadow-xs">
             GURUKUL
           </h2>
 
@@ -184,7 +181,7 @@ export default function MobileGurukulView() {
           </div>
 
           {/* Description */}
-          <p className="text-xs text-[#3D523C] max-w-xs mx-auto leading-relaxed mb-4 font-medium">
+          <p className="text-xs text-[#3D523C] max-w-xs mx-auto leading-relaxed mb-4 font-normal">
             A complete learning platform that blends the timeless knowledge of Ayurveda with modern education and technology.
           </p>
 
@@ -199,7 +196,7 @@ export default function MobileGurukulView() {
         </div>
 
         {/* 5-Feature Floating Bar (Crisp Native React Card with Vector SVG Icons) */}
-        <div className="relative z-20 mt-1 max-w-sm mx-auto bg-white rounded-2xl p-2.5 border border-[#E6E0CF] shadow-sm flex items-center justify-between">
+        <div className="relative z-20 mt-1 max-w-sm mx-auto bg-white rounded-2xl p-2.5 border border-[#E6E0CF] shadow-xs flex items-center justify-between">
           
           <button onClick={() => navigate("/courses")} className="flex-1 flex flex-col items-center gap-1 text-center cursor-pointer active:scale-95 transition-transform">
             <div className="w-7 h-7 rounded-full bg-[#EEF5E8] flex items-center justify-center text-[#3B6632]">
