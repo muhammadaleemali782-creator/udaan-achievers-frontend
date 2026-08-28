@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
-  Menu, X, Bell, ChevronLeft, ChevronRight, ExternalLink
+  ChevronLeft, ChevronRight, X, ExternalLink
 } from "lucide-react";
 
 export default function MobileGurukulView() {
@@ -45,86 +45,47 @@ export default function MobileGurukulView() {
   };
 
   return (
-    <div className="md:hidden min-h-screen bg-[#FBFAF6] text-[#223525] font-sans antialiased select-none pb-12">
+    <div className="md:hidden min-h-screen bg-[#FBFAF6] text-[#223525] font-sans antialiased select-none pb-10">
       
-      {/* ================= 1. TOP STATUS & NAV BAR ================= */}
-      <header className="sticky top-0 z-50 bg-[#FBFAF6] px-4 pt-3 pb-1 flex items-center justify-between border-none shadow-none">
-        {/* Left: Clean Hamburger Menu Icon */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="text-[#203322] p-1 active:scale-95 transition-transform"
-          aria-label="Menu"
-        >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-
-        {/* Center: Gurukul Lotus Logo + Brand Name */}
-        <Link to="/" className="flex items-center gap-2">
-          <img
-            src="/images/gurukul_header_logo.png"
-            alt="Gurukul Logo"
-            className="h-8 object-contain"
-          />
-        </Link>
-
-        {/* Right: Notification Bell with Orange Dot */}
-        <button
-          className="relative text-[#203322] p-1 active:scale-95 transition-transform"
-          aria-label="Notifications"
-        >
-          <Bell size={22} />
-          <span className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-[#E57A24] ring-2 ring-[#FBFAF6]"></span>
-        </button>
-      </header>
-
-      {/* Mobile Drawer Menu */}
-      {menuOpen && (
-        <div className="bg-[#FBFAF6] border-b border-[#EAE3D2] px-5 py-5 space-y-3.5 animate-fadeIn shadow-lg">
-          <Link
-            to="/courses"
-            onClick={() => setMenuOpen(false)}
-            className="block font-serif text-sm font-bold text-[#1C3220] py-2 border-b border-[#EAE3D2]"
-          >
-            📚 Explore All 10 Comic Books
-          </Link>
-          <a
-            href="https://messages-frontend-brown.vercel.app"
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setMenuOpen(false)}
-            className="flex items-center justify-between font-serif text-sm font-bold text-[#1C3220] py-2 border-b border-[#EAE3D2]"
-          >
-            <span>📬 EDUCA Mailbox Portal</span>
-            <ExternalLink size={15} className="text-[#556950]" />
-          </a>
-          <Link
-            to="/login"
-            onClick={() => setMenuOpen(false)}
-            className="block w-full text-center py-2.5 rounded-full bg-[#2A442A] text-white font-serif text-xs font-bold shadow-md"
-          >
-            Student Login / Admissions
-          </Link>
-        </div>
-      )}
-
-      {/* ================= 2. SEAMLESS HERO + 5-FEATURE SECTION ================= */}
+      {/* ================= 1. TOP HEADER & HERO & 5-FEATURE BAR (UNIFIED ZERO-SEAM SECTION) ================= */}
       <section className="relative w-full overflow-hidden">
         <div className="w-full relative">
           <img
-            src="/images/hero_seamless_section.jpg"
-            alt="Ancient Wisdom Modern Education - GURUKUL with Feature Cards"
+            src="/images/top_header_and_hero.jpg"
+            alt="GURUKUL • Powered by Educa Veda - Ancient Wisdom Modern Education"
             className="w-full h-auto object-cover block"
           />
 
-          {/* Interactive Clickable Hotspot: 'Explore Books' Button */}
+          {/* Interactive Touch Hotspot: Hamburger Menu (Top Left) */}
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="absolute top-2 left-2 w-12 h-10 cursor-pointer z-20"
+            aria-label="Toggle Menu"
+          />
+
+          {/* Interactive Touch Hotspot: Gurukul Logo (Top Center) */}
+          <Link
+            to="/"
+            className="absolute top-2 left-1/4 right-1/4 h-10 cursor-pointer z-20"
+            aria-label="Home"
+          />
+
+          {/* Interactive Touch Hotspot: Notification Bell (Top Right) */}
+          <button
+            onClick={() => navigate("/courses")}
+            className="absolute top-2 right-2 w-12 h-10 cursor-pointer z-20"
+            aria-label="Notifications"
+          />
+
+          {/* Interactive Touch Hotspot: 'Explore Books' Button */}
           <Link
             to="/courses"
-            className="absolute top-[65%] left-1/2 -translate-x-1/2 w-44 h-10 rounded-full cursor-pointer z-10"
+            className="absolute top-[62%] left-1/2 -translate-x-1/2 w-44 h-10 rounded-full cursor-pointer z-20"
             aria-label="Explore Books"
           />
 
-          {/* Interactive Clickable Hotspots: 5 Feature Badges in the Floating Bar */}
-          <div className="absolute bottom-[2%] left-0 right-0 h-[18%] flex z-10">
+          {/* Interactive Touch Hotspots: 5 Feature Badges in the Floating Bar */}
+          <div className="absolute bottom-[2%] left-0 right-0 h-[17%] flex z-20">
             <button onClick={() => navigate("/courses")} className="flex-1 cursor-pointer" aria-label="Mentorship" />
             <button onClick={() => navigate("/courses")} className="flex-1 cursor-pointer" aria-label="Study Material" />
             <button onClick={() => navigate("/courses")} className="flex-1 cursor-pointer" aria-label="Test Series" />
@@ -134,7 +95,41 @@ export default function MobileGurukulView() {
         </div>
       </section>
 
-      {/* ================= 3. "EXPLORE OUR BOOKS" NUMBERED COMIC CAROUSEL ================= */}
+      {/* Drawer Menu */}
+      {menuOpen && (
+        <div className="bg-[#FBFAF6] border-b border-[#EAE3D2] px-5 py-5 space-y-3.5 animate-fadeIn shadow-lg">
+          <div className="flex items-center justify-between pb-2 border-b border-[#EAE3D2]">
+            <span className="font-serif font-bold text-sm text-[#1C3220]">Menu</span>
+            <button onClick={() => setMenuOpen(false)}><X size={20} /></button>
+          </div>
+          <Link
+            to="/courses"
+            onClick={() => setMenuOpen(false)}
+            className="block font-serif text-sm font-bold text-[#1C3220] py-1.5"
+          >
+            📚 Explore All 10 Comic Books
+          </Link>
+          <a
+            href="https://messages-frontend-brown.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMenuOpen(false)}
+            className="flex items-center justify-between font-serif text-sm font-bold text-[#1C3220] py-1.5"
+          >
+            <span>📬 EDUCA Mailbox Portal</span>
+            <ExternalLink size={15} className="text-[#556950]" />
+          </a>
+          <Link
+            to="/login"
+            onClick={() => setMenuOpen(false)}
+            className="block w-full text-center py-2.5 rounded-full bg-[#2A442A] text-white font-serif text-xs font-bold shadow-md mt-2"
+          >
+            Student Login / Admissions
+          </Link>
+        </div>
+      )}
+
+      {/* ================= 2. "EXPLORE OUR BOOKS" NUMBERED COMIC CAROUSEL ================= */}
       <section className="px-3 pt-5 pb-3 text-center overflow-hidden">
         
         {/* Section Heading with Leaf Ornaments */}
@@ -171,7 +166,7 @@ export default function MobileGurukulView() {
                 <img
                   src="/books/book1_wellness_coaching.jpg"
                   alt="Book 1: Wellness Coaching Introduction"
-                  className="w-full h-auto object-cover"
+                  className="w-full h-auto object-cover block"
                 />
               </Link>
             </div>
@@ -182,7 +177,7 @@ export default function MobileGurukulView() {
                 <img
                   src="/books/book2_naturopathy_basics.jpg"
                   alt="Book 2: Naturopathy Basics"
-                  className="w-full h-auto object-cover"
+                  className="w-full h-auto object-cover block"
                 />
               </Link>
             </div>
@@ -193,7 +188,7 @@ export default function MobileGurukulView() {
                 <img
                   src="/books/book3_ayurveda_basics.jpg"
                   alt="Book 3: Ayurveda Basics"
-                  className="w-full h-auto object-cover"
+                  className="w-full h-auto object-cover block"
                 />
               </Link>
             </div>
@@ -227,8 +222,8 @@ export default function MobileGurukulView() {
 
       </section>
 
-      {/* ================= 4. "WHY GURUKUL?" 4 CARDS SECTION ================= */}
-      <section className="px-3 pt-3 pb-6">
+      {/* ================= 3. "WHY GURUKUL?" 4 CARDS SECTION ================= */}
+      <section className="px-3 pt-2 pb-6">
         <div className="w-full relative rounded-2xl overflow-hidden shadow-xs border border-[#E8E2D0] bg-white">
           <img
             src="/images/why_gurukul_full_row.jpg"
