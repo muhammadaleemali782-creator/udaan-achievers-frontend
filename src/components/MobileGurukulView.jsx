@@ -77,7 +77,7 @@ export default function MobileGurukulView() {
         </button>
       </header>
 
-      {/* Drawer Menu */}
+      {/* Mobile Drawer Menu */}
       {menuOpen && (
         <div className="bg-[#FBFAF6] border-b border-[#EAE3D2] px-5 py-5 space-y-3.5 animate-fadeIn shadow-lg">
           <Link
@@ -135,7 +135,7 @@ export default function MobileGurukulView() {
       </section>
 
       {/* ================= 3. "EXPLORE OUR BOOKS" NUMBERED COMIC CAROUSEL ================= */}
-      <section className="px-3 pt-5 pb-4 text-center overflow-hidden">
+      <section className="px-3 pt-5 pb-3 text-center overflow-hidden">
         
         {/* Section Heading with Leaf Ornaments */}
         <div className="flex items-center justify-center gap-2 mb-0.5">
@@ -162,38 +162,38 @@ export default function MobileGurukulView() {
             <ChevronLeft size={18} />
           </button>
 
-          {/* 3 Books Visible in Row */}
-          <div className="flex items-center justify-center gap-3.5 w-full px-7">
+          {/* 3 Books Visible in Row Matching Reference Mockup */}
+          <div className="flex items-center justify-center gap-3 w-full px-7">
             
-            {/* Book 1 */}
-            <div className="w-1/3 max-w-[130px] rounded-xl overflow-hidden shadow-md border-2 border-[#182B1B] bg-[#182B1B] transition-transform active:scale-95">
+            {/* Book 1: Wellness Coaching */}
+            <div className="w-[31%] rounded-xl overflow-hidden shadow-md border border-[#182B1B]/40 bg-[#182B1B] transition-transform active:scale-95">
               <Link to="/courses">
                 <img
                   src="/books/book1_wellness_coaching.jpg"
                   alt="Book 1: Wellness Coaching Introduction"
-                  className="w-full aspect-[4/6] object-cover"
+                  className="w-full h-auto object-cover"
                 />
               </Link>
             </div>
 
-            {/* Book 2 */}
-            <div className="w-1/3 max-w-[130px] rounded-xl overflow-hidden shadow-md border-2 border-[#182B1B] bg-[#182B1B] transition-transform active:scale-95">
+            {/* Book 2: Naturopathy Basics */}
+            <div className="w-[31%] rounded-xl overflow-hidden shadow-md border border-[#182B1B]/40 bg-[#182B1B] transition-transform active:scale-95">
               <Link to="/courses">
                 <img
                   src="/books/book2_naturopathy_basics.jpg"
                   alt="Book 2: Naturopathy Basics"
-                  className="w-full aspect-[4/6] object-cover"
+                  className="w-full h-auto object-cover"
                 />
               </Link>
             </div>
 
-            {/* Book 3 */}
-            <div className="w-1/3 max-w-[130px] rounded-xl overflow-hidden shadow-md border-2 border-[#182B1B] bg-[#182B1B] transition-transform active:scale-95">
+            {/* Book 3: Ayurveda Basics */}
+            <div className="w-[31%] rounded-xl overflow-hidden shadow-md border border-[#182B1B]/40 bg-[#182B1B] transition-transform active:scale-95">
               <Link to="/courses">
                 <img
                   src="/books/book3_ayurveda_basics.jpg"
                   alt="Book 3: Ayurveda Basics"
-                  className="w-full aspect-[4/6] object-cover"
+                  className="w-full h-auto object-cover"
                 />
               </Link>
             </div>
@@ -227,14 +227,22 @@ export default function MobileGurukulView() {
 
       </section>
 
-      {/* ================= 4. "WHY GURUKUL?" SECTION ================= */}
+      {/* ================= 4. "WHY GURUKUL?" 4 CARDS SECTION ================= */}
       <section className="px-3 pt-3 pb-6">
-        <div className="rounded-2xl overflow-hidden shadow-xs border border-[#E8E2D0] bg-white">
+        <div className="w-full relative rounded-2xl overflow-hidden shadow-xs border border-[#E8E2D0] bg-white">
           <img
-            src="/images/why_gurukul_section.jpg"
+            src="/images/why_gurukul_full_row.jpg"
             alt="Why Gurukul? Ayurvedic Wisdom · Interactive Learning · Test & Improve · Track Your Progress"
             className="w-full h-auto object-cover block"
           />
+
+          {/* Clickable Hotspots for the 4 Cards */}
+          <div className="absolute inset-0 flex z-10">
+            <button onClick={() => navigate("/courses")} className="flex-1 cursor-pointer" aria-label="Ayurvedic Wisdom" />
+            <button onClick={() => navigate("/courses")} className="flex-1 cursor-pointer" aria-label="Interactive Learning" />
+            <button onClick={() => navigate("/courses")} className="flex-1 cursor-pointer" aria-label="Test & Improve" />
+            <button onClick={() => navigate("/login")} className="flex-1 cursor-pointer" aria-label="Track Your Progress" />
+          </div>
         </div>
       </section>
 
