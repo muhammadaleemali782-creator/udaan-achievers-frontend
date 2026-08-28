@@ -47,7 +47,7 @@ export default function MobileGurukulView() {
   return (
     <div className="md:hidden min-h-screen bg-[#FBFAF6] text-[#223525] font-sans antialiased select-none pb-12">
       
-      {/* ================= 1. TOP STATUS & NAV BAR (SEAMLESS - NO BORDER) ================= */}
+      {/* ================= 1. TOP STATUS & NAV BAR ================= */}
       <header className="sticky top-0 z-50 bg-[#FBFAF6] px-4 pt-3 pb-1 flex items-center justify-between border-none shadow-none">
         {/* Left: Clean Hamburger Menu Icon */}
         <button
@@ -107,7 +107,7 @@ export default function MobileGurukulView() {
         </div>
       )}
 
-      {/* ================= 2. SEAMLESS HERO + 5-FEATURE SECTION (ZERO SEAMS, ZERO CUTS) ================= */}
+      {/* ================= 2. SEAMLESS HERO + 5-FEATURE SECTION ================= */}
       <section className="relative w-full overflow-hidden">
         <div className="w-full relative">
           <img
@@ -162,7 +162,7 @@ export default function MobileGurukulView() {
             <ChevronLeft size={18} />
           </button>
 
-          {/* 3 Books Visible in Row (Book 1, Book 2, Book 3) */}
+          {/* 3 Books Visible in Row */}
           <div className="flex items-center justify-center gap-3.5 w-full px-7">
             
             {/* Book 1 */}
@@ -171,7 +171,7 @@ export default function MobileGurukulView() {
                 <img
                   src="/books/book1_wellness_coaching.jpg"
                   alt="Book 1: Wellness Coaching Introduction"
-                  className="w-full h-auto object-cover"
+                  className="w-full aspect-[4/6] object-cover"
                 />
               </Link>
             </div>
@@ -182,7 +182,7 @@ export default function MobileGurukulView() {
                 <img
                   src="/books/book2_naturopathy_basics.jpg"
                   alt="Book 2: Naturopathy Basics"
-                  className="w-full h-auto object-cover"
+                  className="w-full aspect-[4/6] object-cover"
                 />
               </Link>
             </div>
@@ -193,7 +193,7 @@ export default function MobileGurukulView() {
                 <img
                   src="/books/book3_ayurveda_basics.jpg"
                   alt="Book 3: Ayurveda Basics"
-                  className="w-full h-auto object-cover"
+                  className="w-full aspect-[4/6] object-cover"
                 />
               </Link>
             </div>
