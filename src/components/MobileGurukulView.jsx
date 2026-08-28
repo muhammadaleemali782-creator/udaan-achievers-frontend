@@ -1,7 +1,8 @@
 import React, { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
-  ChevronLeft, ChevronRight, X, ExternalLink, ArrowRight
+  Menu, X, Bell, ChevronLeft, ChevronRight, ArrowRight,
+  UserCheck, BookOpen, ClipboardCheck, TrendingUp, Award, ExternalLink
 } from "lucide-react";
 
 export default function MobileGurukulView() {
@@ -37,28 +38,32 @@ export default function MobileGurukulView() {
     }
   ];
 
-  const whyCards = [
+  const whyFeatures = [
     {
       id: "w1",
-      image: "/images/why_card1.jpg",
+      icon: "🌿",
+      iconBg: "bg-[#EDF5E7]",
       title: "Ayurvedic Wisdom",
       desc: "Dive into the ancient knowledge of Ayurveda and holistic healing."
     },
     {
       id: "w2",
-      image: "/images/why_card2.jpg",
+      icon: "💡",
+      iconBg: "bg-[#FCF7E8]",
       title: "Interactive Learning",
       desc: "Comics, animations & smart notes for better understanding."
     },
     {
       id: "w3",
-      image: "/images/why_card3.jpg",
+      icon: "📋",
+      iconBg: "bg-[#F7EEF5]",
       title: "Test & Improve",
       desc: "Take tests, analyze performance and improve your score."
     },
     {
       id: "w4",
-      image: "/images/why_card4.jpg",
+      icon: "📈",
+      iconBg: "bg-[#EEF8F2]",
       title: "Track Your Progress",
       desc: "Monitor your learning journey and achieve your goals."
     }
@@ -78,55 +83,45 @@ export default function MobileGurukulView() {
   };
 
   return (
-    <div className="md:hidden min-h-screen bg-[#FBFAF6] text-[#223525] font-sans antialiased select-none pb-8">
+    <div className="md:hidden min-h-screen bg-[#FBFAF6] text-[#223525] font-sans antialiased select-none pb-12">
       
-      {/* ================= 1. TOP HEADER & HERO & 5-FEATURE BAR (100% SEAMLESS) ================= */}
-      <section className="relative w-full overflow-hidden">
-        <div className="w-full relative">
-          <img
-            src="/images/top_header_and_hero.jpg"
-            alt="GURUKUL • Powered by Educa Veda - Ancient Wisdom Modern Education"
-            className="w-full h-auto object-cover block"
-          />
+      {/* ================= 1. CRISP TOP STATUS & NAV BAR ================= */}
+      <header className="sticky top-0 z-50 bg-[#FBFAF6]/98 backdrop-blur-md px-4 py-2.5 flex items-center justify-between border-none">
+        {/* Left: Clean Hamburger Icon */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          className="text-[#1F3322] p-1 active:scale-90 transition-transform cursor-pointer"
+          aria-label="Menu"
+        >
+          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
 
-          {/* Touch Hotspot: Hamburger Menu (Top Left) */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="absolute top-2 left-2 w-12 h-10 cursor-pointer z-20"
-            aria-label="Toggle Menu"
-          />
-
-          {/* Touch Hotspot: Gurukul Logo (Top Center) */}
-          <Link
-            to="/"
-            className="absolute top-2 left-1/4 right-1/4 h-10 cursor-pointer z-20"
-            aria-label="Home"
-          />
-
-          {/* Touch Hotspot: Notification Bell (Top Right) */}
-          <button
-            onClick={() => navigate("/courses")}
-            className="absolute top-2 right-2 w-12 h-10 cursor-pointer z-20"
-            aria-label="Notifications"
-          />
-
-          {/* Touch Hotspot: 'Explore Books' Button */}
-          <Link
-            to="/courses"
-            className="absolute top-[62%] left-1/2 -translate-x-1/2 w-44 h-10 rounded-full cursor-pointer z-20"
-            aria-label="Explore Books"
-          />
-
-          {/* Touch Hotspots: 5 Feature Badges */}
-          <div className="absolute bottom-[2%] left-0 right-0 h-[17%] flex z-20">
-            <button onClick={() => navigate("/courses")} className="flex-1 cursor-pointer" aria-label="Mentorship" />
-            <button onClick={() => navigate("/courses")} className="flex-1 cursor-pointer" aria-label="Study Material" />
-            <button onClick={() => navigate("/courses")} className="flex-1 cursor-pointer" aria-label="Test Series" />
-            <button onClick={() => navigate("/login")} className="flex-1 cursor-pointer" aria-label="Progress" />
-            <button onClick={() => navigate("/about")} className="flex-1 cursor-pointer" aria-label="Certificate" />
+        {/* Center: Brand Logo + Typography */}
+        <Link to="/" className="flex items-center gap-2">
+          {/* Botanical Lotus Emblem */}
+          <div className="w-8 h-8 flex items-center justify-center">
+            <span className="text-2xl leading-none">🪔</span>
           </div>
-        </div>
-      </section>
+          <div className="text-left">
+            <h1 style={{ fontFamily: "'Cinzel', serif" }} className="text-lg font-black text-[#1C3220] tracking-wider leading-none">
+              GURUKUL
+            </h1>
+            <p style={{ fontFamily: "'Playfair Display', serif" }} className="text-[10px] text-[#556950] font-normal leading-tight">
+              Powered by <span className="text-[#384F36] font-bold">Educa Veda</span>
+            </p>
+          </div>
+        </Link>
+
+        {/* Right: Notification Bell with Orange Dot */}
+        <button
+          onClick={() => navigate("/courses")}
+          className="relative text-[#1F3322] p-1 active:scale-90 transition-transform cursor-pointer"
+          aria-label="Notifications"
+        >
+          <Bell size={22} />
+          <span className="absolute top-1 right-1 w-2.5 h-2.5 rounded-full bg-[#E57A24] ring-2 ring-[#FBFAF6]"></span>
+        </button>
+      </header>
 
       {/* Drawer Menu */}
       {menuOpen && (
@@ -162,8 +157,88 @@ export default function MobileGurukulView() {
         </div>
       )}
 
-      {/* ================= 2. "EXPLORE OUR BOOKS" HORIZONTAL SCROLL CAROUSEL ================= */}
-      <section className="pt-5 pb-3 text-center overflow-hidden">
+      {/* ================= 2. HERO SECTION WITH REAL CRISP TYPOGRAPHY ================= */}
+      <section className="relative px-4 pt-4 pb-4 text-center overflow-hidden">
+        
+        {/* Real Sanskrit & Botanical Background Graphic */}
+        <div className="absolute inset-0 z-0 opacity-20 pointer-events-none bg-[radial-gradient(#385238_1px,transparent_1px)] [background-size:16px_16px]"></div>
+
+        <div className="relative z-10">
+          {/* Ancient Wisdom. Modern Education. */}
+          <p style={{ fontFamily: "'Playfair Display', serif" }} className="italic text-xs text-[#7A5B3E] font-bold tracking-wide mb-1">
+            Ancient Wisdom. Modern Education.
+          </p>
+
+          {/* GURUKUL Title */}
+          <h2 style={{ fontFamily: "'Cinzel', serif" }} className="text-3xl sm:text-4xl font-extrabold text-[#193620] tracking-[0.18em] my-1 uppercase">
+            GURUKUL
+          </h2>
+
+          {/* Learn. Practice. Achieve. */}
+          <div className="flex items-center justify-center gap-1.5 text-xs text-[#3E553A] font-bold mb-2">
+            <span>🌿</span>
+            <span style={{ fontFamily: "'Playfair Display', serif" }}>Learn. Practice. Achieve.</span>
+            <span>🌿</span>
+          </div>
+
+          {/* Description */}
+          <p className="text-xs text-[#485C46] max-w-xs mx-auto leading-relaxed mb-4 font-normal">
+            A complete learning platform that blends the timeless knowledge of Ayurveda with modern education and technology.
+          </p>
+
+          {/* Explore Books Button */}
+          <Link
+            to="/courses"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#2A442A] hover:bg-[#1E331E] text-white text-xs font-bold shadow-md active:scale-95 transition-all mb-4"
+          >
+            <span>Explore Books</span>
+            <ArrowRight size={13} />
+          </Link>
+        </div>
+
+        {/* 5-Feature Floating Bar (Crisp Native React Card with SVG Icons) */}
+        <div className="relative z-20 mt-2 max-w-sm mx-auto bg-white/98 rounded-2xl p-2.5 border border-[#E6E0CF] shadow-xs flex items-center justify-between">
+          
+          <button onClick={() => navigate("/courses")} className="flex-1 flex flex-col items-center gap-1 text-center cursor-pointer active:scale-95 transition-transform">
+            <div className="w-7 h-7 rounded-full bg-[#EEF5E8] flex items-center justify-center text-[#3B6632]">
+              <UserCheck size={14} />
+            </div>
+            <span className="text-[9px] font-bold text-[#2A3E2D] leading-tight">Mentorship</span>
+          </button>
+
+          <button onClick={() => navigate("/courses")} className="flex-1 flex flex-col items-center gap-1 text-center cursor-pointer active:scale-95 transition-transform">
+            <div className="w-7 h-7 rounded-full bg-[#FCF7E8] flex items-center justify-center text-[#B28228]">
+              <BookOpen size={14} />
+            </div>
+            <span className="text-[9px] font-bold text-[#2A3E2D] leading-tight">Study<br />Material</span>
+          </button>
+
+          <button onClick={() => navigate("/courses")} className="flex-1 flex flex-col items-center gap-1 text-center cursor-pointer active:scale-95 transition-transform">
+            <div className="w-7 h-7 rounded-full bg-[#F7EEF5] flex items-center justify-center text-[#8B3B82]">
+              <ClipboardCheck size={14} />
+            </div>
+            <span className="text-[9px] font-bold text-[#2A3E2D] leading-tight">Test<br />Series</span>
+          </button>
+
+          <button onClick={() => navigate("/login")} className="flex-1 flex flex-col items-center gap-1 text-center cursor-pointer active:scale-95 transition-transform">
+            <div className="w-7 h-7 rounded-full bg-[#EEF8F2] flex items-center justify-center text-[#2E8B57]">
+              <TrendingUp size={14} />
+            </div>
+            <span className="text-[9px] font-bold text-[#2A3E2D] leading-tight">Progress</span>
+          </button>
+
+          <button onClick={() => navigate("/about")} className="flex-1 flex flex-col items-center gap-1 text-center cursor-pointer active:scale-95 transition-transform">
+            <div className="w-7 h-7 rounded-full bg-[#EDF3F8] flex items-center justify-center text-[#2B6CB0]">
+              <Award size={14} />
+            </div>
+            <span className="text-[9px] font-bold text-[#2A3E2D] leading-tight">Certificate</span>
+          </button>
+
+        </div>
+      </section>
+
+      {/* ================= 3. "EXPLORE OUR BOOKS" HORIZONTAL CAROUSEL ================= */}
+      <section className="pt-4 pb-3 text-center overflow-hidden">
         
         {/* Section Heading with Leaf Ornaments */}
         <div className="flex items-center justify-center gap-2 mb-0.5 px-4">
@@ -178,13 +253,13 @@ export default function MobileGurukulView() {
           Comics that make learning powerful, interactive &amp; unforgettable!
         </p>
 
-        {/* Relative wrapper with left/right arrows & scrollable books */}
+        {/* Carousel with Left/Right Arrows & Horizontal Scroll Strip */}
         <div className="relative w-full py-1">
           
           {/* Left Arrow Button */}
           <button
             onClick={() => scrollByAmount(-170)}
-            className="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-white/95 border border-[#D5CDBC] shadow-md flex items-center justify-center text-[#2A3E2C] active:scale-90 transition-transform"
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-white border border-[#D5CDBC] shadow-md flex items-center justify-center text-[#2A3E2C] active:scale-90 transition-transform cursor-pointer"
             aria-label="Previous Book"
           >
             <ChevronLeft size={18} />
@@ -234,7 +309,7 @@ export default function MobileGurukulView() {
           {/* Right Arrow Button */}
           <button
             onClick={() => scrollByAmount(170)}
-            className="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-white/95 border border-[#D5CDBC] shadow-md flex items-center justify-center text-[#2A3E2C] active:scale-90 transition-transform"
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-8 h-8 rounded-full bg-white border border-[#D5CDBC] shadow-md flex items-center justify-center text-[#2A3E2C] active:scale-90 transition-transform cursor-pointer"
             aria-label="Next Book"
           >
             <ChevronRight size={18} />
@@ -262,23 +337,32 @@ export default function MobileGurukulView() {
 
       </section>
 
-      {/* ================= 3. "WHY GURUKUL?" HORIZONTAL 4 CARDS SECTION ================= */}
+      {/* ================= 4. "WHY GURUKUL?" 4 CRISP NATIVE CARDS ================= */}
       <section className="pt-2 pb-6 px-3">
         <div
           className="flex items-center gap-2.5 overflow-x-auto scrollbar-none py-2 px-1"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
-          {whyCards.map((c) => (
+          {whyFeatures.map((c) => (
             <div
               key={c.id}
               onClick={() => navigate("/courses")}
-              className="w-[110px] sm:w-[118px] flex-shrink-0 rounded-2xl overflow-hidden shadow-xs border border-[#E8E2D0] bg-white cursor-pointer active:scale-95 transition-transform"
+              className="w-[124px] sm:w-[132px] flex-shrink-0 rounded-2xl bg-white p-3 border border-[#E8E2D0] shadow-xs flex flex-col justify-between text-center items-center cursor-pointer active:scale-95 transition-transform"
             >
-              <img
-                src={c.image}
-                alt={c.title}
-                className="w-full h-auto object-cover block"
-              />
+              <div>
+                <div className={`w-9 h-9 rounded-full ${c.iconBg} flex items-center justify-center text-lg mb-2 mx-auto`}>
+                  {c.icon}
+                </div>
+                <h4 style={{ fontFamily: "'Playfair Display', serif" }} className="text-xs font-bold text-[#1A2E1D] leading-tight mb-1">
+                  {c.title}
+                </h4>
+                <p className="text-[9.5px] text-[#556754] leading-tight">
+                  {c.desc}
+                </p>
+              </div>
+              <div className="mt-2 text-[#B28228]">
+                <ArrowRight size={13} />
+              </div>
             </div>
           ))}
         </div>
