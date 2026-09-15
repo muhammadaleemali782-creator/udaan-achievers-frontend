@@ -3,32 +3,31 @@ export default {
   theme: {
     extend: {
       colors: {
-        // old semantic tokens — remapped so every existing page (Courses,
-        // About, Contact, Login, Admin) automatically re-themes to match
-        // the new slate/cyan design language, no per-file edits needed.
-        ink: "#0F172A",
-        paper: "#F8FAFC",
-        paperDark: "#E2E8F0",
-        saffron: "#06B6D4",
-        saffronDark: "#0891B2",
-        teal: "#06B6D4",
-        tealDark: "#0891B2",
-        charcoal: "#0F172A",
-        muted: "#64748B",
+        brand: {
+          50: "#EEF2FF",
+          100: "#E0E7FF",
+          500: "#6366F1",
+          600: "#4F46E5",
+          700: "#4338CA",
+          800: "#3730A3",
+          900: "#312E81",
+        },
+        primary: "#4F46E5",
+        surface: "#FFFFFF",
+        canvas: "#F8FAFC",
       },
       fontFamily: {
-        display: ["Inter", "sans-serif"],
-        body: ["Inter", "sans-serif"],
+        sans: ["Plus Jakarta Sans", "Inter", "sans-serif"],
+        display: ["Plus Jakarta Sans", "Inter", "sans-serif"],
         mono: ["JetBrains Mono", "monospace"],
-        sans: ["Inter", "sans-serif"],
       },
       animation: {
-        fadeIn: "fadeIn 0.35s ease both",
+        fadeIn: "fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) both",
       },
       keyframes: {
         fadeIn: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
+          "0%": { opacity: "0", transform: "scale(0.98)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
         },
       },
     },
