@@ -91,7 +91,7 @@ export const WhatWeDoSection: React.FC = () => {
             </p>
 
             <p className="text-slate-600 text-sm leading-relaxed">
-              By blending disciplined school coaching with small batch sizes, daily doubt solving clinics, and practical computer skills, we ensure students never feel left behind.
+              By blending disciplined academic mentoring with small batch sizes, daily doubt solving clinics, and practical computer skills, we ensure students never feel left behind.
             </p>
 
             {/* Circular Arrow Navigation Link */}

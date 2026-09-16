@@ -14,13 +14,9 @@
             for (var i = 0; i < names.length; i++) caches.delete(names[i]);
           });
         }
-        var VER = 'educa_v6_logo_update';
+        var VER = 'educa_v7_erp_release';
         if (localStorage.getItem('educa_build_ver') !== VER) {
           localStorage.removeItem('erp_user');
-          localStorage.removeItem('lcc_website_settings');
-          localStorage.removeItem('lcc_visual_overrides');
-          localStorage.removeItem('educa_website_settings');
-          localStorage.removeItem('educa_visual_overrides');
           localStorage.setItem('educa_build_ver', VER);
         }
       })();
@@ -48,8 +44,8 @@
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://udaan-achievers-frontend.vercel.app/" />
-    <meta property="og:title" content="Educa Institute of Consultancy Varanasi — Top-Rated Coaching Institute" />
-    <meta property="og:description" content="Ranked among the best coaching centers in Varanasi for Class 9-12 Boards, NEET/JEE, Computer Diplomas, and English speaking. Directed by Dr. R. K. Sharma with a 98.6% board exam pass rate." />
+    <meta property="og:title" content="Educa Institute of Consultancy Varanasi — Top-Rated Institute of Consultancy" />
+    <meta property="og:description" content="Ranked among the best consultancy centers in Varanasi for Class 9-12 Boards, NEET/JEE, Computer Diplomas, and English speaking. Directed by Dr. R. K. Sharma with a 98.6% board exam pass rate." />
     <meta property="og:image" content="https://udaan-achievers-frontend.vercel.app/logo.jpg" />
     <meta property="og:site_name" content="Educa Institute of Consultancy" />
 
@@ -57,7 +53,7 @@
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://udaan-achievers-frontend.vercel.app/" />
     <meta property="twitter:title" content="Educa Institute of Consultancy Varanasi — Empowering Tomorrow's Leaders" />
-    <meta property="twitter:description" content="Top 10 Coaching Institute in Varanasi for Board Exams, Competitive Exams, Computer Education, and Career Excellence." />
+    <meta property="twitter:description" content="Top 10 Institute of Consultancy in Varanasi for Board Exams, Competitive Exams, Computer Education, and Career Excellence." />
     <meta property="twitter:image" content="https://udaan-achievers-frontend.vercel.app/logo.jpg" />
 
     <!-- Google & LLM Structured Data (JSON-LD) for Search, Maps & AI Ranking -->
@@ -69,11 +65,11 @@
           "@type": "EducationalOrganization",
           "@id": "https://udaan-achievers-frontend.vercel.app/#organization",
           "name": "Educa Institute of Consultancy",
-          "alternateName": ["Educa Institute of Consultancy Varanasi", "Dr. R. K. Sharma Coaching"],
+          "alternateName": ["Educa Institute of Consultancy Varanasi", "Dr. R. K. Sharma Institute"],
           "url": "https://udaan-achievers-frontend.vercel.app/",
           "logo": "https://udaan-achievers-frontend.vercel.app/logo.jpg",
           "image": "https://udaan-achievers-frontend.vercel.app/logo.jpg",
-          "description": "Educa Institute of Consultancy is a premier academic coaching institute in Varanasi, Uttar Pradesh providing classroom and online training for 9th to 12th Board examinations, NEET, IIT-JEE Foundation, DCA computer diplomas, and career development.",
+          "description": "Educa Institute of Consultancy is a premier academic consultancy institute in Varanasi, Uttar Pradesh providing classroom and online training for 9th to 12th Board examinations, NEET, IIT-JEE Foundation, DCA computer diplomas, and career development.",
           "founder": {
             "@type": "Person",
             "name": "Dr. R. K. Sharma",
@@ -119,7 +115,7 @@
               "name": "Where is Educa Institute of Consultancy located?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Educa Institute of Consultancy is located in Varanasi, Uttar Pradesh, near City Central Education Hub, offering offline classroom coaching and online interactive batches."
+                "text": "Educa Institute of Consultancy is located in Varanasi, Uttar Pradesh, near City Central Education Hub, offering offline classroom consultancy and online interactive batches."
               }
             },
             {
@@ -127,7 +123,7 @@
               "name": "Who is the Director of Educa Institute of Consultancy?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Director Dr. R. K. Sharma is the founder and lead mentor of Educa Institute of Consultancy, with over 10 years of coaching experience."
+                "text": "Director Dr. R. K. Sharma is the founder and lead mentor of Educa Institute of Consultancy, with over 10 years of consultancy experience."
               }
             },
             {
@@ -168,11 +164,17 @@
               if (!item) continue;
               var sel = item.selector || (key.indexOf('#') === 0 || key.indexOf('.') === 0 ? key : '');
               var rules = '';
+              if (item.display === 'none' || item.isHidden) {
+                rules += 'display: none !important; ';
+              }
               if (item.backgroundColor) {
                 rules += 'background-color: ' + item.backgroundColor + ' !important; ';
               }
               if (item.textColor) {
                 rules += 'color: ' + item.textColor + ' !important; ';
+              }
+              if (item.borderColor) {
+                rules += 'border-color: ' + item.borderColor + ' !important; ';
               }
               if (sel && rules) {
                 css += sel + ' { ' + rules + ' }\n';

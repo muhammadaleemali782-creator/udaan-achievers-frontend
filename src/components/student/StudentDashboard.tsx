@@ -84,7 +84,7 @@ export const StudentDashboard: React.FC = () => {
   const enrolledCourseList = courses.filter(c => (currentStudent?.enrolledCourses || []).includes(c.id));
   const fallbackCourse = {
     id: 'batch-foundation',
-    title: 'Comprehensive Board & Academic Coaching',
+    title: 'Comprehensive Board & Consultancy Training',
     category: 'secondary' as const,
     targetClass: currentStudent?.targetClass || currentStudent?.classEnrolled || 'Class 10',
     duration: 'Full Academic Session',
@@ -564,7 +564,7 @@ export const StudentDashboard: React.FC = () => {
                 </div>
                 <div>
                   <h2 className="text-2xl font-black text-slate-900 tracking-tight">LAKSHYA CAREER CLASSES</h2>
-                  <span className="text-xs text-slate-500 uppercase tracking-widest font-bold block">Premier Coaching & Computer Institute</span>
+                  <span className="text-xs text-slate-500 uppercase tracking-widest font-bold block">Premier Institute & Computer Institute</span>
                 </div>
               </div>
 
@@ -572,7 +572,7 @@ export const StudentDashboard: React.FC = () => {
                 <span className="text-xs text-slate-400 uppercase tracking-widest font-bold block">CERTIFICATE OF EXCELLENCE</span>
                 <h3 className="text-3xl font-serif font-black text-slate-900 mt-2 italic">{currentStudent.name}</h3>
                 <p className="text-xs text-slate-600 max-w-lg mx-auto mt-2 leading-relaxed">
-                  has successfully completed the comprehensive academic coaching program in <strong>{activeCourse.title}</strong> with distinction and outstanding performance.
+                  has successfully completed the comprehensive consultancy training program in <strong>{activeCourse.title}</strong> with distinction and outstanding performance.
                 </p>
               </div>
 

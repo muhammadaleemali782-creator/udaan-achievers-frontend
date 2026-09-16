@@ -39,7 +39,7 @@ export const Footer: React.FC = () => {
                   {websiteSettings?.shortName || 'Educa Institute'}
                 </span>
                 <span className="px-2 py-0.5 rounded bg-amber-400 text-slate-950 text-[10px] font-black uppercase tracking-wider">
-                  Coaching
+                  Institute
                 </span>
               </div>
               <span className="text-xs font-bold text-[#0066FF] tracking-wide mt-0.5">
@@ -49,7 +49,7 @@ export const Footer: React.FC = () => {
           </div>
 
           <p className="text-xs sm:text-sm text-slate-500 max-w-xl mx-auto leading-relaxed font-medium">
-            <strong>{websiteSettings?.instituteName || 'Educa Institute of Consultancy'}</strong> — Premier coaching institute for Wellness Consultancy in Naturopathy & Ayurveda (WCNA) and Wealth Consultancy in Finance Management (WCFM) under the mentorship of <strong>{websiteSettings?.directorName || 'Dr. R. K. Sharma'}</strong>.
+            <strong>{websiteSettings?.instituteName || 'Educa Institute of Consultancy'}</strong> — Premier consultancy institute for Wellness Consultancy in Naturopathy & Ayurveda (WCNA) and Wealth Consultancy in Finance Management (WCFM) under the mentorship of <strong>{websiteSettings?.directorName || 'Dr. R. K. Sharma'}</strong>.
           </p>
 
           {/* Quick Links Navigation */}
@@ -132,7 +132,7 @@ export const Footer: React.FC = () => {
             © 2016 – 2026 <strong>{websiteSettings?.instituteName || 'Educa Institute of Consultancy'}</strong>, Varanasi, Uttar Pradesh. Directed by <strong>{websiteSettings?.directorName || 'Dr. R. K. Sharma'}</strong>.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] text-slate-400 font-medium">
-            <span>ISO 9001:2015 Certified Coaching Center</span>
+            <span>ISO 9001:2015 Certified Consultancy Center</span>
             <span>•</span>
             <span>All Rights Reserved</span>
           </div>

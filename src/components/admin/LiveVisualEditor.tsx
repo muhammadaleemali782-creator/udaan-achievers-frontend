@@ -17,7 +17,8 @@ import {
   Settings,
   Image as ImageIcon,
   Type,
-  Palette
+  Palette,
+  Trash2
 } from 'lucide-react';
 
 import { VisualOverrideItem } from '../../types';
@@ -49,7 +50,7 @@ export const SECTION_LABELS: Record<string, string> = {
   about: 'About Institute & Director Dr. R. K. Sharma Card',
   methodology: 'Mission & Pedagogy (What We Do)',
   ad_top: 'Top Offer Banner',
-  courses: 'Coaching Courses Grid',
+  courses: 'Consultancy & Certification Courses Grid',
   batches: 'High-Impact Live Batches',
   guarantee: 'Pedagogy, Trust & Rainbow Learning Arch',
   what_we_do: 'Features & Benefits',
@@ -368,6 +369,7 @@ export const LiveVisualEditor: React.FC = () => {
     newTextColor: string;
     elementRef: HTMLElement | null;
     tagName: string;
+    selector?: string;
   } | null>(null);
 
   // Time-Machine Undo/Redo State Stack
@@ -476,7 +478,8 @@ export const LiveVisualEditor: React.FC = () => {
           originalTextColor: currentText,
           newTextColor: currentText,
           elementRef: img,
-          tagName: 'IMG'
+          tagName: 'IMG',
+          selector: img.id ? `#${img.id}` : 'img'
         });
         return;
       }
@@ -497,7 +500,8 @@ export const LiveVisualEditor: React.FC = () => {
         originalTextColor: currentText,
         newTextColor: currentText,
         elementRef: effectiveEl,
-        tagName: effectiveEl.tagName
+        tagName: effectiveEl.tagName,
+        selector: effectiveEl.id ? `#${effectiveEl.id}` : (effectiveEl.className && typeof effectiveEl.className === 'string' && effectiveEl.className.trim() ? `.${effectiveEl.className.split(' ')[0]}` : effectiveEl.tagName.toLowerCase())
       });
     };
 
@@ -594,6 +598,46 @@ export const LiveVisualEditor: React.FC = () => {
   };
 
   // Apply Point & Click Edit Live to DOM & Database Permanently
+  // Permanently hide / remove element from page
+  const handleRemoveElement = async () => {
+    if (!clickedTarget || !clickedTarget.elementRef) return;
+    const el = clickedTarget.elementRef;
+    el.style.display = 'none';
+    const sel = clickedTarget.selector || (el.id ? `#${el.id}` : el.tagName.toLowerCase());
+
+    const current = websiteSettings.visualOverrides || {};
+    const updatedOverrides: Record<string, any> = {
+      ...current,
+      [sel]: {
+        ...(current[sel] || {}),
+        selector: sel,
+        display: 'none',
+        isHidden: true
+      }
+    };
+    const updatedSettings = {
+      ...websiteSettings,
+      visualOverrides: updatedOverrides
+    };
+    try {
+      localStorage.setItem('educa_visual_overrides', JSON.stringify(updatedOverrides));
+      localStorage.setItem('lcc_visual_overrides', JSON.stringify(updatedOverrides));
+      await updateWebsiteSettings(updatedSettings);
+
+      let styleEl = document.getElementById('educa-instant-theme-css');
+      if (!styleEl) {
+        styleEl = document.createElement('style');
+        styleEl.id = 'educa-instant-theme-css';
+        document.head.appendChild(styleEl);
+      }
+      styleEl.textContent += `\n${sel} { display: none !important; }\n`;
+      showToast('Element removed successfully and saved permanently!', 'success');
+    } catch (e) {
+      showToast('Element removed in browser storage!', 'info');
+    }
+    setClickedTarget(null);
+  };
+
   const handleApplyClickEdit = async () => {
     if (!clickedTarget || !clickedTarget.elementRef) return;
 
@@ -654,7 +698,20 @@ export const LiveVisualEditor: React.FC = () => {
 
     // 5. Save to AppContext & localStorage & backend immediately
     try {
+      localStorage.setItem('educa_visual_overrides', JSON.stringify(updatedOverrides));
       localStorage.setItem('lcc_visual_overrides', JSON.stringify(updatedOverrides));
+      let styleEl = document.getElementById('educa-instant-theme-css');
+      if (!styleEl) {
+        styleEl = document.createElement('style');
+        styleEl.id = 'educa-instant-theme-css';
+        document.head.appendChild(styleEl);
+      }
+      if (clickedTarget.newBgColor || clickedTarget.newTextColor) {
+        let r = '';
+        if (clickedTarget.newBgColor) r += `background-color: ${clickedTarget.newBgColor} !important; `;
+        if (clickedTarget.newTextColor) r += `color: ${clickedTarget.newTextColor} !important; `;
+        styleEl.textContent += `\n${clickedTarget.selector} { ${r} }\n`;
+      }
       await updateWebsiteSettings(updatedSettings);
       pushSnapshot(updatedSettings, courses, `Updated ${clickedTarget.tagName}: colors/content`);
       setHasUnsavedChanges(false);
@@ -1087,13 +1144,23 @@ export const LiveVisualEditor: React.FC = () => {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex justify-end gap-2 pt-2 border-t border-slate-800">
+            <div className="flex items-center justify-between gap-2 pt-2 border-t border-slate-800">
               <button
-                onClick={handleCancelEdit}
-                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 cursor-pointer"
+                type="button"
+                onClick={handleRemoveElement}
+                className="px-3.5 py-2 rounded-xl bg-rose-600/20 hover:bg-rose-600/30 text-rose-400 border border-rose-500/40 text-xs font-black uppercase tracking-wider flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
+                title="Permanently remove this element from the page"
               >
-                Cancel
+                <Trash2 className="w-3.5 h-3.5" />
+                <span>Remove / Hide Element</span>
               </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleCancelEdit}
+                  className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300 cursor-pointer"
+                >
+                  Cancel
+                </button>
               <button
                 onClick={handleApplyClickEdit}
                 className="px-6 py-2 rounded-xl bg-[#0066FF] hover:bg-blue-600 text-white text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow-md cursor-pointer"
@@ -1101,6 +1168,7 @@ export const LiveVisualEditor: React.FC = () => {
                 <Check className="w-3.5 h-3.5" />
                 <span>Apply Live Change</span>
               </button>
+              </div>
             </div>
           </div>
         </div>

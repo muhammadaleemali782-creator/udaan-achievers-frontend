@@ -577,7 +577,7 @@ export const PaymentModal: React.FC = () => {
 
                   <div className="flex gap-2">
                     <a
-                      href={`upi://pay?pa=${instituteUpi}&pn=Educa Institute%20Coaching&am=${selectedCourseForPayment.discountFee}&cu=INR`}
+                      href={`upi://pay?pa=${instituteUpi}&pn=Educa Institute%20Institute&am=${selectedCourseForPayment.discountFee}&cu=INR`}
                       className="flex-1 py-1.5 rounded-xl bg-white border border-emerald-300 hover:bg-emerald-100/50 text-emerald-900 font-bold text-[11px] flex items-center justify-center gap-1.5 transition-colors cursor-pointer text-center"
                     >
                       <Smartphone className="w-3.5 h-3.5" />

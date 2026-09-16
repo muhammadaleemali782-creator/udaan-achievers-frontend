@@ -12,7 +12,7 @@ export const MissionVision: React.FC = () => {
       borderColor: 'border-brand-orange/40',
       bgColor: 'bg-brand-orange/10',
       description:
-        'To demystify complex academic concepts, ignite organic curiosity, and provide affordable, high-standard coaching that transforms average students into top performers through structured problem-solving and daily practice.'
+        'To demystify complex academic concepts, ignite organic curiosity, and provide affordable, high-standard consultancy that transforms average students into top performers through structured problem-solving and daily practice.'
     },
     {
       icon: Eye,

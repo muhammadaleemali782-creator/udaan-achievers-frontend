@@ -116,7 +116,7 @@ export const CourseSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Section Header: Explore Top-Rated Coaching Courses */}
+        {/* Section Header: Explore Top-Rated Consultancy & Certification Courses */}
         <div id="all-courses-grid" className="text-center max-w-3xl mx-auto mb-8 sm:mb-10 pt-4">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 text-[#0066FF] border border-blue-200 text-xs font-black uppercase tracking-wider mb-3">
             <GraduationCap className="w-3.5 h-3.5" />

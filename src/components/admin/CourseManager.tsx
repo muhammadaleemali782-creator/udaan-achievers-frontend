@@ -22,7 +22,7 @@ export const CourseManager: React.FC = () => {
     image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&auto=format&fit=crop&q=80',
     badge: 'Toppers Choice',
     features: ['10-Year PYQs Solved', 'Weekly Board Mocks', '1:1 Doubt Solving', 'Printed Theory Modules'],
-    description: 'Comprehensive coaching with focus on step-by-step formula derivations and high-yield questions.',
+    description: 'Comprehensive consultancy with focus on step-by-step formula derivations and high-yield questions.',
     whatsappRedirectUrl: '',
     privatePlaylistUrl: ''
   });
@@ -47,7 +47,7 @@ export const CourseManager: React.FC = () => {
       image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&auto=format&fit=crop&q=80',
       badge: 'Toppers Choice',
       features: ['10-Year PYQs Solved', 'Weekly Board Mocks', '1:1 Doubt Solving'],
-      description: 'Comprehensive coaching with focus on step-by-step formula derivations.',
+      description: 'Comprehensive consultancy with focus on step-by-step formula derivations.',
       whatsappRedirectUrl: '',
       privatePlaylistUrl: ''
     });
