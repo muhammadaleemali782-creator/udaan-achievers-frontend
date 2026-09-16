@@ -98,7 +98,7 @@ export const InstagramSection: React.FC = () => {
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 text-white font-black text-xs uppercase tracking-wider shadow-lg hover:opacity-95 transition-all"
           >
             <Instagram className="w-4 h-4" />
-            <span>Follow @lcc_coaching_official</span>
+            <span>Follow @educa_institute</span>
           </a>
         </div>
 
