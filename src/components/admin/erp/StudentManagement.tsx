@@ -52,7 +52,7 @@ export const StudentManagement: React.FC = () => {
       name: form.name,
       mobile: form.mobile,
       email: form.email || `${form.name.toLowerCase().replace(/\s+/g, '.')}@example.com`,
-      address: form.address || 'Knowledge Park, Varanasi',
+      address: form.address || 'Vihar Gali No. 3, Utthan Road, Jhalwa, Prayagraj',
       course: form.course,
       batch: form.batch,
       admissionDate: new Date().toISOString().split('T')[0],

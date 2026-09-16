@@ -11,7 +11,7 @@ export const ContactSection: React.FC = () => {
   const director = websiteSettings?.directorName || 'Dr. R. K. Sharma';
   const phone = websiteSettings?.contactPhone || '+91 98765 43210';
   const email = websiteSettings?.contactEmail || 'admissions@educaveda.com';
-  const address = websiteSettings?.contactAddress || 'Educa Institute Campus, Knowledge Park, Varanasi & New Delhi.';
+  const address = websiteSettings?.contactAddress || 'Vihar Gali No. 3, Utthan Road, Jhalwa, Prayagraj';
 
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();

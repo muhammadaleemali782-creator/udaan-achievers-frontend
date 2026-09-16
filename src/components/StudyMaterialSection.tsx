@@ -33,7 +33,7 @@ export const StudyMaterialSection: React.FC = () => {
     { id: 'pyq', label: 'Past Papers', icon: Clock }
   ];
 
-  const classFilters = ['all', 'Class 8', 'Class 9', 'Class 10', 'Class 12', 'Computer / DCA', 'English Speaking'];
+  const classFilters = ['all', 'WCNA Program', 'WCFM Program', 'Wellness Coaching', 'Ayurveda', 'Naturopathy', 'Diet & Lifestyle'];
 
   const filteredMaterials = studyMaterials.filter(mat => {
     if (!mat) return false;

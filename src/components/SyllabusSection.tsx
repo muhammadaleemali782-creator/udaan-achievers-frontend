@@ -1,13 +1,13 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import { BookOpen, Download, ChevronDown, ChevronUp, CheckCircle2, Sparkles, Clock, Target, Layers, FileText, Award, ShieldCheck, Flame, BookCheck } from 'lucide-react';
 
 export const SyllabusSection: React.FC = () => {
   const { syllabuses, showToast } = useApp();
-  const [selectedClass, setSelectedClass] = useState<string>('Class 10');
+  const [selectedClass, setSelectedClass] = useState<string>('WCNA Certification');
   const [openChapterIdx, setOpenChapterIdx] = useState<number | null>(0); // Default first chapter expanded
 
-  const classes = ['Class 8', 'Class 9', 'Class 10', 'Class 12', 'Computer / DCA', 'English Speaking'];
+  const classes = ['WCNA Certification', 'WCFM Certification'];
 
   const activeSyllabus = syllabuses.find(s => s.targetClass === selectedClass) || syllabuses[0];
 

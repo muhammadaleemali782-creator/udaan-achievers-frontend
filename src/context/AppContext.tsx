@@ -237,7 +237,7 @@ const INITIAL_SETTINGS: WebsiteSettings = {
   directorName: 'Dr. R. K. Sharma',
   contactPhone: '+91 98765 43210',
   contactEmail: 'admissions@educaveda.com',
-  contactAddress: 'Educa Institute Campus, Knowledge Park, Varanasi & New Delhi',
+  contactAddress: 'Vihar Gali No. 3, Utthan Road, Jhalwa, Prayagraj',
   emergencyAlertText: 'Admissions Open for Session 2026–2027 (WCNA & WCFM Programs)',
   noticeTickerSpeed: 'normal',
   heroBadgeText: "INDIA'S PREMIER CONSULTANCY INSTITUTE",
@@ -304,8 +304,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const [courses, setCourses] = useState<Course[]>(() => loadSaved('educa_courses_v3', INITIAL_COURSES));
-  const [studyMaterials, setStudyMaterials] = useState<StudyMaterial[]>(() => loadSaved('lcc_study_materials', INITIAL_STUDY_MATERIALS));
-  const [syllabuses, setSyllabuses] = useState<SyllabusItem[]>(() => loadSaved('lcc_syllabus', INITIAL_SYLLABUS));
+  const [studyMaterials, setStudyMaterials] = useState<StudyMaterial[]>(() => loadSaved('educa_study_materials_v2', INITIAL_STUDY_MATERIALS));
+  const [syllabuses, setSyllabuses] = useState<SyllabusItem[]>(() => loadSaved('educa_syllabus_v2', INITIAL_SYLLABUS));
   const [notices, setNotices] = useState<Notice[]>(() => loadSaved('lcc_notices', INITIAL_NOTICES));
   const [videos, setVideos] = useState<VideoLecture[]>(() => loadSaved('lcc_videos', INITIAL_VIDEOS));
   const [instagramPosts, setInstagramPosts] = useState<InstagramPost[]>(() => loadSaved('lcc_instagram', INITIAL_INSTAGRAM_POSTS));
@@ -989,7 +989,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
     setStudyMaterials(prev => {
       const updated = [newMat, ...prev];
-      saveItem('lcc_study_materials', updated);
+      saveItem('educa_study_materials_v2', updated);
       return updated;
     });
     showToast(`Material "${newMat.title}" published!`, 'success');
@@ -999,7 +999,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     api.media.deletePDF(id).catch(() => {});
     setStudyMaterials(prev => {
       const updated = prev.filter(m => m.id !== id);
-      saveItem('lcc_study_materials', updated);
+      saveItem('educa_study_materials_v2', updated);
       return updated;
     });
     showToast('Study material deleted.', 'info');

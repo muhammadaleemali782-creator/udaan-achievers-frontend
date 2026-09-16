@@ -68,7 +68,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ feeRecord, transacti
               एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • वाराणसी एवं नई दिल्ली
             </p>
             <p className="text-[10px] text-slate-500">
-              Knowledge Park, Varanasi & New Delhi | Phone: +91 98765 43210 | admissions@educaveda.com
+              Vihar Gali No. 3, Utthan Road, Jhalwa, Prayagraj | Phone: +91 98765 43210 | admissions@educaveda.com
             </p>
             <div className="inline-block mt-2 px-3 py-0.5 rounded-full bg-slate-100 border border-slate-300 text-[10px] font-mono font-bold text-slate-700 uppercase">
               Official Student Fee Payment Voucher
