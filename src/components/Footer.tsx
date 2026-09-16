@@ -129,7 +129,7 @@ export const Footer: React.FC = () => {
         {/* Bottom Copyright Strip */}
         <div className="pt-8 border-t border-slate-100 text-center space-y-2">
           <p className="text-xs text-slate-500 font-medium leading-relaxed">
-            © 2016 – 2026 <strong>{websiteSettings?.instituteName || 'Educa Institute of Consultancy'}</strong>, Varanasi, Uttar Pradesh. Directed by <strong>{websiteSettings?.directorName || 'Dr. R. K. Sharma'}</strong>.
+            © 2016 – 2026 <strong>{websiteSettings?.instituteName || 'Educa Institute of Consultancy'}</strong>, Prayagraj, Uttar Pradesh. Directed by <strong>{websiteSettings?.directorName || 'Dr. R. K. Sharma'}</strong>.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] text-slate-400 font-medium">
             <span>ISO 9001:2015 Certified Consultancy Center</span>

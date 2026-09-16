@@ -237,7 +237,7 @@ const INITIAL_SETTINGS: WebsiteSettings = {
   directorName: 'Dr. R. K. Sharma',
   contactPhone: '+91 98765 43210',
   contactEmail: 'admissions@educaveda.com',
-  contactAddress: 'Vihar Gali No. 3, Utthan Road, Jhalwa, Prayagraj',
+  contactAddress: 'VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ',
   emergencyAlertText: 'Admissions Open for Session 2026–2027 (WCNA & WCFM Programs)',
   noticeTickerSpeed: 'normal',
   heroBadgeText: "INDIA'S PREMIER CONSULTANCY INSTITUTE",
@@ -319,6 +319,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [socialLinks, setSocialLinks] = useState<SocialLink[]>(() => loadSaved('lcc_social_links', INITIAL_SOCIALS));
   const [websiteSettings, setWebsiteSettings] = useState<WebsiteSettings>(() => {
     const saved = loadSaved<WebsiteSettings>('lcc_website_settings', INITIAL_SETTINGS);
+    saved.contactAddress = 'VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ';
     const overrides = loadSaved<Record<string, any>>('lcc_visual_overrides', {});
     if (overrides && Object.keys(overrides).length > 0) {
       saved.visualOverrides = { ...(saved.visualOverrides || {}), ...overrides };

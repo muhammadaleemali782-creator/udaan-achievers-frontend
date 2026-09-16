@@ -129,7 +129,7 @@ export const Navbar: React.FC = () => {
             {websiteSettings?.instituteName || 'EDUCA INSTITUTE OF CONSULTANCY'}
           </h1>
           <h2 className="text-sm sm:text-xl lg:text-2xl font-black text-[#D32F2F] tracking-wide leading-tight">
-            एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • वाराणसी एवं नई दिल्ली
+            एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज
           </h2>
           <p className="text-[10px] sm:text-xs font-bold text-slate-600 hidden sm:block">
             (A Premier Institute for Naturopathy, Ayurveda & Wealth Management Consultancy)
