@@ -4,7 +4,7 @@ import { User, Mail, Lock, Phone, X, GraduationCap, ArrowRight, Loader2, KeyRoun
 import { ForgotPasswordModal } from './ForgotPasswordModal';
 
 export const StudentAuthModal: React.FC = () => {
-  const { isStudentAuthModalOpen, setIsStudentAuthModalOpen, loginStudent, registerStudent, updateStudentPassword, navigateTo, showToast } = useApp();
+  const { isStudentAuthModalOpen, setIsStudentAuthModalOpen, loginStudent, loginAdmin, registerStudent, updateStudentPassword, navigateTo, showToast } = useApp();
   const [tab, setTab] = useState<'login' | 'register'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -49,11 +49,25 @@ export const StudentAuthModal: React.FC = () => {
 
     if (tab === 'login') {
       if (!email || !password) {
-        showToast('Please enter both student email and password.', 'warning');
+        showToast('Please enter both email and password.', 'warning');
         setIsLoading(false);
         return;
       }
-      const success = await loginStudent(email.trim(), password);
+
+      const cleanEmail = email.trim().toLowerCase();
+      // Seamlessly detect admin credentials
+      if (cleanEmail === 'admin@educa.com' || cleanEmail === 'admin@educaveda.com' || cleanEmail === 'admin@educainstitute.com' || cleanEmail === 'admin') {
+        const success = await loginAdmin(cleanEmail, password);
+        setIsLoading(false);
+        if (success) {
+          setIsStudentAuthModalOpen(false);
+          setEmail('');
+          setPassword('');
+        }
+        return;
+      }
+
+      const success = await loginStudent(cleanEmail, password);
       setIsLoading(false);
       if (success) {
         // If the user's password was temporary or needs reset, prompt right here
@@ -108,8 +122,8 @@ export const StudentAuthModal: React.FC = () => {
               className="w-10 h-10 rounded-xl object-contain bg-white shadow-sm border border-white/20"
             />
             <div>
-              <h3 className="text-sm sm:text-base font-black">Educa Institute Student Portal</h3>
-              <span className="text-[11px] text-blue-100 font-medium">Academic, Tests & Counseling Desk</span>
+              <h3 className="text-sm sm:text-base font-black">Educa Institute Portal</h3>
+              <span className="text-[11px] text-blue-100 font-medium">Enter your credentials to continue</span>
             </div>
           </div>
 
@@ -271,7 +285,7 @@ export const StudentAuthModal: React.FC = () => {
                       <input
                         type="email"
                         required
-                        placeholder="name@example.com"
+                        placeholder="name@educa.com"
                         value={email}
                         onChange={e => setEmail(e.target.value)}
                         className="w-full pl-9 pr-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-[#0066FF]"

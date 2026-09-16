@@ -198,57 +198,49 @@ export const Navbar: React.FC = () => {
             )}
           </button>
 
-          {/* Unified Auth Button: Admin Desk when admin logged in, Student Profile when student logged in, Student Portal otherwise */}
-          {isAdminAuthenticated ? (
-            <button
-              onClick={() => navigateTo('admin-panel')}
-              className="px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white text-[11px] sm:text-xs font-black uppercase tracking-wider shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
-              title="Open Director Admin Panel"
-            >
-              <Shield className="w-3.5 h-3.5" />
-              <span className="whitespace-nowrap font-black">Admin Desk</span>
-            </button>
-          ) : currentStudent ? (
-            <div className="flex items-center gap-1 sm:gap-2">
+          {/* Desktop/Tablet Auth Only - Hidden on Mobile (Mobile has bottom nav bar Login) */}
+          <div className="hidden md:flex items-center gap-1.5 sm:gap-2">
+            {isAdminAuthenticated ? (
               <button
-                onClick={() => navigateTo('student-portal')}
-                className="flex items-center gap-1.5 sm:gap-2 bg-white/10 hover:bg-white/20 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-white/20 transition-all cursor-pointer"
+                onClick={() => navigateTo('admin-panel')}
+                className="px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white text-[11px] sm:text-xs font-black uppercase tracking-wider shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
+                title="Open Director Admin Panel"
               >
-                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-amber-400 text-slate-950 font-bold text-[10px] sm:text-xs flex items-center justify-center">
-                  {(currentStudent.name || 'S').charAt(0).toUpperCase()}
-                </div>
-                <span className="text-[11px] sm:text-xs font-bold text-white hidden sm:inline truncate max-w-[100px]">
-                  {(currentStudent.name || 'Student').split(' ')[0]}
-                </span>
+                <Shield className="w-3.5 h-3.5" />
+                <span className="whitespace-nowrap font-black">Admin Desk</span>
               </button>
-              <button
-                onClick={logoutStudent}
-                className="p-1.5 rounded-full hover:bg-white/10 text-white/70 hover:text-white transition-colors cursor-pointer"
-                title="Log Out"
-              >
-                <X className="w-3.5 h-3.5" />
-              </button>
-            </div>
-          ) : (
-            <div className="flex items-center gap-1.5 sm:gap-2">
+            ) : currentStudent ? (
+              <div className="flex items-center gap-1 sm:gap-2">
+                <button
+                  onClick={() => navigateTo('student-portal')}
+                  className="flex items-center gap-1.5 sm:gap-2 bg-white/10 hover:bg-white/20 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-white/20 transition-all cursor-pointer"
+                >
+                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-amber-400 text-slate-950 font-bold text-[10px] sm:text-xs flex items-center justify-center">
+                    {(currentStudent.name || 'S').charAt(0).toUpperCase()}
+                  </div>
+                  <span className="text-[11px] sm:text-xs font-bold text-white hidden sm:inline truncate max-w-[100px]">
+                    {(currentStudent.name || 'Student').split(' ')[0]}
+                  </span>
+                </button>
+                <button
+                  onClick={logoutStudent}
+                  className="p-1.5 rounded-full hover:bg-white/10 text-white/70 hover:text-white transition-colors cursor-pointer"
+                  title="Log Out"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            ) : (
               <button
                 onClick={() => setIsStudentAuthModalOpen(true)}
-                className="px-2.5 sm:px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-[10px] sm:text-xs font-bold transition-all flex items-center gap-1 cursor-pointer"
-                title="Student Portal"
+                className="px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 text-[11px] sm:text-xs font-black uppercase tracking-wider shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
+                title="Access Portal"
               >
-                <User className="w-3 h-3 text-amber-300" />
-                <span className="hidden xs:inline">Student</span>
-              </button>
-              <button
-                onClick={() => setIsAdminAuthModalOpen(true)}
-                className="px-3 sm:px-4 py-1.5 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 text-[10px] sm:text-xs font-black uppercase tracking-wider shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
-                title="Admin Control Center"
-              >
-                <Shield className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-slate-950" />
+                <User className="w-3.5 h-3.5 text-slate-950" />
                 <span className="whitespace-nowrap font-black">Portal Login</span>
               </button>
-            </div>
-          )}
+            )}
+          </div>
 
           {/* Mobile Hamburger Toggle */}
           <button
@@ -367,7 +359,9 @@ export const Navbar: React.FC = () => {
 
           <button
             onClick={() => {
-              if (currentStudent) {
+              if (isAdminAuthenticated) {
+                navigateTo('admin-panel');
+              } else if (currentStudent) {
                 navigateTo('student-portal');
               } else {
                 setIsStudentAuthModalOpen(true);
@@ -378,7 +372,7 @@ export const Navbar: React.FC = () => {
             }`}
           >
             <User className="w-5 h-5" />
-            <span>{currentStudent ? 'Portal' : 'Login'}</span>
+            <span>{isAdminAuthenticated ? 'Admin' : currentStudent ? 'Portal' : 'Login'}</span>
           </button>
         </div>
       )}

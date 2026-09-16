@@ -396,7 +396,7 @@ export const INITIAL_STUDENTS: Student[] = [
   {
     id: 'stu-demo',
     name: 'Aarav Patel',
-    email: 'aarav@educaveda.com',
+    email: 'aarav@educa.com',
     phone: '+91 98765 43210',
     classEnrolled: 'WCNA Program',
     enrolledCourses: ['c-wcna'],
@@ -410,7 +410,7 @@ export const INITIAL_STUDENTS: Student[] = [
   {
     id: 'stu-2',
     name: 'Sneha Kumari',
-    email: 'sneha@educaveda.com',
+    email: 'sneha@educa.com',
     phone: '+91 98765 11223',
     classEnrolled: 'WCFM Program',
     enrolledCourses: ['c-wcfm'],
@@ -426,7 +426,7 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
   {
     id: 'TXN-98421',
     studentName: 'Aarav Patel',
-    studentEmail: 'aarav@educaveda.com',
+    studentEmail: 'aarav@educa.com',
     studentPhone: '+91 98765 43210',
     courseId: 'c-wcna',
     courseName: 'WCNA [ WELLNESS CONSULTANCY IN NATUROPATHY AND AYURVEDA ]',
@@ -439,7 +439,7 @@ export const INITIAL_TRANSACTIONS: Transaction[] = [
   {
     id: 'TXN-98420',
     studentName: 'Sneha Kumari',
-    studentEmail: 'sneha@educaveda.com',
+    studentEmail: 'sneha@educa.com',
     studentPhone: '+91 98765 11223',
     courseId: 'c-wcfm',
     courseName: 'WCFM [ WEALTH CONSULTANCY IN FINANCE MANAGEMENT ]',

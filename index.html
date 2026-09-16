@@ -148,10 +148,10 @@
     <script>
       (function() {
         try {
-          var rawOverrides = localStorage.getItem('educa_visual_overrides');
+          var rawOverrides = localStorage.getItem('educa_visual_overrides') || localStorage.getItem('lcc_visual_overrides');
           var overrides = rawOverrides ? JSON.parse(rawOverrides) : null;
           if (!overrides || Object.keys(overrides).length === 0) {
-            var rawSets = localStorage.getItem('educa_website_settings');
+            var rawSets = localStorage.getItem('educa_website_settings') || localStorage.getItem('lcc_website_settings');
             if (rawSets) {
               var sets = JSON.parse(rawSets);
               overrides = sets.visualOverrides || null;
@@ -186,6 +186,60 @@
               style.textContent = css;
               document.head.appendChild(style);
             }
+
+            function applySingle(item) {
+              if (!item) return;
+              var el = null;
+              if (item.selector) {
+                try { el = document.querySelector(item.selector); } catch(e){}
+              }
+              if (!el && item.originalValue) {
+                if (item.type === 'image') {
+                  var imgs = document.querySelectorAll('img');
+                  for (var i = 0; i < imgs.length; i++) {
+                    if (imgs[i].src === item.originalValue || imgs[i].getAttribute('src') === item.originalValue) {
+                      el = imgs[i]; break;
+                    }
+                  }
+                } else {
+                  var candidates = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, span, a, button, li, div');
+                  for (var j = 0; j < candidates.length; j++) {
+                    if (candidates[j].textContent && candidates[j].textContent.trim() === item.originalValue.trim()) {
+                      el = candidates[j]; break;
+                    }
+                  }
+                }
+              }
+              if (el) {
+                if (item.isHidden || item.display === 'none') {
+                  el.style.display = 'none';
+                }
+                if (item.type === 'image' && item.value && el.src !== item.value) {
+                  el.src = item.value;
+                } else if (item.value && (item.type === 'text' || !item.type) && el.innerText !== item.value) {
+                  el.innerText = item.value;
+                }
+                if (item.backgroundColor && el.style.backgroundColor !== item.backgroundColor) {
+                  el.style.backgroundColor = item.backgroundColor;
+                }
+                if (item.textColor && el.style.color !== item.textColor) {
+                  el.style.color = item.textColor;
+                }
+              }
+            }
+
+            function applyAll() {
+              for (var k in overrides) {
+                applySingle(overrides[k]);
+              }
+            }
+
+            var obs = new MutationObserver(function() {
+              applyAll();
+            });
+            obs.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+            document.addEventListener('DOMContentLoaded', applyAll);
+            window.addEventListener('load', applyAll);
           }
         } catch (e) {}
       })();

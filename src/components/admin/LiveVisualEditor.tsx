@@ -314,12 +314,15 @@ export const applyVisualOverrides = (overrides?: Record<string, VisualOverrideIt
     }
 
     if (targetEl) {
+      if (item.isHidden || item.display === 'none') {
+        targetEl.style.display = 'none';
+      }
       if (item.type === 'image' && item.value) {
         const img = targetEl as HTMLImageElement;
         if (img.src !== item.value) {
           img.src = item.value;
         }
-      } else if (item.value && targetEl.children.length === 0) {
+      } else if (item.value) {
         if (targetEl.innerText !== item.value) {
           targetEl.innerText = item.value;
         }
@@ -603,7 +606,7 @@ export const LiveVisualEditor: React.FC = () => {
     if (!clickedTarget || !clickedTarget.elementRef) return;
     const el = clickedTarget.elementRef;
     el.style.display = 'none';
-    const sel = clickedTarget.selector || (el.id ? `#${el.id}` : el.tagName.toLowerCase());
+    const sel = getDomPath(el);
 
     const current = websiteSettings.visualOverrides || {};
     const updatedOverrides: Record<string, any> = {
@@ -612,7 +615,8 @@ export const LiveVisualEditor: React.FC = () => {
         ...(current[sel] || {}),
         selector: sel,
         display: 'none',
-        isHidden: true
+        isHidden: true,
+        originalValue: clickedTarget.originalValue || ''
       }
     };
     const updatedSettings = {

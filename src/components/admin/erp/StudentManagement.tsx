@@ -51,7 +51,7 @@ export const StudentManagement: React.FC = () => {
       studentId: generateStudentId(),
       name: form.name,
       mobile: form.mobile,
-      email: form.email || `${form.name.toLowerCase().replace(/\s+/g, '.')}@example.com`,
+      email: form.email || `${form.name.toLowerCase().replace(/[^a-z0-9]/g, '.').replace(/\.+/g, '.')}@educa.com`,
       address: form.address || 'Vihar Gali No. 3, Utthan Road, Jhalwa, Prayagraj',
       course: form.course,
       batch: form.batch,
@@ -264,7 +264,7 @@ export const StudentManagement: React.FC = () => {
                 <label className="font-semibold text-slate-700 block mb-1">Email Address</label>
                 <input
                   type="email"
-                  placeholder="student@example.com"
+                  placeholder="student@educa.com"
                   value={form.email}
                   onChange={e => setForm({ ...form, email: e.target.value })}
                   className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 focus:outline-none focus:border-indigo-500"

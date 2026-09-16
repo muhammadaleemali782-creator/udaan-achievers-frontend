@@ -68,7 +68,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ feeRecord, transacti
               एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज
             </p>
             <p className="text-[10px] text-slate-500">
-              VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ | Phone: +91 98765 43210 | admissions@educaveda.com
+              VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ | Phone: +91 98765 43210 | admissions@educa.com
             </p>
             <div className="inline-block mt-2 px-3 py-0.5 rounded-full bg-slate-100 border border-slate-300 text-[10px] font-mono font-bold text-slate-700 uppercase">
               Official Student Fee Payment Voucher

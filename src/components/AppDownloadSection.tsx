@@ -310,7 +310,7 @@ export const AppDownloadSection: React.FC = () => {
                         AP
                       </div>
                       <h4 className="font-bold text-xs text-slate-900">Aarav Patel</h4>
-                      <span className="text-[10px] text-slate-400 block">aarav@educaveda.com</span>
+                      <span className="text-[10px] text-slate-400 block">aarav@educa.com</span>
                     </div>
 
                     <div className="space-y-1.5 text-[11px] font-bold text-slate-700">

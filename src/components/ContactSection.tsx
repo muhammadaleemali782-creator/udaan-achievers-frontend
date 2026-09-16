@@ -10,7 +10,7 @@ export const ContactSection: React.FC = () => {
 
   const director = websiteSettings?.directorName || 'Dr. R. K. Sharma';
   const phone = websiteSettings?.contactPhone || '+91 98765 43210';
-  const email = websiteSettings?.contactEmail || 'admissions@educaveda.com';
+  const email = websiteSettings?.contactEmail || 'admissions@educa.com';
   const address = websiteSettings?.contactAddress || 'VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ';
 
   const handleSend = (e: React.FormEvent) => {
