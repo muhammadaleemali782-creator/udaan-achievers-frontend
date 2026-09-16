@@ -1,310 +1,221 @@
-import React, { useEffect, useState, useMemo } from "react";
-import api from "../api";
-import CourseCard from "../components/CourseCard";
-import { Search } from "lucide-react";
-
-// Fallback WCNA Curriculum in case backend is loading
-const FALLBACK_WCNA_COURSES = [
-  {
-    "name": "WCNA \u2014 Wellness Consultancy of Naturopathy & Ayurveda",
-    "cat": "WCNA Program",
-    "level": "18 Months + 6 Mo Internship",
-    "price": 24999,
-    "oldPrice": 35000,
-    "seats": "Admissions Open",
-    "rating": 5.0,
-    "students": "540 enrolled",
-    "image": "/books/wcna_master_course.jpg",
-    "tag": "CAREER FOCUSED TRAINING",
-    "desc": "Complete 18-Month career focused training course in Wellness Consultancy of Naturopathy & Ayurveda with 6-month internship, personal guidance, and clinical case studies.",
-    "lectures": [
-      "Anatomy & Physiology",
-      "Rogshashtra",
-      "Principal of Ayurveda",
-      "Principal of Naturopathy",
-      "Diet & Nutrition",
-      "Yoga Science",
-      "Counselling Skills",
-      "Objection & Solution",
-      "Client Follow Up",
-      "Wellness Center Setup",
-      "20+ Wellness Case Studies"
-    ]
-  },
-  {
-    "name": "WCNA: Wellness Coaching (BOOK 01)",
-    "cat": "Curriculum Books",
-    "level": "Book 01",
-    "price": 499,
-    "oldPrice": 799,
-    "seats": "Instant Access",
-    "rating": 4.9,
-    "students": "320+ copies",
-    "image": "/books/book1_wellness_coaching.jpg",
-    "tag": "FOUNDATION",
-    "desc": "Essential introduction to modern wellness coaching, client mindset transformation, and holistic health philosophy.",
-    "lectures": [
-      "Holistic Health Principles",
-      "Client Mindset Shifts",
-      "Goal Setting",
-      "Wellness Dimensions"
-    ]
-  },
-  {
-    "name": "WCNA: Naturopathy Basics (BOOK 02)",
-    "cat": "Curriculum Books",
-    "level": "Book 02",
-    "price": 549,
-    "oldPrice": 849,
-    "seats": "Instant Access",
-    "rating": 4.9,
-    "students": "320+ copies",
-    "image": "/books/book2_naturopathy_basics.jpg",
-    "tag": "NATURE CURE",
-    "desc": "Core principles of Naturopathic healing, 5 elements therapy, hydrotherapy, mud packs, and natural body detoxification.",
-    "lectures": [
-      "5 Elements Therapy",
-      "Hydrotherapy",
-      "Mud Therapy",
-      "Fasting & Detoxification"
-    ]
-  },
-  {
-    "name": "WCNA: Ayurveda Basics (BOOK 03)",
-    "cat": "Curriculum Books",
-    "level": "Book 03",
-    "price": 599,
-    "oldPrice": 899,
-    "seats": "Instant Access",
-    "rating": 4.9,
-    "students": "320+ copies",
-    "image": "/books/book3_ayurveda_basics.jpg",
-    "tag": "ANCIENT WISDOM",
-    "desc": "Foundational Ayurvedic concepts: Vata, Pitta, Kapha assessment, Agni, Ama diagnostics, and body constitution analysis.",
-    "lectures": [
-      "Tridosha Analysis",
-      "Dhatu & Mala Science",
-      "Prakriti Assessment",
-      "Agni & Ama Diagnostics"
-    ]
-  },
-  {
-    "name": "WCNA: Client Assessment (BOOK 05)",
-    "cat": "Curriculum Books",
-    "level": "Book 05",
-    "price": 649,
-    "oldPrice": 949,
-    "seats": "Instant Access",
-    "rating": 4.9,
-    "students": "320+ copies",
-    "image": "/books/book5_client_assessment.jpg",
-    "tag": "CLINICAL PRACTICE",
-    "desc": "Comprehensive framework for evaluating client medical history, physical symptoms, stress markers, and lifestyle assessment.",
-    "lectures": [
-      "Health Intake Forms",
-      "Nadi & Tongue Observation",
-      "Vital Marker Analysis",
-      "Lifestyle Stress Auditing"
-    ]
-  },
-  {
-    "name": "WCNA: Diet Planning (BOOK 06)",
-    "cat": "Curriculum Books",
-    "level": "Book 06",
-    "price": 599,
-    "oldPrice": 899,
-    "seats": "Instant Access",
-    "rating": 4.9,
-    "students": "320+ copies",
-    "image": "/books/book6_diet_planning.jpg",
-    "tag": "NUTRITION",
-    "desc": "Scientific diet design combining Ahara principles, sattvic nutrition, calorie balance, and customized disease meal charts.",
-    "lectures": [
-      "Ahara Vidhi",
-      "Sattvic Nutrition",
-      "Therapeutic Diet Charts",
-      "Calorie & Micro-nutrient Balance"
-    ]
-  },
-  {
-    "name": "WCNA: Lifestyle & Routine (BOOK 07)",
-    "cat": "Curriculum Books",
-    "level": "Book 07",
-    "price": 499,
-    "oldPrice": 799,
-    "seats": "Instant Access",
-    "rating": 4.9,
-    "students": "320+ copies",
-    "image": "/books/book7_lifestyle_coaching.jpg",
-    "tag": "DAILY HABITS",
-    "desc": "Step-by-step coaching tools for sleep optimization, morning rituals, stress reduction, and habit formation.",
-    "lectures": [
-      "Dinacharya Protocol",
-      "Circadian Rhythm Biology",
-      "Sleep Architecture",
-      "Stress & Breathwork"
-    ]
-  },
-  {
-    "name": "WCNA: Managing Diseases (BOOK 08)",
-    "cat": "Clinical Practice",
-    "level": "Book 08",
-    "price": 749,
-    "oldPrice": 1099,
-    "seats": "Instant Access",
-    "rating": 4.9,
-    "students": "320+ copies",
-    "image": "/books/book8_managing_diseases.jpg",
-    "tag": "REVERSAL PROTOCOLS",
-    "desc": "Proven holistic protocols for managing Diabetes, Hypertension, Thyroid imbalances, PCOD, and Digestive disorders.",
-    "lectures": [
-      "Metabolic Syndrome",
-      "Hypertension Protocols",
-      "Thyroid Management",
-      "Gut & Acid Reflux Protocols"
-    ]
-  },
-  {
-    "name": "WCNA: Herbs & Supplements (BOOK 09)",
-    "cat": "Clinical Practice",
-    "level": "Book 09",
-    "price": 699,
-    "oldPrice": 999,
-    "seats": "Instant Access",
-    "rating": 4.9,
-    "students": "320+ copies",
-    "image": "/books/book9_herbs_supplements.jpg",
-    "tag": "HERBOLOGY",
-    "desc": "Practical guide to potent medicinal herbs, classical formulations, safe dosages, contraindications, and supplement pairing.",
-    "lectures": [
-      "Classical Formulations",
-      "Herb Synergy & Anupana",
-      "Dosage & Toxicity Safety",
-      "Modern Supplement Pairings"
-    ]
-  },
-  {
-    "name": "WCNA: Communication Skills (BOOK 10)",
-    "cat": "Clinical Practice",
-    "level": "Book 10",
-    "price": 599,
-    "oldPrice": 899,
-    "seats": "Instant Access",
-    "rating": 4.9,
-    "students": "320+ copies",
-    "image": "/books/book10_client_communication.jpg",
-    "tag": "CONSULTANCY PRACTICE",
-    "desc": "Advanced consulting psychology, overcoming client objections, long-term retention, and establishing a successful wellness center.",
-    "lectures": [
-      "Counseling Psychology",
-      "Objection Handling",
-      "Client Retention System",
-      "Wellness Center Setup"
-    ]
-  }
-];
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { CheckCircle2, Clock, Calendar, Users, Award, ArrowRight, Sparkles } from "lucide-react";
+import PublicNavbar from "../components/PublicNavbar";
+import PublicFooter from "../components/PublicFooter";
 
 export default function Courses() {
-  const [courses, setCourses] = useState([]);
-  const [cat, setCat] = useState("all");
-  const [search, setSearch] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("all");
 
-  useEffect(() => {
-    api
-      .get("/api/courses")
-      .then((res) => {
-        if (res.data && res.data.length > 0) {
-          setCourses(res.data);
-        } else {
-          setCourses(FALLBACK_WCNA_COURSES);
-        }
-      })
-      .catch(() => setCourses(FALLBACK_WCNA_COURSES))
-      .finally(() => setLoading(false));
-  }, []);
+  const programs = [
+    {
+      id: "wcna",
+      code: "WCNA",
+      title: "Wellness Consultancy in Naturopathy & Ayurveda",
+      tagline: "Flagship Holistic Healthcare Certification",
+      duration: "6 Months",
+      fee: "₹25,000",
+      seats: "40 Seats per batch",
+      leadFaculty: "Dr. R. K. Sharma (BAMS, MD Naturopathy)",
+      color: "emerald",
+      overview: "Designed for aspiring holistic health consultants, lifestyle advisors, and wellness center directors. Combines foundational Ayurvedic biology, Tridosha analysis, and clinical Naturopathic therapies.",
+      modules: [
+        "Human Anatomy & Functional Physiology",
+        "Rogshashtra & Diagnostics Framework",
+        "Foundational Principles of Ayurveda & Tridoshas",
+        "Naturopathic Hydrotherapy & Mud Packs",
+        "Nutritional Diet Planning & Ahara Vidhi",
+        "Clinical Case Studies & Patient Management",
+        "Wellness Practice Setup & Ethical Standards"
+      ],
+      batches: [
+        { name: "WCNA Morning Alpha", timing: "08:00 AM – 10:30 AM", days: "Mon, Wed, Fri" },
+        { name: "WCNA Weekend Pro", timing: "10:00 AM – 02:00 PM", days: "Saturday & Sunday" }
+      ]
+    },
+    {
+      id: "wcfm",
+      code: "WCFM",
+      title: "Wealth Consultancy in Finance Management",
+      tagline: "Professional Financial Advisory & Valuation Certification",
+      duration: "6 Months",
+      fee: "₹30,000",
+      seats: "35 Seats per batch",
+      leadFaculty: "Prof. Arvind Mehta (CFA, FinOps Advisory)",
+      color: "indigo",
+      overview: "Built for finance executives, portfolio consultants, and wealth advisors. In-depth focus on DCF modeling, financial statement analysis, asset allocation, and wealth tax advisory.",
+      modules: [
+        "Corporate Financial Analysis & Modeling",
+        "Portfolio Engineering & Risk Optimization",
+        "Corporate Valuation & DCF Methodologies",
+        "Personal Wealth & Asset Allocation Strategies",
+        "Tax Structuring & Regulatory Compliance",
+        "Client Advisory & Consulting Practice",
+        "Cap-table Management & Seed Investments"
+      ],
+      batches: [
+        { name: "WCFM Evening Prime", timing: "05:30 PM – 08:00 PM", days: "Tue, Thu, Sat" },
+        { name: "WCFM Weekend Master", timing: "02:00 PM – 06:00 PM", days: "Sunday" }
+      ]
+    }
+  ];
 
-  const displayList = courses.length > 0 ? courses : FALLBACK_WCNA_COURSES;
-
-  const categories = useMemo(() => [
-    { id: "all", label: "All Curriculum & Books", count: displayList.length },
-    { id: "WCNA Program", label: "WCNA Master Program", count: displayList.filter(c => c.cat === "WCNA Program").length },
-    { id: "Curriculum Books", label: "Curriculum Books (01 - 07)", count: displayList.filter(c => c.cat === "Curriculum Books").length },
-    { id: "Clinical Practice", label: "Clinical & Coaching (08 - 10)", count: displayList.filter(c => c.cat === "Clinical Practice").length },
-  ], [displayList]);
-
-  const filtered = useMemo(() => {
-    return displayList.filter((c) => {
-      const matchCat = cat === "all" || c.cat === cat;
-      const matchSearch =
-        !search ||
-        c.name.toLowerCase().includes(search.toLowerCase()) ||
-        (c.desc && c.desc.toLowerCase().includes(search.toLowerCase()));
-      return matchCat && matchSearch;
-    });
-  }, [displayList, cat, search]);
+  const filteredPrograms = activeTab === "all" ? programs : programs.filter(p => p.id === activeTab);
 
   return (
-    <div className="bg-paper min-h-screen py-10 md:py-16">
-      <div className="max-w-6xl mx-auto px-4 md:px-8">
-        
-        {/* Header */}
-        <div className="text-center max-w-2xl mx-auto mb-10">
-          <p className="font-mono text-xs text-tealDark font-bold uppercase tracking-wider mb-2">
-            🌿 EDUCA VEDA · UDAAN ACHIEVERS
-          </p>
-          <h1 className="font-display text-3xl md:text-5xl text-charcoal mb-4">
-            WCNA Curriculum &amp; Study Books
+    <div className="min-h-screen bg-slate-50 flex flex-col text-slate-900">
+      <PublicNavbar />
+
+      {/* Page Header */}
+      <section className="bg-white border-b border-slate-200 py-14 md:py-20">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+          <span className="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs font-bold">
+            ACADEMIC CURRICULUM
+          </span>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
+            Comprehensive Programs &amp; Batch Schedules
           </h1>
-          <p className="font-body text-sm md:text-base text-muted">
-            18-Month Career Focused Training Course in Naturopathy &amp; Ayurveda with 10 comprehensive study books, 20+ clinical case studies, and 1:1 guidance.
+          <p className="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+            Detailed curriculum specifications, faculty assignments, fee breakdowns, and active batch timetables.
           </p>
+
+          {/* Filter Pills */}
+          <div className="flex items-center justify-center gap-2 pt-4">
+            <button
+              onClick={() => setActiveTab("all")}
+              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                activeTab === "all"
+                  ? "bg-slate-900 text-white shadow-sm"
+                  : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+              }`}
+            >
+              All Programs (2)
+            </button>
+            <button
+              onClick={() => setActiveTab("wcna")}
+              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                activeTab === "wcna"
+                  ? "bg-emerald-600 text-white shadow-sm"
+                  : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+              }`}
+            >
+              WCNA (Naturopathy &amp; Ayurveda)
+            </button>
+            <button
+              onClick={() => setActiveTab("wcfm")}
+              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+                activeTab === "wcfm"
+                  ? "bg-indigo-600 text-white shadow-sm"
+                  : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+              }`}
+            >
+              WCFM (Wealth &amp; Finance)
+            </button>
+          </div>
         </div>
+      </section>
 
-        {/* Filters and Search */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
-          <div className="flex items-center gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
-            {categories.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => setCat(item.id)}
-                className={`font-body text-xs font-semibold px-4 py-2 rounded-full whitespace-nowrap transition-colors ${
-                  cat === item.id
-                    ? "bg-ink text-white shadow-sm"
-                    : "bg-white border border-paperDark text-muted hover:text-charcoal"
-                }`}
-              >
-                {item.label} ({item.count})
-              </button>
-            ))}
-          </div>
+      {/* Program Details */}
+      <section className="py-16 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        {filteredPrograms.map((prog) => (
+          <div
+            key={prog.id}
+            className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+          >
+            <div className="p-6 sm:p-8 space-y-6">
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className={`px-2.5 py-0.5 rounded-md text-xs font-bold ${
+                      prog.color === "emerald"
+                        ? "bg-emerald-50 text-emerald-700 border border-emerald-200"
+                        : "bg-indigo-50 text-indigo-700 border border-indigo-200"
+                    }`}>
+                      {prog.code} PROGRAM
+                    </span>
+                    <span className="text-xs text-slate-500 font-medium">Duration: {prog.duration}</span>
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-2">{prog.title}</h2>
+                  <p className="text-xs sm:text-sm text-slate-500 font-medium mt-0.5">{prog.tagline}</p>
+                </div>
 
-          <div className="relative w-full md:w-72">
-            <input
-              type="text"
-              placeholder="Search books & modules..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full font-body text-xs px-4 py-2 pl-9 rounded-full bg-white border border-paperDark outline-none focus:border-ink"
-            />
-            <Search size={14} className="absolute left-3 top-2.5 text-muted" />
-          </div>
-        </div>
+                <div className="text-right">
+                  <p className="text-xs text-slate-500">Total Course Fee</p>
+                  <p className="text-2xl font-black text-slate-900">{prog.fee}</p>
+                  <span className="text-[11px] text-emerald-600 font-medium">Installment plans available</span>
+                </div>
+              </div>
 
-        {/* Grid */}
-        {filtered.length === 0 ? (
-          <div className="rounded-2xl p-12 text-center bg-white border border-paperDark">
-            <p className="font-body text-sm text-muted">Koi book ya course nahi mila.</p>
-          </div>
-        ) : (
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filtered.map((course, idx) => (
-              <CourseCard key={course._id || idx} course={course} />
-            ))}
-          </div>
-        )}
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100">
+                {prog.overview}
+              </p>
 
-      </div>
+              <div className="grid md:grid-cols-2 gap-8 pt-2">
+                {/* Modules */}
+                <div>
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 mb-3">
+                    Curriculum Modules (Theory + Practical)
+                  </h4>
+                  <ul className="space-y-2">
+                    {prog.modules.map((m, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-xs text-slate-700">
+                        <CheckCircle2 size={14} className={prog.color === "emerald" ? "text-emerald-500 mt-0.5 flex-shrink-0" : "text-indigo-500 mt-0.5 flex-shrink-0"} />
+                        <span>{m}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Batches & Faculty */}
+                <div className="space-y-5">
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 mb-2">
+                      Assigned Lead Faculty
+                    </h4>
+                    <p className="text-xs font-semibold text-slate-800 p-3 rounded-lg bg-slate-50 border border-slate-100">
+                      👨‍🏫 {prog.leadFaculty}
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-900 mb-2">
+                      Active Batch Timetables
+                    </h4>
+                    <div className="space-y-2">
+                      {prog.batches.map((b, bIdx) => (
+                        <div key={bIdx} className="p-3 rounded-lg bg-slate-50 border border-slate-100 text-xs flex justify-between items-center">
+                          <div>
+                            <span className="font-bold text-slate-800">{b.name}</span>
+                            <p className="text-[11px] text-slate-500">{b.days}</p>
+                          </div>
+                          <span className="font-mono text-[11px] text-indigo-600 font-semibold">{b.timing}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <span className="text-xs text-slate-500">
+                  Includes study manual, examination fees, and completion credential.
+                </span>
+                <Link
+                  to="/contact"
+                  className={`w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg text-white font-semibold text-xs transition-colors ${
+                    prog.color === "emerald" ? "bg-emerald-600 hover:bg-emerald-700" : "bg-indigo-600 hover:bg-indigo-700"
+                  }`}
+                >
+                  <span>Apply for {prog.code}</span>
+                  <ArrowRight size={14} />
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <PublicFooter />
     </div>
   );
 }

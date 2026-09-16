@@ -49,7 +49,7 @@ export default function ERPLayout({ children }) {
   const navItems = [
     {
       id: "dashboard",
-      path: "/",
+      path: "/dashboard",
       label: "Dashboard",
       icon: LayoutDashboard,
       badge: null,
@@ -71,7 +71,7 @@ export default function ERPLayout({ children }) {
     },
     {
       id: "courses",
-      path: "/courses",
+      path: "/erp/courses",
       label: "Courses & Batches",
       icon: BookOpen,
       badge: "WCNA / WCFM",
@@ -95,10 +95,7 @@ export default function ERPLayout({ children }) {
     },
   ];
 
-  const isActive = (path) => {
-    if (path === "/" && (location.pathname === "/" || location.pathname === "/dashboard")) return true;
-    return location.pathname.startsWith(path) && path !== "/";
-  };
+  const isActive = (path) => location.pathname === path;
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans antialiased flex flex-col selection:bg-indigo-500 selection:text-white">
@@ -154,9 +151,28 @@ export default function ERPLayout({ children }) {
 
             {/* Right: Quick Action & Profile */}
             <div className="flex items-center gap-3">
+              <Link
+                to="/"
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-xs transition-colors"
+              >
+                <span>🌐 Website</span>
+              </Link>
+
+              <button
+                onClick={() => {
+                  localStorage.removeItem("erp_user");
+                  toast.success("Signed out of ERP");
+                  navigate("/");
+                }}
+                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-rose-200 bg-white hover:bg-rose-50 text-rose-600 text-xs font-semibold shadow-xs transition-colors"
+                title="Sign out of ERP"
+              >
+                <span>Log Out</span>
+              </button>
+
               <button
                 onClick={() => navigate("/admissions?action=new")}
-                className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white text-xs font-semibold shadow-sm shadow-indigo-200 transition-all cursor-pointer"
+                className="hidden md:inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white text-xs font-semibold shadow-sm shadow-indigo-200 transition-all cursor-pointer"
               >
                 <PlusCircle size={15} />
                 <span>New Admission</span>
@@ -263,6 +279,13 @@ export default function ERPLayout({ children }) {
           })}
 
           <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
+            <Link
+              to="/"
+              onClick={() => setMobileMenuOpen(false)}
+              className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 text-xs font-bold"
+            >
+              <span>🌐 Public Website</span>
+            </Link>
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
@@ -272,6 +295,17 @@ export default function ERPLayout({ children }) {
             >
               <PlusCircle size={16} />
               <span>Create New Admission</span>
+            </button>
+            <button
+              onClick={() => {
+                localStorage.removeItem("erp_user");
+                setMobileMenuOpen(false);
+                toast.success("Signed out of ERP");
+                navigate("/");
+              }}
+              className="w-full flex items-center justify-center gap-2 py-2 rounded-xl border border-rose-200 text-rose-600 text-xs font-bold"
+            >
+              <span>Log Out of ERP</span>
             </button>
           </div>
         </div>

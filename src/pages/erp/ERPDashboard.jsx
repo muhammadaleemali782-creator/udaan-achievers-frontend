@@ -268,7 +268,7 @@ export default function ERPDashboard() {
             </p>
           </div>
           <Link
-            to="/courses"
+            to="/erp/courses"
             className="text-xs font-bold text-indigo-600 hover:text-indigo-800 flex items-center gap-1"
           >
             <span>All Courses &amp; Batches</span>
@@ -315,7 +315,7 @@ export default function ERPDashboard() {
                   Batches: <b className="text-slate-800">{course.batches.join(", ")}</b>
                 </span>
                 <Link
-                  to={`/courses?focus=${course.code}`}
+                  to={`/erp/courses?focus=${course.code}`}
                   className="text-xs font-bold text-indigo-600 hover:text-indigo-800 inline-flex items-center gap-1"
                 >
                   <span>Manage Batch Roster</span>
