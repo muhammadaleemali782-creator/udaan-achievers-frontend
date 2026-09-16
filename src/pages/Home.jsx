@@ -81,8 +81,8 @@ export default function Home() {
     {
       id: "c1",
       cat: "wcna",
-      title: "WCNA: Wellness Consultancy of Naturopathy & Ayurveda",
-      tag: "POPULAR FLAGSHIP DIPLOMA",
+      title: "WCNA [ WELLNESS CONSULTANCY IN NATUROPATHY AND AYURVEDA ]",
+      tag: "FLAGSHIP WELLNESS DIPLOMA",
       badgeColor: "bg-emerald-600 text-white",
       rating: "5.0 ★",
       reviews: "(540+ Enrolled)",
@@ -91,17 +91,17 @@ export default function Home() {
       oldPrice: "₹35,000",
       image: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&auto=format&fit=crop&q=80",
       points: [
-        "Anatomy, Physiology & Rogshashtra",
-        "Panchakarma & Ayurvedic Principles",
-        "Clinical Case Studies & Diagnostic Intake",
-        "Verified Professional Certification"
+        "Fundamental Principles of Ayurveda & Tridosha",
+        "Clinical Naturopathy & Hydrotherapy Protocols",
+        "Panchakarma Therapies & Detox Procedures",
+        "Nadi Pariksha (Pulse Diagnosis) & Patient Counseling"
       ]
     },
     {
       id: "c2",
       cat: "wcfm",
-      title: "WCFM: Wealth Consultancy in Finance Management",
-      tag: "HIGH DEMAND PROFESSIONAL",
+      title: "WCFM [ WEALTH CONSULTANCY IN FINANCE MANAGEMENT ]",
+      tag: "FLAGSHIP WEALTH DIPLOMA",
       badgeColor: "bg-[#0B3B95] text-white",
       rating: "4.9 ★",
       reviews: "(420+ Enrolled)",
@@ -114,44 +114,6 @@ export default function Home() {
         "Portfolio Engineering & Risk Analytics",
         "Personal Wealth & Asset Allocation",
         "Tax Structuring & Regulatory Compliance"
-      ]
-    },
-    {
-      id: "c3",
-      cat: "foundation",
-      title: "Holistic Health & Diet Planning Foundation",
-      tag: "FOUNDATION ESSENTIALS",
-      badgeColor: "bg-amber-600 text-white",
-      rating: "4.8 ★",
-      reviews: "(310+ Scholars)",
-      duration: "3 Months Fast-Track",
-      price: "₹14,999",
-      oldPrice: "₹20,000",
-      image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&auto=format&fit=crop&q=80",
-      points: [
-        "Ahara Vidhi & Nutritional Science",
-        "5 Elements Therapy & Body Detox",
-        "Lifestyle Stress & Routine Auditing",
-        "Practical Meal Chart Formulation"
-      ]
-    },
-    {
-      id: "c4",
-      cat: "wcfm",
-      title: "Executive FinOps & Investment Advisory",
-      tag: "EXECUTIVE SPECIALIZATION",
-      badgeColor: "bg-indigo-700 text-white",
-      rating: "5.0 ★",
-      reviews: "(280+ Enrolled)",
-      duration: "4 Months Weekend",
-      price: "₹19,999",
-      oldPrice: "₹28,000",
-      image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&auto=format&fit=crop&q=80",
-      points: [
-        "Financial Statement Analysis",
-        "Cap-table Management & Term Sheets",
-        "Client Advisory & Consulting Practice",
-        "Seed & Angel Investing Frameworks"
       ]
     }
   ];
@@ -321,10 +283,10 @@ export default function Home() {
               LEGACY OF ACADEMIC EXCELLENCE
             </span>
             <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
-              About <span className="text-[#0B3B95]">EDUCA VEDA</span>
+              About <span className="text-[#0B3B95]">Educa Institute of Consultancy</span>
             </h2>
             <p className="text-sm text-slate-600 leading-relaxed">
-              Directed and founded by veteran practitioners, EDUCA VEDA is recognized as a premier educational institute for certified wellness sciences and corporate wealth management.
+              Directed and founded by veteran practitioners, Educa Institute of Consultancy is recognized as a premier educational institute for certified wellness sciences and corporate wealth management.
             </p>
           </div>
 
@@ -370,7 +332,7 @@ export default function Home() {
                 Empowering every student with confidence and modern skills
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
-                At EDUCA VEDA, education is beyond theory. We emphasize strong foundational principles, hands-on diagnostics, professional cap-table modeling, and verified credentials.
+                At Educa Institute of Consultancy, education is beyond theory. We emphasize strong foundational principles, hands-on diagnostics, professional cap-table modeling, and verified credentials.
               </p>
 
               <div className="space-y-3 pt-2 text-xs">
@@ -516,7 +478,7 @@ export default function Home() {
                     : "bg-slate-100 text-slate-700 hover:bg-slate-200"
                 }`}
               >
-                All Courses (4)
+                All Programs (2)
               </button>
               <button
                 onClick={() => setCourseFilter("wcna")}
@@ -537,16 +499,6 @@ export default function Home() {
                 }`}
               >
                 WCFM (Wealth &amp; Finance)
-              </button>
-              <button
-                onClick={() => setCourseFilter("foundation")}
-                className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all ${
-                  courseFilter === "foundation"
-                    ? "bg-amber-600 text-white shadow-sm"
-                    : "bg-slate-100 text-slate-700 hover:bg-slate-200"
-                }`}
-              >
-                Foundation &amp; Diet
               </button>
             </div>
           </div>
@@ -846,7 +798,7 @@ export default function Home() {
             Nurturing Confident, Happy &amp; Successful Scholars
           </h2>
           <p className="text-xs sm:text-sm font-semibold max-w-2xl mx-auto text-slate-800 leading-relaxed">
-            From Ayurvedic Biology to Advanced Corporate Financial Modeling, EDUCA VEDA provides complete conceptual clarity, hands-on diagnostics, and verified certifications.
+            From Ayurvedic Biology to Advanced Corporate Financial Modeling, Educa Institute of Consultancy provides complete conceptual clarity, hands-on diagnostics, and verified certifications.
           </p>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 text-left">
@@ -1073,7 +1025,7 @@ export default function Home() {
               </h2>
             </div>
             <button
-              onClick={() => toast.info("Opening EDUCA VEDA Official Video Channel...")}
+              onClick={() => toast.info("Opening Educa Institute of Consultancy Official Video Channel...")}
               className="px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs flex items-center gap-2"
             >
               <Video size={14} />
@@ -1344,15 +1296,15 @@ export default function Home() {
               FREQUENTLY ASKED QUESTIONS
             </span>
             <h2 className="text-3xl font-black text-slate-900 tracking-tight">
-              Everything You Need to Know About <span className="text-[#0B3B95]">EDUCA VEDA</span>
+              Everything You Need to Know About <span className="text-[#0B3B95]">Educa Institute of Consultancy</span>
             </h2>
           </div>
 
           <div className="space-y-3">
             {[
               {
-                q: "What is EDUCA VEDA?",
-                a: "EDUCA VEDA is a recognized premier institute offering specialized certifications in Naturopathy & Ayurveda (WCNA) and Wealth Consultancy in Finance Management (WCFM), combining clinical wisdom with corporate financial acumen."
+                q: "What is Educa Institute of Consultancy?",
+                a: "Educa Institute of Consultancy is a recognized premier institute offering specialized certifications in Naturopathy & Ayurveda (WCNA) and Wealth Consultancy in Finance Management (WCFM), combining clinical wisdom with corporate financial acumen."
               },
               {
                 q: "How can I access the Institute Portal?",

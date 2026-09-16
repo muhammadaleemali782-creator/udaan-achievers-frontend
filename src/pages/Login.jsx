@@ -49,7 +49,7 @@ export default function Login() {
             EV
           </div>
           <h2 className="text-2xl font-bold tracking-tight text-slate-900">
-            EDUCA VEDA Portal
+            Educa Institute of Consultancy Portal
           </h2>
           <p className="text-xs text-slate-500">
             Sign in to access Student, Admission, Fees &amp; Attendance Management

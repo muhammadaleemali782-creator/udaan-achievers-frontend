@@ -19,7 +19,7 @@ export default function LCCFooter() {
               </div>
               <div>
                 <h3 className="font-black text-xl text-[#0B3B95] tracking-tight">
-                  EDUCA VEDA (E.V.)
+                  Educa Institute of Consultancy
                 </h3>
                 <p className="text-xs text-slate-600 font-bold">
                   Premier Institute for Wellness &amp; Professional Financial Studies
@@ -28,7 +28,7 @@ export default function LCCFooter() {
             </div>
 
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-md">
-              EDUCA VEDA provides career-transforming education in Naturopathy &amp; Ayurveda (WCNA) and Wealth Consultancy in Finance Management (WCFM), led by certified academicians and clinical specialists.
+              Educa Institute of Consultancy provides career-transforming education in Naturopathy &amp; Ayurveda (WCNA) and Wealth Consultancy in Finance Management (WCFM), led by certified academicians and clinical specialists.
             </p>
 
             <div className="pt-2 flex flex-wrap gap-2 text-xs">
@@ -107,7 +107,7 @@ export default function LCCFooter() {
 
         {/* Bottom bar */}
         <div className="pt-8 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
-          <p>© {new Date().getFullYear()} EDUCA VEDA (E.V.). All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Educa Institute of Consultancy. All rights reserved.</p>
           <div className="flex gap-4 text-xs">
             <Link to="/about" className="hover:underline">About</Link>
             <Link to="/courses" className="hover:underline">Courses</Link>

@@ -66,7 +66,7 @@ export default function Contact() {
                 </div>
                 <h3 className="text-2xl font-bold text-slate-900">Inquiry Submitted Successfully!</h3>
                 <p className="text-xs sm:text-sm text-slate-600 max-w-md mx-auto">
-                  Thank you for reaching out to EDUCA VEDA. Your inquiry has been registered. An academic counsellor will contact you at <span className="font-semibold text-slate-900">{form.mobile}</span> shortly.
+                  Thank you for reaching out to Educa Institute of Consultancy. Your inquiry has been registered. An academic counsellor will contact you at <span className="font-semibold text-slate-900">{form.mobile}</span> shortly.
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}

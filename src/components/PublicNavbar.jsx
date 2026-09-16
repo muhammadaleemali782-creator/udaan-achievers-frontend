@@ -33,7 +33,7 @@ export default function PublicNavbar() {
             <div>
               <div className="flex items-center gap-2">
                 <span className="font-bold text-lg md:text-xl text-slate-900 tracking-tight">
-                  EDUCA VEDA
+                  Educa Institute of Consultancy
                 </span>
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-700 border border-indigo-200">
                   INSTITUTE

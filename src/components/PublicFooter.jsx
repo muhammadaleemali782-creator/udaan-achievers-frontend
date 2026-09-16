@@ -14,7 +14,7 @@ export default function PublicFooter() {
                 EV
               </div>
               <div>
-                <span className="font-bold text-lg text-white tracking-tight">EDUCA VEDA</span>
+                <span className="font-bold text-lg text-white tracking-tight">Educa Institute of Consultancy</span>
                 <p className="text-[11px] text-slate-400">Institute of Professional &amp; Wellness Studies</p>
               </div>
             </div>
@@ -91,7 +91,7 @@ export default function PublicFooter() {
         </div>
 
         <div className="pt-8 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px]">
-          <p>© {new Date().getFullYear()} EDUCA VEDA. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Educa Institute of Consultancy. All rights reserved.</p>
           <div className="flex gap-4">
             <Link to="/about" className="hover:text-slate-400">About Institute</Link>
             <Link to="/contact" className="hover:text-slate-400">Admissions</Link>

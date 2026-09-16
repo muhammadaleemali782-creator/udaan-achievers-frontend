@@ -72,11 +72,11 @@ export default function LCCNavbar() {
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="font-black text-lg sm:text-2xl text-[#0B3B95] tracking-tight leading-none">
-                  EDUCA VEDA (E.V.)
+                  Educa Institute of Consultancy
                 </h1>
               </div>
               <p className="font-bold text-xs sm:text-sm text-slate-800 mt-0.5">
-                एडुका वेदा इंस्टीट्यूट • वाराणसी एवं नई दिल्ली
+                एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • वाराणसी एवं नई दिल्ली
               </p>
               <p className="text-[10px] sm:text-xs text-slate-500 hidden sm:block">
                 A Premier Institute for Naturopathy, Ayurveda (WCNA) &amp; Wealth Management (WCFM)

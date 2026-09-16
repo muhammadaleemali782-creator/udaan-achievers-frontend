@@ -13,13 +13,13 @@ export default function About() {
       <section className="bg-white border-b border-slate-200 py-14 md:py-20">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
           <span className="px-3 py-1 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs font-bold">
-            ABOUT EDUCA VEDA
+            ABOUT Educa Institute of Consultancy
           </span>
           <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-slate-900 tracking-tight">
             Empowering Modern Professionals with Clinical &amp; Financial Wisdom
           </h1>
           <p className="text-slate-600 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
-            Founded with a vision to merge classical holistic wellness science with rigorous corporate financial advisory, EDUCA VEDA delivers premier vocational certifications across India.
+            Founded with a vision to merge classical holistic wellness science with rigorous corporate financial advisory, Educa Institute of Consultancy delivers premier vocational certifications across India.
           </p>
         </div>
       </section>
