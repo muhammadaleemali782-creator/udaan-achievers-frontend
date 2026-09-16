@@ -95,7 +95,7 @@ const MainContent: React.FC = () => {
       theme === 'dark' ? 'bg-slate-950 text-slate-100 dark' : 'bg-white text-slate-900'
     }`}>
       <div>
-        <Navbar />
+        {activeView !== 'admin-panel' && <Navbar />}
 
         <main className={activeView !== 'admin-panel' ? 'pb-32 xl:pb-16' : ''}>
           {activeView === 'home' && (

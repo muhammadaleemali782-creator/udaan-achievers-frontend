@@ -249,7 +249,21 @@ const INITIAL_SETTINGS: WebsiteSettings = {
 };
 
 export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [activeView, setActiveView] = useState<ActiveView>('home');
+  const getInitialView = (): ActiveView => {
+    try {
+      const path = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
+      if (path.includes('/admin') || hash.includes('#admin') || hash.includes('#admin-panel')) {
+        return 'admin-panel';
+      }
+      if (path.includes('/student') || hash.includes('#student')) {
+        return 'student-portal';
+      }
+    } catch {}
+    return 'home';
+  };
+
+  const [activeView, setActiveView] = useState<ActiveView>(getInitialView);
   const [scrollSection, setScrollSection] = useState<string>('home');
   const [theme] = useState<'light'>('light');
   const [colorTheme, setColorTheme] = useState<ColorTheme>('cobalt');
@@ -258,6 +272,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     localStorage.removeItem('lcc_theme');
     document.documentElement.classList.remove('dark');
     document.body.classList.remove('dark');
+
+    const handlePopState = () => {
+      const path = window.location.pathname.toLowerCase();
+      const hash = window.location.hash.toLowerCase();
+      if (path.includes('/admin') || hash.includes('#admin')) {
+        setActiveView('admin-panel');
+      } else if (path.includes('/student') || hash.includes('#student')) {
+        setActiveView('student-portal');
+      } else {
+        setActiveView('home');
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
   const loadSaved = <T,>(key: string, fallback: T): T => {
@@ -439,6 +467,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const navigateTo = (view: ActiveView, anchorId?: string) => {
     setActiveView(view);
+    try {
+      if (view === 'admin-panel') {
+        window.history.pushState(null, '', '/admin');
+      } else if (view === 'student-portal') {
+        window.history.pushState(null, '', '/student');
+      } else if (view === 'home') {
+        window.history.pushState(null, '', '/');
+      }
+    } catch {}
+
     if (anchorId) {
       setScrollSection(view);
       setTimeout(() => {
