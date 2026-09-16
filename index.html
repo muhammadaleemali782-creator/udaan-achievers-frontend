@@ -1,6 +1,31 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Aggressive Cache & ServiceWorker Buster -->
+    <script>
+      (function() {
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(regs) {
+            for (var i = 0; i < regs.length; i++) regs[i].unregister();
+          });
+        }
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            for (var i = 0; i < names.length; i++) caches.delete(names[i]);
+          });
+        }
+        var VER = 'educa_v5_live_sync';
+        if (localStorage.getItem('educa_build_ver') !== VER) {
+          localStorage.removeItem('erp_user');
+          localStorage.removeItem('lcc_website_settings');
+          localStorage.removeItem('lcc_visual_overrides');
+          localStorage.removeItem('educa_website_settings');
+          localStorage.removeItem('educa_visual_overrides');
+          localStorage.setItem('educa_build_ver', VER);
+        }
+      })();
+    </script>
+
     <meta charset="UTF-8" />
     <link rel="icon" type="image/jpeg" href="/logo.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
