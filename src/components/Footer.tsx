@@ -1,0 +1,144 @@
+import React from 'react';
+import { useApp } from '../context/AppContext';
+import { GraduationCap, Phone, Mail, MapPin, Heart, Shield, Sparkles, ArrowUp } from 'lucide-react';
+import { Youtube, Instagram } from './SocialIcons';
+
+export const Footer: React.FC = () => {
+  const { navigateTo, websiteSettings, socialLinks, isAdminAuthenticated, setIsAdminAuthModalOpen } = useApp();
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const yt = socialLinks.find(s => s.platform === 'youtube')?.url || 'https://youtube.com';
+  const ig = socialLinks.find(s => s.platform === 'instagram')?.url || 'https://instagram.com';
+
+  return (
+    <footer className="bg-white border-t border-slate-200/90 pt-16 pb-32 sm:pb-16 px-4 sm:px-6 lg:px-8 text-slate-600 relative">
+      <div className="max-w-7xl mx-auto space-y-12">
+        
+        {/* Main Footer Row */}
+        <div className="flex flex-col items-center text-center space-y-6">
+          
+          {/* Brand Badge */}
+          <div
+            onClick={scrollToTop}
+            className="flex items-center gap-3 cursor-pointer select-none group"
+          >
+            <img
+              src={websiteSettings?.logoUrl || '/logo.jpg'}
+              alt={websiteSettings?.instituteName || 'Educa Institute Educa Institute of Consultancy'}
+              className="w-12 h-12 rounded-2xl object-contain shadow-md border border-slate-200 bg-white"
+              onError={(e: any) => {
+                e.target.src = '/logo.jpg';
+              }}
+            />
+            <div className="flex flex-col text-left">
+              <div className="flex items-center gap-1.5">
+                <span className="font-black text-xl tracking-tight text-slate-900 leading-none">
+                  {websiteSettings?.shortName || 'Educa Institute'}
+                </span>
+                <span className="px-2 py-0.5 rounded bg-amber-400 text-slate-950 text-[10px] font-black uppercase tracking-wider">
+                  Coaching
+                </span>
+              </div>
+              <span className="text-xs font-bold text-[#0066FF] tracking-wide mt-0.5">
+                {websiteSettings?.instituteTagline || 'Educa Institute of Consultancy'}
+              </span>
+            </div>
+          </div>
+
+          <p className="text-xs sm:text-sm text-slate-500 max-w-xl mx-auto leading-relaxed font-medium">
+            <strong>{websiteSettings?.instituteName || 'Educa Institute of Consultancy'}</strong> — Premier coaching institute for Wellness Consultancy in Naturopathy & Ayurveda (WCNA) and Wealth Consultancy in Finance Management (WCFM) under the mentorship of <strong>{websiteSettings?.directorName || 'Dr. R. K. Sharma'}</strong>.
+          </p>
+
+          {/* Quick Links Navigation */}
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs font-extrabold text-slate-700">
+            <button onClick={() => navigateTo('home')} className="hover:text-[#0066FF] transition-colors cursor-pointer">
+              Home
+            </button>
+            <button onClick={() => navigateTo('courses', 'courses-section')} className="hover:text-[#0066FF] transition-colors cursor-pointer">
+              Courses
+            </button>
+            <button onClick={() => navigateTo('study-material', 'study-material-section')} className="hover:text-[#0066FF] transition-colors cursor-pointer">
+              Study Vault
+            </button>
+            <button onClick={() => navigateTo('batches', 'batches-section')} className="hover:text-[#0066FF] transition-colors cursor-pointer">
+              Batches
+            </button>
+            <button onClick={() => navigateTo('reviews', 'reviews-section')} className="hover:text-[#0066FF] transition-colors cursor-pointer">
+              Student Reviews
+            </button>
+            <button onClick={() => navigateTo('notices')} className="hover:text-[#0066FF] transition-colors cursor-pointer">
+              Notices
+            </button>
+            <button onClick={() => navigateTo('contact', 'contact-section')} className="hover:text-[#0066FF] transition-colors cursor-pointer">
+              Contacts
+            </button>
+            {isAdminAuthenticated ? (
+              <button
+                onClick={() => navigateTo('admin-panel')}
+                className="flex items-center gap-1 hover:text-emerald-600 transition-colors text-emerald-600 font-black cursor-pointer"
+                title="Director Admin Panel"
+              >
+                <Shield className="w-3.5 h-3.5" />
+                <span>Admin Desk</span>
+              </button>
+            ) : (
+              <button
+                onClick={() => navigateTo('student-portal')}
+                className="hover:text-[#0066FF] transition-colors text-[#0066FF] font-bold cursor-pointer"
+              >
+                Student Portal
+              </button>
+            )}
+          </div>
+
+          {/* Social Icons & Back to Top */}
+          <div className="flex items-center justify-center gap-4 pt-2">
+            <a
+              href={yt}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full bg-slate-50 hover:bg-rose-50 hover:text-rose-600 border border-slate-200 flex items-center justify-center transition-colors"
+              title="YouTube"
+            >
+              <Youtube className="w-4 h-4" />
+            </a>
+
+            <a
+              href={ig}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-10 h-10 rounded-full bg-slate-50 hover:bg-pink-50 hover:text-pink-600 border border-slate-200 flex items-center justify-center transition-colors"
+              title="Instagram"
+            >
+              <Instagram className="w-4 h-4" />
+            </a>
+
+            <button
+              onClick={scrollToTop}
+              className="w-10 h-10 rounded-full bg-blue-50 text-[#0066FF] hover:bg-[#0066FF] hover:text-white border border-blue-200 flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+              title="Back to Top"
+            >
+              <ArrowUp className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Bottom Copyright Strip */}
+        <div className="pt-8 border-t border-slate-100 text-center space-y-2">
+          <p className="text-xs text-slate-500 font-medium leading-relaxed">
+            © 2016 – 2026 <strong>{websiteSettings?.instituteName || 'Educa Institute of Consultancy'}</strong>, Varanasi, Uttar Pradesh. Directed by <strong>{websiteSettings?.directorName || 'Dr. R. K. Sharma'}</strong>.
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] text-slate-400 font-medium">
+            <span>ISO 9001:2015 Certified Coaching Center</span>
+            <span>•</span>
+            <span>All Rights Reserved</span>
+          </div>
+        </div>
+
+      </div>
+    </footer>
+  );
+};

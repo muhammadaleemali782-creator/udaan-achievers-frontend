@@ -1,36 +1,31 @@
+﻿/** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,jsx}"],
+  content: [
+    './index.html',
+    './src/**/*.{js,ts,jsx,tsx}',
+  ],
+  darkMode: 'class',
   theme: {
     extend: {
       colors: {
-        brand: {
-          50: "#EEF2FF",
-          100: "#E0E7FF",
-          500: "#6366F1",
-          600: "#4F46E5",
-          700: "#4338CA",
-          800: "#3730A3",
-          900: "#312E81",
-        },
-        primary: "#4F46E5",
-        surface: "#FFFFFF",
-        canvas: "#F8FAFC",
+        learner: {
+          blue: '#0066FF',
+          blueDark: '#0052CC',
+          blueLight: '#EBF3FF',
+          yellow: '#FFB800',
+          yellowDark: '#E6A600',
+          yellowLight: '#FFF8E6',
+        }
       },
       fontFamily: {
-        sans: ["Plus Jakarta Sans", "Inter", "sans-serif"],
-        display: ["Plus Jakarta Sans", "Inter", "sans-serif"],
-        mono: ["JetBrains Mono", "monospace"],
+        sans: ['Plus Jakarta Sans', 'Inter', 'system-ui', 'sans-serif'],
       },
-      animation: {
-        fadeIn: "fadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) both",
-      },
-      keyframes: {
-        fadeIn: {
-          "0%": { opacity: "0", transform: "scale(0.98)" },
-          "100%": { opacity: "1", transform: "scale(1)" },
-        },
-      },
+      boxShadow: {
+        'learner': '0 4px 20px -2px rgba(0, 102, 255, 0.15)',
+        'learner-lg': '0 12px 32px -4px rgba(0, 102, 255, 0.2)',
+        'card-clean': '0 4px 20px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -2px rgba(15, 23, 42, 0.04)',
+      }
     },
   },
   plugins: [],
-};
+}
