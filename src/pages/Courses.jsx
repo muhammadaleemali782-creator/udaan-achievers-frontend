@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { CheckCircle2, Clock, Calendar, Users, Award, ArrowRight, Sparkles } from "lucide-react";
-import PublicNavbar from "../components/PublicNavbar";
-import PublicFooter from "../components/PublicFooter";
+import LCCNavbar from "../components/LCCNavbar";
+import LCCFooter from "../components/LCCFooter";
 
 export default function Courses() {
   const [activeTab, setActiveTab] = useState("all");
@@ -64,7 +64,7 @@ export default function Courses() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col text-slate-900">
-      <PublicNavbar />
+      <LCCNavbar />
 
       {/* Page Header */}
       <section className="bg-white border-b border-slate-200 py-14 md:py-20">
@@ -215,7 +215,7 @@ export default function Courses() {
         ))}
       </section>
 
-      <PublicFooter />
+      <LCCFooter />
     </div>
   );
 }

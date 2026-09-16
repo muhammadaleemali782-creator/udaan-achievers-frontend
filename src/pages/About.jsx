@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Award, Users, BookOpen, Clock, CheckCircle2, ArrowRight } from "lucide-react";
-import PublicNavbar from "../components/PublicNavbar";
-import PublicFooter from "../components/PublicFooter";
+import LCCNavbar from "../components/LCCNavbar";
+import LCCFooter from "../components/LCCFooter";
 
 export default function About() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col text-slate-900">
-      <PublicNavbar />
+      <LCCNavbar />
 
       {/* Header */}
       <section className="bg-white border-b border-slate-200 py-14 md:py-20">
@@ -116,7 +116,7 @@ export default function About() {
         </div>
       </section>
 
-      <PublicFooter />
+      <LCCFooter />
     </div>
   );
 }
