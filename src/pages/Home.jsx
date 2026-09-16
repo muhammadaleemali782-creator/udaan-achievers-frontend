@@ -294,7 +294,7 @@ export default function Home() {
             Are you an Administrator, Faculty, or Enrolled Student?
           </h2>
           <p className="text-slate-400 text-sm max-w-xl mx-auto leading-relaxed">
-            Access real-time roll call, admission applications, fee receipts, student profiles, and batch rosters via the secure ERP Portal.
+            Access real-time roll call, admission applications, fee receipts, student profiles, and batch rosters via the secure Portal.
           </p>
           <div className="pt-2">
             <Link
@@ -302,7 +302,7 @@ export default function Home() {
               className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm shadow-md transition-all"
             >
               <ShieldCheck size={16} />
-              <span>Login to Institute ERP Portal</span>
+              <span>Login to Institute Portal</span>
               <ArrowRight size={16} />
             </Link>
           </div>

@@ -71,7 +71,7 @@ export default function PublicNavbar() {
                   className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow-sm transition-all"
                 >
                   <User size={13} />
-                  <span>ERP Dashboard</span>
+                  <span>Institute Dashboard</span>
                   <ArrowRight size={13} />
                 </Link>
                 <button
@@ -88,7 +88,7 @@ export default function PublicNavbar() {
                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold shadow-sm transition-all"
               >
                 <ShieldCheck size={14} className="text-indigo-400" />
-                <span>ERP Portal Login</span>
+                <span>Portal Login</span>
               </Link>
             )}
           </div>
@@ -129,7 +129,7 @@ export default function PublicNavbar() {
                   onClick={() => setOpen(false)}
                   className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-indigo-600 text-white text-sm font-semibold shadow-sm"
                 >
-                  <span>Enter ERP Dashboard</span>
+                  <span>Enter Institute Dashboard</span>
                   <ArrowRight size={15} />
                 </Link>
                 <button
@@ -147,7 +147,7 @@ export default function PublicNavbar() {
                 className="w-full flex items-center justify-center gap-2 py-2.5 rounded-lg bg-slate-900 text-white text-sm font-semibold shadow-sm"
               >
                 <ShieldCheck size={15} className="text-indigo-400" />
-                <span>ERP Portal Login</span>
+                <span>Portal Login</span>
               </Link>
             )}
           </div>

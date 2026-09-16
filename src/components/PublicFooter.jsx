@@ -83,7 +83,7 @@ export default function PublicFooter() {
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-slate-900 hover:bg-slate-800 text-white text-[11px] font-semibold border border-slate-700 transition-all"
                 >
                   <ShieldCheck size={13} className="text-indigo-400" />
-                  <span>Staff / ERP Portal Login</span>
+                  <span>Staff / Admin Portal Login</span>
                 </Link>
               </li>
             </ul>
@@ -95,7 +95,7 @@ export default function PublicFooter() {
           <div className="flex gap-4">
             <Link to="/about" className="hover:text-slate-400">About Institute</Link>
             <Link to="/contact" className="hover:text-slate-400">Admissions</Link>
-            <Link to="/login" className="hover:text-slate-400">ERP Access</Link>
+            <Link to="/login" className="hover:text-slate-400">Portal Access</Link>
           </div>
         </div>
       </div>

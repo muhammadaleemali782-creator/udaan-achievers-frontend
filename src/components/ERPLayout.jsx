@@ -119,7 +119,7 @@ export default function ERPLayout({ children }) {
                       EDUCA VEDA
                     </span>
                     <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-100 text-emerald-800">
-                      ERP v3.0
+                      Portal v3.0
                     </span>
                   </div>
                   <p className="text-[11px] text-slate-500 font-medium">
@@ -145,7 +145,7 @@ export default function ERPLayout({ children }) {
                 <span className="px-2 py-0.5 rounded bg-sky-50 border border-sky-100 text-sky-700 font-mono font-medium">
                   WCFM
                 </span>
-                <span>Specialized ERP</span>
+                <span>Specialized Portal</span>
               </div>
             </div>
 
@@ -161,11 +161,11 @@ export default function ERPLayout({ children }) {
               <button
                 onClick={() => {
                   localStorage.removeItem("erp_user");
-                  toast.success("Signed out of ERP");
+                  toast.success("Signed out successfully");
                   navigate("/");
                 }}
                 className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-rose-200 bg-white hover:bg-rose-50 text-rose-600 text-xs font-semibold shadow-xs transition-colors"
-                title="Sign out of ERP"
+                title="Sign out"
               >
                 <span>Log Out</span>
               </button>
@@ -300,12 +300,12 @@ export default function ERPLayout({ children }) {
               onClick={() => {
                 localStorage.removeItem("erp_user");
                 setMobileMenuOpen(false);
-                toast.success("Signed out of ERP");
+                toast.success("Signed out successfully");
                 navigate("/");
               }}
               className="w-full flex items-center justify-center gap-2 py-2 rounded-xl border border-rose-200 text-rose-600 text-xs font-bold"
             >
-              <span>Log Out of ERP</span>
+              <span>Log Out</span>
             </button>
           </div>
         </div>
@@ -320,7 +320,7 @@ export default function ERPLayout({ children }) {
       <footer className="bg-white border-t border-slate-200 py-4 px-4 text-center text-xs text-slate-500">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
           <p>
-            &copy; {new Date().getFullYear()} <b className="text-slate-800">Educa Veda</b>. Complete ERP System for WCNA &amp; WCFM Management.
+            &copy; {new Date().getFullYear()} <b className="text-slate-800">Educa Veda</b>. Complete Management System for WCNA &amp; WCFM Management.
           </p>
           <div className="flex items-center gap-4 text-xs">
             <span className="flex items-center gap-1 text-emerald-600 font-medium">
