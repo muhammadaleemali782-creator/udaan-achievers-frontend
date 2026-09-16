@@ -414,6 +414,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         }
         if (setsRes.status === 'fulfilled' && setsRes.value.data) {
           const cloudSets = setsRes.value.data;
+          cloudSets.contactAddress = 'VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ';
           const localOverrides = loadSaved<Record<string, any>>('lcc_visual_overrides', {});
           if (localOverrides && Object.keys(localOverrides).length > 0) {
             cloudSets.visualOverrides = { ...localOverrides, ...(cloudSets.visualOverrides || {}) };
