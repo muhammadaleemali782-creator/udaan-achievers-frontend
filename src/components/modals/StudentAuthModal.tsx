@@ -103,7 +103,7 @@ export const StudentAuthModal: React.FC = () => {
           {/* Compact Blue Header */}
           <div className="px-5 py-4 bg-[#0066FF] text-white flex items-center gap-3">
             <img
-              src="/educa-logo.svg"
+              src="/logo.jpg"
               alt="Educa"
               className="w-10 h-10 rounded-xl object-contain bg-white shadow-sm border border-white/20"
             />

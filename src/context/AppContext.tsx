@@ -232,6 +232,7 @@ const INITIAL_SOCIALS: SocialLink[] = [
 
 const INITIAL_SETTINGS: WebsiteSettings = {
   instituteName: 'Educa Institute of Consultancy',
+  logoUrl: '/logo.jpg',
   shortName: 'EDUCA',
   directorName: 'Dr. R. K. Sharma',
   contactPhone: '+91 98765 43210',
