@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 
 import { VisualOverrideItem } from '../../types';
+import { ImageUploaderInput } from '../common/ImageUploaderInput';
 
 export const DEFAULT_SECTION_ORDER = [
   'hero',
@@ -131,7 +132,45 @@ export const getEffectiveTextColor = (el: HTMLElement): string => {
 };
 
 export const getElementFriendlyInfo = (el: HTMLElement): { name: string; subtitle: string; targetEl: HTMLElement } => {
-  // 1. If clicked a specific button or link
+  // 1. Photo / Image - Highest Priority
+  if (el.tagName === 'IMG' || el.querySelector('img')) {
+    const img = (el.tagName === 'IMG' ? el : el.querySelector('img')) as HTMLImageElement;
+    if (img) {
+      return {
+        name: 'Photo / Image',
+        subtitle: img.alt || img.src.split('/').pop() || 'Website Graphic / Photo',
+        targetEl: img
+      };
+    }
+  }
+
+  // 2. Headings - Direct clicks on text headings
+  if (['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(el.tagName)) {
+    return {
+      name: `${el.tagName} Heading`,
+      subtitle: el.innerText.trim().slice(0, 45) || 'Section Heading',
+      targetEl: el
+    };
+  }
+  const parentHeading = el.closest('h1, h2, h3, h4, h5, h6') as HTMLElement;
+  if (parentHeading) {
+    return {
+      name: `${parentHeading.tagName} Heading`,
+      subtitle: parentHeading.innerText.trim().slice(0, 45) || 'Section Heading',
+      targetEl: parentHeading
+    };
+  }
+
+  // 3. Text Elements (Paragraph, Span, Label, List Item)
+  if (['P', 'SPAN', 'LI', 'LABEL', 'STRONG', 'B', 'EM'].includes(el.tagName) && el.innerText?.trim()) {
+    return {
+      name: 'Text Content',
+      subtitle: el.innerText.trim().slice(0, 45) || 'Typography Element',
+      targetEl: el
+    };
+  }
+
+  // 4. Buttons and Links
   if (el.tagName === 'BUTTON' || el.closest('button')) {
     const btn = (el.tagName === 'BUTTON' ? el : el.closest('button')) as HTMLElement;
     const txt = btn.innerText.trim();
@@ -152,9 +191,9 @@ export const getElementFriendlyInfo = (el: HTMLElement): { name: string; subtitl
     };
   }
 
-  // 2. Header Bars & Strips
+  // 5. Header Bars & Strips (when clicked directly on container background)
   const navHeader = el.closest('#header-main-navbar') as HTMLElement;
-  if (navHeader) {
+  if (navHeader && (el === navHeader || el.id === 'header-main-navbar')) {
     return {
       name: 'Campus Portal Navbar (Blue Strip)',
       subtitle: 'Main Navigation Bar & Menu Links',
@@ -163,7 +202,7 @@ export const getElementFriendlyInfo = (el: HTMLElement): { name: string; subtitl
   }
 
   const topBar = el.closest('#header-top-bar') as HTMLElement;
-  if (topBar) {
+  if (topBar && (el === topBar || el.id === 'header-top-bar')) {
     return {
       name: 'Top Announcement & Helpline Bar',
       subtitle: 'Batch 2026-27 Strip',
@@ -172,16 +211,16 @@ export const getElementFriendlyInfo = (el: HTMLElement): { name: string; subtitl
   }
 
   const brandBanner = el.closest('#header-brand-banner') as HTMLElement;
-  if (brandBanner) {
+  if (brandBanner && (el === brandBanner || el.id === 'header-brand-banner')) {
     return {
       name: 'Institutional Bilingual Brand Header',
-      subtitle: 'Educa Institute Logo & Varanasi Title Banner',
+      subtitle: 'Educa Institute Logo & Title Banner',
       targetEl: brandBanner
     };
   }
 
   const noticeTicker = el.closest('#header-notice-ticker') as HTMLElement;
-  if (noticeTicker) {
+  if (noticeTicker && (el === noticeTicker || el.id === 'header-notice-ticker')) {
     return {
       name: 'Live Alert Marquee Notice Bar',
       subtitle: 'Scrolling Breaking News Strip',
@@ -189,9 +228,9 @@ export const getElementFriendlyInfo = (el: HTMLElement): { name: string; subtitl
     };
   }
 
-  // 3. Hero Cards & Spotlight
+  // 6. Hero Cards & Spotlight
   const quickLinks = el.closest('#hero-quick-links-box') as HTMLElement;
-  if (quickLinks && (el === quickLinks || el.closest('#hero-quick-links-header') || el.classList.contains('bg-white'))) {
+  if (quickLinks && (el === quickLinks || el.id === 'hero-quick-links-box')) {
     return {
       name: 'Quick Links Portal Card',
       subtitle: 'Admission, Batches & DPP Links Box',
@@ -200,7 +239,7 @@ export const getElementFriendlyInfo = (el: HTMLElement): { name: string; subtitl
   }
 
   const leadership = el.closest('#hero-leadership-box') as HTMLElement;
-  if (leadership && (el === leadership || el.closest('#hero-leadership-header') || el.classList.contains('bg-white'))) {
+  if (leadership && (el === leadership || el.id === 'hero-leadership-box')) {
     return {
       name: 'Director & Leadership Spotlight Card',
       subtitle: 'Dr. R. K. Sharma Director Showcase Card',
@@ -209,7 +248,7 @@ export const getElementFriendlyInfo = (el: HTMLElement): { name: string; subtitl
   }
 
   const slider = el.closest('#hero-slider-box') as HTMLElement;
-  if (slider && el === slider) {
+  if (slider && (el === slider || el.id === 'hero-slider-box')) {
     return {
       name: 'Main Photo Slider Showcase',
       subtitle: 'Hero Center Photo Slider Box',
@@ -217,38 +256,19 @@ export const getElementFriendlyInfo = (el: HTMLElement): { name: string; subtitl
     };
   }
 
-  // 4. Photo / Image
-  if (el.tagName === 'IMG') {
-    const img = el as HTMLImageElement;
+  // 7. Any other text container
+  if (el.innerText?.trim()) {
     return {
-      name: 'Photo / Image',
-      subtitle: img.alt || 'Website Graphic / Photo',
-      targetEl: img
-    };
-  }
-
-  // 5. Headings
-  if (['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(el.tagName)) {
-    return {
-      name: `${el.tagName} Heading`,
-      subtitle: el.innerText.trim().slice(0, 40) || 'Section Heading',
+      name: el.id ? `#${el.id}` : `${el.tagName.toUpperCase()} Block`,
+      subtitle: el.innerText.trim().slice(0, 40),
       targetEl: el
     };
   }
 
-  // 6. Text Elements
-  if (['P', 'SPAN', 'LI', 'LABEL'].includes(el.tagName)) {
-    return {
-      name: 'Text Content',
-      subtitle: el.innerText.trim().slice(0, 40) || 'Typography Element',
-      targetEl: el
-    };
-  }
-
-  // 7. General Container
+  // 8. General Container
   return {
     name: el.id ? `#${el.id}` : `${el.tagName.toUpperCase()} Container Box`,
-    subtitle: el.innerText.trim().slice(0, 35) || 'Layout Box',
+    subtitle: el.id || 'Layout Box',
     targetEl: el
   };
 };
@@ -487,17 +507,17 @@ export const LiveVisualEditor: React.FC = () => {
         return;
       }
 
-      // Check if leaf text node or container element
-      const hasNoChildren = effectiveEl.children.length === 0;
+      // Check if text node or element
       const textContent = effectiveEl.innerText?.trim() || '';
-      const isText = hasNoChildren && textContent.length > 0 && textContent.length < 500;
+      const isHeadingOrParagraph = ['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'LI', 'LABEL', 'B', 'STRONG', 'EM', 'A', 'BUTTON'].includes(effectiveEl.tagName);
+      const isText = (isHeadingOrParagraph || effectiveEl.children.length <= 1) && textContent.length > 0 && textContent.length < 800;
 
       setClickedTarget({
         type: isText ? 'text' : 'element',
         friendlyName: friendlyInfo.name,
         friendlySubtitle: friendlyInfo.subtitle,
-        originalValue: isText ? textContent : '',
-        newValue: isText ? textContent : '',
+        originalValue: textContent,
+        newValue: textContent,
         originalBgColor: currentBg,
         newBgColor: currentBg,
         originalTextColor: currentText,
@@ -686,7 +706,17 @@ export const LiveVisualEditor: React.FC = () => {
     if (clickedTarget.type === 'text') {
       const val = clickedTarget.newValue.trim();
       const orig = clickedTarget.originalValue.trim();
-      if (orig === websiteSettings.instituteName?.trim()) updatedSettings.instituteName = val;
+      const elId = clickedTarget.elementRef?.id || '';
+
+      if (elId === 'header-brand-title' || orig === websiteSettings.instituteName?.trim()) {
+        updatedSettings.instituteName = val;
+      }
+      if (elId === 'header-brand-hindi' || orig === (websiteSettings.instituteHindiName || 'एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज').trim()) {
+        updatedSettings.instituteHindiName = val;
+      }
+      if (elId === 'header-brand-subtitle' || orig === (websiteSettings.instituteSubtitle || '(A Premier Institute for Naturopathy, Ayurveda & Wealth Management Consultancy)').trim()) {
+        updatedSettings.instituteSubtitle = val;
+      }
       if (orig === websiteSettings.directorName?.trim()) updatedSettings.directorName = val;
       if (orig === websiteSettings.contactPhone?.trim()) updatedSettings.contactPhone = val;
       if (orig === websiteSettings.contactEmail?.trim()) updatedSettings.contactEmail = val;
@@ -696,7 +726,7 @@ export const LiveVisualEditor: React.FC = () => {
       if (orig === websiteSettings.instituteTagline?.trim()) updatedSettings.instituteTagline = val;
     } else if (clickedTarget.type === 'image') {
       if (clickedTarget.originalValue === websiteSettings.directorPhotoUrl) updatedSettings.directorPhotoUrl = clickedTarget.newValue;
-      if (clickedTarget.originalValue === websiteSettings.logoUrl) updatedSettings.logoUrl = clickedTarget.newValue;
+      if (clickedTarget.originalValue === websiteSettings.logoUrl || clickedTarget.elementRef?.closest('#header-brand-banner')) updatedSettings.logoUrl = clickedTarget.newValue;
       if (clickedTarget.originalValue === websiteSettings.heroPosterUrl) updatedSettings.heroPosterUrl = clickedTarget.newValue;
     }
 
@@ -988,25 +1018,12 @@ export const LiveVisualEditor: React.FC = () => {
             {/* Content Editing Section */}
             {clickedTarget.type === 'image' ? (
               <div className="space-y-3">
-                <div className="h-40 rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 flex items-center justify-center">
-                  <img
-                    src={clickedTarget.newValue}
-                    alt="Preview"
-                    className="w-full h-full object-cover"
-                    onError={(e: any) => {
-                      e.target.src = 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&auto=format&fit=crop&q=80';
-                    }}
-                  />
-                </div>
-                <div>
-                  <label className="text-[11px] font-bold text-slate-400 block mb-1">New Image URL (Previews instantly)</label>
-                  <input
-                    type="text"
-                    value={clickedTarget.newValue}
-                    onChange={e => updateContentValue(e.target.value)}
-                    className="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
-                  />
-                </div>
+                <ImageUploaderInput
+                  label="Image Source (Upload from Phone/PC or Paste URL)"
+                  value={clickedTarget.newValue}
+                  onChange={val => updateContentValue(val)}
+                  placeholder="Upload photo from phone or paste URL..."
+                />
               </div>
             ) : clickedTarget.type === 'text' ? (
               <div className="space-y-3">

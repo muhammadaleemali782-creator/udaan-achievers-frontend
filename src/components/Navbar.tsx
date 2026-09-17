@@ -125,14 +125,14 @@ export const Navbar: React.FC = () => {
           onClick={() => navigateTo('home')}
           className="text-center flex-1 cursor-pointer select-none space-y-0.5 sm:space-y-1"
         >
-          <h1 className="text-base sm:text-2xl lg:text-3xl font-black text-[#0B3B95] tracking-tight uppercase leading-snug">
+          <h1 id="header-brand-title" className="text-base sm:text-2xl lg:text-3xl font-black text-[#0B3B95] tracking-tight uppercase leading-snug">
             {websiteSettings?.instituteName || 'EDUCA INSTITUTE OF CONSULTANCY'}
           </h1>
-          <h2 className="text-sm sm:text-xl lg:text-2xl font-black text-[#D32F2F] tracking-wide leading-tight">
-            एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज
+          <h2 id="header-brand-hindi" className="text-sm sm:text-xl lg:text-2xl font-black text-[#D32F2F] tracking-wide leading-tight">
+            {websiteSettings?.instituteHindiName || 'एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज'}
           </h2>
-          <p className="text-[10px] sm:text-xs font-bold text-slate-600 hidden sm:block">
-            (A Premier Institute for Naturopathy, Ayurveda & Wealth Management Consultancy)
+          <p id="header-brand-subtitle" className="text-[10px] sm:text-xs font-bold text-slate-600 hidden sm:block">
+            {websiteSettings?.instituteSubtitle || '(A Premier Institute for Naturopathy, Ayurveda & Wealth Management Consultancy)'}
           </p>
         </div>
 

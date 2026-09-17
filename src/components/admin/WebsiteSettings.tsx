@@ -8,6 +8,8 @@ export const WebsiteSettings: React.FC = () => {
   const { websiteSettings, updateWebsiteSettings, showToast } = useApp();
   const [form, setForm] = useState({
     instituteName: websiteSettings.instituteName || 'Educa Institute of Consultancy',
+    instituteHindiName: websiteSettings.instituteHindiName || 'एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज',
+    instituteSubtitle: websiteSettings.instituteSubtitle || '(A Premier Institute for Naturopathy, Ayurveda & Wealth Management Consultancy)',
     shortName: websiteSettings.shortName || 'Educa Institute',
     instituteTagline: websiteSettings.instituteTagline || 'Educa Institute of Consultancy',
     logoUrl: websiteSettings.logoUrl || '/logo.jpg',
@@ -31,6 +33,8 @@ export const WebsiteSettings: React.FC = () => {
   useEffect(() => {
     setForm({
       instituteName: websiteSettings.instituteName || 'Educa Institute of Consultancy',
+      instituteHindiName: websiteSettings.instituteHindiName || 'एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज',
+      instituteSubtitle: websiteSettings.instituteSubtitle || '(A Premier Institute for Naturopathy, Ayurveda & Wealth Management Consultancy)',
       shortName: websiteSettings.shortName || 'Educa Institute',
       instituteTagline: websiteSettings.instituteTagline || 'Educa Institute of Consultancy',
       logoUrl: websiteSettings.logoUrl || '/logo.jpg',
@@ -104,13 +108,37 @@ export const WebsiteSettings: React.FC = () => {
             <div className="lg:col-span-2 space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs font-bold text-slate-300 block mb-1">Company / Institute Full Name *</label>
+                  <label className="text-xs font-bold text-slate-300 block mb-1">Company / Institute Full Name (English) *</label>
                   <input
                     type="text"
                     required
                     placeholder="e.g. Educa Institute of Consultancy"
                     value={form.instituteName}
                     onChange={e => setForm({ ...form, instituteName: e.target.value })}
+                    className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs font-bold text-slate-300 block mb-1">Brand Name in Hindi (Official Banner) *</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज"
+                    value={form.instituteHindiName}
+                    onChange={e => setForm({ ...form, instituteHindiName: e.target.value })}
+                    className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-xs font-bold text-slate-300 block mb-1">Header Description / Subtitle *</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. (A Premier Institute for Naturopathy, Ayurveda & Wealth Management Consultancy)"
+                    value={form.instituteSubtitle}
+                    onChange={e => setForm({ ...form, instituteSubtitle: e.target.value })}
                     className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
                   />
                 </div>
@@ -129,10 +157,9 @@ export const WebsiteSettings: React.FC = () => {
               </div>
 
               <div>
-                <label className="text-xs font-bold text-slate-300 block mb-1">Institute Tagline / Subtitle *</label>
+                <label className="text-xs font-bold text-slate-300 block mb-1">Institute Tagline / Slogan</label>
                 <input
                   type="text"
-                  required
                   placeholder="e.g. Educa Institute of Consultancy"
                   value={form.instituteTagline}
                   onChange={e => setForm({ ...form, instituteTagline: e.target.value })}

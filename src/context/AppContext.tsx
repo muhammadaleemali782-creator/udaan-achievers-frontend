@@ -232,6 +232,8 @@ const INITIAL_SOCIALS: SocialLink[] = [
 
 const INITIAL_SETTINGS: WebsiteSettings = {
   instituteName: 'Educa Institute of Consultancy',
+  instituteHindiName: 'एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज',
+  instituteSubtitle: '(A Premier Institute for Naturopathy, Ayurveda & Wealth Management Consultancy)',
   logoUrl: '/logo.jpg',
   shortName: 'EDUCA',
   directorName: 'Dr. R. K. Sharma',

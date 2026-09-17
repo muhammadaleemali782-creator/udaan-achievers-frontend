@@ -234,6 +234,8 @@ export interface VisualOverrideItem {
 // Website Global Settings
 export interface WebsiteSettings {
   instituteName: string;
+  instituteHindiName?: string;
+  instituteSubtitle?: string;
   shortName?: string;
   instituteTagline?: string;
   logoUrl?: string;

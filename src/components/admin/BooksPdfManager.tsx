@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useApp } from '../../context/AppContext';
 import { StudyMaterial, MaterialCategory } from '../../types';
-import { FileText, Plus, Trash2, Download, Eye, Layers, HardDrive, CheckCircle2, Sparkles, ExternalLink } from 'lucide-react';
+import { FileText, Plus, Trash2, Download, Eye, Layers, HardDrive, CheckCircle2, Sparkles, ExternalLink, Upload } from 'lucide-react';
 
 export const BooksPdfManager: React.FC = () => {
   const { studyMaterials, addStudyMaterial, deleteStudyMaterial, showToast } = useApp();
@@ -10,6 +10,7 @@ export const BooksPdfManager: React.FC = () => {
     localStorage.getItem('lcc_google_drive_folder') || 'https://drive.google.com/drive/folders/1aBcDeFgHiJkLmNoPqRsTuVwXyZ'
   );
   const [isEditingDriveFolder, setIsEditingDriveFolder] = useState(false);
+  const pdfFileInputRef = useRef<HTMLInputElement>(null);
 
   const [newPdf, setNewPdf] = useState<Partial<StudyMaterial>>({
     title: '',
@@ -205,15 +206,52 @@ export const BooksPdfManager: React.FC = () => {
 
             <div className="md:col-span-2">
               <label className="text-xs font-bold text-slate-300 block mb-1">
-                Google Drive Share Link or PDF Download URL *
+                Google Drive Share Link or Upload PDF from Device *
               </label>
-              <input
-                type="text"
-                placeholder="https://drive.google.com/file/d/.../view or direct PDF link"
-                value={newPdf.googleDriveUrl || newPdf.downloadUrl}
-                onChange={e => setNewPdf({ ...newPdf, googleDriveUrl: e.target.value, downloadUrl: e.target.value })}
-                className="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
-              />
+              <div className="flex items-center gap-2">
+                <input
+                  type="text"
+                  placeholder="https://drive.google.com/file/d/.../view or direct PDF link"
+                  value={newPdf.googleDriveUrl || newPdf.downloadUrl}
+                  onChange={e => setNewPdf({ ...newPdf, googleDriveUrl: e.target.value, downloadUrl: e.target.value })}
+                  className="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
+                />
+                <input
+                  type="file"
+                  ref={pdfFileInputRef}
+                  accept=".pdf,application/pdf"
+                  onChange={e => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    if (file.size > 25 * 1024 * 1024) {
+                      showToast('File exceeds 25MB. For large books, please use Google Drive link.', 'warning');
+                      return;
+                    }
+                    const reader = new FileReader();
+                    reader.onload = (evt) => {
+                      const dataUrl = evt.target?.result as string;
+                      setNewPdf(prev => ({
+                        ...prev,
+                        downloadUrl: dataUrl,
+                        googleDriveUrl: '',
+                        title: prev.title || file.name.replace(/\.[^/.]+$/, "")
+                      }));
+                      showToast(`Loaded ${file.name} successfully!`, 'success');
+                    };
+                    reader.readAsDataURL(file);
+                  }}
+                  className="hidden"
+                />
+                <button
+                  type="button"
+                  onClick={() => pdfFileInputRef.current?.click()}
+                  className="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 flex items-center gap-1.5 shrink-0 transition-colors cursor-pointer"
+                  title="Upload PDF Book from Phone/PC"
+                >
+                  <Upload className="w-3.5 h-3.5 text-amber-400" />
+                  <span className="hidden sm:inline">Upload File</span>
+                </button>
+              </div>
             </div>
 
             <div>

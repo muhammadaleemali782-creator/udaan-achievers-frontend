@@ -1,7 +1,8 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { Advertisement, AdPlacement } from '../../types';
 import { Megaphone, Plus, Trash2, Edit2, Eye, EyeOff, ExternalLink, Flame, CheckCircle2, Sparkles } from 'lucide-react';
+import { ImageUploaderInput } from '../common/ImageUploaderInput';
 
 export const AdsManager: React.FC = () => {
   const { ads, addAd, updateAd, toggleAd, deleteAd, showToast } = useApp();
@@ -125,6 +126,14 @@ export const AdsManager: React.FC = () => {
               className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
             />
           </div>
+
+          <ImageUploaderInput
+            label="Ad Creative Graphic Banner (Upload from Phone/Device or Paste URL)"
+            value={newAd.imageUrl || ''}
+            onChange={url => setNewAd({ ...newAd, imageUrl: url })}
+            placeholder="Upload ad banner image or paste image link..."
+            required
+          />
 
           <div className="flex items-center justify-end gap-3 pt-2">
             <button
