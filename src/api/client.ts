@@ -17,6 +17,10 @@ async function request<T>(endpoint: string, options: RequestInit = {}): Promise<
 
   try {
     const res = await fetch(url, { ...options, headers });
+    const contentType = res.headers.get('content-type') || '';
+    if (!contentType.includes('application/json')) {
+      throw new Error(`Server returned non-JSON (${res.status}): ${url}`);
+    }
     const data = await res.json();
     if (!res.ok) {
       throw new Error(data.message || `Request failed with status ${res.status}`);

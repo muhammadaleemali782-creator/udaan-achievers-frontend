@@ -329,7 +329,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     } catch (e) {}
   };
 
-  const [courses, setCourses] = useState<Course[]>(() => loadSaved('educa_courses_v3', INITIAL_COURSES));
+  const [courses, setCourses] = useState<Course[]>(() => {
+    const deleted = loadSaved<string[]>('educa_deleted_courses', []);
+    const loaded = loadSaved<Course[]>('educa_courses_v3', INITIAL_COURSES);
+    return loaded.filter(c => !deleted.includes(c.id));
+  });
   const [studyMaterials, setStudyMaterials] = useState<StudyMaterial[]>(() => loadSaved('educa_study_materials_v2', INITIAL_STUDY_MATERIALS));
   const [syllabuses, setSyllabuses] = useState<SyllabusItem[]>(() => loadSaved('educa_syllabus_v2', INITIAL_SYLLABUS));
   const [notices, setNotices] = useState<Notice[]>(() => loadSaved('lcc_notices', INITIAL_NOTICES));
@@ -884,6 +888,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         rating: 5.0
       };
     }
+    const deleted = loadSaved<string[]>('educa_deleted_courses', []);
+    if (deleted.includes(newC.id)) {
+      saveItem('educa_deleted_courses', deleted.filter(id => id !== newC.id));
+    }
     setCourses(prev => {
       const updated = [newC, ...prev];
       saveItem('educa_courses_v3', updated);
@@ -908,12 +916,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     try {
       await api.courses.delete(id);
     } catch (e) {}
+    const deleted = loadSaved<string[]>('educa_deleted_courses', []);
+    if (!deleted.includes(id)) {
+      saveItem('educa_deleted_courses', [...deleted, id]);
+    }
     setCourses(prev => {
       const updated = prev.filter(c => c.id !== id);
       saveItem('educa_courses_v3', updated);
       return updated;
     });
-    showToast('Course removed.', 'info');
+    showToast('Course removed permanently.', 'info');
   };
 
   // Material Management

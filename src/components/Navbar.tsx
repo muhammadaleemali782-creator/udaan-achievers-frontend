@@ -99,6 +99,25 @@ export const Navbar: React.FC = () => {
             <MessageSquare className="w-3 h-3 shrink-0" />
             <span>WhatsApp</span>
           </a>
+
+          {isAdminAuthenticated ? (
+            <button
+              onClick={() => navigateTo('admin-panel')}
+              className="bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-0.5 rounded-full flex items-center gap-1 transition-colors whitespace-nowrap cursor-pointer font-black shadow-xs"
+            >
+              <Shield className="w-3 h-3 text-amber-300" />
+              <span>Admin Desk</span>
+            </button>
+          ) : (
+            <button
+              onClick={() => setIsAdminAuthModalOpen(true)}
+              className="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black px-2.5 py-0.5 rounded-full flex items-center gap-1 transition-colors whitespace-nowrap cursor-pointer shadow-xs"
+              title="Director Login to Edit/Delete Anything"
+            >
+              <Shield className="w-3 h-3 text-slate-950" />
+              <span>Director</span>
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -161,9 +161,45 @@ export const getElementFriendlyInfo = (el: HTMLElement): { name: string; subtitl
     }
   }
 
-  // 2. Direct or nested Photo / Image
-  if (el.tagName === 'IMG' || el.querySelector('img')) {
-    const img = (el.tagName === 'IMG' ? el : el.querySelector('img')) as HTMLImageElement;
+  // 2. Course Card & Elements Detection
+  const courseCard = el.closest('#courses-section .group') as HTMLElement;
+  if (courseCard) {
+    const title = courseCard.querySelector('h3')?.innerText?.trim() || 'Course';
+    if (el.tagName === 'IMG') {
+      return {
+        name: `Course Photo: ${title.slice(0, 30)}`,
+        subtitle: 'Click to upload or replace course image',
+        targetEl: el
+      };
+    }
+    if (el.tagName === 'H3' || el.closest('h3')) {
+      const h3 = (el.tagName === 'H3' ? el : el.closest('h3')) as HTMLElement;
+      return {
+        name: `Course Title: ${title.slice(0, 30)}`,
+        subtitle: 'Edit course title live',
+        targetEl: h3
+      };
+    }
+    if (el.tagName === 'P' || el.closest('p')) {
+      const p = (el.tagName === 'P' ? el : el.closest('p')) as HTMLElement;
+      return {
+        name: `Course Description: ${title.slice(0, 25)}`,
+        subtitle: 'Edit course summary live',
+        targetEl: p
+      };
+    }
+    return {
+      name: `Course Card: ${title.slice(0, 30)}`,
+      subtitle: 'Edit card styling, details, or permanently remove course',
+      targetEl: courseCard
+    };
+  }
+
+  // 3. Direct or nested Photo / Image
+  const isDirectImg = el.tagName === 'IMG';
+  const isImgWrapper = !isDirectImg && el.children.length === 1 && el.firstElementChild?.tagName === 'IMG';
+  if (isDirectImg || isImgWrapper) {
+    const img = (isDirectImg ? el : el.firstElementChild) as HTMLImageElement;
     if (img) {
       let friendlyName = 'Photo / Image';
       let friendlySub = img.alt || img.src.split('/').pop() || 'Website Image';
@@ -441,6 +477,7 @@ export const LiveVisualEditor: React.FC = () => {
     updateWebsiteSettings,
     courses,
     updateCourse,
+    deleteCourse,
     showToast
   } = useApp();
 
@@ -729,6 +766,22 @@ export const LiveVisualEditor: React.FC = () => {
   const handleRemoveElement = async () => {
     if (!clickedTarget || !clickedTarget.elementRef) return;
     const el = clickedTarget.elementRef;
+
+    // Direct Course Deletion if element is a course card or inside a course card
+    const courseCard = el.closest('#courses-section .group') as HTMLElement;
+    if (courseCard || clickedTarget.friendlyName.startsWith('Course Card')) {
+      const title = courseCard?.querySelector('h3')?.innerText?.trim() || '';
+      const matched = courses.find(c => c.title.trim() === title || title.includes(c.title.trim()) || c.title.trim() === clickedTarget.originalValue?.trim());
+      if (matched) {
+        if (window.confirm(`Permanently delete course "${matched.title}"?`)) {
+          deleteCourse(matched.id);
+          showToast(`Course "${matched.title}" deleted permanently!`, 'success');
+          setClickedTarget(null);
+          return;
+        }
+      }
+    }
+
     el.style.display = 'none';
     const sel = getDomPath(el);
 
@@ -856,6 +909,21 @@ export const LiveVisualEditor: React.FC = () => {
         clickedTarget.elementRef?.closest('header')
       ) {
         updatedSettings.logoUrl = clickedTarget.newValue;
+      }
+    }
+
+    // 4b. Sync Course changes directly to Course state
+    const courseCard = clickedTarget.elementRef?.closest('#courses-section .group') as HTMLElement;
+    if (courseCard) {
+      const titleEl = courseCard.querySelector('h3');
+      const origTitle = titleEl?.innerText?.trim() || '';
+      const matched = courses.find(c => c.title.trim() === origTitle || origTitle.includes(c.title.trim()) || c.title.trim() === clickedTarget.originalValue?.trim());
+      if (matched) {
+        if (clickedTarget.type === 'text' && (clickedTarget.elementRef === titleEl || clickedTarget.elementRef?.tagName === 'H3')) {
+          updateCourse({ ...matched, title: clickedTarget.newValue });
+        } else if (clickedTarget.type === 'image') {
+          updateCourse({ ...matched, image: clickedTarget.newValue });
+        }
       }
     }
 

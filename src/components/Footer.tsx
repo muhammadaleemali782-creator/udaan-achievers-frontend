@@ -135,6 +135,22 @@ export const Footer: React.FC = () => {
             <span>ISO 9001:2015 Certified Consultancy Center</span>
             <span>•</span>
             <span>All Rights Reserved</span>
+            <span>•</span>
+            {isAdminAuthenticated ? (
+              <button
+                onClick={() => navigateTo('admin-panel')}
+                className="text-[#0066FF] hover:underline font-bold cursor-pointer"
+              >
+                ⚙️ Open Admin Desk
+              </button>
+            ) : (
+              <button
+                onClick={() => setIsAdminAuthModalOpen(true)}
+                className="text-slate-400 hover:text-slate-600 font-medium cursor-pointer"
+              >
+                🔐 Director Portal Login
+              </button>
+            )}
           </div>
         </div>
 
