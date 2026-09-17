@@ -922,12 +922,19 @@ export const LiveVisualEditor: React.FC = () => {
       }
 
       if (
-        clickedTarget.originalValue === websiteSettings.directorPhotoUrl ||
-        clickedTarget.elementRef?.closest('#hero-leadership-box') ||
-        clickedTarget.elementRef?.closest('#about-director-card') ||
-        clickedTarget.friendlyName.toLowerCase().includes('director') ||
         clickedTarget.elementRef?.id === 'hero-director-photo' ||
-        clickedTarget.elementRef?.id === 'about-director-photo'
+        clickedTarget.elementRef?.closest('#hero-leadership-box')
+      ) {
+        updatedSettings.heroDirectorPhotoUrl = clickedTarget.newValue;
+      } else if (
+        clickedTarget.elementRef?.id === 'about-director-photo' ||
+        clickedTarget.elementRef?.closest('#about-director-card') ||
+        clickedTarget.elementRef?.closest('#about-section')
+      ) {
+        updatedSettings.aboutDirectorPhotoUrl = clickedTarget.newValue;
+      } else if (
+        clickedTarget.originalValue === websiteSettings.directorPhotoUrl ||
+        clickedTarget.friendlyName.toLowerCase().includes('director')
       ) {
         updatedSettings.directorPhotoUrl = clickedTarget.newValue;
       }

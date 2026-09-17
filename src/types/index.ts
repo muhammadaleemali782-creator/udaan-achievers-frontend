@@ -254,6 +254,8 @@ export interface WebsiteSettings {
   defaultPlaylistRedirectUrl?: string;
   heroPosterUrl?: string;
   directorPhotoUrl?: string;
+  heroDirectorPhotoUrl?: string;
+  aboutDirectorPhotoUrl?: string;
   visualOverrides?: Record<string, VisualOverrideItem>;
   sectionOrder?: string[];
   heroColumnsOrder?: string[];

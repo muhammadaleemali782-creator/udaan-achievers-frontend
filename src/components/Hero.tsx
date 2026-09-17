@@ -255,7 +255,7 @@ export const Hero: React.FC = () => {
                       )}
                       <img
                         id="hero-director-photo"
-                        src={websiteSettings?.directorPhotoUrl || "/assets/founder.png"}
+                        src={websiteSettings?.heroDirectorPhotoUrl || websiteSettings?.directorPhotoUrl || "/assets/founder.png"}
                         alt={directorName}
                         className={`w-full h-full object-cover object-top cursor-pointer transition-opacity duration-300 ${dirPhotoLoaded ? 'opacity-100' : 'opacity-0'}`}
                         onLoad={() => setDirPhotoLoaded(true)}
@@ -269,15 +269,15 @@ export const Hero: React.FC = () => {
                         {!dirPhotoEdit ? (
                           <button
                             type="button"
-                            onClick={() => { setDirPhotoUrl(websiteSettings?.directorPhotoUrl || ''); setDirPhotoEdit(true); }}
+                            onClick={() => { setDirPhotoUrl(websiteSettings?.heroDirectorPhotoUrl || websiteSettings?.directorPhotoUrl || ''); setDirPhotoEdit(true); }}
                             className="text-[10px] font-bold text-[#0066FF] hover:underline cursor-pointer bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200"
                           >
-                            📸 Change Photo
+                            📸 Change Hero Photo
                           </button>
                         ) : (
                           <div className="mt-1 p-2 bg-white rounded-xl border border-blue-300 shadow-md text-left space-y-2">
                             <ImageUploaderInput
-                              label="Director Photo"
+                              label="Hero Director Photo"
                               value={dirPhotoUrl}
                               onChange={setDirPhotoUrl}
                               placeholder="Upload or paste URL..."
@@ -287,8 +287,8 @@ export const Hero: React.FC = () => {
                                 type="button"
                                 onClick={async () => {
                                   setDirPhotoLoaded(false);
-                                  await updateWebsiteSettings({ ...websiteSettings, directorPhotoUrl: dirPhotoUrl });
-                                  showToast('Director photo updated!', 'success');
+                                  await updateWebsiteSettings({ ...websiteSettings, heroDirectorPhotoUrl: dirPhotoUrl });
+                                  showToast('Hero Director photo updated!', 'success');
                                   setDirPhotoEdit(false);
                                 }}
                                 className="flex-1 py-1 text-[10px] font-black bg-[#0066FF] text-white rounded-lg cursor-pointer"

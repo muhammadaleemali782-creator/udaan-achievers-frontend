@@ -27,7 +27,9 @@ export const WebsiteSettings: React.FC = () => {
     defaultWhatsappRedirectUrl: websiteSettings.defaultWhatsappRedirectUrl || '',
     defaultPlaylistRedirectUrl: websiteSettings.defaultPlaylistRedirectUrl || '',
     heroPosterUrl: websiteSettings.heroPosterUrl || '',
-    directorPhotoUrl: websiteSettings.directorPhotoUrl || ''
+    directorPhotoUrl: websiteSettings.directorPhotoUrl || '',
+    heroDirectorPhotoUrl: websiteSettings.heroDirectorPhotoUrl || '',
+    aboutDirectorPhotoUrl: websiteSettings.aboutDirectorPhotoUrl || ''
   });
 
   useEffect(() => {
@@ -52,7 +54,9 @@ export const WebsiteSettings: React.FC = () => {
       defaultWhatsappRedirectUrl: websiteSettings.defaultWhatsappRedirectUrl || '',
       defaultPlaylistRedirectUrl: websiteSettings.defaultPlaylistRedirectUrl || '',
       heroPosterUrl: websiteSettings.heroPosterUrl || '',
-      directorPhotoUrl: websiteSettings.directorPhotoUrl || ''
+      directorPhotoUrl: websiteSettings.directorPhotoUrl || '',
+      heroDirectorPhotoUrl: websiteSettings.heroDirectorPhotoUrl || '',
+      aboutDirectorPhotoUrl: websiteSettings.aboutDirectorPhotoUrl || ''
     });
   }, [websiteSettings]);
 
@@ -182,10 +186,17 @@ export const WebsiteSettings: React.FC = () => {
               />
 
               <ImageUploaderInput
-                label="Director / Founder Official Photo (File Upload or URL)"
-                value={form.directorPhotoUrl}
-                onChange={url => setForm({ ...form, directorPhotoUrl: url })}
-                placeholder="Upload Director Dr. R. K. Sharma photo or paste URL..."
+                label="Hero Section Leadership Photo (File Upload or URL)"
+                value={form.heroDirectorPhotoUrl || form.directorPhotoUrl}
+                onChange={url => setForm({ ...form, heroDirectorPhotoUrl: url })}
+                placeholder="Upload Hero Section Director photo or paste URL..."
+              />
+
+              <ImageUploaderInput
+                label="About Section Director Profile Photo (File Upload or URL)"
+                value={form.aboutDirectorPhotoUrl || form.directorPhotoUrl}
+                onChange={url => setForm({ ...form, aboutDirectorPhotoUrl: url })}
+                placeholder="Upload About Section Dr. R. K. Sharma photo or paste URL..."
               />
             </div>
 

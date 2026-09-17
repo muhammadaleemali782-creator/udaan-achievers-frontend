@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { Award, BookOpen, Clock, HeartHandshake, Sparkles, Target, Users, CheckCircle2, ShieldCheck, ArrowRight, Flag, Rocket, Trophy, Monitor, Laptop } from 'lucide-react';
 import { useApp } from '../context/AppContext';
+import { ImageUploaderInput } from './common/ImageUploaderInput';
 
 export const AboutSection: React.FC = () => {
-  const { websiteSettings } = useApp();
+  const { websiteSettings, isAdminAuthenticated, updateWebsiteSettings, showToast } = useApp();
   const director = websiteSettings?.directorName || 'Dr. R. K. Sharma';
   const institute = websiteSettings?.instituteName || 'Educa Institute of Consultancy';
   const [aboutPhotoLoaded, setAboutPhotoLoaded] = useState(false);
+  const [aboutPhotoEdit, setAboutPhotoEdit] = useState(false);
+  const [aboutPhotoUrl, setAboutPhotoUrl] = useState('');
 
   const milestones = [
     {
@@ -79,7 +82,7 @@ export const AboutSection: React.FC = () => {
                     )}
                     <img
                       id="about-director-photo"
-                      src={websiteSettings?.directorPhotoUrl || "/assets/founder.png"}
+                      src={websiteSettings?.aboutDirectorPhotoUrl || websiteSettings?.directorPhotoUrl || "/assets/founder.png"}
                       alt={`${director} - Founder & Director`}
                       className={`w-full h-full object-cover object-top hover:scale-105 transition-all duration-300 cursor-pointer ${aboutPhotoLoaded ? 'opacity-100' : 'opacity-0'}`}
                       onLoad={() => setAboutPhotoLoaded(true)}
@@ -89,6 +92,50 @@ export const AboutSection: React.FC = () => {
                   <div className="absolute -bottom-2 -right-2 p-2 rounded-2xl bg-[#0066FF] text-white shadow-md">
                     <ShieldCheck className="w-4 h-4" />
                   </div>
+
+                  {isAdminAuthenticated && (
+                    <div className="mt-2 text-center">
+                      {!aboutPhotoEdit ? (
+                        <button
+                          type="button"
+                          onClick={() => { setAboutPhotoUrl(websiteSettings?.aboutDirectorPhotoUrl || websiteSettings?.directorPhotoUrl || ''); setAboutPhotoEdit(true); }}
+                          className="text-[10px] font-bold text-[#0066FF] hover:underline cursor-pointer bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200 inline-flex items-center gap-1"
+                        >
+                          📸 Change About Photo
+                        </button>
+                      ) : (
+                        <div className="mt-2 p-2 bg-white rounded-xl border border-blue-300 shadow-md text-left space-y-2 w-56 sm:w-64">
+                          <ImageUploaderInput
+                            label="About Section Director Photo"
+                            value={aboutPhotoUrl}
+                            onChange={setAboutPhotoUrl}
+                            placeholder="Upload or paste URL..."
+                          />
+                          <div className="flex gap-1.5">
+                            <button
+                              type="button"
+                              onClick={async () => {
+                                setAboutPhotoLoaded(false);
+                                await updateWebsiteSettings({ ...websiteSettings, aboutDirectorPhotoUrl: aboutPhotoUrl });
+                                showToast('About Section photo updated!', 'success');
+                                setAboutPhotoEdit(false);
+                              }}
+                              className="flex-1 py-1 text-[10px] font-black bg-[#0066FF] text-white rounded-lg cursor-pointer"
+                            >
+                              Save
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setAboutPhotoEdit(false)}
+                              className="flex-1 py-1 text-[10px] font-bold bg-slate-100 text-slate-700 rounded-lg cursor-pointer"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 <div className="space-y-1.5 text-center sm:text-left">
