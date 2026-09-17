@@ -464,6 +464,8 @@ export const LiveVisualEditor: React.FC = () => {
     selector?: string;
   } | null>(null);
 
+  const [isSaving, setIsSaving] = useState(false);
+
   // Time-Machine Undo/Redo State Stack
   const [historyStack, setHistoryStack] = useState<HistorySnapshot[]>([]);
   const [historyPointer, setHistoryPointer] = useState<number>(-1);
@@ -765,7 +767,8 @@ export const LiveVisualEditor: React.FC = () => {
   };
 
   const handleApplyClickEdit = async () => {
-    if (!clickedTarget || !clickedTarget.elementRef) return;
+    if (!clickedTarget || !clickedTarget.elementRef || isSaving) return;
+    setIsSaving(true);
 
     const selector = getDomPath(clickedTarget.elementRef);
 
@@ -880,6 +883,7 @@ export const LiveVisualEditor: React.FC = () => {
       showToast('Saved to local browser storage!', 'info');
     }
 
+    setIsSaving(false);
     setClickedTarget(null);
   };
 
@@ -1266,21 +1270,32 @@ export const LiveVisualEditor: React.FC = () => {
                 </div>
 
                 <div
-                  className="p-4 rounded-xl border border-slate-700 shadow-md flex flex-col items-center justify-center text-center transition-all duration-150 min-h-[60px]"
+                  className="p-4 rounded-xl border border-slate-700 shadow-md flex flex-col items-center justify-center text-center transition-all duration-150 min-h-[60px] overflow-hidden"
                   style={{
                     backgroundColor: clickedTarget.newBgColor || '#0B3B95',
                     color: clickedTarget.newTextColor || '#ffffff'
                   }}
                 >
-                  <span className="font-extrabold text-sm tracking-wide">
-                    {clickedTarget.type === 'text'
-                      ? (clickedTarget.newValue || clickedTarget.originalValue)
-                      : clickedTarget.friendlyName}
-                  </span>
-                  {clickedTarget.type !== 'text' && (
-                    <span className="text-[10px] opacity-80 mt-0.5">
-                      {clickedTarget.friendlySubtitle}
-                    </span>
+                  {clickedTarget.type === 'image' && clickedTarget.newValue ? (
+                    <img
+                      src={clickedTarget.newValue}
+                      alt="Preview"
+                      className="max-h-32 max-w-full object-contain rounded-lg border border-slate-600"
+                      onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                    />
+                  ) : (
+                    <>
+                      <span className="font-extrabold text-sm tracking-wide">
+                        {clickedTarget.type === 'text'
+                          ? (clickedTarget.newValue || clickedTarget.originalValue)
+                          : clickedTarget.friendlyName}
+                      </span>
+                      {clickedTarget.type !== 'text' && (
+                        <span className="text-[10px] opacity-80 mt-0.5">
+                          {clickedTarget.friendlySubtitle}
+                        </span>
+                      )}
+                    </>
                   )}
                 </div>
 
@@ -1308,12 +1323,23 @@ export const LiveVisualEditor: React.FC = () => {
                 >
                   Cancel
                 </button>
-              <button
+                <button
+                type="button"
                 onClick={handleApplyClickEdit}
-                className="px-6 py-2 rounded-xl bg-[#0066FF] hover:bg-blue-600 text-white text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow-md cursor-pointer"
+                disabled={isSaving}
+                className={`px-6 py-2 rounded-xl text-white text-xs font-black uppercase tracking-wider flex items-center gap-1.5 shadow-md cursor-pointer transition-colors ${
+                  isSaving ? 'bg-slate-600 cursor-not-allowed' : 'bg-[#0066FF] hover:bg-blue-600'
+                }`}
               >
-                <Check className="w-3.5 h-3.5" />
-                <span>Apply Live Change</span>
+                {isSaving ? (
+                  <svg className="w-3.5 h-3.5 animate-spin" viewBox="0 0 24 24" fill="none">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                  </svg>
+                ) : (
+                  <Check className="w-3.5 h-3.5" />
+                )}
+                <span>{isSaving ? 'Saving...' : 'Apply Live Change'}</span>
               </button>
               </div>
             </div>

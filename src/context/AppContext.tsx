@@ -290,6 +290,30 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  // 🔑 Fetch settings from backend on startup so changes are SHARED across all devices
+  useEffect(() => {
+    api.settings.get().then(res => {
+      if (res?.data) {
+        const remote = res.data as Partial<WebsiteSettings>;
+        remote.contactAddress = 'VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ';
+        setWebsiteSettings(prev => {
+          const merged = { ...prev, ...remote };
+          // keep visualOverrides — merge remote overrides on top
+          if (remote.visualOverrides) {
+            merged.visualOverrides = { ...(prev.visualOverrides || {}), ...remote.visualOverrides };
+          }
+          saveItem('educa_website_settings', merged);
+          saveItem('lcc_website_settings', merged);
+          if (merged.visualOverrides) {
+            saveItem('educa_visual_overrides', merged.visualOverrides);
+            saveItem('lcc_visual_overrides', merged.visualOverrides);
+          }
+          return merged;
+        });
+      }
+    }).catch(() => {/* offline — use localStorage */});
+  }, []);
+
   const loadSaved = <T,>(key: string, fallback: T): T => {
     try {
       const item = localStorage.getItem(key);
