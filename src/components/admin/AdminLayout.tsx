@@ -322,8 +322,8 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ activeTab, setActiveTa
         </div>
       )}
 
-      {/* Desktop Executive Sidebar (Pure White & Slate-50) */}
-      <aside className="hidden md:flex flex-col w-64 lg:w-72 bg-white border-r border-slate-200 shrink-0 h-screen sticky top-0 shadow-xs">
+      {/* Desktop Executive Sidebar */}
+      <aside className="hidden md:flex flex-col w-52 lg:w-64 bg-white border-r border-slate-200 shrink-0 h-screen sticky top-0 shadow-xs">
         {/* Brand Header */}
         <div className="p-4 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -457,7 +457,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ activeTab, setActiveTa
       </aside>
 
       {/* Main Administrative Workspace */}
-      <main className="flex-1 p-4 sm:p-6 lg:p-8 overflow-y-auto max-w-7xl">
+      <main className="flex-1 min-w-0 p-3 sm:p-4 lg:p-6 xl:p-8 overflow-y-auto">
         {children}
       </main>
     </div>
