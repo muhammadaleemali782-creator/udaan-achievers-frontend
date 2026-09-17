@@ -72,11 +72,12 @@ export const AboutSection: React.FC = () => {
               
               <div className="flex flex-col sm:flex-row items-center gap-6">
                 <div className="relative shrink-0">
-                  <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl overflow-hidden border-4 border-[#0066FF] shadow-lg shadow-blue-500/25 bg-slate-900">
+                  <div id="about-director-card" className="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl overflow-hidden border-4 border-[#0066FF] shadow-lg shadow-blue-500/25 bg-slate-900">
                     <img
+                      id="about-director-photo"
                       src={websiteSettings?.directorPhotoUrl || "/assets/founder.png"}
                       alt={`${director} - Founder & Director`}
-                      className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-300 cursor-pointer"
                     />
                   </div>
                   <div className="absolute -bottom-2 -right-2 p-2 rounded-2xl bg-[#0066FF] text-white shadow-md">

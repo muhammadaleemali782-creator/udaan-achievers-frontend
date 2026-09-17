@@ -244,11 +244,12 @@ export const Hero: React.FC = () => {
 
                   {/* Director Card */}
                   <div className="text-center space-y-2 p-3 bg-slate-50 rounded-xl border border-slate-200">
-                    <div className="w-24 h-24 mx-auto rounded-xl overflow-hidden border-2 border-[#0B3B95] shadow-md bg-slate-900">
+                    <div className="w-24 h-24 mx-auto rounded-xl overflow-hidden border-2 border-[#0B3B95] shadow-md bg-slate-900" id="hero-leadership-box">
                       <img
+                        id="hero-director-photo"
                         src={websiteSettings?.directorPhotoUrl || "/assets/founder.png"}
                         alt={directorName}
-                        className="w-full h-full object-cover object-top"
+                        className="w-full h-full object-cover object-top cursor-pointer"
                       />
                     </div>
                     <div>
