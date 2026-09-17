@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
+import { ImageUploaderInput } from './common/ImageUploaderInput';
 import {
   GraduationCap,
   Sparkles,
@@ -20,7 +21,7 @@ import {
 import { AdBanner } from './ads/AdBanner';
 
 export const Hero: React.FC = () => {
-  const { navigateTo, setIsStudentAuthModalOpen, websiteSettings, galleryItems, courses } = useApp();
+  const { navigateTo, setIsStudentAuthModalOpen, websiteSettings, galleryItems, courses, isAdminAuthenticated, updateWebsiteSettings, showToast } = useApp();
 
   // Slide Images for University-Style Carousel (High-res academic & campus events)
   const defaultSlides = [
@@ -66,6 +67,9 @@ export const Hero: React.FC = () => {
     : defaultSlides;
 
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [dirPhotoEdit, setDirPhotoEdit] = useState(false);
+  const [dirPhotoUrl, setDirPhotoUrl] = useState('');
+  const [dirPhotoLoaded, setDirPhotoLoaded] = useState(false);
 
   // Auto slide transition every 5 seconds
   useEffect(() => {
@@ -244,14 +248,66 @@ export const Hero: React.FC = () => {
 
                   {/* Director Card */}
                   <div className="text-center space-y-2 p-3 bg-slate-50 rounded-xl border border-slate-200">
-                    <div className="w-24 h-24 mx-auto rounded-xl overflow-hidden border-2 border-[#0B3B95] shadow-md bg-slate-900" id="hero-leadership-box">
+                    <div className="relative w-24 h-24 mx-auto rounded-xl overflow-hidden border-2 border-[#0B3B95] shadow-md bg-slate-200" id="hero-leadership-box">
+                      {/* Skeleton shimmer until photo loads */}
+                      {!dirPhotoLoaded && (
+                        <div className="absolute inset-0 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 animate-pulse" />
+                      )}
                       <img
                         id="hero-director-photo"
                         src={websiteSettings?.directorPhotoUrl || "/assets/founder.png"}
                         alt={directorName}
-                        className="w-full h-full object-cover object-top cursor-pointer"
+                        className={`w-full h-full object-cover object-top cursor-pointer transition-opacity duration-300 ${dirPhotoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                        onLoad={() => setDirPhotoLoaded(true)}
+                        onError={() => setDirPhotoLoaded(true)}
                       />
                     </div>
+
+                    {/* Admin-only inline photo change panel */}
+                    {isAdminAuthenticated && (
+                      <div>
+                        {!dirPhotoEdit ? (
+                          <button
+                            type="button"
+                            onClick={() => { setDirPhotoUrl(websiteSettings?.directorPhotoUrl || ''); setDirPhotoEdit(true); }}
+                            className="text-[10px] font-bold text-[#0066FF] hover:underline cursor-pointer bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200"
+                          >
+                            📸 Change Photo
+                          </button>
+                        ) : (
+                          <div className="mt-1 p-2 bg-white rounded-xl border border-blue-300 shadow-md text-left space-y-2">
+                            <ImageUploaderInput
+                              label="Director Photo"
+                              value={dirPhotoUrl}
+                              onChange={setDirPhotoUrl}
+                              placeholder="Upload or paste URL..."
+                            />
+                            <div className="flex gap-1.5">
+                              <button
+                                type="button"
+                                onClick={async () => {
+                                  setDirPhotoLoaded(false);
+                                  await updateWebsiteSettings({ ...websiteSettings, directorPhotoUrl: dirPhotoUrl });
+                                  showToast('Director photo updated!', 'success');
+                                  setDirPhotoEdit(false);
+                                }}
+                                className="flex-1 py-1 text-[10px] font-black bg-[#0066FF] text-white rounded-lg cursor-pointer"
+                              >
+                                Save
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setDirPhotoEdit(false)}
+                                className="flex-1 py-1 text-[10px] font-bold bg-slate-100 text-slate-700 rounded-lg cursor-pointer"
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
                     <div>
                       <h4 className="text-sm font-black text-slate-900 leading-tight">{directorName}</h4>
                       <p className="text-[11px] font-bold text-[#0B3B95]">Director & Founder</p>
