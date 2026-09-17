@@ -309,7 +309,7 @@ export const Hero: React.FC = () => {
                     )}
 
                     <div>
-                      <h4 className="text-sm font-black text-slate-900 leading-tight">{directorName}</h4>
+                      <h4 id="hero-director-name" className="text-sm font-black text-slate-900 leading-tight cursor-pointer">{directorName}</h4>
                       <p className="text-[11px] font-bold text-[#0B3B95]">Director & Founder</p>
                       <p className="text-[10px] text-slate-500 font-medium mt-0.5 leading-snug">
                         Dean of Naturopathy & Ayurveda (BAMS, MD)

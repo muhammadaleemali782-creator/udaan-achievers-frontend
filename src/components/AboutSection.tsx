@@ -95,7 +95,7 @@ export const AboutSection: React.FC = () => {
                   <span className="px-3 py-1 rounded-full bg-[#0066FF] text-white font-black text-[10px] uppercase tracking-wider">
                     FOUNDER & MANAGING DIRECTOR
                   </span>
-                  <h3 className="text-2xl font-black text-slate-900">{director}</h3>
+                  <h3 id="about-director-name" className="text-2xl font-black text-slate-900 cursor-pointer">{director}</h3>
                   <p className="text-xs text-[#0066FF] font-bold">
                     Dean & Director of Naturopathy & Ayurveda • {institute}
                   </p>

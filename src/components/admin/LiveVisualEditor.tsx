@@ -18,7 +18,9 @@ import {
   Image as ImageIcon,
   Type,
   Palette,
-  Trash2
+  Trash2,
+  Loader2,
+  CheckCircle
 } from 'lucide-react';
 
 import { VisualOverrideItem } from '../../types';
@@ -484,6 +486,8 @@ export const LiveVisualEditor: React.FC = () => {
   const [isEditorActive, setIsEditorActive] = useState<boolean>(false);
   const [isReorderModalOpen, setIsReorderModalOpen] = useState<boolean>(false);
   const [hasUnsavedChanges, setHasUnsavedChanges] = useState<boolean>(false);
+  const [isSavingDock, setIsSavingDock] = useState<boolean>(false);
+  const [justSavedDock, setJustSavedDock] = useState<boolean>(false);
 
   // Point & Click Target State
   const [clickedTarget, setClickedTarget] = useState<{
@@ -870,7 +874,7 @@ export const LiveVisualEditor: React.FC = () => {
       const orig = clickedTarget.originalValue.trim();
       const elId = clickedTarget.elementRef?.id || '';
 
-      if (elId === 'header-brand-title' || orig === websiteSettings.instituteName?.trim()) {
+      if (elId === 'header-brand-title' || orig === websiteSettings.instituteName?.trim() || clickedTarget.elementRef?.closest('#header-brand-banner')) {
         updatedSettings.instituteName = val;
       }
       if (elId === 'header-brand-hindi' || orig === (websiteSettings.instituteHindiName || 'एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज').trim()) {
@@ -879,13 +883,35 @@ export const LiveVisualEditor: React.FC = () => {
       if (elId === 'header-brand-subtitle' || orig === (websiteSettings.instituteSubtitle || '(A Premier Institute for Naturopathy, Ayurveda & Wealth Management Consultancy)').trim()) {
         updatedSettings.instituteSubtitle = val;
       }
-      if (orig === websiteSettings.directorName?.trim()) updatedSettings.directorName = val;
-      if (orig === websiteSettings.contactPhone?.trim()) updatedSettings.contactPhone = val;
-      if (orig === websiteSettings.contactEmail?.trim()) updatedSettings.contactEmail = val;
-      if (orig === websiteSettings.contactAddress?.trim()) updatedSettings.contactAddress = val;
-      if (orig === websiteSettings.emergencyAlertText?.trim()) updatedSettings.emergencyAlertText = val;
-      if (orig === websiteSettings.heroBadgeText?.trim()) updatedSettings.heroBadgeText = val;
-      if (orig === websiteSettings.instituteTagline?.trim()) updatedSettings.instituteTagline = val;
+      if (
+        elId === 'hero-director-name' ||
+        elId === 'about-director-name' ||
+        orig === websiteSettings.directorName?.trim() ||
+        orig.includes(websiteSettings.directorName?.trim()) ||
+        clickedTarget.friendlyName.toLowerCase().includes('director') ||
+        clickedTarget.elementRef?.closest('#hero-leadership-box') ||
+        clickedTarget.elementRef?.closest('#about-director-card')
+      ) {
+        updatedSettings.directorName = val;
+      }
+      if (orig === websiteSettings.contactPhone?.trim() || clickedTarget.elementRef?.closest('a[href^="tel"]') || orig.includes('+91')) {
+        updatedSettings.contactPhone = val;
+      }
+      if (orig === websiteSettings.contactEmail?.trim() || clickedTarget.elementRef?.closest('a[href^="mailto"]') || orig.includes('@')) {
+        updatedSettings.contactEmail = val;
+      }
+      if (orig === websiteSettings.contactAddress?.trim() || clickedTarget.elementRef?.closest('#footer-address') || orig.includes('UTTHAN ROAD') || orig.includes('JHALWA')) {
+        updatedSettings.contactAddress = val;
+      }
+      if (orig === websiteSettings.emergencyAlertText?.trim() || clickedTarget.elementRef?.closest('#header-notice-ticker')) {
+        updatedSettings.emergencyAlertText = val;
+      }
+      if (orig === websiteSettings.heroBadgeText?.trim() || clickedTarget.elementRef?.closest('#header-live-alert-badge')) {
+        updatedSettings.heroBadgeText = val;
+      }
+      if (orig === websiteSettings.instituteTagline?.trim()) {
+        updatedSettings.instituteTagline = val;
+      }
     } else if (clickedTarget.type === 'image') {
       const isSlider = clickedTarget.elementRef?.closest('#hero-slider-box') ||
         clickedTarget.elementRef?.hasAttribute('data-hero-slider-img') ||
@@ -898,7 +924,10 @@ export const LiveVisualEditor: React.FC = () => {
       if (
         clickedTarget.originalValue === websiteSettings.directorPhotoUrl ||
         clickedTarget.elementRef?.closest('#hero-leadership-box') ||
-        clickedTarget.elementRef?.closest('#about-director-card')
+        clickedTarget.elementRef?.closest('#about-director-card') ||
+        clickedTarget.friendlyName.toLowerCase().includes('director') ||
+        clickedTarget.elementRef?.id === 'hero-director-photo' ||
+        clickedTarget.elementRef?.id === 'about-director-photo'
       ) {
         updatedSettings.directorPhotoUrl = clickedTarget.newValue;
       }
@@ -906,7 +935,8 @@ export const LiveVisualEditor: React.FC = () => {
       if (
         clickedTarget.originalValue === websiteSettings.logoUrl ||
         clickedTarget.elementRef?.closest('#header-brand-banner') ||
-        clickedTarget.elementRef?.closest('header')
+        clickedTarget.elementRef?.closest('header') ||
+        clickedTarget.friendlyName.toLowerCase().includes('logo')
       ) {
         updatedSettings.logoUrl = clickedTarget.newValue;
       }
@@ -1040,12 +1070,22 @@ export const LiveVisualEditor: React.FC = () => {
   };
 
   const handleSaveAll = async () => {
+    setIsSavingDock(true);
     try {
+      if (typeof navigator !== 'undefined' && navigator.vibrate) {
+        try { navigator.vibrate(50); } catch (e) {}
+      }
       await updateWebsiteSettings(websiteSettings);
       setHasUnsavedChanges(false);
-      showToast('All live changes saved permanently to cloud database and browser!', 'success');
+      setJustSavedDock(true);
+      showToast('All changes saved permanently to Director Desk & browser!', 'success');
+      setTimeout(() => setJustSavedDock(false), 2500);
     } catch (e: any) {
       showToast('Saved to browser storage!', 'info');
+      setJustSavedDock(true);
+      setTimeout(() => setJustSavedDock(false), 2000);
+    } finally {
+      setIsSavingDock(false);
     }
   };
 
@@ -1155,18 +1195,38 @@ export const LiveVisualEditor: React.FC = () => {
               <Redo2 className="w-4 h-4" />
             </button>
 
-            {/* Save All to Backend */}
+            {/* Save All Button with Unmistakable Visual Feedback */}
             <button
+              type="button"
               onClick={handleSaveAll}
-              className={`px-3 py-1.5 rounded-full text-xs font-black uppercase flex items-center gap-1 cursor-pointer transition-all ${
-                hasUnsavedChanges
-                  ? 'bg-emerald-500 hover:bg-emerald-600 text-white shadow-md'
-                  : 'bg-slate-800 text-slate-400'
+              disabled={isSavingDock}
+              className={`px-3.5 py-1.5 rounded-full text-xs font-black uppercase flex items-center gap-1.5 cursor-pointer transition-all duration-150 active:scale-90 shadow-xl ${
+                justSavedDock
+                  ? 'bg-emerald-500 text-white ring-4 ring-emerald-400/50 scale-105'
+                  : isSavingDock
+                  ? 'bg-amber-400 text-slate-950 ring-2 ring-amber-300'
+                  : hasUnsavedChanges
+                  ? 'bg-emerald-500 hover:bg-emerald-600 text-white animate-bounce ring-2 ring-emerald-400/60'
+                  : 'bg-[#0066FF] hover:bg-blue-600 text-white hover:ring-2 hover:ring-blue-400'
               }`}
-              title="Save All Changes Permanently"
+              title="Save All Changes Permanently to Database & Director Desk"
             >
-              <Save className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Save</span>
+              {isSavingDock ? (
+                <>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin text-slate-950" />
+                  <span>SAVING...</span>
+                </>
+              ) : justSavedDock ? (
+                <>
+                  <CheckCircle className="w-3.5 h-3.5 text-white" />
+                  <span>SAVED ✓</span>
+                </>
+              ) : (
+                <>
+                  <Save className="w-3.5 h-3.5" />
+                  <span>SAVE</span>
+                </>
+              )}
             </button>
           </>
         )}
