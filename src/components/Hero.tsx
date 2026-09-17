@@ -173,27 +173,29 @@ export const Hero: React.FC = () => {
                   <div
                     key={slide.id}
                     className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
-                      idx === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                      idx === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
                     }`}
                   >
                     <img
+                      id={`hero-slide-img-${idx}`}
+                      data-hero-slider-img="true"
                       src={slide.imageUrl}
                       alt={slide.title}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover cursor-pointer"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent pointer-events-none" />
                   </div>
                 ))}
 
                 {/* Slider Caption Overlay */}
-                <div className="relative z-20 p-4 sm:p-6 text-white space-y-1 sm:space-y-2">
-                  <span className="inline-block px-2.5 py-0.5 rounded-md bg-amber-400 text-slate-950 text-[10px] font-black uppercase tracking-wider">
+                <div className="relative z-20 p-4 sm:p-6 text-white space-y-1 sm:space-y-2 pointer-events-none">
+                  <span className="inline-block px-2.5 py-0.5 rounded-md bg-amber-400 text-slate-950 text-[10px] font-black uppercase tracking-wider pointer-events-auto cursor-pointer">
                     {slides[currentSlide]?.tag}
                   </span>
-                  <h3 className="text-sm sm:text-lg lg:text-xl font-black text-white leading-snug drop-shadow-md">
+                  <h3 className="text-sm sm:text-lg lg:text-xl font-black text-white leading-snug drop-shadow-md pointer-events-auto cursor-pointer">
                     {slides[currentSlide]?.title}
                   </h3>
-                  <p className="text-xs text-slate-300 line-clamp-1 font-medium hidden sm:block">
+                  <p className="text-xs text-slate-300 line-clamp-1 font-medium hidden sm:block pointer-events-auto cursor-pointer">
                     {slides[currentSlide]?.subtitle}
                   </p>
                 </div>

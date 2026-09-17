@@ -22,6 +22,39 @@
       })();
     </script>
 
+    <!-- Immediate Zero-Delay Theme & Visual Overrides Injector (Zero flicker on refresh) -->
+    <script>
+      (function() {
+        try {
+          var rawOverrides = localStorage.getItem('educa_visual_overrides') || localStorage.getItem('lcc_visual_overrides');
+          if (rawOverrides) {
+            var overrides = JSON.parse(rawOverrides);
+            var css = '';
+            for (var key in overrides) {
+              var item = overrides[key];
+              if (!item) continue;
+              var sel = item.selector || key;
+              if (item.isHidden || item.display === 'none') {
+                css += sel + ' { display: none !important; }\n';
+              }
+              if (item.backgroundColor) {
+                css += sel + ' { background-color: ' + item.backgroundColor + ' !important; }\n';
+              }
+              if (item.textColor) {
+                css += sel + ' { color: ' + item.textColor + ' !important; }\n';
+              }
+            }
+            if (css) {
+              var s = document.createElement('style');
+              s.id = 'educa-instant-theme-css';
+              s.textContent = css;
+              document.head.appendChild(s);
+            }
+          }
+        } catch(e) {}
+      })();
+    </script>
+
     <meta charset="UTF-8" />
     <link rel="icon" type="image/jpeg" href="/logo.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -30,16 +63,16 @@
     <title>Educa Institute of Consultancy — Premier Institute for Naturopathy, Ayurveda (WCNA) & Wealth Management (WCFM)</title>
     <meta name="title" content="Educa Institute of Consultancy — Premier Institute for Naturopathy, Ayurveda & Wealth Management" />
     <meta name="description" content="Educa Institute of Consultancy (E.I.C.) offers premier professional certification programs in Naturopathy & Ayurveda (WCNA) and Wealth Consultancy in Finance Management (WCFM), led by Dr. R. K. Sharma." />
-    <meta name="keywords" content="educa institute of consultancy, wcna, wcfm, naturopathy consultancy, ayurveda consultancy, wealth consultancy, finance management certification, dr r k sharma, varanasi, new delhi" />
+    <meta name="keywords" content="educa institute of consultancy, wcna, wcfm, naturopathy consultancy, ayurveda consultancy, wealth consultancy, finance management certification, dr r k sharma, prayagraj, utthan road jhalwa" />
     <meta name="author" content="Director Dr. R. K. Sharma" />
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <link rel="canonical" href="https://udaan-achievers-frontend.vercel.app/" />
 
     <!-- Geo Targeting for Local Google Search & Map Indexing -->
     <meta name="geo.region" content="IN-UP" />
-    <meta name="geo.placename" content="Varanasi, Uttar Pradesh, India" />
-    <meta name="geo.position" content="25.3176;82.9739" />
-    <meta name="ICBM" content="25.3176, 82.9739" />
+    <meta name="geo.placename" content="Prayagraj, Uttar Pradesh, India" />
+    <meta name="geo.position" content="25.4358;81.7706" />
+    <meta name="ICBM" content="25.4358, 81.7706" />
 
     <!-- Open Graph / Facebook / WhatsApp -->
     <meta property="og:type" content="website" />

@@ -132,19 +132,93 @@ export const getEffectiveTextColor = (el: HTMLElement): string => {
 };
 
 export const getElementFriendlyInfo = (el: HTMLElement): { name: string; subtitle: string; targetEl: HTMLElement } => {
-  // 1. Photo / Image - Highest Priority
+  // 1. Hero Slider Box - Click on slider photos, navigation, or caption
+  const slider = el.closest('#hero-slider-box') as HTMLElement;
+  if (slider) {
+    if (el.tagName === 'BUTTON' || el.closest('button')) {
+      const btn = (el.tagName === 'BUTTON' ? el : el.closest('button')) as HTMLElement;
+      return {
+        name: 'Slider Navigation Button',
+        subtitle: btn.getAttribute('aria-label') || 'Slide Controller',
+        targetEl: btn
+      };
+    }
+    if (['H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'P', 'SPAN', 'LABEL', 'STRONG', 'B'].includes(el.tagName) && el.innerText?.trim()) {
+      return {
+        name: `${el.tagName} Caption Text`,
+        subtitle: el.innerText.trim().slice(0, 45) || 'Slider Caption',
+        targetEl: el
+      };
+    }
+    // Any other click on the slider box is the slider photo!
+    const activeImg = (slider.querySelector('.opacity-100 img') || slider.querySelector('img[data-hero-slider-img]') || slider.querySelector('img')) as HTMLImageElement;
+    if (activeImg) {
+      return {
+        name: 'Main Hero Photo Slider',
+        subtitle: activeImg.alt || 'Active Campus Slide Photo',
+        targetEl: activeImg
+      };
+    }
+  }
+
+  // 2. Direct or nested Photo / Image
   if (el.tagName === 'IMG' || el.querySelector('img')) {
     const img = (el.tagName === 'IMG' ? el : el.querySelector('img')) as HTMLImageElement;
     if (img) {
+      let friendlyName = 'Photo / Image';
+      let friendlySub = img.alt || img.src.split('/').pop() || 'Website Image';
+
+      if (img.closest('#header-brand-banner')) {
+        friendlyName = 'Institute Brand Logo';
+        friendlySub = 'Official Educa Logo';
+      } else if (img.closest('#hero-leadership-box') || img.closest('#about-director-card')) {
+        friendlyName = 'Director Dr. R. K. Sharma Photo';
+        friendlySub = 'Leadership Spotlight Photo';
+      } else if (img.closest('#hero-slider-box') || img.hasAttribute('data-hero-slider-img')) {
+        friendlyName = 'Main Hero Photo Slider';
+        friendlySub = img.alt || 'Hero Slide Photo';
+      }
+
       return {
-        name: 'Photo / Image',
-        subtitle: img.alt || img.src.split('/').pop() || 'Website Graphic / Photo',
+        name: friendlyName,
+        subtitle: friendlySub,
         targetEl: img
       };
     }
   }
 
-  // 2. Headings - Direct clicks on text headings
+  // 3. Sibling overlay over an image (e.g. gradient overlay, card badge, vignette)
+  if (el.parentElement) {
+    const siblingImg = el.parentElement.querySelector(':scope > img') as HTMLImageElement;
+    if (siblingImg && !el.innerText?.trim()) {
+      let friendlyName = 'Photo / Image';
+      let friendlySub = siblingImg.alt || siblingImg.src.split('/').pop() || 'Website Image';
+      if (siblingImg.closest('#hero-slider-box')) {
+        friendlyName = 'Main Hero Photo Slider';
+        friendlySub = siblingImg.alt || 'Hero Slide Photo';
+      }
+      return {
+        name: friendlyName,
+        subtitle: friendlySub,
+        targetEl: siblingImg
+      };
+    }
+  }
+
+  // 4. CSS Background Image Detection
+  const compStyle = window.getComputedStyle(el);
+  if (compStyle.backgroundImage && compStyle.backgroundImage !== 'none' && compStyle.backgroundImage.includes('url(')) {
+    const bgMatch = compStyle.backgroundImage.match(/url\(["']?([^"']+)["']?\)/);
+    if (bgMatch && bgMatch[1]) {
+      return {
+        name: 'Background Photo / Image',
+        subtitle: bgMatch[1].split('/').pop() || 'Background Graphic',
+        targetEl: el
+      };
+    }
+  }
+
+  // 5. Headings - Direct clicks on text headings
   if (['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].includes(el.tagName)) {
     return {
       name: `${el.tagName} Heading`,
@@ -161,7 +235,7 @@ export const getElementFriendlyInfo = (el: HTMLElement): { name: string; subtitl
     };
   }
 
-  // 3. Text Elements (Paragraph, Span, Label, List Item)
+  // 6. Text Elements (Paragraph, Span, Label, List Item)
   if (['P', 'SPAN', 'LI', 'LABEL', 'STRONG', 'B', 'EM'].includes(el.tagName) && el.innerText?.trim()) {
     return {
       name: 'Text Content',
@@ -170,7 +244,7 @@ export const getElementFriendlyInfo = (el: HTMLElement): { name: string; subtitl
     };
   }
 
-  // 4. Buttons and Links
+  // 7. Buttons and Links
   if (el.tagName === 'BUTTON' || el.closest('button')) {
     const btn = (el.tagName === 'BUTTON' ? el : el.closest('button')) as HTMLElement;
     const txt = btn.innerText.trim();
@@ -191,7 +265,7 @@ export const getElementFriendlyInfo = (el: HTMLElement): { name: string; subtitl
     };
   }
 
-  // 5. Header Bars & Strips (when clicked directly on container background)
+  // 8. Header Bars & Strips (when clicked directly on container background)
   const navHeader = el.closest('#header-main-navbar') as HTMLElement;
   if (navHeader && (el === navHeader || el.id === 'header-main-navbar')) {
     return {
@@ -228,7 +302,7 @@ export const getElementFriendlyInfo = (el: HTMLElement): { name: string; subtitl
     };
   }
 
-  // 6. Hero Cards & Spotlight
+  // 9. Hero Cards & Spotlight
   const quickLinks = el.closest('#hero-quick-links-box') as HTMLElement;
   if (quickLinks && (el === quickLinks || el.id === 'hero-quick-links-box')) {
     return {
@@ -247,16 +321,7 @@ export const getElementFriendlyInfo = (el: HTMLElement): { name: string; subtitl
     };
   }
 
-  const slider = el.closest('#hero-slider-box') as HTMLElement;
-  if (slider && (el === slider || el.id === 'hero-slider-box')) {
-    return {
-      name: 'Main Photo Slider Showcase',
-      subtitle: 'Hero Center Photo Slider Box',
-      targetEl: slider
-    };
-  }
-
-  // 7. Any other text container
+  // 10. Any other text container
   if (el.innerText?.trim()) {
     return {
       name: el.id ? `#${el.id}` : `${el.tagName.toUpperCase()} Block`,
@@ -265,7 +330,7 @@ export const getElementFriendlyInfo = (el: HTMLElement): { name: string; subtitl
     };
   }
 
-  // 8. General Container
+  // 11. General Container
   return {
     name: el.id ? `#${el.id}` : `${el.tagName.toUpperCase()} Container Box`,
     subtitle: el.id || 'Layout Box',
@@ -338,9 +403,13 @@ export const applyVisualOverrides = (overrides?: Record<string, VisualOverrideIt
         targetEl.style.display = 'none';
       }
       if (item.type === 'image' && item.value) {
-        const img = targetEl as HTMLImageElement;
-        if (img.src !== item.value) {
-          img.src = item.value;
+        if (targetEl.tagName === 'IMG') {
+          const img = targetEl as HTMLImageElement;
+          if (img.src !== item.value) {
+            img.src = item.value;
+          }
+        } else {
+          targetEl.style.backgroundImage = `url("${item.value}")`;
         }
       } else if (item.value) {
         if (targetEl.innerText !== item.value) {
@@ -490,6 +559,7 @@ export const LiveVisualEditor: React.FC = () => {
       // Check if image
       if (effectiveEl.tagName === 'IMG') {
         const img = effectiveEl as HTMLImageElement;
+        const selector = getDomPath(img);
         setClickedTarget({
           type: 'image',
           friendlyName: friendlyInfo.name,
@@ -502,9 +572,33 @@ export const LiveVisualEditor: React.FC = () => {
           newTextColor: currentText,
           elementRef: img,
           tagName: 'IMG',
-          selector: img.id ? `#${img.id}` : 'img'
+          selector: selector
         });
         return;
+      }
+
+      // Check if background image
+      const compStyle = window.getComputedStyle(effectiveEl);
+      if (compStyle.backgroundImage && compStyle.backgroundImage !== 'none' && compStyle.backgroundImage.includes('url(')) {
+        const bgMatch = compStyle.backgroundImage.match(/url\(["']?([^"']+)["']?\)/);
+        const currentBgUrl = bgMatch ? bgMatch[1] : '';
+        if (currentBgUrl) {
+          setClickedTarget({
+            type: 'image',
+            friendlyName: friendlyInfo.name,
+            friendlySubtitle: friendlyInfo.subtitle,
+            originalValue: currentBgUrl,
+            newValue: currentBgUrl,
+            originalBgColor: currentBg,
+            newBgColor: currentBg,
+            originalTextColor: currentText,
+            newTextColor: currentText,
+            elementRef: effectiveEl,
+            tagName: effectiveEl.tagName,
+            selector: getDomPath(effectiveEl)
+          });
+          return;
+        }
       }
 
       // Check if text node or element
@@ -559,7 +653,11 @@ export const LiveVisualEditor: React.FC = () => {
       if (clickedTarget.type === 'text') {
         clickedTarget.elementRef.innerText = val;
       } else if (clickedTarget.type === 'image') {
-        (clickedTarget.elementRef as HTMLImageElement).src = val;
+        if (clickedTarget.elementRef.tagName === 'IMG') {
+          (clickedTarget.elementRef as HTMLImageElement).src = val;
+        } else {
+          clickedTarget.elementRef.style.backgroundImage = `url("${val}")`;
+        }
       }
     } catch (e) {}
     setClickedTarget({ ...clickedTarget, newValue: val });
@@ -572,7 +670,11 @@ export const LiveVisualEditor: React.FC = () => {
         clickedTarget.elementRef.style.backgroundColor = clickedTarget.originalBgColor;
         clickedTarget.elementRef.style.color = clickedTarget.originalTextColor;
         if (clickedTarget.type === 'image') {
-          (clickedTarget.elementRef as HTMLImageElement).src = clickedTarget.originalValue;
+          if (clickedTarget.elementRef.tagName === 'IMG') {
+            (clickedTarget.elementRef as HTMLImageElement).src = clickedTarget.originalValue;
+          } else {
+            clickedTarget.elementRef.style.backgroundImage = `url("${clickedTarget.originalValue}")`;
+          }
         } else if (clickedTarget.type === 'text') {
           clickedTarget.elementRef.innerText = clickedTarget.originalValue;
         }
@@ -677,7 +779,11 @@ export const LiveVisualEditor: React.FC = () => {
 
     // 2. Apply content to the live DOM
     if (clickedTarget.type === 'image') {
-      (clickedTarget.elementRef as HTMLImageElement).src = clickedTarget.newValue;
+      if (clickedTarget.elementRef.tagName === 'IMG') {
+        (clickedTarget.elementRef as HTMLImageElement).src = clickedTarget.newValue;
+      } else {
+        clickedTarget.elementRef.style.backgroundImage = `url("${clickedTarget.newValue}")`;
+      }
     } else if (clickedTarget.type === 'text' && clickedTarget.newValue) {
       clickedTarget.elementRef.innerText = clickedTarget.newValue;
     }
@@ -725,9 +831,29 @@ export const LiveVisualEditor: React.FC = () => {
       if (orig === websiteSettings.heroBadgeText?.trim()) updatedSettings.heroBadgeText = val;
       if (orig === websiteSettings.instituteTagline?.trim()) updatedSettings.instituteTagline = val;
     } else if (clickedTarget.type === 'image') {
-      if (clickedTarget.originalValue === websiteSettings.directorPhotoUrl) updatedSettings.directorPhotoUrl = clickedTarget.newValue;
-      if (clickedTarget.originalValue === websiteSettings.logoUrl || clickedTarget.elementRef?.closest('#header-brand-banner')) updatedSettings.logoUrl = clickedTarget.newValue;
-      if (clickedTarget.originalValue === websiteSettings.heroPosterUrl) updatedSettings.heroPosterUrl = clickedTarget.newValue;
+      const isSlider = clickedTarget.elementRef?.closest('#hero-slider-box') ||
+        clickedTarget.elementRef?.hasAttribute('data-hero-slider-img') ||
+        clickedTarget.originalValue === websiteSettings.heroPosterUrl;
+
+      if (isSlider) {
+        updatedSettings.heroPosterUrl = clickedTarget.newValue;
+      }
+
+      if (
+        clickedTarget.originalValue === websiteSettings.directorPhotoUrl ||
+        clickedTarget.elementRef?.closest('#hero-leadership-box') ||
+        clickedTarget.elementRef?.closest('#about-director-card')
+      ) {
+        updatedSettings.directorPhotoUrl = clickedTarget.newValue;
+      }
+
+      if (
+        clickedTarget.originalValue === websiteSettings.logoUrl ||
+        clickedTarget.elementRef?.closest('#header-brand-banner') ||
+        clickedTarget.elementRef?.closest('header')
+      ) {
+        updatedSettings.logoUrl = clickedTarget.newValue;
+      }
     }
 
     // 5. Save to AppContext & localStorage & backend immediately
