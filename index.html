@@ -40,13 +40,16 @@
     <link rel="icon" type="image/jpeg" href="/logo.jpg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
     <style>
-      html {
+      html, body {
+        touch-action: pan-y !important;
+        -webkit-overflow-scrolling: touch !important;
+        overflow-y: auto !important;
+        overflow-x: hidden !important;
+        height: auto !important;
+        min-height: 100% !important;
+        -webkit-tap-highlight-color: transparent;
         scroll-behavior: smooth;
         -webkit-text-size-adjust: 100%;
-      }
-      body {
-        -webkit-tap-highlight-color: transparent;
-        overscroll-behavior-y: none;
       }
     </style>
     

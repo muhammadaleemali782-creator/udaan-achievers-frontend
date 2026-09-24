@@ -16,8 +16,12 @@ public class MainActivity extends BridgeActivity {
                 settings.setDomStorageEnabled(true);
                 settings.setDatabaseEnabled(true);
                 settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-                settings.setRenderPriority(WebSettings.RenderPriority.HIGH);
-                webView.setLayerType(WebView.LAYER_TYPE_HARDWARE, null);
+                settings.setUseWideViewPort(true);
+                settings.setLoadWithOverviewMode(true);
+                webView.setVerticalScrollBarEnabled(true);
+                webView.setHorizontalScrollBarEnabled(false);
+                webView.setOverScrollMode(WebView.OVER_SCROLL_IF_CONTENT_SCROLLS);
+                webView.setScrollBarStyle(WebView.SCROLLBARS_INSIDE_OVERLAY);
             }
         } catch (Exception ignored) {}
     }

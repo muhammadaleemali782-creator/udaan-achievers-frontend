@@ -17,8 +17,10 @@ import {
   Trash2,
   Plus,
   X,
-  Save
+  Save,
+  Loader2
 } from 'lucide-react';
+import { CourseCardSkeleton } from './common/SkeletonLoader';
 
 export const CourseSection: React.FC = () => {
   const { courses, updateCourse, deleteCourse, addCourse, isAdminAuthenticated, setIsAdminAuthModalOpen, navigateTo, showToast, startEnrollment } = useApp();
@@ -26,6 +28,7 @@ export const CourseSection: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [editingCourse, setEditingCourse] = useState<Course | null>(null);
   const [isAddingCourse, setIsAddingCourse] = useState(false);
+  const [loadingCourseId, setLoadingCourseId] = useState<string | null>(null);
   const [newCourse, setNewCourse] = useState<Partial<Course>>({
     title: '',
     category: 'wellness',
@@ -373,11 +376,27 @@ export const CourseSection: React.FC = () => {
                     )}
 
                     <button
-                      onClick={() => handleEnroll(course)}
-                      className="px-5 py-2.5 rounded-full bg-[#0066FF] hover:bg-blue-700 text-white text-xs font-black uppercase tracking-wider shadow-md shadow-blue-500/20 transition-all flex items-center gap-1.5 cursor-pointer"
+                      onClick={() => {
+                        setLoadingCourseId(course.id);
+                        setTimeout(() => {
+                          handleEnroll(course);
+                          setLoadingCourseId(null);
+                        }, 400);
+                      }}
+                      disabled={loadingCourseId === course.id}
+                      className="px-5 py-2.5 rounded-full bg-[#0066FF] hover:bg-blue-700 text-white text-xs font-black uppercase tracking-wider shadow-md shadow-blue-500/20 transition-all flex items-center gap-1.5 cursor-pointer disabled:opacity-75"
                     >
-                      <span>Enroll Now</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      {loadingCourseId === course.id ? (
+                        <>
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                          <span>Loading...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Enroll Now</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </>
+                      )}
                     </button>
                   </div>
                 </div>
@@ -386,7 +405,12 @@ export const CourseSection: React.FC = () => {
           ))}
         </div>
 
-        {filteredCourses.length === 0 && (
+        {courses.length === 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <CourseCardSkeleton />
+            <CourseCardSkeleton />
+          </div>
+        ) : filteredCourses.length === 0 ? (
           <div className="p-12 bg-slate-50 dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 text-center space-y-3">
             <p className="text-slate-500 text-sm font-medium">No courses found matching your filter.</p>
             <button
@@ -396,7 +420,7 @@ export const CourseSection: React.FC = () => {
               Reset Filters
             </button>
           </div>
-        )}
+        ) : null}
 
         {/* Live Admin Course Editor Modal */}
         {editingCourse && (

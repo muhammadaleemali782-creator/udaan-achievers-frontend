@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Layers, Sparkles, CheckCircle2, Clock, Users, ArrowRight, ShieldCheck, Zap, Lock } from 'lucide-react';
+import { Layers, Sparkles, CheckCircle2, Clock, Users, ArrowRight, ShieldCheck, Zap, Lock, Loader2 } from 'lucide-react';
+import { BatchCardSkeleton } from './common/SkeletonLoader';
 
 export const PaidBatchesSection: React.FC = () => {
   const { courses, startEnrollment, currentStudent, navigateTo, websiteSettings } = useApp();
+  const [loadingBatchId, setLoadingBatchId] = useState<string | null>(null);
 
   const paidCourses = courses.filter(c => c.isPaid);
 
@@ -21,12 +23,18 @@ export const PaidBatchesSection: React.FC = () => {
             Join Our High-Impact <span className="text-[#0066FF]">Live Batches</span>
           </h2>
           <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-medium">
-            Enroll today for intensive curriculum coverage, daily practice problems (DPPs), personal doubt resolution sessions with {websiteSettings?.directorName || 'Dr. R. K. Sharma'}, and automated test evaluations.
+            Enroll today for intensive curriculum coverage, daily practice problems (DPPs), personal doubt resolution sessions with {websiteSettings?.founderName || websiteSettings?.directorName || 'Founder S. R. Anand'}, and automated test evaluations.
           </p>
         </div>
 
         {/* Paid Batches Cards */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+        {paidCourses.length === 0 ? (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            <BatchCardSkeleton />
+            <BatchCardSkeleton />
+          </div>
+        ) : (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {paidCourses.slice(0, 3).map((course, idx) => {
             const isEnrolled = !!currentStudent?.enrolledCourses?.includes(course.id);
             const isFeatured = idx === 1; // Highlight middle card
@@ -124,15 +132,31 @@ export const PaidBatchesSection: React.FC = () => {
                     </button>
                   ) : (
                     <button
-                      onClick={() => startEnrollment(course)}
-                      className={`w-full py-4 rounded-full font-black text-xs uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 ${
+                      onClick={() => {
+                        setLoadingBatchId(course.id);
+                        setTimeout(() => {
+                          startEnrollment(course);
+                          setLoadingBatchId(null);
+                        }, 400);
+                      }}
+                      disabled={loadingBatchId === course.id}
+                      className={`w-full py-4 rounded-full font-black text-xs uppercase tracking-wider transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-75 ${
                         isFeatured
                           ? 'bg-[#0066FF] hover:bg-blue-700 text-white shadow-blue-500/25'
                           : 'bg-slate-900 hover:bg-[#0066FF] text-white'
                       }`}
                     >
-                      <span>Enroll in Batch</span>
-                      <ArrowRight className="w-4 h-4" />
+                      {loadingBatchId === course.id ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          <span>Processing...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Enroll in Batch</span>
+                          <ArrowRight className="w-4 h-4" />
+                        </>
+                      )}
                     </button>
                   )}
 
@@ -144,6 +168,7 @@ export const PaidBatchesSection: React.FC = () => {
             );
           })}
         </div>
+        )}
 
         {/* Bottom Trust Guarantee Strip */}
         <div className="p-6 rounded-3xl bg-blue-50/70 border border-blue-100 flex flex-col sm:flex-row items-center justify-between gap-4">

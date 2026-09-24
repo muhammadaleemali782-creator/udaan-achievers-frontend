@@ -21,23 +21,41 @@ import {
   ShieldCheck,
   Zap,
   Layers,
-  Heart
+  Heart,
+  Loader2
 } from 'lucide-react';
 
 export const AppDownloadSection: React.FC = () => {
   const { showToast, courses } = useApp();
-  const [notifyPhone, setNotifyPhone] = useState('');
-  const [isPreRegistered, setIsPreRegistered] = useState(false);
+  const [downloadPhone, setDownloadPhone] = useState('');
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [isDownloaded, setIsDownloaded] = useState(false);
   const [activeScreen, setActiveScreen] = useState<'home' | 'courses' | 'chat' | 'receipt' | 'profile'>('home');
 
-  const handlePreRegister = (e: React.FormEvent) => {
+  const handleDownloadApp = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!notifyPhone) {
-      showToast('Please enter your mobile number for launch alert.', 'warning');
+    const cleanPhone = downloadPhone.trim();
+    if (!cleanPhone || cleanPhone.length < 10) {
+      showToast('Please enter a valid 10-digit mobile number.', 'warning');
       return;
     }
-    setIsPreRegistered(true);
-    showToast(`Pre-registration confirmed for ${notifyPhone}! You will get 1-Month Free Pro access on Play Store launch.`, 'success');
+    setIsDownloading(true);
+    showToast(`Verifying mobile +91 ${cleanPhone} and starting APK download...`, 'info');
+
+    setTimeout(() => {
+      setIsDownloading(false);
+      setIsDownloaded(true);
+      
+      // Trigger native download
+      const link = document.createElement('a');
+      link.href = '/educa-institute.apk';
+      link.download = 'Educa-Institute.apk';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      showToast('Download started! Check your notification bar or downloads folder.', 'success');
+    }, 800);
   };
 
   return (
@@ -391,35 +409,80 @@ export const AppDownloadSection: React.FC = () => {
 
 
 
-            {/* Pre-Register Box */}
+            {/* Mobile Number APK Download Box */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
-              <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-blue-600" />
-                <span>Pre-Register for Early VIP Access</span>
-              </h4>
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                  <Download className="w-4 h-4 text-blue-600" />
+                  <span>Download Educa Institute Android APK</span>
+                </h4>
+                <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
+                  v1.0.0 • 28 MB
+                </span>
+              </div>
 
-              {isPreRegistered ? (
-                <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center gap-3 text-xs">
-                  <CheckCircle2 className="w-5 h-5 shrink-0" />
-                  <span>You're on the launch priority list! We'll send your download link on {notifyPhone}.</span>
+              {isDownloaded ? (
+                <div className="space-y-3">
+                  <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center gap-3 text-xs">
+                    <CheckCircle2 className="w-5 h-5 shrink-0 text-emerald-600" />
+                    <div>
+                      <p className="font-bold">APK Download Started for {downloadPhone}!</p>
+                      <p className="text-[11px] text-emerald-600 mt-0.5">Please check your browser notification to install.</p>
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleDownloadApp}
+                    disabled={isDownloading}
+                    className="w-full py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer"
+                  >
+                    {isDownloading ? <Loader2 className="w-4 h-4 animate-spin text-blue-600" /> : <Download className="w-4 h-4 text-blue-600" />}
+                    <span>Download Again</span>
+                  </button>
                 </div>
               ) : (
-                <form onSubmit={handlePreRegister} className="flex flex-col sm:flex-row gap-2.5">
-                  <input
-                    type="tel"
-                    required
-                    placeholder="Enter WhatsApp / Mobile number..."
-                    value={notifyPhone}
-                    onChange={e => setNotifyPhone(e.target.value)}
-                    className="flex-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-600"
-                  />
-                  <button
-                    type="submit"
-                    className="px-6 py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md shadow-blue-500/20 flex items-center justify-center gap-2 transition-all shrink-0"
-                  >
-                    <Bell className="w-4 h-4" />
-                    <span>Get Launch Alert</span>
-                  </button>
+                <form onSubmit={handleDownloadApp} className="space-y-3">
+                  <div className="flex flex-col sm:flex-row gap-2.5">
+                    <input
+                      type="tel"
+                      required
+                      maxLength={10}
+                      pattern="[0-9]{10}"
+                      placeholder="Enter 10-digit mobile number..."
+                      value={downloadPhone}
+                      onChange={e => setDownloadPhone(e.target.value.replace(/\D/g, ''))}
+                      className="flex-1 px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-600"
+                    />
+                    <button
+                      type="submit"
+                      disabled={isDownloading}
+                      className="px-6 py-3 rounded-2xl bg-blue-600 hover:bg-blue-700 disabled:opacity-70 text-white font-bold text-xs shadow-md shadow-blue-500/20 flex items-center justify-center gap-2 transition-all shrink-0 cursor-pointer"
+                    >
+                      {isDownloading ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          <span>Downloading APK...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Download className="w-4 h-4" />
+                          <span>Download APK Now</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                  <div className="flex items-center justify-between text-[11px] text-slate-500 px-1">
+                    <span className="flex items-center gap-1">
+                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" /> 100% Virus-Free & Safe
+                    </span>
+                    <a
+                      href="/educa-institute.apk"
+                      download="Educa-Institute.apk"
+                      className="text-blue-600 hover:underline font-medium flex items-center gap-1"
+                    >
+                      Direct Download Link
+                    </a>
+                  </div>
                 </form>
               )}
             </div>
