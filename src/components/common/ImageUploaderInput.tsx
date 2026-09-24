@@ -1,0 +1,168 @@
+import React, { useRef, useState } from 'react';
+import { Upload, Image as ImageIcon, X, Link } from 'lucide-react';
+
+// Auto-convert Google Drive sharing links & Dropbox links to direct raw image URLs
+export const convertGoogleDriveUrl = (url: string): string => {
+  if (!url || typeof url !== 'string') return url;
+  const trimmed = url.trim().replace(/^["']|["']$/g, '');
+
+  // Google Drive: file/d/ID, open?id=ID, uc?id=ID, etc.
+  const driveMatch = trimmed.match(/(?:drive|docs)\.google\.com\/(?:file\/d\/|open\?id=|uc\?(?:export=view&)?id=)([a-zA-Z0-9_-]+)/);
+  if (driveMatch && driveMatch[1]) {
+    return `https://lh3.googleusercontent.com/d/${driveMatch[1]}`;
+  }
+
+  // Dropbox: convert ?dl=0 to ?raw=1 for direct image rendering
+  if (trimmed.includes('dropbox.com')) {
+    return trimmed.replace(/[?&]dl=0/, '').replace(/[?&]raw=1/, '') + (trimmed.includes('?') ? '&raw=1' : '?raw=1');
+  }
+
+  return trimmed;
+};
+
+interface ImageUploaderInputProps {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  required?: boolean;
+}
+
+export const ImageUploaderInput: React.FC<ImageUploaderInputProps> = ({
+  label,
+  value,
+  onChange,
+  placeholder = 'https://... or upload local image file',
+  required = false
+}) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 15 * 1024 * 1024) {
+      alert('File size exceeds 15MB limit. Please choose a smaller image.');
+      return;
+    }
+
+    setIsUploading(true);
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const rawDataUrl = event.target?.result as string;
+      
+      // Auto-compress large phone camera photos using HTML5 Canvas
+      const img = new Image();
+      img.onload = () => {
+        try {
+          const maxDim = 1280;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > maxDim || height > maxDim) {
+            if (width > height) {
+              height = Math.round((height * maxDim) / width);
+              width = maxDim;
+            } else {
+              width = Math.round((width * maxDim) / height);
+              height = maxDim;
+            }
+          }
+
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            ctx.drawImage(img, 0, 0, width, height);
+            const compressed = canvas.toDataURL('image/jpeg', 0.85);
+            onChange(compressed);
+          } else {
+            onChange(rawDataUrl);
+          }
+        } catch (err) {
+          onChange(rawDataUrl);
+        }
+        setIsUploading(false);
+      };
+      img.onerror = () => {
+        onChange(rawDataUrl);
+        setIsUploading(false);
+      };
+      img.src = rawDataUrl;
+    };
+    reader.onerror = () => {
+      setIsUploading(false);
+      alert('Failed to read local file.');
+    };
+    reader.readAsDataURL(file);
+  };
+
+  return (
+    <div className="space-y-1.5">
+      <label className="text-xs font-bold text-slate-300 block">{label} {required && '*'}</label>
+      
+      <div className="flex items-center gap-2">
+        <div className="relative flex-1">
+          <input
+            type="text"
+            required={required}
+            placeholder={placeholder}
+            value={value}
+            onChange={(e) => onChange(convertGoogleDriveUrl(e.target.value))}
+            className="w-full pl-9 pr-8 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
+          />
+          <Link className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+          {value && (
+            <button
+              type="button"
+              onClick={() => onChange('')}
+              className="absolute right-2.5 top-2.5 text-slate-400 hover:text-white"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
+        </div>
+
+        <input
+          type="file"
+          ref={fileInputRef}
+          accept="image/*"
+          onChange={handleFileChange}
+          className="hidden"
+        />
+
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          disabled={isUploading}
+          className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-bold text-slate-200 flex items-center gap-1.5 shrink-0 transition-colors cursor-pointer"
+          title="Upload Local File from Device"
+        >
+          <Upload className="w-3.5 h-3.5 text-amber-400" />
+          <span className="hidden xs:inline">{isUploading ? 'Loading...' : 'Upload File'}</span>
+        </button>
+      </div>
+
+      {/* Image Thumbnail Preview */}
+      {value && (
+        <div className="flex items-center gap-2 pt-1">
+          <div className="w-10 h-10 rounded-lg overflow-hidden border border-slate-700 bg-slate-900 shrink-0">
+            <img
+              src={value}
+              alt="Thumbnail preview"
+              className="w-full h-full object-cover"
+              onError={(e: any) => {
+                e.target.style.display = 'none';
+              }}
+            />
+          </div>
+          <span className="text-[10px] text-slate-400 truncate max-w-xs font-mono">
+            {value.startsWith('data:') ? 'Local file selected (Base64)' : value}
+          </span>
+        </div>
+      )}
+    </div>
+  );
+};

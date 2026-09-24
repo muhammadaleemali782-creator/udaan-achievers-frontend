@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Aggressive Cache & ServiceWorker Buster -->
+    <script>
+      (function() {
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.getRegistrations().then(function(regs) {
+            for (var i = 0; i < regs.length; i++) regs[i].unregister();
+          });
+        }
+        if ('caches' in window) {
+          caches.keys().then(function(names) {
+            for (var i = 0; i < names.length; i++) caches.delete(names[i]);
+          });
+        }
+        var VER = 'educa_v7_erp_release';
+        if (localStorage.getItem('educa_build_ver') !== VER) {
+          localStorage.removeItem('erp_user');
+          localStorage.setItem('educa_build_ver', VER);
+        }
+      })();
+    </script>
+
+    <!-- Immediate Zero-Delay Theme & Visual Overrides Injector (Zero flicker on refresh) -->
+    <script>
+      (function() {
+        try {
+          var rawOverrides = localStorage.getItem('educa_visual_overrides') || localStorage.getItem('lcc_visual_overrides');
+          if (rawOverrides) {
+            var overrides = JSON.parse(rawOverrides);
+            var css = '';
+            for (var key in overrides) {
+              var item = overrides[key];
+              if (!item) continue;
+              var sel = item.selector || key;
+              if (item.isHidden || item.display === 'none') {
+                css += sel + ' { display: none !important; }\n';
+              }
+              if (item.backgroundColor) {
+                css += sel + ' { background-color: ' + item.backgroundColor + ' !important; }\n';
+              }
+              if (item.textColor) {
+                css += sel + ' { color: ' + item.textColor + ' !important; }\n';
+              }
+            }
+            if (css) {
+              var s = document.createElement('style');
+              s.id = 'educa-instant-theme-css';
+              s.textContent = css;
+              document.head.appendChild(s);
+            }
+          }
+        } catch(e) {}
+      })();
+    </script>
+
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/jpeg" href="/logo.jpg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta SEO Tags -->
+    <title>Educa Institute of Consultancy — Premier Institute for Naturopathy, Ayurveda (WCNA) & Wealth Management (WCFM)</title>
+    <meta name="title" content="Educa Institute of Consultancy — Premier Institute for Naturopathy, Ayurveda & Wealth Management" />
+    <meta name="description" content="Educa Institute of Consultancy (E.I.C.) offers premier professional certification programs in Naturopathy & Ayurveda (WCNA) and Wealth Consultancy in Finance Management (WCFM), led by Dr. R. K. Sharma." />
+    <meta name="keywords" content="educa institute of consultancy, wcna, wcfm, naturopathy consultancy, ayurveda consultancy, wealth consultancy, finance management certification, dr r k sharma, prayagraj, utthan road jhalwa" />
+    <meta name="author" content="Director Dr. R. K. Sharma" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <link rel="canonical" href="https://udaan-achievers-frontend.vercel.app/" />
+
+    <!-- Geo Targeting for Local Google Search & Map Indexing -->
+    <meta name="geo.region" content="IN-UP" />
+    <meta name="geo.placename" content="Prayagraj, Uttar Pradesh, India" />
+    <meta name="geo.position" content="25.4358;81.7706" />
+    <meta name="ICBM" content="25.4358, 81.7706" />
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://udaan-achievers-frontend.vercel.app/" />
+    <meta property="og:title" content="Educa Institute of Consultancy Varanasi — Top-Rated Institute of Consultancy" />
+    <meta property="og:description" content="Ranked among the best consultancy centers in Varanasi for Class 9-12 Boards, NEET/JEE, Computer Diplomas, and English speaking. Directed by Dr. R. K. Sharma with a 98.6% board exam pass rate." />
+    <meta property="og:image" content="https://udaan-achievers-frontend.vercel.app/logo.jpg" />
+    <meta property="og:site_name" content="Educa Institute of Consultancy" />
+
+    <!-- Twitter Card -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://udaan-achievers-frontend.vercel.app/" />
+    <meta property="twitter:title" content="Educa Institute of Consultancy Varanasi — Empowering Tomorrow's Leaders" />
+    <meta property="twitter:description" content="Top 10 Institute of Consultancy in Varanasi for Board Exams, Competitive Exams, Computer Education, and Career Excellence." />
+    <meta property="twitter:image" content="https://udaan-achievers-frontend.vercel.app/logo.jpg" />
+
+    <!-- Google & LLM Structured Data (JSON-LD) for Search, Maps & AI Ranking -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "EducationalOrganization",
+          "@id": "https://udaan-achievers-frontend.vercel.app/#organization",
+          "name": "Educa Institute of Consultancy",
+          "alternateName": ["Educa Institute of Consultancy Varanasi", "Dr. R. K. Sharma Institute"],
+          "url": "https://udaan-achievers-frontend.vercel.app/",
+          "logo": "https://udaan-achievers-frontend.vercel.app/logo.jpg",
+          "image": "https://udaan-achievers-frontend.vercel.app/logo.jpg",
+          "description": "Educa Institute of Consultancy is a premier academic consultancy institute in Varanasi, Uttar Pradesh providing classroom and online training for 9th to 12th Board examinations, NEET, IIT-JEE Foundation, DCA computer diplomas, and career development.",
+          "founder": {
+            "@type": "Person",
+            "name": "Dr. R. K. Sharma",
+            "jobTitle": "Director & Lead Academician"
+          },
+          "telephone": "+91-98765-43210",
+          "email": "admissions@educaveda.com",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Near City Central, Main Market Road, Education Hub",
+            "addressLocality": "Varanasi",
+            "addressRegion": "Uttar Pradesh",
+            "postalCode": "221001",
+            "addressCountry": "IN"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 25.3176,
+            "longitude": 82.9739
+          },
+          "areaServed": ["Varanasi", "Kanpur", "Lucknow", "Uttar Pradesh", "India"],
+          "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "4.9",
+            "bestRating": "5",
+            "reviewCount": "1500"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://udaan-achievers-frontend.vercel.app/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is Educa Institute of Consultancy?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Educa Institute of Consultancy is a top-rated professional institute based in Varanasi, Uttar Pradesh, founded and directed by Dr. R. K. Sharma, renowned for high board exam scores, 1:1 computer labs, and comprehensive school & diploma batches."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Where is Educa Institute of Consultancy located?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Educa Institute of Consultancy is located in Varanasi, Uttar Pradesh, near City Central Education Hub, offering offline classroom consultancy and online interactive batches."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Who is the Director of Educa Institute of Consultancy?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Director Dr. R. K. Sharma is the founder and lead mentor of Educa Institute of Consultancy, with over 10 years of consultancy experience."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How to enroll in courses at Educa Institute?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Students can visit https://udaan-achievers-frontend.vercel.app, login with their student account, pay securely via Razorpay, and get instant access to official WhatsApp batch groups and private lecture playlists."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <!-- Premium Google Fonts: Plus Jakarta Sans & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Instant Zero-Flash Pre-render Visual Overrides -->
+    <script>
+      (function() {
+        try {
+          var rawOverrides = localStorage.getItem('educa_visual_overrides') || localStorage.getItem('lcc_visual_overrides');
+          var overrides = rawOverrides ? JSON.parse(rawOverrides) : null;
+          if (!overrides || Object.keys(overrides).length === 0) {
+            var rawSets = localStorage.getItem('educa_website_settings') || localStorage.getItem('lcc_website_settings');
+            if (rawSets) {
+              var sets = JSON.parse(rawSets);
+              overrides = sets.visualOverrides || null;
+            }
+          }
+          if (overrides && typeof overrides === 'object') {
+            var css = '';
+            for (var key in overrides) {
+              var item = overrides[key];
+              if (!item) continue;
+              var sel = item.selector || (key.indexOf('#') === 0 || key.indexOf('.') === 0 ? key : '');
+              var rules = '';
+              if (item.display === 'none' || item.isHidden) {
+                rules += 'display: none !important; ';
+              }
+              if (item.backgroundColor) {
+                rules += 'background-color: ' + item.backgroundColor + ' !important; ';
+              }
+              if (item.textColor) {
+                rules += 'color: ' + item.textColor + ' !important; ';
+              }
+              if (item.borderColor) {
+                rules += 'border-color: ' + item.borderColor + ' !important; ';
+              }
+              if (sel && rules) {
+                css += sel + ' { ' + rules + ' }\n';
+              }
+            }
+            if (css) {
+              var style = document.createElement('style');
+              style.id = 'educa-instant-theme-css';
+              style.textContent = css;
+              document.head.appendChild(style);
+            }
+
+            function applySingle(item) {
+              if (!item) return;
+              var el = null;
+              if (item.selector) {
+                try { el = document.querySelector(item.selector); } catch(e){}
+              }
+              if (!el && item.originalValue) {
+                if (item.type === 'image') {
+                  var imgs = document.querySelectorAll('img');
+                  for (var i = 0; i < imgs.length; i++) {
+                    if (imgs[i].src === item.originalValue || imgs[i].getAttribute('src') === item.originalValue) {
+                      el = imgs[i]; break;
+                    }
+                  }
+                } else {
+                  var candidates = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, span, a, button, li, div');
+                  for (var j = 0; j < candidates.length; j++) {
+                    if (candidates[j].textContent && candidates[j].textContent.trim() === item.originalValue.trim()) {
+                      el = candidates[j]; break;
+                    }
+                  }
+                }
+              }
+              if (el) {
+                if (item.isHidden || item.display === 'none') {
+                  el.style.display = 'none';
+                }
+                if (item.type === 'image' && item.value && el.src !== item.value) {
+                  el.src = item.value;
+                } else if (item.value && (item.type === 'text' || !item.type) && el.innerText !== item.value) {
+                  el.innerText = item.value;
+                }
+                if (item.backgroundColor && el.style.backgroundColor !== item.backgroundColor) {
+                  el.style.backgroundColor = item.backgroundColor;
+                }
+                if (item.textColor && el.style.color !== item.textColor) {
+                  el.style.color = item.textColor;
+                }
+              }
+            }
+
+            function applyAll() {
+              for (var k in overrides) {
+                applySingle(overrides[k]);
+              }
+            }
+
+            var obs = new MutationObserver(function() {
+              applyAll();
+            });
+            obs.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
+            document.addEventListener('DOMContentLoaded', applyAll);
+            window.addEventListener('load', applyAll);
+          }
+        } catch (e) {}
+      })();
+    </script>
+    <!-- Preload Official Razorpay Checkout SDK -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  </head>
+  <body class="bg-white text-slate-900 antialiased selection:bg-blue-600 selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
