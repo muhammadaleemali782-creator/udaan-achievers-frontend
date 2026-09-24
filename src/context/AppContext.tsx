@@ -321,14 +321,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       }
     }).catch(() => {/* offline — use localStorage */});
 
-    // 2. Load courses from MongoDB Atlas
+    // 2. Load courses from MongoDB Atlas (Single Source of Truth)
     api.courses.get().then(res => {
       if (res?.data && Array.isArray(res.data) && res.data.length > 0) {
-        const deleted = Array.from(new Set([
-          ...loadSaved<string[]>('educa_deleted_courses', []),
-          ...loadSaved<string[]>('lcc_deleted_courses', [])
-        ]));
-        const validCourses = (res.data as Course[]).filter(c => !deleted.includes(c.id));
+        const validCourses = (res.data as Course[]).filter(c => c && c.id && c.title);
         if (validCourses.length > 0) {
           setCourses(validCourses);
           saveItem('educa_courses_v3', validCourses);

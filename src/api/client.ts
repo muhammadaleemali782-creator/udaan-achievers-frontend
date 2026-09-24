@@ -1,4 +1,5 @@
-const API_BASE = import.meta.env.VITE_API_URL || (typeof window !== 'undefined' && window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : '/api');
+const RENDER_API_URL = 'https://udaan-achievers-backend.onrender.com/api';
+const API_BASE = import.meta.env.VITE_API_URL || (typeof window !== 'undefined' && window.location.hostname === 'localhost' ? 'http://localhost:5000/api' : RENDER_API_URL);
 
 const getAuthHeader = (): Record<string, string> => {
   const token = localStorage.getItem('lcc_auth_token') || localStorage.getItem('lcc_admin_token');

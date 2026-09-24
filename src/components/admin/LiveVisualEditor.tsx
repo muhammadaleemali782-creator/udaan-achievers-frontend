@@ -958,12 +958,22 @@ export const LiveVisualEditor: React.FC = () => {
         elId === 'hero-director-name' ||
         elId === 'about-director-name' ||
         orig === websiteSettings.directorName?.trim() ||
-        orig.includes(websiteSettings.directorName?.trim()) ||
+        orig === websiteSettings.founderName?.trim() ||
+        orig.includes(websiteSettings.directorName?.trim() || '') ||
+        clickedTarget.friendlyName.toLowerCase().includes('founder') ||
         clickedTarget.friendlyName.toLowerCase().includes('director') ||
-        clickedTarget.elementRef?.closest('#hero-leadership-box') ||
         clickedTarget.elementRef?.closest('#about-director-card')
       ) {
         updatedSettings.directorName = val;
+        updatedSettings.founderName = val;
+      }
+      if (
+        orig === websiteSettings.coFounderName?.trim() ||
+        orig.includes(websiteSettings.coFounderName?.trim() || '') ||
+        clickedTarget.friendlyName.toLowerCase().includes('co-founder') ||
+        clickedTarget.friendlyName.toLowerCase().includes('cofounder')
+      ) {
+        updatedSettings.coFounderName = val;
       }
       if (orig === websiteSettings.contactPhone?.trim() || clickedTarget.elementRef?.closest('a[href^="tel"]') || orig.includes('+91')) {
         updatedSettings.contactPhone = val;
