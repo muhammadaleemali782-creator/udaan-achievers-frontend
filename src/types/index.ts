@@ -241,6 +241,12 @@ export interface WebsiteSettings {
   logoUrl?: string;
   faviconUrl?: string;
   directorName: string;
+  founderName?: string;
+  founderRole?: string;
+  coFounderName?: string;
+  coFounderRole?: string;
+  coFounderPhotoUrl?: string;
+  mapEmbedUrl?: string;
   contactPhone: string;
   contactEmail: string;
   contactAddress: string;
@@ -261,3 +267,4 @@ export interface WebsiteSettings {
   heroColumnsOrder?: string[];
   headerOrder?: string[];
 }
+

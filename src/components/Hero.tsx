@@ -88,7 +88,9 @@ export const Hero: React.FC = () => {
   };
 
   const instituteFullName = websiteSettings?.instituteName || 'Educa Institute of Consultancy';
-  const directorName = websiteSettings?.directorName || 'Dr. R. K. Sharma';
+  const directorName = websiteSettings?.directorName || websiteSettings?.founderName || 'S. R. Anand';
+  const coFounderName = websiteSettings?.coFounderName || 'Akash';
+  const coFounderRole = websiteSettings?.coFounderRole || 'Co-Founder';
 
   return (
     <section className="bg-slate-100/70 border-b border-slate-200/90 pb-8 sm:pb-12 pt-3 sm:pt-4 px-2 sm:px-4 lg:px-6">
@@ -310,10 +312,12 @@ export const Hero: React.FC = () => {
 
                     <div>
                       <h4 id="hero-director-name" className="text-sm font-black text-slate-900 leading-tight cursor-pointer">{directorName}</h4>
-                      <p className="text-[11px] font-bold text-[#0B3B95]">Director & Founder</p>
-                      <p className="text-[10px] text-slate-500 font-medium mt-0.5 leading-snug">
-                        Dean of Naturopathy & Ayurveda (BAMS, MD)
-                      </p>
+                      <p className="text-[11px] font-bold text-[#0B3B95]">{websiteSettings?.founderRole || 'Founder & Director'}</p>
+                      
+                      <div className="mt-2 pt-1.5 border-t border-slate-200/80 flex items-center justify-between text-[11px] px-1">
+                        <span className="text-slate-500 font-bold">{coFounderRole}:</span>
+                        <span className="font-extrabold text-[#0B3B95]">{coFounderName}</span>
+                      </div>
                     </div>
                   </div>
 

@@ -49,7 +49,7 @@ export const Footer: React.FC = () => {
           </div>
 
           <p className="text-xs sm:text-sm text-slate-500 max-w-xl mx-auto leading-relaxed font-medium">
-            <strong>{websiteSettings?.instituteName || 'Educa Institute of Consultancy'}</strong> — Premier consultancy institute for Wellness Consultancy in Naturopathy & Ayurveda (WCNA) and Wealth Consultancy in Finance Management (WCFM) under the mentorship of <strong>{websiteSettings?.directorName || 'Dr. R. K. Sharma'}</strong>.
+            <strong>{websiteSettings?.instituteName || 'Educa Institute of Consultancy'}</strong> — Premier consultancy institute for Wellness Consultancy in Naturopathy & Ayurveda (WCNA) and Wealth Consultancy in Finance Management (WCFM) under the mentorship of <strong>{websiteSettings?.directorName || 'S. R. Anand'}</strong>.
           </p>
 
           {/* Quick Links Navigation */}
@@ -129,7 +129,7 @@ export const Footer: React.FC = () => {
         {/* Bottom Copyright Strip */}
         <div className="pt-8 border-t border-slate-100 text-center space-y-2">
           <p className="text-xs text-slate-500 font-medium leading-relaxed">
-            © 2016 – 2026 <strong>{websiteSettings?.instituteName || 'Educa Institute of Consultancy'}</strong>, Prayagraj, Uttar Pradesh. Directed by <strong>{websiteSettings?.directorName || 'Dr. R. K. Sharma'}</strong>.
+            © 2016 – 2026 <strong>{websiteSettings?.instituteName || 'Educa Institute of Consultancy'}</strong>, Prayagraj, Uttar Pradesh. Directed by <strong>{websiteSettings?.directorName || 'S. R. Anand'}</strong>.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3 text-[11px] text-slate-400 font-medium">
             <span>ISO 9001:2015 Certified Consultancy Center</span>

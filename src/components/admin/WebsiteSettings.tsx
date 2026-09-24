@@ -14,7 +14,13 @@ export const WebsiteSettings: React.FC = () => {
     instituteTagline: websiteSettings.instituteTagline || 'Educa Institute of Consultancy',
     logoUrl: websiteSettings.logoUrl || '/logo.jpg',
     faviconUrl: websiteSettings.faviconUrl || '/logo.jpg',
-    directorName: websiteSettings.directorName || 'Dr. R. K. Sharma',
+    directorName: websiteSettings.directorName || websiteSettings.founderName || 'S. R. Anand',
+    founderName: websiteSettings.founderName || websiteSettings.directorName || 'S. R. Anand',
+    founderRole: websiteSettings.founderRole || 'Founder & Managing Director',
+    coFounderName: websiteSettings.coFounderName || 'Akash',
+    coFounderRole: websiteSettings.coFounderRole || 'Co-Founder',
+    coFounderPhotoUrl: websiteSettings.coFounderPhotoUrl || '',
+    mapEmbedUrl: websiteSettings.mapEmbedUrl || '',
     contactPhone: websiteSettings.contactPhone || '+91 98765 43210',
     contactEmail: websiteSettings.contactEmail || 'admissions@educa.com',
     contactAddress: websiteSettings.contactAddress || 'VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ',
@@ -41,7 +47,13 @@ export const WebsiteSettings: React.FC = () => {
       instituteTagline: websiteSettings.instituteTagline || 'Educa Institute of Consultancy',
       logoUrl: websiteSettings.logoUrl || '/logo.jpg',
       faviconUrl: websiteSettings.faviconUrl || '/logo.jpg',
-      directorName: websiteSettings.directorName || 'Dr. R. K. Sharma',
+      directorName: websiteSettings.directorName || websiteSettings.founderName || 'S. R. Anand',
+      founderName: websiteSettings.founderName || websiteSettings.directorName || 'S. R. Anand',
+      founderRole: websiteSettings.founderRole || 'Founder & Managing Director',
+      coFounderName: websiteSettings.coFounderName || 'Akash',
+      coFounderRole: websiteSettings.coFounderRole || 'Co-Founder',
+      coFounderPhotoUrl: websiteSettings.coFounderPhotoUrl || '',
+      mapEmbedUrl: websiteSettings.mapEmbedUrl || '',
       contactPhone: websiteSettings.contactPhone || '+91 98765 43210',
       contactEmail: websiteSettings.contactEmail || 'admissions@educa.com',
       contactAddress: websiteSettings.contactAddress || 'VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ',
@@ -267,12 +279,55 @@ export const WebsiteSettings: React.FC = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="text-xs font-bold text-slate-300 block mb-1">Director / Founder Name</label>
+              <label className="text-xs font-bold text-slate-300 block mb-1">Founder / Director Name</label>
               <input
                 type="text"
+                placeholder="e.g. S. R. Anand"
                 value={form.directorName}
-                onChange={e => setForm({ ...form, directorName: e.target.value })}
+                onChange={e => setForm({ ...form, directorName: e.target.value, founderName: e.target.value })}
                 className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
+              />
+            </div>
+
+            <div>
+              <label className="text-xs font-bold text-slate-300 block mb-1">Founder Role / Title</label>
+              <input
+                type="text"
+                placeholder="e.g. Founder & Managing Director"
+                value={form.founderRole}
+                onChange={e => setForm({ ...form, founderRole: e.target.value })}
+                className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
+              />
+            </div>
+
+            <div>
+              <label className="text-xs font-bold text-slate-300 block mb-1">Co-Founder Name</label>
+              <input
+                type="text"
+                placeholder="e.g. Akash"
+                value={form.coFounderName}
+                onChange={e => setForm({ ...form, coFounderName: e.target.value })}
+                className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
+              />
+            </div>
+
+            <div>
+              <label className="text-xs font-bold text-slate-300 block mb-1">Co-Founder Role / Title</label>
+              <input
+                type="text"
+                placeholder="e.g. Co-Founder"
+                value={form.coFounderRole}
+                onChange={e => setForm({ ...form, coFounderRole: e.target.value })}
+                className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
+              />
+            </div>
+
+            <div className="md:col-span-2">
+              <ImageUploaderInput
+                label="Co-Founder Photo (Upload or Paste Image URL)"
+                value={form.coFounderPhotoUrl}
+                onChange={url => setForm({ ...form, coFounderPhotoUrl: url })}
+                placeholder="Upload photo file or paste image URL for Co-Founder..."
               />
             </div>
 
@@ -296,7 +351,7 @@ export const WebsiteSettings: React.FC = () => {
               />
             </div>
 
-            <div>
+            <div className="md:col-span-2">
               <label className="text-xs font-bold text-slate-300 block mb-1">Campus Physical Address</label>
               <input
                 type="text"
@@ -304,6 +359,31 @@ export const WebsiteSettings: React.FC = () => {
                 onChange={e => setForm({ ...form, contactAddress: e.target.value })}
                 className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
               />
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="text-xs font-bold text-slate-300 block mb-1 flex items-center justify-between">
+                <span className="flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#0066FF]" />
+                  <span>Google Map Embed Link / URL (यहाँ से आप कभी भी अपनी लोकेशन का Google Map बदल सकते हैं)</span>
+                </span>
+                <span className="text-[10px] text-amber-400 font-normal">Contact Section me update hoga</span>
+              </label>
+              <input
+                type="text"
+                placeholder="Google Map iframe src, embed link (https://maps.google.com/...) ya address link paste karein..."
+                value={form.mapEmbedUrl}
+                onChange={e => {
+                  let val = e.target.value;
+                  const match = val.match(/src=["']([^"']+)["']/);
+                  if (match) val = match[1];
+                  setForm({ ...form, mapEmbedUrl: val });
+                }}
+                className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF] font-mono"
+              />
+              <p className="text-[11px] text-slate-400 mt-1">
+                💡 Google Maps par jakar <strong>Share → Embed a map</strong> ka code ya URL yahan paste karein. Website par live map instant update ho jayega.
+              </p>
             </div>
 
             <div className="md:col-span-2">

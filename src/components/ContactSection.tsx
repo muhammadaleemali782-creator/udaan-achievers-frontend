@@ -4,14 +4,30 @@ import { MapPin, Phone, Mail, Clock, MessageSquare, Send, Sparkles, CheckCircle2
 import { Youtube, Instagram } from './SocialIcons';
 
 export const ContactSection: React.FC = () => {
-  const { showToast, websiteSettings } = useApp();
+  const { showToast, websiteSettings, isAdminAuthenticated, updateWebsiteSettings } = useApp();
   const [form, setForm] = useState({ name: '', email: '', phone: '', message: '' });
   const [sent, setSent] = useState(false);
+  const [editMap, setEditMap] = useState(false);
+  const [mapInput, setMapInput] = useState('');
 
-  const director = websiteSettings?.directorName || 'Dr. R. K. Sharma';
+  const director = websiteSettings?.directorName || websiteSettings?.founderName || 'S. R. Anand';
   const phone = websiteSettings?.contactPhone || '+91 98765 43210';
   const email = websiteSettings?.contactEmail || 'admissions@educa.com';
   const address = websiteSettings?.contactAddress || 'VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ';
+  const mapSrc = websiteSettings?.mapEmbedUrl || `https://maps.google.com/maps?q=${encodeURIComponent(address)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+
+  const handleSaveMap = async () => {
+    let cleanUrl = mapInput.trim();
+    const match = cleanUrl.match(/src=["']([^"']+)["']/);
+    if (match) cleanUrl = match[1];
+    if (!cleanUrl) {
+      showToast('Please enter a valid Google Maps link or embed code.', 'warning');
+      return;
+    }
+    await updateWebsiteSettings({ ...websiteSettings, mapEmbedUrl: cleanUrl });
+    showToast('Google Map location updated successfully!', 'success');
+    setEditMap(false);
+  };
 
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
@@ -107,14 +123,66 @@ export const ContactSection: React.FC = () => {
           {/* Right Column: Google Maps Embed + Quick Form */}
           <div className="lg:col-span-7 space-y-6">
             
-            {/* Interactive Google Map Embed: VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ */}
-            <div className="h-64 sm:h-72 rounded-3xl overflow-hidden border border-slate-200 shadow-card-clean bg-slate-100">
-              <iframe
-                title="Educa Institute Location - Jhalwa Prayagraj"
-                src="https://maps.google.com/maps?q=VIHAR+GALI+NO.+3+UTTHAN+ROAD+JHALWA+PRAYAGRAJ&t=&z=15&ie=UTF8&iwloc=&output=embed"
-                className="w-full h-full border-0"
-                loading="lazy"
-              />
+            {/* Interactive Google Map Embed with Live Admin Editor */}
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                  <MapPin className="w-3.5 h-3.5 text-[#0066FF]" />
+                  <span>Google Map Campus Location</span>
+                </span>
+                {isAdminAuthenticated && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setMapInput(websiteSettings?.mapEmbedUrl || '');
+                      setEditMap(!editMap);
+                    }}
+                    className="text-[11px] font-bold text-[#0066FF] hover:underline cursor-pointer bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-200 flex items-center gap-1"
+                  >
+                    📍 {editMap ? 'Cancel Edit' : 'Edit Map Location'}
+                  </button>
+                )}
+              </div>
+
+              {isAdminAuthenticated && editMap && (
+                <div className="p-3 bg-white rounded-2xl border border-blue-300 shadow-md space-y-2">
+                  <label className="text-xs font-bold text-slate-800 block">
+                    Update Google Maps Embed URL or iframe code:
+                  </label>
+                  <input
+                    type="text"
+                    value={mapInput}
+                    onChange={e => setMapInput(e.target.value)}
+                    placeholder="Paste Google Maps embed URL (https://maps.google.com/...) or <iframe>...</iframe>"
+                    className="w-full px-3 py-2 text-xs border border-slate-300 rounded-xl focus:outline-none focus:border-[#0066FF] font-mono"
+                  />
+                  <div className="flex justify-end gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setEditMap(false)}
+                      className="px-3 py-1 text-xs font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg cursor-pointer"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleSaveMap}
+                      className="px-4 py-1 text-xs font-black bg-[#0066FF] hover:bg-blue-700 text-white rounded-lg cursor-pointer shadow-xs"
+                    >
+                      Save Map Live
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              <div className="h-64 sm:h-72 rounded-3xl overflow-hidden border border-slate-200 shadow-card-clean bg-slate-100">
+                <iframe
+                  title="Campus Location Map"
+                  src={mapSrc}
+                  className="w-full h-full border-0"
+                  loading="lazy"
+                />
+              </div>
             </div>
 
             {/* Quick Contact Form */}
@@ -123,7 +191,7 @@ export const ContactSection: React.FC = () => {
 
               {sent ? (
                 <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 text-emerald-700 text-xs font-bold text-center">
-                  Thank you! Your message has been delivered to Dr. R. K. Sharma & counseling team.
+                  Thank you! Your message has been delivered to {director} & counseling team.
                 </div>
               ) : (
                 <form onSubmit={handleSend} className="space-y-3">

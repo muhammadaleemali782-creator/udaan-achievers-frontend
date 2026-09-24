@@ -238,7 +238,13 @@ const INITIAL_SETTINGS: WebsiteSettings = {
   instituteSubtitle: '(A Premier Institute for Naturopathy, Ayurveda & Wealth Management Consultancy)',
   logoUrl: '/logo.jpg',
   shortName: 'EDUCA',
-  directorName: 'Dr. R. K. Sharma',
+  directorName: 'S. R. Anand',
+  founderName: 'S. R. Anand',
+  founderRole: 'Founder & Managing Director',
+  coFounderName: 'Akash',
+  coFounderRole: 'Co-Founder',
+  coFounderPhotoUrl: '/assets/founder.png',
+  mapEmbedUrl: 'https://maps.google.com/maps?q=VIHAR+GALI+NO.+3+UTTHAN+ROAD+JHALWA+PRAYAGRAJ&t=&z=15&ie=UTF8&iwloc=&output=embed',
   contactPhone: '+91 98765 43210',
   contactEmail: 'admissions@educa.com',
   contactAddress: 'VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ',
@@ -461,7 +467,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         localStorage.setItem('lcc_admin_token', 'emergency_admin_token_2026');
         localStorage.setItem('lcc_admin_authenticated', 'true');
         setIsAdminAuthenticated(true);
-        showToast('Welcome Director Dr. R. K. Sharma! Opening Institute Control Center...', 'success');
+        showToast('Welcome to Institute Control Center!', 'success');
         navigateTo('admin-panel');
         try {
           api.auth.adminLogin({ email: cleanEmail, password: pass }).then(res => {
@@ -479,7 +485,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         localStorage.setItem('lcc_admin_token', res.token);
         localStorage.setItem('lcc_admin_authenticated', 'true');
         setIsAdminAuthenticated(true);
-        showToast('Welcome Director Dr. R. K. Sharma! Opening Institute Control Center...', 'success');
+        showToast('Welcome to Institute Control Center!', 'success');
         navigateTo('admin-panel');
         return true;
       }
