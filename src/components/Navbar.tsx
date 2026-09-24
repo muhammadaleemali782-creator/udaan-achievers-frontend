@@ -335,7 +335,7 @@ export const Navbar: React.FC = () => {
       <>
         {headerOrder.map(partKey => headerPartsMap[partKey] || null)}
       {activeView !== 'admin-panel' && (
-        <div className="xl:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-950/95 border-t border-slate-200/80 dark:border-slate-800 py-2 px-3 backdrop-blur-xl flex items-center justify-around shadow-2xl transition-colors">
+        <div className="xl:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-2 px-3 flex items-center justify-around shadow-lg transition-colors">
           <button
             onClick={() => navigateTo('home')}
             className={`flex flex-col items-center gap-0.5 text-[10px] font-bold transition-colors cursor-pointer ${

@@ -22,7 +22,6 @@ import { FaqSection } from './components/FaqSection';
 import { Footer } from './components/Footer';
 import { AdBanner } from './components/ads/AdBanner';
 import { Bell, Calendar, ArrowLeft } from 'lucide-react';
-import { MobileAppNavigation } from './components/MobileAppNavigation';
 
 // Modals & Panels
 import { PaymentModal } from './components/modals/PaymentModal';
@@ -38,31 +37,11 @@ import { ToastContainer } from './components/Toast';
 const MainContent: React.FC = () => {
   const { activeView, isAdminAuthenticated, theme, websiteSettings, notices, navigateTo } = useApp();
 
-  // Apply visual overrides across page reloads and dynamic renders permanently
+  // Apply visual overrides smoothly without heavy DOM tree MutationObserver
   React.useEffect(() => {
     const overrides = websiteSettings?.visualOverrides;
     if (!overrides || Object.keys(overrides).length === 0) return;
-
     applyVisualOverrides(overrides);
-
-    let rafId: number | null = null;
-    const debouncedApply = () => {
-      if (rafId) cancelAnimationFrame(rafId);
-      rafId = requestAnimationFrame(() => {
-        applyVisualOverrides(overrides);
-      });
-    };
-
-    const observer = new MutationObserver(() => {
-      debouncedApply();
-    });
-
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    return () => {
-      if (rafId) cancelAnimationFrame(rafId);
-      observer.disconnect();
-    };
   }, [websiteSettings?.visualOverrides, activeView]);
 
   const sectionMap: Record<string, React.ReactNode> = {
@@ -237,9 +216,6 @@ const MainContent: React.FC = () => {
       </div>
 
       {activeView !== 'admin-panel' && <Footer />}
-
-      {/* Mobile & Tablet Native App Bar with 1-Tap PWA Install */}
-      {activeView !== 'admin-panel' && <MobileAppNavigation />}
 
       {/* Global Modals */}
       <PaymentModal />

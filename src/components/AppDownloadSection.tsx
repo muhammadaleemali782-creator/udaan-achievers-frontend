@@ -389,42 +389,7 @@ export const AppDownloadSection: React.FC = () => {
               The official <strong>Educa Institute</strong> mobile and tablet app brings high-speed video lectures, daily practice sheets, photo question recognition, and direct mentor chats with Founder S. R. Anand, Akash, and faculty.
             </p>
 
-            {/* Direct PWA Install Button for Mobile & Tablet */}
-            <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/20 flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-                  <Smartphone className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                  <h4 className="text-sm font-bold">Install App on Phone & Tablet</h4>
-                  <p className="text-xs text-blue-100">Works on Android, iPad & iPhone — No App Store needed!</p>
-                </div>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
-                <a
-                  href="/educa-institute.apk"
-                  download="Educa-Institute.apk"
-                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white text-blue-700 font-bold text-xs hover:bg-blue-50 shadow-md cursor-pointer transition-all flex items-center justify-center gap-2 shrink-0 no-underline"
-                >
-                  <Download className="w-4 h-4" />
-                  <span>Download APK (Android)</span>
-                </a>
-                <button
-                  type="button"
-                  onClick={() => {
-                    if ((window as any).__promptPwaInstall) {
-                      (window as any).__promptPwaInstall();
-                    } else {
-                      showToast('Tap browser menu (⋮ or Share) and select "Add to Home screen" to install.', 'info');
-                    }
-                  }}
-                  className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-blue-800/60 hover:bg-blue-800 text-white font-bold text-xs shadow-md cursor-pointer transition-all flex items-center justify-center gap-2 shrink-0 border border-white/20"
-                >
-                  <Smartphone className="w-4 h-4" />
-                  <span>Instant Install</span>
-                </button>
-              </div>
-            </div>
+
 
             {/* Pre-Register Box */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
