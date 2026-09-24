@@ -400,20 +400,30 @@ export const AppDownloadSection: React.FC = () => {
                   <p className="text-xs text-blue-100">Works on Android, iPad & iPhone — No App Store needed!</p>
                 </div>
               </div>
-              <button
-                type="button"
-                onClick={() => {
-                  if ((window as any).__promptPwaInstall) {
-                    (window as any).__promptPwaInstall();
-                  } else {
-                    showToast('Tap browser menu (⋮ or Share) and select "Add to Home screen" to install.', 'info');
-                  }
-                }}
-                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white text-blue-700 font-bold text-xs hover:bg-blue-50 shadow-md cursor-pointer transition-all flex items-center justify-center gap-2 shrink-0"
-              >
-                <Download className="w-4 h-4" />
-                <span>Install App Now</span>
-              </button>
+              <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                <a
+                  href="/educa-institute.apk"
+                  download="Educa-Institute.apk"
+                  className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white text-blue-700 font-bold text-xs hover:bg-blue-50 shadow-md cursor-pointer transition-all flex items-center justify-center gap-2 shrink-0 no-underline"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Download APK (Android)</span>
+                </a>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if ((window as any).__promptPwaInstall) {
+                      (window as any).__promptPwaInstall();
+                    } else {
+                      showToast('Tap browser menu (⋮ or Share) and select "Add to Home screen" to install.', 'info');
+                    }
+                  }}
+                  className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-blue-800/60 hover:bg-blue-800 text-white font-bold text-xs shadow-md cursor-pointer transition-all flex items-center justify-center gap-2 shrink-0 border border-white/20"
+                >
+                  <Smartphone className="w-4 h-4" />
+                  <span>Instant Install</span>
+                </button>
+              </div>
             </div>
 
             {/* Pre-Register Box */}
