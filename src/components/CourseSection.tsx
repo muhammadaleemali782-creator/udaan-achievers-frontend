@@ -276,7 +276,7 @@ export const CourseSection: React.FC = () => {
                   data-course-field="discountFee"
                   className="absolute top-3.5 right-3.5 px-3 py-1 rounded-full bg-[#0066FF] text-white text-xs font-black shadow-sm"
                 >
-                  ₹{course.discountFee}
+                  ₹{Number(course.discountFee || 150000).toLocaleString('en-IN')}
                 </div>
 
                 <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-white text-xs font-medium">
@@ -332,7 +332,7 @@ export const CourseSection: React.FC = () => {
                       className="text-[10px] text-slate-400 block line-through cursor-pointer hover:text-amber-400 transition-colors"
                       title="Click to edit original fee"
                     >
-                      ₹{course.fee}
+                      ₹{Number(course.fee || 200000).toLocaleString('en-IN')}
                     </span>
                     <span
                       data-course-id={course.id}
@@ -340,7 +340,7 @@ export const CourseSection: React.FC = () => {
                       className="text-sm sm:text-base font-black text-slate-900 dark:text-white cursor-pointer hover:text-[#0066FF] transition-colors"
                       title="Click to edit discount fee"
                     >
-                      ₹{course.discountFee}
+                      ₹{Number(course.discountFee || 150000).toLocaleString('en-IN')}
                     </span>
                   </div>
 
@@ -463,6 +463,29 @@ export const CourseSection: React.FC = () => {
                     onChange={e => setEditingCourse({ ...editingCourse, description: e.target.value })}
                     className="w-full p-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
                   />
+                </div>
+
+                <div className="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label className="text-[11px] font-bold text-slate-400 block mb-1">WhatsApp Group Link</label>
+                    <input
+                      type="url"
+                      placeholder="https://chat.whatsapp.com/..."
+                      value={editingCourse.whatsappRedirectUrl || ''}
+                      onChange={e => setEditingCourse({ ...editingCourse, whatsappRedirectUrl: e.target.value })}
+                      className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
+                    />
+                  </div>
+                  <div>
+                    <label className="text-[11px] font-bold text-slate-400 block mb-1">Video / Playlist Link</label>
+                    <input
+                      type="url"
+                      placeholder="https://youtube.com/playlist?list=..."
+                      value={editingCourse.privatePlaylistUrl || ''}
+                      onChange={e => setEditingCourse({ ...editingCourse, privatePlaylistUrl: e.target.value })}
+                      className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
+                    />
+                  </div>
                 </div>
               </div>
 

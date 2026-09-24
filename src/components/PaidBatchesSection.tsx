@@ -96,18 +96,22 @@ export const PaidBatchesSection: React.FC = () => {
                 </div>
 
                 <div className="pt-6 border-t border-slate-100 space-y-4">
-                  <div className="flex items-baseline justify-between">
-                    <div>
-                      <span className="text-2xl sm:text-3xl font-black text-slate-900">
-                        ₹{course.discountFee}
+                  <div className="flex items-baseline justify-between gap-2 flex-wrap">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                        ₹{Number(course.discountFee || 150000).toLocaleString('en-IN')}
                       </span>
-                      <span className="text-xs text-slate-400 line-through ml-2 font-medium">
-                        ₹{course.fee}
-                      </span>
+                      {Number(course.fee) > Number(course.discountFee) && (
+                        <span className="text-xs text-slate-400 line-through font-medium">
+                          ₹{Number(course.fee || 200000).toLocaleString('en-IN')}
+                        </span>
+                      )}
                     </div>
-                    <span className="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-extrabold border border-emerald-200">
-                      SAVE ₹{course.fee - course.discountFee}
-                    </span>
+                    {Number(course.fee) > Number(course.discountFee) && (
+                      <span className="px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-[11px] font-extrabold border border-emerald-200">
+                        SAVE ₹{(Number(course.fee) - Number(course.discountFee)).toLocaleString('en-IN')}
+                      </span>
+                    )}
                   </div>
 
                   {isEnrolled ? (

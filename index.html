@@ -21,34 +21,16 @@
       }
     </script>
 
-    <!-- Immediate Zero-Delay Theme & Visual Overrides Injector (Zero flicker on refresh) -->
+    <!-- Self-Healing Local Storage Cleanup (Ensures clean MongoDB Atlas data on load) -->
     <script>
       (function() {
         try {
-          var rawOverrides = localStorage.getItem('educa_visual_overrides') || localStorage.getItem('lcc_visual_overrides');
-          if (rawOverrides) {
-            var overrides = JSON.parse(rawOverrides);
-            var css = '';
-            for (var key in overrides) {
-              var item = overrides[key];
-              if (!item) continue;
-              var sel = item.selector || key;
-              if (item.isHidden || item.display === 'none') {
-                css += sel + ' { display: none !important; }\n';
-              }
-              if (item.backgroundColor) {
-                css += sel + ' { background-color: ' + item.backgroundColor + ' !important; }\n';
-              }
-              if (item.textColor) {
-                css += sel + ' { color: ' + item.textColor + ' !important; }\n';
-              }
-            }
-            if (css) {
-              var s = document.createElement('style');
-              s.id = 'educa-instant-theme-css';
-              s.textContent = css;
-              document.head.appendChild(s);
-            }
+          localStorage.removeItem('educa_visual_overrides');
+          localStorage.removeItem('lcc_visual_overrides');
+          var rawC = localStorage.getItem('educa_courses_v3') || '';
+          if (rawC.includes('1500004920000015000')) {
+            localStorage.removeItem('educa_courses_v3');
+            localStorage.removeItem('lcc_courses');
           }
         } catch(e) {}
       })();

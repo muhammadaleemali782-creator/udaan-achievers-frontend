@@ -499,8 +499,11 @@ export const applyVisualOverrides = (overrides?: Record<string, VisualOverrideIt
           targetEl.style.backgroundImage = `url("${item.value}")`;
         }
       } else if (item.value) {
-        if (targetEl.innerText !== item.value) {
-          targetEl.innerText = item.value;
+        // SAFETY GUARD: Never wipe out container elements that have child elements (e.g. cards, buttons, sections)
+        if (targetEl.children.length === 0) {
+          if (targetEl.innerText !== item.value) {
+            targetEl.innerText = item.value;
+          }
         }
       }
 

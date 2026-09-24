@@ -6,18 +6,22 @@ const getAuthHeader = (): Record<string, string> => {
   return token ? { Authorization: `Bearer ${token}` } : {};
 };
 
-// Generic fetcher with JSON handling and timeout
+// Generic fetcher with JSON handling and zero-delay fresh data
 async function request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-  const url = `${API_BASE}${endpoint}`;
+  const method = (options.method || 'GET').toUpperCase();
+  const sep = endpoint.includes('?') ? '&' : '?';
+  const url = method === 'GET' ? `${API_BASE}${endpoint}${sep}_t=${Date.now()}` : `${API_BASE}${endpoint}`;
   const customHeaders = (options.headers as Record<string, string>) || {};
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
+    'Cache-Control': 'no-cache, no-store, must-revalidate',
+    'Pragma': 'no-cache',
     ...getAuthHeader(),
     ...customHeaders
   };
 
   try {
-    const res = await fetch(url, { ...options, headers });
+    const res = await fetch(url, { ...options, headers, cache: 'no-store' });
     const contentType = res.headers.get('content-type') || '';
     if (!contentType.includes('application/json')) {
       throw new Error(`Server returned non-JSON (${res.status}): ${url}`);

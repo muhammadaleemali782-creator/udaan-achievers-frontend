@@ -355,7 +355,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       ...loadSaved<string[]>('lcc_deleted_courses', [])
     ]));
     const loaded = loadSaved<Course[]>('educa_courses_v3', loadSaved<Course[]>('lcc_courses', INITIAL_COURSES));
-    return loaded.filter(c => !deleted.includes(c.id));
+    return loaded
+      .filter(c => !deleted.includes(c.id))
+      .map(c => ({
+        ...c,
+        fee: Number(c.fee) > 10000000 ? 200000 : c.fee,
+        discountFee: Number(c.discountFee) > 10000000 ? 150000 : c.discountFee
+      }));
   });
   const [studyMaterials, setStudyMaterials] = useState<StudyMaterial[]>(() => loadSaved('educa_study_materials_v2', INITIAL_STUDY_MATERIALS));
   const [syllabuses, setSyllabuses] = useState<SyllabusItem[]>(() => loadSaved('educa_syllabus_v2', INITIAL_SYLLABUS));
@@ -375,10 +381,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (!saved.contactAddress) {
       saved.contactAddress = 'VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ';
     }
-    const overrides = loadSaved<Record<string, any>>('educa_visual_overrides', loadSaved<Record<string, any>>('lcc_visual_overrides', {}));
-    if (overrides && Object.keys(overrides).length > 0) {
-      saved.visualOverrides = { ...(saved.visualOverrides || {}), ...overrides };
-    }
+    saved.visualOverrides = {};
     return saved;
   });
 
@@ -428,6 +431,61 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const toggleTheme = () => {
     // Light mode enforced
   };
+
+  // Immediate Live Cloud Data Sync from MongoDB Atlas (Ensures instant updates across all devices)
+  useEffect(() => {
+    api.settings.get().then(res => {
+      if (res && res.data) {
+        setWebsiteSettings(prev => ({
+          ...prev,
+          ...res.data,
+          visualOverrides: res.data.visualOverrides || {}
+        }));
+      }
+    }).catch(() => {});
+
+    api.courses.get().then(res => {
+      if (res && res.data && res.data.length > 0) {
+        const sanitized = res.data.map(c => ({
+          ...c,
+          fee: Number(c.fee) > 10000000 ? 200000 : c.fee,
+          discountFee: Number(c.discountFee) > 10000000 ? 150000 : c.discountFee
+        }));
+        setCourses(sanitized);
+        saveItem('educa_courses_v3', sanitized);
+        saveItem('lcc_courses', sanitized);
+      }
+    }).catch(() => {});
+
+    api.notices.get().then(res => {
+      if (res && res.data && res.data.length > 0) {
+        setNotices(res.data);
+        saveItem('lcc_notices', res.data);
+      }
+    }).catch(() => {});
+
+    api.socials.get().then(res => {
+      if (res && res.data && res.data.length > 0) {
+        setSocialLinks(res.data);
+        saveItem('lcc_social_links', res.data);
+      }
+    }).catch(() => {});
+
+    api.media.getPDFs().then(res => {
+      if (res && res.data && res.data.length > 0) {
+        setStudyMaterials(res.data);
+        saveItem('educa_study_materials_v2', res.data);
+      }
+    }).catch(() => {});
+
+    api.media.getVideos().then(res => {
+      if (res && res.data && res.data.length > 0) {
+        setVideos(res.data);
+        saveItem('educa_videos_v2', res.data);
+        saveItem('lcc_videos', res.data);
+      }
+    }).catch(() => {});
+  }, []);
 
   const navigateTo = (view: ActiveView, anchorId?: string) => {
     setActiveView(view);
