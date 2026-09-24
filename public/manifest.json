@@ -1,0 +1,59 @@
+{
+  "name": "Educa Institute of Consultancy",
+  "short_name": "Educa App",
+  "description": "Premier Institute for Naturopathy, Ayurveda (WCNA) & Wealth Management (WCFM) Consultancy.",
+  "start_url": "/?source=pwa",
+  "id": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#ffffff",
+  "theme_color": "#0066FF",
+  "categories": ["education", "productivity", "business"],
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Courses & Certifications",
+      "short_name": "Courses",
+      "url": "/#courses-section",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Student Portal",
+      "short_name": "Portal",
+      "url": "/#student",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Admissions 2026",
+      "short_name": "Admissions",
+      "url": "/#admission-section",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Campus Contact",
+      "short_name": "Contact",
+      "url": "/#contact-section",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}

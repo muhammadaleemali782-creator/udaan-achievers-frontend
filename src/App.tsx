@@ -22,6 +22,7 @@ import { FaqSection } from './components/FaqSection';
 import { Footer } from './components/Footer';
 import { AdBanner } from './components/ads/AdBanner';
 import { Bell, Calendar, ArrowLeft } from 'lucide-react';
+import { MobileAppNavigation } from './components/MobileAppNavigation';
 
 // Modals & Panels
 import { PaymentModal } from './components/modals/PaymentModal';
@@ -197,7 +198,7 @@ const MainContent: React.FC = () => {
                         {notice.description}
                       </p>
                       <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
-                        <span>Issued by: Dr. R. K. Sharma (Director)</span>
+                        <span>Issued by: {websiteSettings?.directorName || websiteSettings?.founderName || 'S. R. Anand'} (Founder)</span>
                         <span className="font-semibold text-emerald-600">Active</span>
                       </div>
                     </div>
@@ -236,6 +237,9 @@ const MainContent: React.FC = () => {
       </div>
 
       {activeView !== 'admin-panel' && <Footer />}
+
+      {/* Mobile & Tablet Native App Bar with 1-Tap PWA Install */}
+      {activeView !== 'admin-panel' && <MobileAppNavigation />}
 
       {/* Global Modals */}
       <PaymentModal />

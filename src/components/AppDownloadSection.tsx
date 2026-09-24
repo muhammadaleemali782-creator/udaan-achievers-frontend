@@ -386,8 +386,35 @@ export const AppDownloadSection: React.FC = () => {
             </h3>
 
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-              The upcoming <strong>Learner by Educa Institute</strong> mobile app brings high-speed video lectures, daily practice sheets, photo question recognition, and direct mentor chats with Dr. R. K. Sharma and faculty.
+              The official <strong>Educa Institute</strong> mobile and tablet app brings high-speed video lectures, daily practice sheets, photo question recognition, and direct mentor chats with Founder S. R. Anand, Akash, and faculty.
             </p>
+
+            {/* Direct PWA Install Button for Mobile & Tablet */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                  <Smartphone className="w-5 h-5 text-white" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold">Install App on Phone & Tablet</h4>
+                  <p className="text-xs text-blue-100">Works on Android, iPad & iPhone — No App Store needed!</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  if ((window as any).__promptPwaInstall) {
+                    (window as any).__promptPwaInstall();
+                  } else {
+                    showToast('Tap browser menu (⋮ or Share) and select "Add to Home screen" to install.', 'info');
+                  }
+                }}
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-white text-blue-700 font-bold text-xs hover:bg-blue-50 shadow-md cursor-pointer transition-all flex items-center justify-center gap-2 shrink-0"
+              >
+                <Download className="w-4 h-4" />
+                <span>Install App Now</span>
+              </button>
+            </div>
 
             {/* Pre-Register Box */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
