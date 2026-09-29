@@ -21,12 +21,10 @@
       }
     </script>
 
-    <!-- Self-Healing Local Storage Cleanup (Ensures clean MongoDB Atlas data on load) -->
+    <!-- Self-Healing Local Storage Cleanup (corrupt courses only) -->
     <script>
       (function() {
         try {
-          localStorage.removeItem('educa_visual_overrides');
-          localStorage.removeItem('lcc_visual_overrides');
           var rawC = localStorage.getItem('educa_courses_v3') || '';
           if (rawC.includes('1500004920000015000')) {
             localStorage.removeItem('educa_courses_v3');

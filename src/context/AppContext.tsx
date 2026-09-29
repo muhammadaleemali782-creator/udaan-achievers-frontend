@@ -381,7 +381,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (!saved.contactAddress) {
       saved.contactAddress = 'VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ';
     }
-    saved.visualOverrides = {};
+    if (!saved.visualOverrides) {
+      saved.visualOverrides = {};
+    }
     return saved;
   });
 
