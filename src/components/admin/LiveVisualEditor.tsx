@@ -622,7 +622,9 @@ export const LiveVisualEditor: React.FC = () => {
       setHistoryStack([initialSnapshot]);
       setHistoryPointer(0);
     }
-  }, [isAdminAuthenticated, websiteSettings, courses]);
+    // ponytail: one-shot init only — deps intentionally exclude websiteSettings/courses to prevent re-fire loop
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAdminAuthenticated]);
 
   // Point & Click Interceptor when Visual Editor is Active
   useEffect(() => {
@@ -1227,22 +1229,16 @@ export const LiveVisualEditor: React.FC = () => {
   return (
     <>
       <style>{`
-        .visual-editor-mode-active * {
-          cursor: crosshair !important;
+        body.visual-editor-mode-active {
+          cursor: crosshair;
         }
         .visual-editor-mode-active h1:hover,
         .visual-editor-mode-active h2:hover,
         .visual-editor-mode-active h3:hover,
         .visual-editor-mode-active p:hover,
-        .visual-editor-mode-active span:hover,
-        .visual-editor-mode-active img:hover,
-        .visual-editor-mode-active header:hover,
-        .visual-editor-mode-active nav:hover,
-        .visual-editor-mode-active [id^="header-"]:hover,
-        .visual-editor-mode-active [id^="hero-"]:hover {
+        .visual-editor-mode-active img:hover {
           outline: 2px dashed #f59e0b !important;
           outline-offset: 3px !important;
-          transition: outline 0.15s ease-in-out;
         }
       `}</style>
 
