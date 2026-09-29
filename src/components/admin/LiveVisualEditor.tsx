@@ -1076,10 +1076,8 @@ export const LiveVisualEditor: React.FC = () => {
       await updateCourse(updatedCourseData);
     }
 
-    // 5. Save to AppContext & localStorage & backend immediately
+    // 5. Save to AppContext & backend immediately
     try {
-      localStorage.setItem('educa_visual_overrides', JSON.stringify(updatedOverrides));
-      localStorage.setItem('lcc_visual_overrides', JSON.stringify(updatedOverrides));
       let styleEl = document.getElementById('educa-instant-theme-css');
       if (!styleEl) {
         styleEl = document.createElement('style');

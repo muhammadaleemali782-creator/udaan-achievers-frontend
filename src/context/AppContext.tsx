@@ -334,20 +334,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     }).catch(() => {/* offline — use localStorage */});
   }, []);
 
-  const loadSaved = <T,>(key: string, fallback: T): T => {
-    try {
-      const item = localStorage.getItem(key);
-      return item ? JSON.parse(item) : fallback;
-    } catch (e) {
-      return fallback;
-    }
-  };
+  const loadSaved = <T,>(key: string, fallback: T): T => fallback;
 
-  const saveItem = (key: string, data: any) => {
-    try {
-      localStorage.setItem(key, JSON.stringify(data));
-    } catch (e) {}
-  };
+  const saveItem = (_key: string, _data: any) => {};
 
   const [courses, setCourses] = useState<Course[]>(() => {
     const deleted = Array.from(new Set([
