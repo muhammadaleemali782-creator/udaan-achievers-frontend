@@ -261,12 +261,8 @@
               }
             }
 
-            var obs = new MutationObserver(function() {
-              applyAll();
-            });
-            obs.observe(document.documentElement, { childList: true, subtree: true, characterData: true });
             document.addEventListener('DOMContentLoaded', applyAll);
-            window.addEventListener('load', applyAll);
+            window.addEventListener('load', function() { setTimeout(applyAll, 100); });
           }
         } catch (e) {}
       })();
