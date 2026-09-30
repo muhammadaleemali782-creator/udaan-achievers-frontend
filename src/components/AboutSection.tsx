@@ -7,8 +7,8 @@ export const AboutSection: React.FC = () => {
   const { websiteSettings, isAdminAuthenticated, updateWebsiteSettings, showToast } = useApp();
   const director = websiteSettings?.directorName || websiteSettings?.founderName || 'S. R. Anand';
   const founderRole = websiteSettings?.founderRole || 'Founder & Managing Director';
-  const coFounder = websiteSettings?.coFounderName || 'Akash';
-  const coFounderRole = websiteSettings?.coFounderRole || 'Co-Founder';
+  const coFounder = websiteSettings?.coFounderName || 'A.D. Rao';
+  const coFounderRole = websiteSettings?.coFounderRole || 'Co-Founder & Managing Director';
   const institute = websiteSettings?.instituteName || 'Educa Institute of Consultancy';
   const [aboutPhotoLoaded, setAboutPhotoLoaded] = useState(false);
   const [aboutPhotoEdit, setAboutPhotoEdit] = useState(false);
@@ -247,8 +247,9 @@ export const AboutSection: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-3 rounded-2xl bg-white border border-indigo-100 shadow-xs text-xs text-slate-700 italic leading-relaxed">
-                "Humara lakshya har student ko practical mastery aur career success dena hai — structured guidance aur relentless practice ke sath."
+              <div className="p-3 rounded-2xl bg-white border border-indigo-100 shadow-xs text-xs text-slate-700 italic leading-relaxed whitespace-pre-line">
+                "Mera maanna hai ki education sirf knowledge ya certificate hasil karne ka madhyam nahi hai. Education woh power hai jo ek insaan ko apni capabilities samajhne, apni direction choose karne aur apne future ke liye better decisions lene ka confidence deti hai. Mera vision hai ki EDUCA ke through har learner ko sirf learning nahi, balki growth, guidance aur opportunities ke saath connect kiya ja sake. Kyunki jab learning ko sahi direction aur opportunity milti hai, tab ek simple dream bhi ek meaningful journey ban sakta hai."
+                <span className="block mt-1 font-bold text-slate-900 not-italic text-[11px]">— A.D. Rao, Co-Founder</span>
               </div>
             </div>
 
