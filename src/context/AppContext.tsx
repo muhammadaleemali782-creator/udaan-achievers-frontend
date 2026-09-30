@@ -255,7 +255,56 @@ const INITIAL_SETTINGS: WebsiteSettings = {
   allowStudentReviews: true,
   maintenanceMode: false,
   razorpayKeyId: 'rzp_live_TbWh7wBlq0NQuz',
-  visualOverrides: {},
+  visualOverrides: {
+    "section#about-section > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > span:nth-of-type(1)": {
+      "selector": "section#about-section > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > span:nth-of-type(1)",
+      "type": "text",
+      "originalValue": "FOUNDER & MANAGING DIRECTOR",
+      "value": "FOUNDER & DIRECTOR"
+    },
+    "section#about-section > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > span:nth-of-type(1)": {
+      "selector": "section#about-section > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > span:nth-of-type(1)",
+      "type": "text",
+      "originalValue": "CO-FOUNDER & MANAGING DIRECTOR",
+      "value": "CO-FOUNDER & MANAGING DIRECTOR"
+    },
+    "section#about-section > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > h3:nth-of-type(1)": {
+      "selector": "section#about-section > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > h3:nth-of-type(1)",
+      "type": "text",
+      "originalValue": "Akash",
+      "value": "A.D. Rao"
+    },
+    "div#hero-leadership-box > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > p:nth-of-type(1)": {
+      "selector": "div#hero-leadership-box > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(3) > p:nth-of-type(1)",
+      "type": "text",
+      "originalValue": "Founder & Managing Director",
+      "value": "Founder & Director"
+    },
+    "section#about-section > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > h4:nth-of-type(1)": {
+      "selector": "section#about-section > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > h4:nth-of-type(1)",
+      "type": "text",
+      "originalValue": "Air-Conditioned Computer Lab",
+      "value": "Air-Conditioned  classroom "
+    },
+    "section#about-section > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > p:nth-of-type(1)": {
+      "selector": "section#about-section > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > p:nth-of-type(1)",
+      "type": "text",
+      "originalValue": "Individual PC workstations for DCA, ADCA, Python, and Tally Prime with GST.",
+      "value": "With peaceful students and best environment, culture, decipline, and many more facilities. "
+    },
+    "section#about-section > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(1)": {
+      "selector": "section#about-section > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(1)",
+      "type": "text",
+      "originalValue": "10+ Years of inspiring students under S. R. Anand & A.D. Rao's leadership",
+      "value": "6+ Years of inspiring students under S. R. Anand & A.D. Rao's leadership"
+    },
+    "section#contact-section > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > p:nth-of-type(1)": {
+      "selector": "section#contact-section > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > p:nth-of-type(1)",
+      "type": "text",
+      "originalValue": "+91 98765 43210",
+      "value": "+91 9369087032"
+    }
+  },
   sectionOrder: []
 };
 
@@ -278,7 +327,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [scrollSection, setScrollSection] = useState<string>('home');
   const [theme] = useState<'light'>('light');
   const [colorTheme, setColorTheme] = useState<ColorTheme>('cobalt');
-  const [isInitialLoading, setIsInitialLoading] = useState<boolean>(true);
+  const [isInitialLoading, setIsInitialLoading] = useState<boolean>(() => {
+    try {
+      return !localStorage.getItem('educa_website_settings');
+    } catch {
+      return false;
+    }
+  });
 
   useEffect(() => {
     localStorage.removeItem('lcc_theme');
@@ -324,6 +379,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           if (remote.visualOverrides) {
             merged.visualOverrides = { ...(prev.visualOverrides || {}), ...remote.visualOverrides };
           }
+          saveItem('educa_website_settings', merged);
           return merged;
         });
       }
@@ -338,6 +394,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         const validCourses = (res.data as Course[]).filter(c => c && c.id && c.title);
         if (validCourses.length > 0) {
           setCourses(validCourses);
+          saveItem('educa_courses_v3', validCourses);
         }
       }
     }).catch(() => {/* offline fallback */}).finally(() => {
@@ -348,9 +405,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return () => clearTimeout(timer);
   }, []);
 
-  const loadSaved = <T,>(key: string, fallback: T): T => fallback;
+  const loadSaved = <T,>(key: string, fallback: T): T => {
+    try {
+      const item = localStorage.getItem(key);
+      return item ? JSON.parse(item) : fallback;
+    } catch {
+      return fallback;
+    }
+  };
 
-  const saveItem = (_key: string, _data: any) => {};
+  const saveItem = (key: string, data: any) => {
+    try {
+      localStorage.setItem(key, JSON.stringify(data));
+    } catch {}
+  };
 
   const [courses, setCourses] = useState<Course[]>(() => {
     const deleted = Array.from(new Set([
@@ -384,9 +452,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (!saved.contactAddress) {
       saved.contactAddress = 'VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ';
     }
-    if (!saved.visualOverrides) {
-      saved.visualOverrides = {};
-    }
+    saved.visualOverrides = {
+      ...(INITIAL_SETTINGS.visualOverrides || {}),
+      ...(saved.visualOverrides || {})
+    };
     return saved;
   });
 
