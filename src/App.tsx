@@ -35,14 +35,18 @@ import { LiveVisualEditor, applyVisualOverrides, DEFAULT_SECTION_ORDER } from '.
 import { ToastContainer } from './components/Toast';
 
 const MainContent: React.FC = () => {
-  const { activeView, isAdminAuthenticated, theme, websiteSettings, notices, navigateTo } = useApp();
+  const { activeView, isAdminAuthenticated, theme, websiteSettings, notices, navigateTo, isInitialLoading } = useApp();
 
   // Apply visual overrides smoothly without heavy DOM tree MutationObserver
   React.useEffect(() => {
     const overrides = websiteSettings?.visualOverrides;
     if (!overrides || Object.keys(overrides).length === 0) return;
-    applyVisualOverrides(overrides);
-  }, [websiteSettings?.visualOverrides, activeView]);
+    // Small delay to ensure DOM is settled
+    const timer = setTimeout(() => {
+      applyVisualOverrides(overrides);
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [websiteSettings?.visualOverrides, activeView, isInitialLoading]);
 
   const sectionMap: Record<string, React.ReactNode> = {
     hero: <Hero key="hero" />,
@@ -69,6 +73,20 @@ const MainContent: React.FC = () => {
   const currentSectionOrder = (websiteSettings.sectionOrder && websiteSettings.sectionOrder.length > 0)
     ? websiteSettings.sectionOrder
     : DEFAULT_SECTION_ORDER;
+
+  if (isInitialLoading) {
+    return (
+      <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center space-y-4">
+        <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 p-0.5 shadow-xl shadow-blue-500/20 flex items-center justify-center animate-pulse">
+          <img src="/logo.jpg" alt="Educa" className="w-full h-full rounded-2xl object-cover" />
+        </div>
+        <div className="flex items-center gap-2 text-white/80 text-sm font-semibold tracking-wide">
+          <div className="w-2 h-2 rounded-full bg-blue-500 animate-ping" />
+          <span>Syncing with Educa Cloud...</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`min-h-screen flex flex-col justify-between transition-colors duration-200 ${

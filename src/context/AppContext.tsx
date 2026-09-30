@@ -152,6 +152,7 @@ export interface AppContextType {
   toasts: Toast[];
   showToast: (message: string, type?: 'success' | 'info' | 'error' | 'warning') => void;
   removeToast: (id: string) => void;
+  isInitialLoading: boolean;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -245,7 +246,7 @@ const INITIAL_SETTINGS: WebsiteSettings = {
   coFounderRole: 'Co-Founder',
   coFounderPhotoUrl: '/assets/founder.png',
   mapEmbedUrl: 'https://maps.google.com/maps?q=VIHAR+GALI+NO.+3+UTTHAN+ROAD+JHALWA+PRAYAGRAJ&t=&z=15&ie=UTF8&iwloc=&output=embed',
-  contactPhone: '+91 98765 43210',
+  contactPhone: '+91 9369087032',
   contactEmail: 'admissions@educa.com',
   contactAddress: 'VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ',
   emergencyAlertText: 'Admissions Open for Session 2026–2027 (WCNA & WCFM Programs)',
@@ -277,6 +278,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [scrollSection, setScrollSection] = useState<string>('home');
   const [theme] = useState<'light'>('light');
   const [colorTheme, setColorTheme] = useState<ColorTheme>('cobalt');
+  const [isInitialLoading, setIsInitialLoading] = useState<boolean>(true);
 
   useEffect(() => {
     localStorage.removeItem('lcc_theme');
@@ -300,38 +302,50 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // 🔑 Fetch settings & courses from MongoDB Atlas on startup so changes are SHARED across all devices & persist on refresh
   useEffect(() => {
+    let settingsDone = false;
+    let coursesDone = false;
+    const checkDone = () => {
+      if (settingsDone && coursesDone) {
+        setIsInitialLoading(false);
+      }
+    };
+
+    // Safety timeout: max 2.5s so user is never stuck
+    const timer = setTimeout(() => {
+      setIsInitialLoading(false);
+    }, 2500);
+
     // 1. Load settings from MongoDB Atlas
     api.settings.get().then(res => {
       if (res?.data) {
         const remote = res.data as Partial<WebsiteSettings>;
         setWebsiteSettings(prev => {
           const merged = { ...prev, ...remote };
-          // keep visualOverrides — merge remote overrides on top
           if (remote.visualOverrides) {
             merged.visualOverrides = { ...(prev.visualOverrides || {}), ...remote.visualOverrides };
-          }
-          saveItem('educa_website_settings', merged);
-          saveItem('lcc_website_settings', merged);
-          if (merged.visualOverrides) {
-            saveItem('educa_visual_overrides', merged.visualOverrides);
-            saveItem('lcc_visual_overrides', merged.visualOverrides);
           }
           return merged;
         });
       }
-    }).catch(() => {/* offline — use localStorage */});
+    }).catch(() => {/* offline fallback */}).finally(() => {
+      settingsDone = true;
+      checkDone();
+    });
 
-    // 2. Load courses from MongoDB Atlas (Single Source of Truth)
+    // 2. Load courses from MongoDB Atlas
     api.courses.get().then(res => {
       if (res?.data && Array.isArray(res.data) && res.data.length > 0) {
         const validCourses = (res.data as Course[]).filter(c => c && c.id && c.title);
         if (validCourses.length > 0) {
           setCourses(validCourses);
-          saveItem('educa_courses_v3', validCourses);
-          saveItem('lcc_courses', validCourses);
         }
       }
-    }).catch(() => {/* offline — use localStorage */});
+    }).catch(() => {/* offline fallback */}).finally(() => {
+      coursesDone = true;
+      checkDone();
+    });
+
+    return () => clearTimeout(timer);
   }, []);
 
   const loadSaved = <T,>(key: string, fallback: T): T => fallback;
@@ -1272,7 +1286,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         submitQuizScore,
         toasts,
         showToast,
-        removeToast
+        removeToast,
+        isInitialLoading
       }}
     >
       {children}
