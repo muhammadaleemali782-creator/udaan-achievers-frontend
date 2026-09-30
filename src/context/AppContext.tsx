@@ -506,60 +506,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     // Light mode enforced
   };
 
-  // Immediate Live Cloud Data Sync from MongoDB Atlas (Ensures instant updates across all devices)
-  useEffect(() => {
-    api.settings.get().then(res => {
-      if (res && res.data) {
-        setWebsiteSettings(prev => ({
-          ...prev,
-          ...res.data,
-          visualOverrides: res.data.visualOverrides || {}
-        }));
-      }
-    }).catch(() => {});
-
-    api.courses.get().then(res => {
-      if (res && res.data && res.data.length > 0) {
-        const sanitized = res.data.map(c => ({
-          ...c,
-          fee: Number(c.fee) > 10000000 ? 200000 : c.fee,
-          discountFee: Number(c.discountFee) > 10000000 ? 150000 : c.discountFee
-        }));
-        setCourses(sanitized);
-        saveItem('educa_courses_v3', sanitized);
-        saveItem('lcc_courses', sanitized);
-      }
-    }).catch(() => {});
-
-    api.notices.get().then(res => {
-      if (res && res.data && res.data.length > 0) {
-        setNotices(res.data);
-        saveItem('lcc_notices', res.data);
-      }
-    }).catch(() => {});
-
-    api.socials.get().then(res => {
-      if (res && res.data && res.data.length > 0) {
-        setSocialLinks(res.data);
-        saveItem('lcc_social_links', res.data);
-      }
-    }).catch(() => {});
-
-    api.media.getPDFs().then(res => {
-      if (res && res.data && res.data.length > 0) {
-        setStudyMaterials(res.data);
-        saveItem('educa_study_materials_v2', res.data);
-      }
-    }).catch(() => {});
-
-    api.media.getVideos().then(res => {
-      if (res && res.data && res.data.length > 0) {
-        setVideos(res.data);
-        saveItem('educa_videos_v2', res.data);
-        saveItem('lcc_videos', res.data);
-      }
-    }).catch(() => {});
-  }, []);
+  // ponytail: removed duplicate useEffect that fired 6 API calls (4 were 404-ing: notices, socials, media/pdfs, media/videos)
+  // Settings + courses already fetched in the startup useEffect above (lines 358-406)
 
   const navigateTo = (view: ActiveView, anchorId?: string) => {
     setActiveView(view);
