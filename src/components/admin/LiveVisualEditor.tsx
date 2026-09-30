@@ -463,27 +463,8 @@ export const applyVisualOverrides = (overrides?: Record<string, VisualOverrideIt
       } catch (e) {}
     }
 
-    // Fallback: match by originalValue if selector did not match
-    if (!targetEl && item.originalValue) {
-      if (item.type === 'image') {
-        const imgs = document.querySelectorAll('img');
-        for (const img of Array.from(imgs)) {
-          if (img.src === item.originalValue || img.getAttribute('src') === item.originalValue) {
-            targetEl = img;
-            break;
-          }
-        }
-      } else {
-        const elements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, span, a, button, li, div');
-        for (const el of Array.from(elements)) {
-          const htmlEl = el as HTMLElement;
-          if (htmlEl.innerText?.trim() === item.originalValue.trim()) {
-            targetEl = htmlEl;
-            break;
-          }
-        }
-      }
-    }
+    // ponytail: skipped O(n) fallback DOM scan — selector-based lookup is sufficient
+    // Re-enable if admin creates overrides with broken selectors
 
     if (targetEl) {
       if (item.isHidden || item.display === 'none') {
@@ -1237,7 +1218,7 @@ export const LiveVisualEditor: React.FC = () => {
       {/* Floating Visual Editor Dock (Bottom Right, Non-Intrusive) */}
       <div
         id="visual-editor-dock"
-        className="fixed bottom-20 sm:bottom-6 right-4 z-50 flex items-center gap-2 bg-slate-950/95 text-white p-2 sm:p-2.5 rounded-full border border-slate-700 shadow-2xl backdrop-blur-xl animate-in slide-in-from-bottom-5"
+        className="fixed bottom-20 sm:bottom-6 right-4 z-50 flex items-center gap-2 bg-slate-950 text-white p-2 sm:p-2.5 rounded-full border border-slate-700 shadow-2xl animate-in slide-in-from-bottom-5"
       >
         {/* Toggle Editor Switch */}
         <button
@@ -1252,7 +1233,7 @@ export const LiveVisualEditor: React.FC = () => {
           }}
           className={`px-3.5 py-1.5 rounded-full text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer ${
             isEditorActive
-              ? 'bg-amber-400 text-slate-950 shadow-md ring-2 ring-amber-300 animate-pulse'
+              ? 'bg-amber-400 text-slate-950 shadow-md ring-2 ring-amber-300'
               : 'bg-[#0066FF] text-white hover:bg-blue-600'
           }`}
         >
@@ -1311,7 +1292,7 @@ export const LiveVisualEditor: React.FC = () => {
                   : isSavingDock
                   ? 'bg-amber-400 text-slate-950 ring-2 ring-amber-300'
                   : hasUnsavedChanges
-                  ? 'bg-emerald-500 hover:bg-emerald-600 text-white animate-bounce ring-2 ring-emerald-400/60'
+                  ? 'bg-emerald-500 hover:bg-emerald-600 text-white ring-2 ring-emerald-400/60'
                   : 'bg-[#0066FF] hover:bg-blue-600 text-white hover:ring-2 hover:ring-blue-400'
               }`}
               title="Save All Changes Permanently to Database & Director Desk"
@@ -1639,7 +1620,7 @@ export const LiveVisualEditor: React.FC = () => {
               <div className="p-3.5 rounded-2xl border border-blue-500/30 bg-blue-950/20 space-y-2">
                 <div className="flex items-center justify-between">
                   <span className="flex items-center gap-1.5 text-xs font-black text-amber-400 uppercase tracking-wider">
-                    <Eye className="w-4 h-4 animate-pulse" /> Live Preview Box
+                    <Eye className="w-4 h-4" /> Live Preview Box
                   </span>
                   <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20">
                     ✓ Website pe real-time change ho raha hai

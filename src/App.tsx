@@ -31,7 +31,9 @@ import { StudentAuthModal } from './components/modals/StudentAuthModal';
 import { AdminAuthModal } from './components/modals/AdminAuthModal';
 import { StudentDashboard } from './components/student/StudentDashboard';
 import { AdminPanel } from './components/admin/AdminPanel';
-import { LiveVisualEditor, applyVisualOverrides, DEFAULT_SECTION_ORDER } from './components/admin/LiveVisualEditor';
+import { applyVisualOverrides, DEFAULT_SECTION_ORDER } from './components/admin/LiveVisualEditor';
+// ponytail: lazy-load the 84KB visual editor — only admins need it
+const LiveVisualEditor = React.lazy(() => import('./components/admin/LiveVisualEditor').then(m => ({ default: m.LiveVisualEditor })));
 import { ToastContainer } from './components/Toast';
 
 const MainContent: React.FC = () => {
@@ -245,7 +247,9 @@ const MainContent: React.FC = () => {
 
       {/* Admin On-Page Live Visual Editor with Time-Machine Undo/Redo & Reshuffle */}
       {isAdminAuthenticated && activeView !== 'admin-panel' && (
-        <LiveVisualEditor />
+        <React.Suspense fallback={null}>
+          <LiveVisualEditor />
+        </React.Suspense>
       )}
     </div>
   );
