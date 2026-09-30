@@ -261,7 +261,12 @@ export const Hero: React.FC = () => {
                         alt={directorName}
                         className={`w-full h-full object-cover object-top cursor-pointer transition-opacity duration-300 ${dirPhotoLoaded ? 'opacity-100' : 'opacity-0'}`}
                         onLoad={() => setDirPhotoLoaded(true)}
-                        onError={() => setDirPhotoLoaded(true)}
+                        onError={(e: any) => {
+                          setDirPhotoLoaded(true);
+                          if (e.target.src !== window.location.origin + '/assets/founder.png') {
+                            e.target.src = '/assets/founder.png';
+                          }
+                        }}
                       />
                     </div>
 

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { MapPin, Phone, Mail, Clock, MessageSquare, Send, Sparkles, CheckCircle2 } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, MessageSquare, Send, Sparkles, CheckCircle2, ExternalLink } from 'lucide-react';
 import { Youtube, Instagram } from './SocialIcons';
+import { getGoogleMapEmbedUrl, getGoogleMapAppUrl } from '../utils/mapUtils';
 
 export const ContactSection: React.FC = () => {
   const { showToast, websiteSettings, isAdminAuthenticated, updateWebsiteSettings } = useApp();
@@ -11,20 +12,20 @@ export const ContactSection: React.FC = () => {
   const [mapInput, setMapInput] = useState('');
 
   const director = websiteSettings?.directorName || websiteSettings?.founderName || 'S. R. Anand';
-  const phone = websiteSettings?.contactPhone || '+91 98765 43210';
+  const phone = websiteSettings?.contactPhone || '+91 9369087032';
   const email = websiteSettings?.contactEmail || 'admissions@educa.com';
   const address = websiteSettings?.contactAddress || 'VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ';
-  const mapSrc = websiteSettings?.mapEmbedUrl || `https://maps.google.com/maps?q=${encodeURIComponent(address)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+  const mapSrc = getGoogleMapEmbedUrl(websiteSettings?.mapEmbedUrl, address);
+  const mapAppUrl = getGoogleMapAppUrl(websiteSettings?.mapEmbedUrl, address);
 
   const handleSaveMap = async () => {
     let cleanUrl = mapInput.trim();
-    const match = cleanUrl.match(/src=["']([^"']+)["']/);
-    if (match) cleanUrl = match[1];
     if (!cleanUrl) {
       showToast('Please enter a valid Google Maps link or embed code.', 'warning');
       return;
     }
-    await updateWebsiteSettings({ ...websiteSettings, mapEmbedUrl: cleanUrl });
+    const resolvedEmbed = getGoogleMapEmbedUrl(cleanUrl, address);
+    await updateWebsiteSettings({ ...websiteSettings, mapEmbedUrl: resolvedEmbed });
     showToast('Google Map location updated successfully!', 'success');
     setEditMap(false);
   };
@@ -175,13 +176,22 @@ export const ContactSection: React.FC = () => {
                 </div>
               )}
 
-              <div className="h-64 sm:h-72 rounded-3xl overflow-hidden border border-slate-200 shadow-card-clean bg-slate-100">
+              <div className="h-64 sm:h-72 rounded-3xl overflow-hidden border border-slate-200 shadow-card-clean bg-slate-100 relative">
                 <iframe
                   title="Campus Location Map"
                   src={mapSrc}
                   className="w-full h-full border-0"
                   loading="lazy"
                 />
+                <a
+                  href={mapAppUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute bottom-3 right-3 px-3 py-1.5 rounded-xl bg-white/95 hover:bg-white text-slate-800 text-[11px] font-bold shadow-md border border-slate-200 backdrop-blur-xs flex items-center gap-1.5 transition-all"
+                >
+                  <ExternalLink className="w-3 h-3 text-[#0066FF]" />
+                  <span>Open in Maps</span>
+                </a>
               </div>
             </div>
 

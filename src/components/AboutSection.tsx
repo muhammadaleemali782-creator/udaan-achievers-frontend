@@ -93,7 +93,12 @@ export const AboutSection: React.FC = () => {
                       alt={`${director} - Founder & Director`}
                       className={`w-full h-full object-cover object-top hover:scale-105 transition-all duration-300 cursor-pointer ${aboutPhotoLoaded ? 'opacity-100' : 'opacity-0'}`}
                       onLoad={() => setAboutPhotoLoaded(true)}
-                      onError={() => setAboutPhotoLoaded(true)}
+                      onError={(e: any) => {
+                        setAboutPhotoLoaded(true);
+                        if (e.target.src !== window.location.origin + '/assets/founder.png') {
+                          e.target.src = '/assets/founder.png';
+                        }
+                      }}
                     />
                   </div>
                   <div className="absolute -bottom-2 -right-2 p-1.5 rounded-xl bg-[#0066FF] text-white shadow-md">
@@ -174,7 +179,12 @@ export const AboutSection: React.FC = () => {
                       alt={`${coFounder} - ${coFounderRole}`}
                       className={`w-full h-full object-cover object-top hover:scale-105 transition-all duration-300 cursor-pointer ${coPhotoLoaded ? 'opacity-100' : 'opacity-0'}`}
                       onLoad={() => setCoPhotoLoaded(true)}
-                      onError={() => setCoPhotoLoaded(true)}
+                      onError={(e: any) => {
+                        setCoPhotoLoaded(true);
+                        if (e.target.src !== window.location.origin + '/assets/founder.png') {
+                          e.target.src = '/assets/founder.png';
+                        }
+                      }}
                     />
                   </div>
                   <div className="absolute -bottom-1 -right-1 p-1 rounded-lg bg-indigo-600 text-white shadow-xs">
