@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo, useCallback } from 'react';
 import {
   Course,
   StudyMaterial,
@@ -492,15 +492,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   const [toasts, setToasts] = useState<Toast[]>([]);
 
-  const showToast = (message: string, type: 'success' | 'info' | 'error' | 'warning' = 'info') => {
+  const removeToast = useCallback((id: string) => {
+    setToasts(prev => prev.filter(t => t.id !== id));
+  }, []);
+
+  const showToast = useCallback((message: string, type: 'success' | 'info' | 'error' | 'warning' = 'info') => {
     const id = Date.now().toString() + Math.random().toString();
     setToasts(prev => [...prev, { id, type, message }]);
-    setTimeout(() => removeToast(id), 4000);
-  };
-
-  const removeToast = (id: string) => {
-    setToasts(prev => prev.filter(t => t.id !== id));
-  };
+    setTimeout(() => setToasts(p => p.filter(t => t.id !== id)), 4000);
+  }, []);
 
   const toggleTheme = () => {
     // Light mode enforced
@@ -1216,97 +1216,107 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     showToast(`Quiz completed! You scored ${score}%`, 'success');
   };
 
+  // ponytail: memoize context value — prevents all 43 consumers from re-rendering on every provider render
+  const contextValue = useMemo(() => ({
+    activeView,
+    setActiveView,
+    navigateTo,
+    scrollSection,
+    theme,
+    toggleTheme,
+    colorTheme,
+    setColorTheme,
+    courses,
+    setCourses,
+    studyMaterials,
+    setStudyMaterials,
+    syllabuses,
+    setSyllabuses,
+    notices,
+    setNotices,
+    videos,
+    setVideos,
+    instagramPosts,
+    setInstagramPosts,
+    galleryItems,
+    setGalleryItems,
+    students,
+    setStudents,
+    transactions,
+    inquiries,
+    setInquiries,
+    mockTests,
+    ads,
+    reviews,
+    socialLinks,
+    websiteSettings,
+    selectedCourseForPayment,
+    setSelectedCourseForPayment,
+    selectedDocForPreview,
+    setSelectedDocForPreview,
+    selectedVideoForPlayer,
+    setSelectedVideoForPlayer,
+    isStudentAuthModalOpen,
+    setIsStudentAuthModalOpen,
+    isAdminAuthModalOpen,
+    setIsAdminAuthModalOpen,
+    currentStudent,
+    isAdminAuthenticated,
+    loginStudent,
+    registerStudent,
+    logoutStudent,
+    loginAdmin,
+    logoutAdmin,
+    enrollInCourse,
+    startEnrollment,
+    submitAdmissionInquiry,
+    addAd,
+    updateAd,
+    toggleAd,
+    deleteAd,
+    trackAdClick,
+    addReviewLocally,
+    moderateReview,
+    deleteReview,
+    updateSocialLink,
+    updateWebsiteSettings,
+    toggleUserStatus,
+    adminResetPassword,
+    updateStudentPassword,
+    refreshUsers,
+    addCourse,
+    updateCourse,
+    deleteCourse,
+    addStudyMaterial,
+    deleteStudyMaterial,
+    addNotice,
+    deleteNotice,
+    addVideoLecture,
+    updateVideoLecture,
+    toggleVideoLecture,
+    deleteVideoLecture,
+    addGalleryItem,
+    updateGalleryItem,
+    deleteGalleryItem,
+    updateStudentProgress,
+    submitQuizScore,
+    toasts,
+    showToast,
+    removeToast,
+    isInitialLoading
+  }), [
+    activeView, scrollSection, theme, colorTheme,
+    courses, studyMaterials, syllabuses, notices, videos,
+    instagramPosts, galleryItems, students, transactions,
+    inquiries, mockTests, ads, reviews, socialLinks,
+    websiteSettings, selectedCourseForPayment, selectedDocForPreview,
+    selectedVideoForPlayer, isStudentAuthModalOpen, isAdminAuthModalOpen,
+    currentStudent, isAdminAuthenticated, toasts, isInitialLoading,
+    showToast, removeToast
+  ]);
+
   return (
-    <AppContext.Provider
-      value={{
-        activeView,
-        setActiveView,
-        navigateTo,
-        scrollSection,
-        theme,
-        toggleTheme,
-        colorTheme,
-        setColorTheme,
-        courses,
-        setCourses,
-        studyMaterials,
-        setStudyMaterials,
-        syllabuses,
-        setSyllabuses,
-        notices,
-        setNotices,
-        videos,
-        setVideos,
-        instagramPosts,
-        setInstagramPosts,
-        galleryItems,
-        setGalleryItems,
-        students,
-        setStudents,
-        transactions,
-        inquiries,
-        setInquiries,
-        mockTests,
-        ads,
-        reviews,
-        socialLinks,
-        websiteSettings,
-        selectedCourseForPayment,
-        setSelectedCourseForPayment,
-        selectedDocForPreview,
-        setSelectedDocForPreview,
-        selectedVideoForPlayer,
-        setSelectedVideoForPlayer,
-        isStudentAuthModalOpen,
-        setIsStudentAuthModalOpen,
-        isAdminAuthModalOpen,
-        setIsAdminAuthModalOpen,
-        currentStudent,
-        isAdminAuthenticated,
-        loginStudent,
-        registerStudent,
-        logoutStudent,
-        loginAdmin,
-        logoutAdmin,
-        enrollInCourse,
-        startEnrollment,
-        submitAdmissionInquiry,
-        addAd,
-        updateAd,
-        toggleAd,
-        deleteAd,
-        trackAdClick,
-        addReviewLocally,
-        moderateReview,
-        deleteReview,
-        updateSocialLink,
-        updateWebsiteSettings,
-        toggleUserStatus,
-        adminResetPassword,
-        updateStudentPassword,
-        refreshUsers,
-        addCourse,
-        updateCourse,
-        deleteCourse,
-        addStudyMaterial,
-        deleteStudyMaterial,
-        addNotice,
-        deleteNotice,
-        addVideoLecture,
-        updateVideoLecture,
-        toggleVideoLecture,
-        deleteVideoLecture,
-        addGalleryItem,
-        updateGalleryItem,
-        deleteGalleryItem,
-        updateStudentProgress,
-        submitQuizScore,
-        toasts,
-        showToast,
-        removeToast,
-        isInitialLoading
-      }}
-    >
+    <AppContext.Provider value={contextValue}>
       {children}
     </AppContext.Provider>
   );
