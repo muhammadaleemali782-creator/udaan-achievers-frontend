@@ -240,7 +240,7 @@ export const AboutSection: React.FC = () => {
                   <span className="px-2.5 py-0.5 rounded-full bg-indigo-600 text-white font-black text-[9px] uppercase tracking-wider">
                     {coFounderRole.toUpperCase()}
                   </span>
-                  <h3 className="text-xl sm:text-2xl font-black text-slate-900 cursor-pointer">{coFounder}</h3>
+                  <h3 id="about-cofounder-name" className="text-xl sm:text-2xl font-black text-slate-900 cursor-pointer">{coFounder}</h3>
                   <p className="text-xs text-indigo-600 font-bold">
                     {coFounderRole} & Operations • {institute}
                   </p>
@@ -255,7 +255,7 @@ export const AboutSection: React.FC = () => {
             {/* Quick Stats Grid */}
             <div className="grid grid-cols-3 gap-2.5 pt-1 text-center">
               <div className="p-3 rounded-2xl bg-white border border-slate-200/80 shadow-xs">
-                <span className="text-lg sm:text-xl font-black text-[#0066FF] block">10+</span>
+                <span className="text-lg sm:text-xl font-black text-[#0066FF] block">6+</span>
                 <span className="text-[10px] text-slate-500 font-bold">Years Mentorship</span>
               </div>
               <div className="p-3 rounded-2xl bg-white border border-slate-200/80 shadow-xs">
@@ -285,7 +285,7 @@ export const AboutSection: React.FC = () => {
             <div className="space-y-2.5">
               {[
                 { title: 'Personalized 1-on-1 Attention', desc: 'Small batch sizes (15–25 students) so every question is heard and resolved.' },
-                { title: 'Air-Conditioned Computer Lab', desc: 'Individual PC workstations for DCA, ADCA, Python, and Tally Prime with GST.' },
+                { title: 'Air-Conditioned  classroom ', desc: 'With peaceful students and best environment, culture, decipline, and many more facilities. ' },
                 { title: 'Complete Chapter Vault & DPPs', desc: 'Point-wise solved notes, worksheets, and 10-year past papers for top scores.' }
               ].map((item, idx) => (
                 <div key={idx} className="p-3.5 rounded-2xl bg-[#F8FAFC] border border-slate-200/80 flex items-start gap-3">
@@ -312,7 +312,7 @@ export const AboutSection: React.FC = () => {
               <span>MILESTONES & PROVEN RECORD</span>
             </div>
             <h3 className="text-2xl sm:text-3xl font-black text-slate-900">Our Journey of Excellence</h3>
-            <p className="text-xs sm:text-sm text-slate-500 font-medium">10+ Years of inspiring students under {director} & {coFounder}'s leadership</p>
+            <p className="text-xs sm:text-sm text-slate-500 font-medium">6+ Years of inspiring students under {director} & {coFounder}'s leadership</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">

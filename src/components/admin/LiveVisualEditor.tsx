@@ -962,21 +962,15 @@ export const LiveVisualEditor: React.FC = () => {
       if (
         elId === 'hero-director-name' ||
         elId === 'about-director-name' ||
-        orig === websiteSettings.directorName?.trim() ||
-        orig === websiteSettings.founderName?.trim() ||
-        orig.includes(websiteSettings.directorName?.trim() || '') ||
-        clickedTarget.friendlyName.toLowerCase().includes('founder') ||
-        clickedTarget.friendlyName.toLowerCase().includes('director') ||
-        clickedTarget.elementRef?.closest('#about-director-card')
+        (orig === (websiteSettings.directorName || '').trim() && val.length < 50) ||
+        (orig === (websiteSettings.founderName || '').trim() && val.length < 50)
       ) {
         updatedSettings.directorName = val;
         updatedSettings.founderName = val;
       }
       if (
-        orig === websiteSettings.coFounderName?.trim() ||
-        orig.includes(websiteSettings.coFounderName?.trim() || '') ||
-        clickedTarget.friendlyName.toLowerCase().includes('co-founder') ||
-        clickedTarget.friendlyName.toLowerCase().includes('cofounder')
+        (orig === (websiteSettings.coFounderName || '').trim() && val.length < 50) ||
+        elId === 'about-cofounder-name'
       ) {
         updatedSettings.coFounderName = val;
       }
