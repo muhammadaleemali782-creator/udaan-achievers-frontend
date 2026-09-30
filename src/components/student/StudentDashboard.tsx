@@ -92,7 +92,7 @@ export const StudentDashboard: React.FC = () => {
     discountFee: 2999,
     rating: 5,
     enrolledCount: 150,
-    instructor: 'Director Dr. R. K. Sharma',
+    instructor: 'Founder & Director S. R. Anand',
     image: '/logo.jpg',
     badge: 'Premier',
     features: ['Daily Live Classes', 'Notes PDF Vault', 'Weekly Tests'],
@@ -545,7 +545,7 @@ export const StudentDashboard: React.FC = () => {
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-xl font-black text-slate-900">Verified Academic Completion Certificate</h3>
-                <p className="text-xs text-slate-500 font-medium">Official verified credential issued by Director Dr. R. K. Sharma.</p>
+                <p className="text-xs text-slate-500 font-medium">Official verified credential issued by Founder & Director S. R. Anand.</p>
               </div>
               <button
                 onClick={handlePrintCertificate}
@@ -560,11 +560,11 @@ export const StudentDashboard: React.FC = () => {
             <div className="bg-white rounded-3xl p-8 sm:p-14 border-8 border-double border-[#0066FF] shadow-2xl text-center space-y-6 relative max-w-3xl mx-auto">
               <div className="flex items-center justify-center gap-3">
                 <div className="w-12 h-12 rounded-2xl bg-[#0066FF] text-white flex items-center justify-center font-black text-xl shadow-md">
-                  Educa Institute
+                  Educa
                 </div>
                 <div>
-                  <h2 className="text-2xl font-black text-slate-900 tracking-tight">LAKSHYA CAREER CLASSES</h2>
-                  <span className="text-xs text-slate-500 uppercase tracking-widest font-bold block">Premier Institute & Computer Institute</span>
+                  <h2 className="text-2xl font-black text-slate-900 tracking-tight">EDUCA INSTITUTE OF CONSULTANCY</h2>
+                  <span className="text-xs text-slate-500 uppercase tracking-widest font-bold block">Premier Naturopathy, Ayurveda & Wealth Institute</span>
                 </div>
               </div>
 
@@ -582,8 +582,8 @@ export const StudentDashboard: React.FC = () => {
                   <span className="font-bold">Verified Date: August 2026</span>
                 </div>
                 <div className="text-right">
-                  <span className="font-serif italic font-bold text-base text-slate-900 block">Dr. R. K. Sharma</span>
-                  <span className="font-bold text-[11px] text-slate-500">Director, Educa Institute of Consultancy</span>
+                  <span className="font-serif italic font-bold text-base text-slate-900 block">S. R. Anand</span>
+                  <span className="font-bold text-[11px] text-slate-500">Founder & Director, Educa Institute of Consultancy</span>
                 </div>
               </div>
             </div>

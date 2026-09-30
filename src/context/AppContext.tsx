@@ -185,7 +185,7 @@ const INITIAL_ADS: Advertisement[] = [
   {
     id: 'ad-feed-1',
     title: '🩺 Ayurvedic Pulse Diagnosis (Nadi Pariksha) Hands-on Practicals',
-    description: 'Master clinical pulse reading, Dosha assessment, and herbal therapy under Dr. R. K. Sharma.',
+    description: 'Master clinical pulse reading, Dosha assessment, and herbal therapy under S. R. Anand.',
     imageUrl: 'https://images.unsplash.com/photo-1512290900672-1f41334ecf97?w=800&auto=format&fit=crop&q=80',
     destinationUrl: '#courses-section',
     placement: 'between_sections',
@@ -202,7 +202,7 @@ const INITIAL_REVIEWS: Review[] = [
     studentName: 'Dr. Sneha Kulkarni',
     studentClass: 'Certified Naturopath & Wellness Consultant (WCNA Batch)',
     rating: 5,
-    comment: 'Dr. Sharma’s pulse diagnosis clinics and hands-on panchakarma training gave me the exact clinical confidence required to establish my private wellness consultancy practice.',
+    comment: 'S. R. Anand’s pulse diagnosis clinics and hands-on panchakarma training gave me the exact clinical confidence required to establish my private wellness consultancy practice.',
     status: 'approved',
     date: '2026-08-14'
   },
@@ -379,6 +379,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           if (remote.visualOverrides) {
             merged.visualOverrides = { ...(prev.visualOverrides || {}), ...remote.visualOverrides };
           }
+          // ponytail: director name is permanent — never let MongoDB override it
+          merged.directorName = 'S. R. Anand';
+          merged.founderName = 'S. R. Anand';
+          merged.coFounderName = 'A.D. Rao';
           saveItem('educa_website_settings', merged);
           return merged;
         });

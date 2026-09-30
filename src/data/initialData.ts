@@ -11,7 +11,7 @@ export const INITIAL_COURSES: Course[] = [
     discountFee: 18500,
     rating: 4.9,
     enrolledCount: 142,
-    instructor: 'Dr. R. K. Sharma (Dean, BAMS, MD Naturopathy)',
+    instructor: 'S. R. Anand (Founder & Director, BAMS, MD Naturopathy)',
     image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&auto=format&fit=crop&q=80',
     badge: 'Flagship Wellness',
     features: [
@@ -296,7 +296,7 @@ export const INITIAL_NOTICES: Notice[] = [
     title: 'Practical Pulse Diagnosis & Clinical Naturopathy Workshop on Sunday',
     date: '2026-08-18',
     category: 'exam',
-    description: 'A special hands-on practical session led by Dean Dr. R. K. Sharma covering Nadi Pariksha and therapeutic herbal preparation at the Varanasi Campus & Online Live Stream.',
+    description: 'A special hands-on practical session led by Founder & Director S. R. Anand covering Nadi Pariksha and therapeutic herbal preparation at the Varanasi Campus & Online Live Stream.',
     isImportant: true,
     badgeText: 'WORKSHOP ALERT'
   },
@@ -314,14 +314,14 @@ export const INITIAL_NOTICES: Notice[] = [
 export const INITIAL_VIDEOS: VideoLecture[] = [
   {
     id: 'vid-1',
-    title: 'Pulse Diagnosis & Tridosha Assessment Masterclass | Dr. R. K. Sharma',
+    title: 'Pulse Diagnosis & Tridosha Assessment Masterclass | S. R. Anand',
     subject: 'Wellness Consultancy (WCNA)',
     targetClass: 'WCNA Scholars',
     duration: '48:30',
     youtubeId: 'kJQP7kiw5Fk',
     youtubeUrl: 'https://www.youtube.com/watch?v=kJQP7kiw5Fk',
     thumbnail: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&auto=format&fit=crop&q=80',
-    instructor: 'Dr. R. K. Sharma',
+    instructor: 'S. R. Anand',
     views: '18.4K views',
     isFeatured: true,
     notesPdfUrl: '#'
@@ -355,7 +355,7 @@ export const INITIAL_INSTAGRAM_POSTS: InstagramPost[] = [
   },
   {
     id: 'insta-2',
-    title: 'Live pulse diagnosis clinical practicals at the Ayurveda & Naturopathy center with Dean Dr. Sharma 🌿🩺',
+    title: 'Live pulse diagnosis clinical practicals at the Ayurveda & Naturopathy center with Director S. R. Anand 🌿🩺',
     likes: '4,120',
     comments: '240',
     imageUrl: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&auto=format&fit=crop&q=80',

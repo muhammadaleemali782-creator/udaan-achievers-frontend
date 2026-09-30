@@ -47,7 +47,7 @@ export const PaymentModal: React.FC = () => {
   // Guard: Mandatory Student Login
   if (!currentStudent) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-200">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 animate-in fade-in duration-200">
         <div className="relative w-full max-w-md bg-white rounded-3xl p-6 text-center space-y-4 shadow-2xl border border-slate-200">
           <div className="w-14 h-14 rounded-2xl bg-blue-50 text-[#0066FF] flex items-center justify-center mx-auto">
             <Lock className="w-7 h-7" />
@@ -330,7 +330,7 @@ export const PaymentModal: React.FC = () => {
   const activePlaylistUrl = unlockedAccess?.playlistUrl || fallbackPlaylist;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/75 animate-in fade-in duration-200">
       <div className="relative w-full max-w-lg bg-white rounded-3xl border border-slate-200/90 shadow-2xl overflow-hidden flex flex-col max-h-[94vh] overflow-y-auto animate-in zoom-in-95 duration-150 font-sans">
         
         {/* Encrypted Secure Header */}
@@ -451,14 +451,14 @@ export const PaymentModal: React.FC = () => {
                 <h4 className="text-xs sm:text-sm font-black text-slate-900 truncate mt-0.5">
                   {selectedCourseForPayment.title}
                 </h4>
-                <p className="text-[10px] text-slate-500 font-medium">Instructor: Director Dr. R. K. Sharma & Faculty</p>
+                <p className="text-[10px] text-slate-500 font-medium">Instructor: Founder & Director S. R. Anand & Faculty</p>
               </div>
               <div className="text-right shrink-0">
                 <span className="text-lg sm:text-xl font-black text-[#0066FF]">
-                  ₹{selectedCourseForPayment.discountFee}
+                  ₹{Number(selectedCourseForPayment.discountFee || 0).toLocaleString('en-IN')}
                 </span>
                 <span className="text-[10px] text-slate-400 block line-through">
-                  ₹{selectedCourseForPayment.fee}
+                  ₹{Number(selectedCourseForPayment.fee || 0).toLocaleString('en-IN')}
                 </span>
               </div>
             </div>
@@ -586,7 +586,7 @@ export const PaymentModal: React.FC = () => {
                     {cleanPhone && (
                       <a
                         href={`https://wa.me/91${cleanPhone}?text=${encodeURIComponent(
-                          `Hello Director Dr. R. K. Sharma Sir, I want to enroll in "${selectedCourseForPayment.title}" (Fee: ₹${selectedCourseForPayment.discountFee}). My Name: ${currentStudent.name}, Mobile: ${currentStudent.phone}. Please activate my admission.`
+                          `Hello Founder & Director S. R. Anand Sir, I want to enroll in "${selectedCourseForPayment.title}" (Fee: ₹${Number(selectedCourseForPayment.discountFee || 0).toLocaleString('en-IN')}). My Name: ${currentStudent.name}, Mobile: ${currentStudent.phone}. Please activate my admission.`
                         )}`}
                         target="_blank"
                         rel="noopener noreferrer"

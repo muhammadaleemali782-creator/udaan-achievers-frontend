@@ -208,7 +208,7 @@ export const WebsiteSettings: React.FC = () => {
                 label="About Section Director Profile Photo (File Upload or URL)"
                 value={form.aboutDirectorPhotoUrl || form.directorPhotoUrl}
                 onChange={url => setForm({ ...form, aboutDirectorPhotoUrl: url })}
-                placeholder="Upload About Section Dr. R. K. Sharma photo or paste URL..."
+                placeholder="Upload About Section S. R. Anand photo or paste URL..."
               />
             </div>
 

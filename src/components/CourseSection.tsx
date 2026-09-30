@@ -36,7 +36,7 @@ export const CourseSection: React.FC = () => {
     duration: '6 Months Certification',
     fee: 25000,
     discountFee: 18500,
-    instructor: 'Dr. R. K. Sharma',
+    instructor: 'S. R. Anand',
     image: '/assets/debate.jpg',
     badge: 'New Program',
     description: '',
@@ -92,7 +92,7 @@ export const CourseSection: React.FC = () => {
             <span className="text-[#0066FF]">for growth</span>
           </h2>
           <p className="text-slate-600 text-xs sm:text-base leading-relaxed font-medium max-w-2xl mx-auto">
-            Join Educa Institute of Consultancy for industry-leading certifications in Wellness Consultancy (WCNA) and Wealth Consultancy (WCFM) led by Dr. R. K. Sharma and certified corporate advisors.
+            Join Educa Institute of Consultancy for industry-leading certifications in Wellness Consultancy (WCNA) and Wealth Consultancy (WCFM) led by S. R. Anand and certified corporate advisors.
           </p>
 
           {/* Quick Action Buttons */}
@@ -223,7 +223,7 @@ export const CourseSection: React.FC = () => {
               🏆 99.2% Professional Certification Success
             </span>
             <span className="flex items-center gap-2 bg-white px-3 py-1 rounded-full border border-slate-200 shrink-0 shadow-2xs">
-              👨‍🏫 Dean: Dr. R. K. Sharma
+              👨‍🏫 Founder & Director: S. R. Anand
             </span>
             {/* Loop Duplicate for Seamless Marquee */}
             <span className="flex items-center gap-2 bg-white px-3 py-1 rounded-full border border-slate-200 shrink-0 shadow-2xs">
@@ -239,7 +239,7 @@ export const CourseSection: React.FC = () => {
               🏆 99.2% Professional Certification Success
             </span>
             <span className="flex items-center gap-2 bg-white px-3 py-1 rounded-full border border-slate-200 shrink-0 shadow-2xs">
-              👨‍🏫 Dean: Dr. R. K. Sharma
+              👨‍🏫 Founder & Director: S. R. Anand
             </span>
           </div>
         </div>
@@ -328,20 +328,30 @@ export const CourseSection: React.FC = () => {
 
                 {/* Bottom Enroll & Details */}
                 <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
-                  <div>
+                  <div className="flex flex-col">
                     <span
-                      data-course-id={course.id}
                       data-course-field="fee"
-                      className="text-[10px] text-slate-400 block line-through cursor-pointer hover:text-amber-400 transition-colors"
-                      title="Click to edit original fee"
+                      onClick={(e) => {
+                        if (isAdminAuthenticated) {
+                          e.stopPropagation();
+                          setEditingCourse({ ...course });
+                        }
+                      }}
+                      className="text-[11px] sm:text-xs text-slate-400 block line-through cursor-pointer hover:text-amber-500 py-0.5 px-1 rounded transition-colors font-medium select-none"
+                      title={isAdminAuthenticated ? "Click to edit original fee" : undefined}
                     >
                       ₹{Number(course.fee || 200000).toLocaleString('en-IN')}
                     </span>
                     <span
-                      data-course-id={course.id}
                       data-course-field="discountFee"
-                      className="text-sm sm:text-base font-black text-slate-900 dark:text-white cursor-pointer hover:text-[#0066FF] transition-colors"
-                      title="Click to edit discount fee"
+                      onClick={(e) => {
+                        if (isAdminAuthenticated) {
+                          e.stopPropagation();
+                          setEditingCourse({ ...course });
+                        }
+                      }}
+                      className="text-base sm:text-lg font-black text-slate-900 dark:text-white cursor-pointer hover:text-[#0066FF] py-0.5 px-1 rounded transition-colors select-none"
+                      title={isAdminAuthenticated ? "Click to edit offer price" : undefined}
                     >
                       ₹{Number(course.discountFee || 150000).toLocaleString('en-IN')}
                     </span>

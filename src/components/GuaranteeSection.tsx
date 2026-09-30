@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { useApp } from '../context/AppContext';
 import { ShieldCheck, Award, HeartHandshake, CheckCircle2, ArrowRight, Sparkles } from 'lucide-react';
 
@@ -106,7 +106,7 @@ export const GuaranteeSection: React.FC = () => {
           </h3>
 
           <p className="text-slate-600 text-xs sm:text-base leading-relaxed font-medium max-w-2xl mx-auto">
-            Under the direct guidance of <strong className="text-slate-900 font-extrabold">Dr. R. K. Sharma</strong>, we assure complete conceptual clarity, dedicated 1:1 doubt clinics, and rigorous practice tests for guaranteed score elevation.
+            Under the direct guidance of <strong className="text-slate-900 font-extrabold">Founder & Director S. R. Anand</strong>, we assure complete conceptual clarity, dedicated 1:1 doubt clinics, and rigorous practice tests for guaranteed score elevation.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left pt-2">
@@ -132,12 +132,12 @@ export const GuaranteeSection: React.FC = () => {
               <ArrowRight className="w-4 h-4" />
             </button>
             <a
-              href="https://wa.me/919876543210"
+              href="https://wa.me/919369087032"
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 font-bold text-xs uppercase tracking-wider text-center transition-colors"
             >
-              Talk to Dr. Sharma
+              Talk to S. R. Anand
             </a>
           </div>
 

@@ -23,7 +23,7 @@ export const YouTubeManager: React.FC = () => {
     duration: '15:00',
     subject: 'Mathematics',
     targetClass: 'Class 10',
-    instructor: 'Dr. R. K. Sharma'
+    instructor: 'S. R. Anand'
   });
 
   const detectPlatform = (url: string, current: VideoPlatform): VideoPlatform => {
@@ -96,7 +96,7 @@ export const YouTubeManager: React.FC = () => {
       duration: '15:00',
       subject: 'Mathematics',
       targetClass: 'Class 10',
-      instructor: 'Dr. R. K. Sharma'
+      instructor: 'S. R. Anand'
     });
     showToast(`${newVideo.platform.toUpperCase()} video lecture published!`, 'success');
   };

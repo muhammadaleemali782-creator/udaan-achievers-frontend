@@ -51,7 +51,7 @@ export const DEFAULT_SECTION_ORDER = [
 
 export const SECTION_LABELS: Record<string, string> = {
   hero: 'Photo Slider & Quick Links Portal (Top)',
-  about: 'About Institute & Director Dr. R. K. Sharma Card',
+  about: 'About Institute & Director S. R. Anand Card',
   methodology: 'Mission & Pedagogy (What We Do)',
   ad_top: 'Top Offer Banner',
   courses: 'Consultancy & Certification Courses Grid',
@@ -259,7 +259,7 @@ export const getElementFriendlyInfo = (el: HTMLElement): { name: string; subtitl
         friendlyName = 'Institute Brand Logo';
         friendlySub = 'Official Educa Logo';
       } else if (img.closest('#hero-leadership-box') || img.closest('#about-director-card')) {
-        friendlyName = 'Director Dr. R. K. Sharma Photo';
+        friendlyName = 'Director S. R. Anand Photo';
         friendlySub = 'Leadership Spotlight Photo';
       } else if (img.closest('#hero-slider-box') || img.hasAttribute('data-hero-slider-img')) {
         friendlyName = 'Main Hero Photo Slider';
@@ -403,7 +403,7 @@ export const getElementFriendlyInfo = (el: HTMLElement): { name: string; subtitl
   if (leadership && (el === leadership || el.id === 'hero-leadership-box')) {
     return {
       name: 'Director & Leadership Spotlight Card',
-      subtitle: 'Dr. R. K. Sharma Director Showcase Card',
+      subtitle: 'S. R. Anand Director Showcase Card',
       targetEl: leadership
     };
   }
@@ -482,8 +482,22 @@ export const applyVisualOverrides = (overrides?: Record<string, VisualOverrideIt
       } else if (item.value) {
         // SAFETY GUARD: Never wipe out container elements that have child elements (e.g. cards, buttons, sections)
         if (targetEl.children.length === 0) {
-          if (targetEl.innerText !== item.value) {
-            targetEl.innerText = item.value;
+          let textVal = item.value;
+          // Auto-format Indian currency/numbers if it looks like price/fee or contains ₹
+          const isPriceOrFee = targetEl.getAttribute('data-course-field') === 'fee' ||
+                               targetEl.getAttribute('data-course-field') === 'discountFee' ||
+                               targetEl.classList.contains('line-through') ||
+                               textVal.includes('₹') ||
+                               /^\d{4,}$/.test(textVal.trim());
+          if (isPriceOrFee) {
+            const rawDigits = textVal.replace(/[^\d]/g, '');
+            if (rawDigits && !isNaN(Number(rawDigits))) {
+              const formatted = Number(rawDigits).toLocaleString('en-IN');
+              textVal = textVal.includes('₹') ? `₹${formatted}` : (targetEl.getAttribute('data-course-field') ? `₹${formatted}` : formatted);
+            }
+          }
+          if (targetEl.innerText !== textVal) {
+            targetEl.innerText = textVal;
           }
         }
       }
@@ -902,7 +916,23 @@ export const LiveVisualEditor: React.FC = () => {
         clickedTarget.elementRef.style.backgroundImage = `url("${clickedTarget.newValue}")`;
       }
     } else if (clickedTarget.type === 'text' && clickedTarget.newValue) {
-      clickedTarget.elementRef.innerText = clickedTarget.newValue;
+      let finalVal = clickedTarget.newValue;
+      const isFee = clickedTarget.friendlyName.includes('Fee') || 
+                    clickedTarget.friendlyName.includes('Price') || 
+                    clickedTarget.elementRef.getAttribute('data-course-field') === 'fee' || 
+                    clickedTarget.elementRef.getAttribute('data-course-field') === 'discountFee' || 
+                    clickedTarget.elementRef.classList.contains('line-through') || 
+                    finalVal.includes('₹') || 
+                    /^\d{4,}$/.test(finalVal.trim());
+      if (isFee) {
+        const rawDigits = finalVal.replace(/[^\d]/g, '');
+        if (rawDigits && !isNaN(Number(rawDigits))) {
+          const formatted = Number(rawDigits).toLocaleString('en-IN');
+          finalVal = finalVal.includes('₹') ? `₹${formatted}` : (clickedTarget.friendlyName.includes('Fee') || clickedTarget.friendlyName.includes('Price') || clickedTarget.elementRef.getAttribute('data-course-field') ? `₹${formatted}` : formatted);
+        }
+      }
+      clickedTarget.elementRef.innerText = finalVal;
+      clickedTarget.newValue = finalVal;
     }
 
     // 3. Build persistent override object
@@ -1209,6 +1239,10 @@ export const LiveVisualEditor: React.FC = () => {
         .visual-editor-mode-active h2:hover,
         .visual-editor-mode-active h3:hover,
         .visual-editor-mode-active p:hover,
+        .visual-editor-mode-active [data-course-field]:hover,
+        .visual-editor-mode-active span:hover,
+        .visual-editor-mode-active a:hover,
+        .visual-editor-mode-active button:hover,
         .visual-editor-mode-active img:hover {
           outline: 2px dashed #f59e0b !important;
           outline-offset: 3px !important;
@@ -1405,7 +1439,7 @@ export const LiveVisualEditor: React.FC = () => {
                           courseData: { ...prev.courseData, fee: num }
                         } : null);
                         const feeEl = clickedTarget.elementRef?.closest('[data-course-id]')?.querySelector('[data-course-field="fee"]');
-                        if (feeEl) (feeEl as HTMLElement).innerText = `₹${num}`;
+                        if (feeEl) (feeEl as HTMLElement).innerText = `₹${num.toLocaleString('en-IN')}`;
                       }}
                       className="w-full px-3 py-1.5 bg-slate-900 border border-amber-500/50 rounded-xl text-xs text-amber-300 font-bold focus:outline-none focus:border-amber-400"
                     />
@@ -1424,7 +1458,7 @@ export const LiveVisualEditor: React.FC = () => {
                           courseData: { ...prev.courseData, discountFee: num }
                         } : null);
                         const discEls = clickedTarget.elementRef?.closest('[data-course-id]')?.querySelectorAll('[data-course-field="discountFee"]');
-                        discEls?.forEach(el => { (el as HTMLElement).innerText = `₹${num}`; });
+                        discEls?.forEach(el => { (el as HTMLElement).innerText = `₹${num.toLocaleString('en-IN')}`; });
                       }}
                       className="w-full px-3 py-1.5 bg-slate-900 border border-emerald-500/50 rounded-xl text-xs text-emerald-300 font-bold focus:outline-none focus:border-emerald-400"
                     />

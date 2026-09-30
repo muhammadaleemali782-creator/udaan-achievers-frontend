@@ -82,7 +82,7 @@ export const INITIAL_ERP_BATCHES: BatchItem[] = [
     duration: '6 Months Certification',
     courseFee: 18500,
     batchTiming: '08:00 AM - 10:30 AM (Mon - Fri)',
-    faculty: 'Dr. R. K. Sharma (Dean & BAMS, MD)',
+    faculty: 'S. R. Anand (Founder & Director)',
     capacity: 35,
     enrolledStudentsCount: 2
   },
@@ -94,7 +94,7 @@ export const INITIAL_ERP_BATCHES: BatchItem[] = [
     duration: '6 Months Certification',
     courseFee: 18500,
     batchTiming: '05:00 PM - 07:30 PM (Mon - Fri)',
-    faculty: 'Dr. R. K. Sharma (Dean & BAMS, MD)',
+    faculty: 'S. R. Anand (Founder & Director)',
     capacity: 35,
     enrolledStudentsCount: 1
   },

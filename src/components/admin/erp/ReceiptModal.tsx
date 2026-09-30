@@ -137,7 +137,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ feeRecord, transacti
             </div>
             <div className="text-right space-y-1">
               <div className="border-b border-slate-400 w-36 pb-1 text-center font-bold text-slate-800 text-[11px]">
-                Dr. R. K. Sharma
+                S. R. Anand
               </div>
               <p className="text-[10px] text-slate-500 uppercase font-semibold">Authorized Signatory</p>
             </div>

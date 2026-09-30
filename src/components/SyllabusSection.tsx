@@ -14,7 +14,7 @@ export const SyllabusSection: React.FC = () => {
   const handleDownloadSyllabus = () => {
     showToast(`Downloading official syllabus blueprint for ${selectedClass}`, 'success');
     const element = document.createElement('a');
-    const file = new Blob([`Educa Institute (Educa Institute of Consultancy) Official Syllabus Blueprint\nClass: ${activeSyllabus.targetClass}\nSubject: ${activeSyllabus.subject}\nTotal Marks: ${activeSyllabus.totalMarks} Marks\nExam Board: ${activeSyllabus.examBoard}\n\nChapter Breakdown:\n${activeSyllabus.chapters.map((c, i) => `${i + 1}. ${c.name} [${c.weightage}] - Est. ${c.estimatedHours} Hours\n   Topics: ${c.subtopics.join(', ')}`).join('\n\n')}\n\nDirector: Dr. R. K. Sharma\nHelpline: +91 98765 43210`], { type: 'text/plain' });
+    const file = new Blob([`Educa Institute (Educa Institute of Consultancy) Official Syllabus Blueprint\nClass: ${activeSyllabus.targetClass}\nSubject: ${activeSyllabus.subject}\nTotal Marks: ${activeSyllabus.totalMarks} Marks\nExam Board: ${activeSyllabus.examBoard}\n\nChapter Breakdown:\n${activeSyllabus.chapters.map((c, i) => `${i + 1}. ${c.name} [${c.weightage}] - Est. ${c.estimatedHours} Hours\n   Topics: ${c.subtopics.join(', ')}`).join('\n\n')}\n\nDirector: S. R. Anand\nHelpline: +91 9369087032`], { type: 'text/plain' });
     element.href = URL.createObjectURL(file);
     element.download = `syllabus_${selectedClass.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.txt`;
     document.body.appendChild(element);

@@ -40,7 +40,7 @@ export const MethodologySection: React.FC = () => {
       badge: 'STAGE 3: RESOLUTION',
       desc: 'Special dedicated 30-minute doubt clearance sessions after every class ensure no child goes home with an unresolved question or lingering confusion.',
       points: [
-        'Direct 1:1 interaction with Dr. Sharma & senior faculty',
+        'Direct 1:1 interaction with S. R. Anand & senior faculty',
         'No question is considered silly — warm and encouraging classroom vibe',
         'Daily homework and DPP checking with personalized feedback'
       ]

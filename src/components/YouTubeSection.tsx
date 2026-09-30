@@ -21,7 +21,7 @@ export const YouTubeSection: React.FC = () => {
               Watch <span className="text-rose-600">Lectures & Short Concept Reels</span>
             </h2>
             <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-base mt-2 font-medium">
-              Watch chapter concept boosters, derivation marathons, and reels by Director Dr. R. K. Sharma across YouTube, Instagram, and Facebook.
+              Watch chapter concept boosters, derivation marathons, and reels by Founder & Director S. R. Anand across YouTube, Instagram, and Facebook.
             </p>
           </div>
 

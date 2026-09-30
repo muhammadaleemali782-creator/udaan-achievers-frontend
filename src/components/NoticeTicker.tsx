@@ -111,7 +111,7 @@ export const NoticeTicker: React.FC = () => {
             </div>
 
             <div className="p-3.5 rounded-2xl bg-blue-50/70 border border-blue-100 flex items-center justify-between text-xs">
-              <span className="text-slate-600 font-bold">Issued by: Director Dr. R. K. Sharma</span>
+              <span className="text-slate-600 font-bold">Issued by: Founder & Director S. R. Anand</span>
               <button
                 onClick={() => setSelectedNotice(null)}
                 className="px-4 py-1.5 rounded-full bg-[#0066FF] hover:bg-blue-700 text-white font-black uppercase text-[11px] shadow-sm cursor-pointer"

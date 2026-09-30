@@ -32,7 +32,7 @@ export const DocPreviewModal: React.FC = () => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/75 animate-in fade-in duration-200">
       <div className="relative w-full max-w-4xl h-[90vh] bg-white dark:bg-slate-950 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col overflow-hidden">
         
         {/* Top Control Bar */}
@@ -168,7 +168,7 @@ export const DocPreviewModal: React.FC = () => {
 
               {/* Footer */}
               <div className="pt-6 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400">
-                <span>Verified Director Note • Dr. R. K. Sharma</span>
+                <span>Verified Director Note • S. R. Anand</span>
                 <span className="font-mono text-emerald-500 font-bold">✓ Ready for Exam Prep</span>
               </div>
             </div>

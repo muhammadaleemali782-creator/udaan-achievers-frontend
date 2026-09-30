@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { useApp } from '../../context/AppContext';
 import { CheckCircle2, Download, Printer, X, ShieldCheck, Share2 } from 'lucide-react';
 import { Transaction } from '../../types';
@@ -14,7 +14,7 @@ export const EReceiptModal: React.FC<{ transaction: Transaction | null; onClose:
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 animate-in fade-in duration-200">
       <div className="relative w-full max-w-sm bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
         
         {/* Header Bar */}
@@ -88,7 +88,7 @@ export const EReceiptModal: React.FC<{ transaction: Transaction | null; onClose:
           {/* Director Seal */}
           <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1">
             <span>Institute: Educa Institute</span>
-            <span className="font-bold text-slate-700">Director: Dr. R. K. Sharma</span>
+            <span className="font-bold text-slate-700">Director: S. R. Anand</span>
           </div>
 
           {/* Action Buttons */}

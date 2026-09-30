@@ -27,7 +27,7 @@ export const CourseBatchManagement: React.FC = () => {
     duration: '6 Months Certification',
     courseFee: 18500,
     batchTiming: '08:00 AM - 10:30 AM (Mon - Fri)',
-    faculty: 'Dr. R. K. Sharma (Dean & BAMS, MD)',
+    faculty: 'S. R. Anand (Founder & Director)',
     capacity: 35
   });
 
@@ -65,7 +65,7 @@ export const CourseBatchManagement: React.FC = () => {
       duration: '6 Months Certification',
       courseFee: 18500,
       batchTiming: '08:00 AM - 10:30 AM (Mon - Fri)',
-      faculty: 'Dr. R. K. Sharma (Dean & BAMS, MD)',
+      faculty: 'S. R. Anand (Founder & Director)',
       capacity: 35
     });
   };
@@ -115,7 +115,7 @@ export const CourseBatchManagement: React.FC = () => {
             </div>
             <div>
               <span className="text-[10px] text-slate-400 block font-semibold">Faculty Lead</span>
-              <span className="font-bold text-slate-800">Dr. R. K. Sharma</span>
+              <span className="font-bold text-slate-800">S. R. Anand</span>
             </div>
             <div>
               <span className="text-[10px] text-slate-400 block font-semibold">Active Batches</span>
@@ -332,7 +332,7 @@ export const CourseBatchManagement: React.FC = () => {
                         courseCode: c,
                         courseFee: c === 'WCNA' ? 18500 : 22000,
                         duration: c === 'WCNA' ? '6 Months Certification' : '1 Year Executive Diploma',
-                        faculty: c === 'WCNA' ? 'Dr. R. K. Sharma (Dean & BAMS, MD)' : 'Prof. Arvind Mehta (Corporate Advisory Lead)'
+                        faculty: c === 'WCNA' ? 'S. R. Anand (Founder & Director)' : 'Prof. Arvind Mehta (Corporate Advisory Lead)'
                       });
                     }}
                     className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 font-semibold focus:outline-none focus:border-indigo-500"
