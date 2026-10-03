@@ -128,20 +128,20 @@ export const CourseSection: React.FC = () => {
           <div className="pt-6 max-w-4xl mx-auto">
             <div className="bg-gradient-to-r from-blue-50/70 via-white to-blue-50/70 rounded-2xl p-5 sm:p-6 border border-blue-100 shadow-sm grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 text-center divide-y sm:divide-y-0 sm:divide-x divide-blue-100/80">
               <div className="pt-2 sm:pt-0">
-                <span className="text-2xl sm:text-3xl font-black text-[#0066FF] block font-mono">98.6%</span>
-                <span className="text-[11px] sm:text-xs text-slate-600 font-bold mt-1 block">Certification Pass Rate</span>
+                <span className="text-2xl sm:text-3xl font-black text-[#0066FF] block font-mono !bg-transparent">98.6%</span>
+                <span className="text-[11px] sm:text-xs text-slate-600 font-bold mt-1 block !bg-transparent">Certification Pass Rate</span>
               </div>
               <div className="pt-2 sm:pt-0">
-                <span className="text-2xl sm:text-3xl font-black text-[#0B3B95] block font-mono">10+ Years</span>
-                <span className="text-[11px] sm:text-xs text-slate-600 font-bold mt-1 block">Academic & Clinical Excellence</span>
+                <span className="text-2xl sm:text-3xl font-black text-[#0B3B95] block font-mono !bg-transparent">6+ Years</span>
+                <span className="text-[11px] sm:text-xs text-slate-600 font-bold mt-1 block !bg-transparent">Academic & Clinical Excellence</span>
               </div>
               <div className="pt-2 sm:pt-0">
-                <span className="text-2xl sm:text-3xl font-black text-[#0066FF] block font-mono">1:1 Practical</span>
-                <span className="text-[11px] sm:text-xs text-slate-600 font-bold mt-1 block">Clinical & Advisory Labs</span>
+                <span className="text-2xl sm:text-3xl font-black text-[#0066FF] block font-mono !bg-transparent">1:1 Solution</span>
+                <span className="text-[11px] sm:text-xs text-slate-600 font-bold mt-1 block !bg-transparent">Clinical & Advisory Labs</span>
               </div>
               <div className="pt-2 sm:pt-0">
-                <span className="text-2xl sm:text-3xl font-black text-[#0B3B95] block font-mono">1500+</span>
-                <span className="text-[11px] sm:text-xs text-slate-600 font-bold mt-1 block">Certified Scholars</span>
+                <span className="text-2xl sm:text-3xl font-black text-[#0B3B95] block font-mono !bg-transparent">500+</span>
+                <span className="text-[11px] sm:text-xs text-slate-600 font-bold mt-1 block !bg-transparent">Certified Scholars</span>
               </div>
             </div>
           </div>

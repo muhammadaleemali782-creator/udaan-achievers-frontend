@@ -117,8 +117,8 @@ export const GuaranteeSection: React.FC = () => {
           <h2 className="text-2xl sm:text-4xl font-black tracking-tight leading-tight">
             THE EDUCA INSTITUTE — <span className="underline decoration-slate-950/30 decoration-wavy">ACADEMIC PROMISE</span>
           </h2>
-          <p className="text-xs sm:text-sm font-bold text-slate-900/80 mt-2 max-w-xl mx-auto leading-relaxed">
-            From 10th Passed foundational learning to 12th Passed career programs, Graduate specializations, and Professional Wealth & Naturopathy Consultancy.
+          <p id="academic-promise-subtitle" className="text-xs sm:text-sm font-bold text-slate-950 mt-2 max-w-2xl mx-auto leading-relaxed !bg-transparent">
+            Management Skills | Communication Skills | Public Speaking | Consultancy Skills
           </p>
         </div>
 

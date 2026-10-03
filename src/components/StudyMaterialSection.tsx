@@ -24,20 +24,32 @@ export const StudyMaterialSection: React.FC = () => {
   const [selectedClass, setSelectedClass] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
-  const categories: { id: string; label: string; icon: React.FC<{ className?: string }> }[] = [
+  const categories = [
     { id: 'all', label: 'All Resources', icon: Layers },
-    { id: 'pdf_notes', label: 'Course Handbooks', icon: BookOpen },
-    { id: 'formulas', label: 'Reference Blueprints', icon: FileCheck },
-    { id: 'cheat_sheets', label: 'Revision Notes', icon: FileText },
-    { id: 'worksheets', label: 'Case Studies', icon: HelpCircle }
+    { id: 'pdf_notes', label: 'Course Handbooks (12 Books)', icon: BookOpen },
+    { id: 'practice_sets', label: 'Question Banks (100 Q&A)', icon: HelpCircle },
+    { id: 'formulas', label: 'Course Blueprints', icon: FileCheck },
+    { id: 'wcfm', label: 'Wealth Management (Finance)', icon: Sparkles }
   ];
 
-  const classFilters = ['all', 'WCNA Program', 'WCFM Program', 'Wellness Coaching', 'Ayurveda', 'Naturopathy', 'Diet & Lifestyle'];
+  const classFilters = ['all', 'WCNA Program', 'WCFM Program', 'Ayurveda', 'Naturopathy', 'Nutrition & Diet', 'Consultation', 'Finance'];
 
   const filteredMaterials = studyMaterials.filter(mat => {
     if (!mat) return false;
-    const matchesCat = selectedCategory === 'all' || mat.category === selectedCategory;
-    const matchesClass = selectedClass === 'all' || (mat.targetClass || '').toLowerCase().includes(selectedClass.toLowerCase());
+    let matchesCat = true;
+    if (selectedCategory === 'wcfm') {
+      matchesCat = (mat.targetClass || '').includes('WCFM') || (mat.subject || '').toLowerCase().includes('wealth') || (mat.subject || '').toLowerCase().includes('financial') || (mat.subject || '').toLowerCase().includes('valuation');
+    } else if (selectedCategory !== 'all') {
+      matchesCat = mat.category === selectedCategory;
+    }
+
+    let matchesClass = true;
+    if (selectedClass === 'Finance') {
+      matchesClass = (mat.targetClass || '').includes('WCFM') || (mat.subject || '').toLowerCase().includes('wealth') || (mat.subject || '').toLowerCase().includes('financial') || (mat.subject || '').toLowerCase().includes('valuation');
+    } else if (selectedClass !== 'all') {
+      matchesClass = (mat.targetClass || '').toLowerCase().includes(selectedClass.toLowerCase()) || (mat.subject || '').toLowerCase().includes(selectedClass.toLowerCase());
+    }
+
     const q = (searchQuery || '').toLowerCase();
     const matchesSearch = !q || (
       (mat.title || '').toLowerCase().includes(q) ||
@@ -50,6 +62,17 @@ export const StudyMaterialSection: React.FC = () => {
   const handleDownload = (mat: StudyMaterial) => {
     showToast(`Downloading: ${mat.title}`, 'success');
     
+    if (mat.downloadUrl && mat.downloadUrl !== '#' && !mat.downloadUrl.startsWith('data:')) {
+      const a = document.createElement('a');
+      a.href = mat.downloadUrl;
+      const fileName = mat.downloadUrl.split('/').pop() || `${mat.title.replace(/[^a-z0-9]/gi, '_')}.docx`;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      return;
+    }
+
     const element = document.createElement('a');
     const file = new Blob([`Educa Institute of Consultancy Study Material\n\nTitle: ${mat.title}\nProgram: ${mat.targetClass}\nSubject: ${mat.subject}\nChapter: ${mat.chapter}\nPages: ${mat.pages}\n\nNotes Summary:\n${mat.previewContent || 'Official verified educational handbook from Educa Institute Academic Mentors.'}\n\nWebsite: https://educainstitute.vercel.app/\nHelpline: +91 9369087032`], { type: 'text/plain' });
     element.href = URL.createObjectURL(file);
@@ -70,15 +93,37 @@ export const StudyMaterialSection: React.FC = () => {
             <span>Digital Study Material & PDF Vault</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
-            FREE REVISION <span className="text-[#0066FF]">NOTES & HANDBOOKS</span>
+            OFFICIAL COURSE <span className="text-[#0066FF]">HANDBOOKS & QUESTION BANKS</span>
           </h2>
           <p className="text-slate-600 text-xs sm:text-base leading-relaxed font-medium">
-            Access official course handbooks, modular revision notes, practitioner blueprints, and educational study materials curated by academic mentors.
+            Access official 12-book course handbooks, modular revision notes, 100 Q&A question banks, and practitioner blueprints curated by academic mentors.
           </p>
         </div>
 
         {/* Dynamic Study Vault Advertisement Banner */}
         <AdBanner placement="study_vault" />
+
+        {/* Category Tabs */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none justify-start sm:justify-center">
+          {categories.map(cat => {
+            const Icon = cat.icon;
+            const isSelected = selectedCategory === cat.id;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setSelectedCategory(cat.id)}
+                className={`px-4 py-2 rounded-2xl text-xs font-bold whitespace-nowrap flex items-center gap-2 transition-all cursor-pointer ${
+                  isSelected
+                    ? 'bg-[#0066FF] text-white shadow-md'
+                    : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                }`}
+              >
+                <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-white' : 'text-[#0066FF]'}`} />
+                <span>{cat.label}</span>
+              </button>
+            );
+          })}
+        </div>
 
         {/* Search & Class Filter Bar */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 bg-white p-4 rounded-3xl border border-slate-200 shadow-card-clean">
@@ -104,7 +149,7 @@ export const StudyMaterialSection: React.FC = () => {
                     : 'bg-slate-50 text-slate-600 hover:bg-slate-100'
                 }`}
               >
-                {cls === 'all' ? 'All Classes' : cls}
+                {cls === 'all' ? 'All Subjects' : cls}
               </button>
             ))}
           </div>

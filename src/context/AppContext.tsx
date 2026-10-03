@@ -136,6 +136,7 @@ export interface AppContextType {
   updateCourse: (course: Course) => void;
   deleteCourse: (id: string) => void;
   addStudyMaterial: (mat: Omit<StudyMaterial, 'id' | 'dateAdded' | 'downloadsCount'>) => void;
+  updateStudyMaterial: (id: string, updated: Partial<StudyMaterial>) => void;
   deleteStudyMaterial: (id: string) => void;
   addNotice: (notice: Omit<Notice, 'id' | 'date'>) => void;
   deleteNotice: (id: string) => void;
@@ -447,7 +448,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         discountFee: Number(c.discountFee) > 10000000 ? 150000 : c.discountFee
       }));
   });
-  const [studyMaterials, setStudyMaterials] = useState<StudyMaterial[]>(() => loadSaved('educa_study_materials_v2', INITIAL_STUDY_MATERIALS));
+  const [studyMaterials, setStudyMaterials] = useState<StudyMaterial[]>(() => {
+    const saved = loadSaved<StudyMaterial[] | null>('educa_study_materials_v4', null);
+    if (saved && Array.isArray(saved) && saved.length > 0) return saved;
+    return INITIAL_STUDY_MATERIALS;
+  });
   const [syllabuses, setSyllabuses] = useState<SyllabusItem[]>(() => loadSaved('educa_syllabus_v2', INITIAL_SYLLABUS));
   const [notices, setNotices] = useState<Notice[]>(() => loadSaved('lcc_notices', INITIAL_NOTICES));
   const [videos, setVideos] = useState<VideoLecture[]>(() => loadSaved('educa_videos_v2', loadSaved('lcc_videos', INITIAL_VIDEOS)));
@@ -465,10 +470,24 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (!saved.contactAddress) {
       saved.contactAddress = 'VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ';
     }
-    saved.visualOverrides = {
+    const mergedOverrides = {
       ...(INITIAL_SETTINGS.visualOverrides || {}),
       ...(saved.visualOverrides || {})
     };
+    // Sanitize visual overrides: strip unwanted white boxes and empty card wiping
+    const sanitizedOverrides: Record<string, any> = {};
+    Object.entries(mergedOverrides).forEach(([k, v]: [string, any]) => {
+      if (!v) return;
+      const bg = (v.backgroundColor || '').toLowerCase().trim();
+      if (bg === '#ffffff' || bg === '#fff' || bg === 'white' || bg === 'rgb(255, 255, 255)') {
+        v.backgroundColor = undefined;
+      }
+      if (v.type === 'text' && (!v.value || !v.value.trim())) {
+        return;
+      }
+      sanitizedOverrides[k] = v;
+    });
+    saved.visualOverrides = sanitizedOverrides;
     return saved;
   });
 
@@ -1070,17 +1089,26 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
     setStudyMaterials(prev => {
       const updated = [newMat, ...prev];
-      saveItem('educa_study_materials_v2', updated);
+      saveItem('educa_study_materials_v4', updated);
       return updated;
     });
     showToast(`Material "${newMat.title}" published!`, 'success');
+  };
+
+  const updateStudyMaterial = (id: string, updatedMat: Partial<StudyMaterial>) => {
+    setStudyMaterials(prev => {
+      const updated = prev.map(m => m.id === id ? { ...m, ...updatedMat } : m);
+      saveItem('educa_study_materials_v4', updated);
+      return updated;
+    });
+    showToast('Study handbook updated successfully!', 'success');
   };
 
   const deleteStudyMaterial = (id: string) => {
     api.media.deletePDF(id).catch(() => {});
     setStudyMaterials(prev => {
       const updated = prev.filter(m => m.id !== id);
-      saveItem('educa_study_materials_v2', updated);
+      saveItem('educa_study_materials_v4', updated);
       return updated;
     });
     showToast('Study material deleted.', 'info');
@@ -1301,6 +1329,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     updateCourse,
     deleteCourse,
     addStudyMaterial,
+    updateStudyMaterial,
     deleteStudyMaterial,
     addNotice,
     deleteNotice,

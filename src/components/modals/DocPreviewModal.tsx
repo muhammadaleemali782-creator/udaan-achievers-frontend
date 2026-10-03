@@ -18,6 +18,17 @@ export const DocPreviewModal: React.FC = () => {
       return;
     }
 
+    if (selectedDocForPreview.downloadUrl && selectedDocForPreview.downloadUrl !== '#' && !selectedDocForPreview.downloadUrl.startsWith('data:')) {
+      const a = document.createElement('a');
+      a.href = selectedDocForPreview.downloadUrl;
+      const fileName = selectedDocForPreview.downloadUrl.split('/').pop() || `${selectedDocForPreview.title.replace(/[^a-z0-9]/gi, '_')}.docx`;
+      a.download = fileName;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      return;
+    }
+
     const element = document.createElement('a');
     const file = new Blob([`Educa Institute Study Notes: ${selectedDocForPreview.title}\n\n${selectedDocForPreview.previewContent || 'Official Study Materials'}`], { type: 'text/plain' });
     element.href = URL.createObjectURL(file);

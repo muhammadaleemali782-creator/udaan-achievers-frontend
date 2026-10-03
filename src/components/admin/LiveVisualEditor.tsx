@@ -479,7 +479,7 @@ export const applyVisualOverrides = (overrides?: Record<string, VisualOverrideIt
         } else {
           targetEl.style.backgroundImage = `url("${item.value}")`;
         }
-      } else if (item.value) {
+      } else if (item.value && item.value.trim().length > 0) {
         // SAFETY GUARD: Never wipe out container elements that have child elements (e.g. cards, buttons, sections)
         if (targetEl.children.length === 0) {
           let textVal = item.value;
@@ -502,8 +502,17 @@ export const applyVisualOverrides = (overrides?: Record<string, VisualOverrideIt
         }
       }
 
-      if (item.backgroundColor && targetEl.style.backgroundColor !== item.backgroundColor) {
-        targetEl.style.backgroundColor = item.backgroundColor;
+      if (item.backgroundColor) {
+        const bg = (item.backgroundColor || '').toLowerCase().trim();
+        const isWhite = bg === '#ffffff' || bg === '#fff' || bg === 'white' || bg === 'rgb(255, 255, 255)';
+        const isTextOrInline = ['SPAN', 'P', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'B', 'STRONG', 'EM', 'A', 'LABEL'].includes(targetEl.tagName) || Boolean(targetEl.closest('button')) || Boolean(targetEl.closest('a'));
+        if (isWhite && isTextOrInline) {
+          if (targetEl.style.backgroundColor) {
+            targetEl.style.backgroundColor = '';
+          }
+        } else if (targetEl.style.backgroundColor !== item.backgroundColor) {
+          targetEl.style.backgroundColor = item.backgroundColor;
+        }
       }
       if (item.textColor && targetEl.style.color !== item.textColor) {
         targetEl.style.color = item.textColor;
@@ -936,13 +945,16 @@ export const LiveVisualEditor: React.FC = () => {
     }
 
     // 3. Build persistent override object
+    const hasCustomBg = clickedTarget.newBgColor && clickedTarget.newBgColor !== clickedTarget.originalBgColor;
+    const hasCustomText = clickedTarget.newTextColor && clickedTarget.newTextColor !== clickedTarget.originalTextColor;
+
     const newOverride: VisualOverrideItem = {
       selector,
       type: clickedTarget.type === 'course' ? 'element' : clickedTarget.type,
       originalValue: clickedTarget.originalValue,
       value: clickedTarget.newValue,
-      backgroundColor: clickedTarget.newBgColor,
-      textColor: clickedTarget.newTextColor
+      backgroundColor: hasCustomBg ? clickedTarget.newBgColor : undefined,
+      textColor: hasCustomText ? clickedTarget.newTextColor : undefined
     };
 
     const updatedOverrides = {

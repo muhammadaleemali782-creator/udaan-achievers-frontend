@@ -1,11 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { useApp } from '../../context/AppContext';
 import { StudyMaterial, MaterialCategory } from '../../types';
-import { FileText, Plus, Trash2, Download, Eye, Layers, HardDrive, CheckCircle2, Sparkles, ExternalLink, Upload } from 'lucide-react';
+import { FileText, Plus, Trash2, Download, Eye, Layers, HardDrive, CheckCircle2, Sparkles, ExternalLink, Upload, Edit3, X } from 'lucide-react';
 
 export const BooksPdfManager: React.FC = () => {
-  const { studyMaterials, addStudyMaterial, deleteStudyMaterial, showToast } = useApp();
+  const { studyMaterials, addStudyMaterial, updateStudyMaterial, deleteStudyMaterial, showToast } = useApp();
   const [isAdding, setIsAdding] = useState(false);
+  const [editingMat, setEditingMat] = useState<StudyMaterial | null>(null);
   const [googleDriveFolder, setGoogleDriveFolder] = useState<string>(
     localStorage.getItem('lcc_google_drive_folder') || 'https://drive.google.com/drive/folders/1aBcDeFgHiJkLmNoPqRsTuVwXyZ'
   );
@@ -298,16 +299,151 @@ export const BooksPdfManager: React.FC = () => {
                   </span>
                 )}
               </div>
-              <button
-                onClick={() => deleteStudyMaterial(mat.id)}
-                className="p-1.5 rounded-lg text-red-400 hover:bg-red-500/10 cursor-pointer"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
+              <div className="flex items-center gap-1">
+                <button
+                  type="button"
+                  onClick={() => setEditingMat(mat)}
+                  className="p-1.5 rounded-lg text-blue-400 hover:bg-blue-500/10 cursor-pointer"
+                  title="Edit Handbook Details"
+                >
+                  <Edit3 className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => deleteStudyMaterial(mat.id)}
+                  className="p-1.5 rounded-lg text-red-400 hover:bg-red-500/10 cursor-pointer"
+                  title="Delete Handbook"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
         ))}
       </div>
+
+      {/* Edit Handbook Modal */}
+      {editingMat && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 bg-black/80 backdrop-blur-xs animate-in fade-in">
+          <div className="bg-slate-950 border border-slate-800 rounded-3xl p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+              <h3 className="text-sm font-black text-white uppercase tracking-wider flex items-center gap-2">
+                <Edit3 className="w-4 h-4 text-[#0066FF]" />
+                <span>Edit Handbook / Study Material</span>
+              </h3>
+              <button
+                type="button"
+                onClick={() => setEditingMat(null)}
+                className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                updateStudyMaterial(editingMat.id, editingMat);
+                setEditingMat(null);
+              }}
+              className="space-y-4 text-xs"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="md:col-span-2">
+                  <label className="text-slate-300 font-bold block mb-1">Title *</label>
+                  <input
+                    type="text"
+                    required
+                    value={editingMat.title}
+                    onChange={e => setEditingMat({ ...editingMat, title: e.target.value })}
+                    className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-[#0066FF]"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-slate-300 font-bold block mb-1">Target Program / Class *</label>
+                  <input
+                    type="text"
+                    required
+                    value={editingMat.targetClass}
+                    onChange={e => setEditingMat({ ...editingMat, targetClass: e.target.value })}
+                    className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-[#0066FF]"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-slate-300 font-bold block mb-1">Subject *</label>
+                  <input
+                    type="text"
+                    required
+                    value={editingMat.subject}
+                    onChange={e => setEditingMat({ ...editingMat, subject: e.target.value })}
+                    className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-[#0066FF]"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-slate-300 font-bold block mb-1">Chapter / Module *</label>
+                  <input
+                    type="text"
+                    required
+                    value={editingMat.chapter}
+                    onChange={e => setEditingMat({ ...editingMat, chapter: e.target.value })}
+                    className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-[#0066FF]"
+                  />
+                </div>
+
+                <div>
+                  <label className="text-slate-300 font-bold block mb-1">Total Pages</label>
+                  <input
+                    type="number"
+                    value={editingMat.pages}
+                    onChange={e => setEditingMat({ ...editingMat, pages: Number(e.target.value) })}
+                    className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-[#0066FF]"
+                  />
+                </div>
+
+                <div className="md:col-span-2">
+                  <label className="text-slate-300 font-bold block mb-1">Download / Document URL</label>
+                  <input
+                    type="text"
+                    value={editingMat.downloadUrl}
+                    onChange={e => setEditingMat({ ...editingMat, downloadUrl: e.target.value })}
+                    placeholder="/documents/Book1_Complete_EDUCA.docx or Google Drive URL"
+                    className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-[#0066FF]"
+                  />
+                </div>
+
+                <div className="md:col-span-2">
+                  <label className="text-slate-300 font-bold block mb-1">Preview Summary / Overview</label>
+                  <textarea
+                    rows={3}
+                    value={editingMat.previewContent || ''}
+                    onChange={e => setEditingMat({ ...editingMat, previewContent: e.target.value })}
+                    className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-white focus:outline-none focus:border-[#0066FF]"
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 pt-2 border-t border-slate-800">
+                <button
+                  type="button"
+                  onClick={() => setEditingMat(null)}
+                  className="px-4 py-2 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 cursor-pointer font-bold"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black uppercase tracking-wider cursor-pointer shadow-md"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

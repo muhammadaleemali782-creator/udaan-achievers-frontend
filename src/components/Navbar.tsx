@@ -17,10 +17,17 @@ import {
   Palette,
   ChevronDown,
   Sun,
-  Moon
+  Moon,
+  ExternalLink
 } from 'lucide-react';
 import { ColorTheme } from '../types';
 import { NoticeTicker } from './NoticeTicker';
+
+const extractYouTubeId = (url?: string): string => {
+  if (!url) return '';
+  const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=|live\/))([\w-]{11})/);
+  return match ? match[1] : '';
+};
 
 export const Navbar: React.FC = () => {
   const {
@@ -43,6 +50,10 @@ export const Navbar: React.FC = () => {
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
+  const [isLivePlayerOpen, setIsLivePlayerOpen] = useState(false);
+
+  const isLive = Boolean(websiteSettings?.liveStream?.isLive);
+  const liveSession = websiteSettings?.liveStream;
 
   const importantNoticesCount = notices.filter(n => n.isImportant).length;
 
@@ -334,6 +345,71 @@ export const Navbar: React.FC = () => {
 
     return (
       <>
+        {/* Very Top Live Stream Classroom Banner (Only when isLive is true) */}
+        {isLive && liveSession && (
+          <div id="top-live-banner" className="bg-gradient-to-r from-red-600 via-rose-600 to-red-700 text-white shadow-lg border-b-2 border-red-800 animate-in fade-in duration-200">
+            <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2 flex flex-wrap items-center justify-between gap-3">
+              <div className="flex items-center gap-2.5 overflow-hidden">
+                <span className="flex h-3 w-3 relative shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+                </span>
+                <span className="bg-white text-red-600 font-black text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full uppercase tracking-wider shrink-0 shadow-xs">
+                  🔴 LIVE NOW
+                </span>
+                <span className="font-extrabold text-xs sm:text-sm truncate">
+                  {liveSession.title || 'Live Masterclass in Session'}
+                </span>
+                <span className="hidden md:inline-block text-[11px] font-bold bg-black/25 px-2.5 py-0.5 rounded-full">
+                  Mentor: {liveSession.instructor || 'S. R. Anand'}
+                </span>
+                <span className="hidden lg:inline-block text-[10px] font-bold bg-black/20 px-2 py-0.5 rounded-full">
+                  {liveSession.targetClass || 'WCNA & WCFM Scholars'}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setIsLivePlayerOpen(!isLivePlayerOpen)}
+                  className="px-3.5 py-1 rounded-full bg-white text-red-600 hover:bg-red-50 text-[11px] font-black uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-sm cursor-pointer"
+                >
+                  <Video className="w-3.5 h-3.5" />
+                  <span>{isLivePlayerOpen ? 'Hide Video' : 'Watch Live'}</span>
+                </button>
+                {liveSession.youtubeUrl && (
+                  <a
+                    href={liveSession.youtubeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-1 rounded-full bg-black/30 hover:bg-black/50 text-white text-[11px] font-bold tracking-wider hidden sm:inline-flex items-center gap-1 transition-colors"
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                    <span>YouTube</span>
+                  </a>
+                )}
+              </div>
+            </div>
+
+            {/* Expandable Embedded Live Player directly at the top */}
+            {isLivePlayerOpen && (
+              <div className="bg-slate-950 p-3 sm:p-6 border-t border-red-500/30">
+                <div className="max-w-4xl mx-auto">
+                  <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl border border-slate-800 bg-black">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${extractYouTubeId(liveSession.youtubeUrl)}?autoplay=1&rel=0`}
+                      title="Educa Institute Live Masterclass"
+                      className="w-full h-full border-0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
         {headerOrder.map(partKey => headerPartsMap[partKey] || null)}
       {activeView !== 'admin-panel' && (
         <div className="xl:hidden fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 py-2 px-3 flex items-center justify-around shadow-lg transition-colors">

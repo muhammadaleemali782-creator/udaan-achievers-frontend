@@ -92,13 +92,16 @@ export const InstagramSection: React.FC = () => {
         {/* Bottom Instagram CTA */}
         <div className="mt-12 text-center">
           <a
+            id="instagram-follow-btn"
             href={igUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 text-white font-black text-xs uppercase tracking-wider shadow-lg hover:opacity-95 transition-all"
           >
-            <Instagram className="w-4 h-4" />
-            <span>Follow @educa_institute</span>
+            <Instagram className="w-4 h-4 text-white shrink-0 !bg-transparent" />
+            <span className="!bg-transparent text-white font-black tracking-wider">
+              FOLLOW @EDUCAINSTITUTEOFCONSULTANCY
+            </span>
           </a>
         </div>
 
