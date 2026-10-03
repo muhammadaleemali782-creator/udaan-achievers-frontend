@@ -1,6 +1,6 @@
 import React from 'react';
 import { useApp } from '../context/AppContext';
-import { ShieldCheck, Award, CheckCircle2, ArrowRight, Sparkles, BookOpen, GraduationCap, Compass } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, ArrowRight, Sparkles } from 'lucide-react';
 
 export const GuaranteeSection: React.FC = () => {
   const { navigateTo } = useApp();
@@ -38,60 +38,115 @@ export const GuaranteeSection: React.FC = () => {
         'Corporate valuation, portfolio engineering & advisory',
         'Consultancy practice setup & client management'
       ]
+    },
+    {
+      level: 'Finance & Wealth Advisors',
+      badge: 'Corporate Wealth (WCFM)',
+      headline: 'Executive Wealth Consultancy & Financial Portfolio Advisory',
+      desc: 'Comprehensive training in corporate valuation, equity research, tax optimization, and HNWI wealth consultancy under expert mentors.',
+      points: [
+        'DCF modeling & corporate balance sheet valuation',
+        'Direct & indirect corporate tax strategy',
+        'HNWI wealth management & regulatory compliance'
+      ]
     }
   ];
 
   return (
-    <section id="academic-promise-section" className="relative overflow-hidden pt-12 pb-20 bg-slate-50 border-y border-slate-200/80">
+    <section id="academic-promise-section" className="relative overflow-hidden pt-12 pb-24 bg-white">
       
-      {/* Brand Header Banner */}
-      <div className="w-full bg-gradient-to-br from-[#0B3B95] via-[#0066FF] to-[#0B3B95] pt-14 pb-32 sm:pb-36 relative px-4 text-center overflow-hidden text-white">
+      {/* Warm Honey Yellow Banner with Rainbow-Curved Floating Avatars */}
+      <div className="w-full bg-[#fdb813] pt-14 pb-32 sm:pb-44 relative px-4 text-center overflow-hidden">
         
-        {/* Subtle Background Accent */}
-        <div className="absolute inset-0 opacity-10 pointer-events-none flex items-center justify-center">
-          <div className="w-[600px] h-[600px] rounded-full border-2 border-dashed border-white" />
+        {/* Subtle Decorative Rainbow Arc Background Lines */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20">
+          <div className="w-[500px] h-[300px] sm:w-[800px] sm:h-[450px] border-4 border-dashed border-slate-900 rounded-t-full -mb-32" />
         </div>
 
-        <div className="max-w-4xl mx-auto relative z-10 px-2 space-y-3">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/20 text-amber-300 text-xs font-black uppercase tracking-wider">
+        {/* Professional Pathway Strip in Rainbow Arc Curve with Dynamic Floating Motion */}
+        <div className="max-w-4xl mx-auto flex items-end justify-center gap-3 sm:gap-10 mb-10 relative z-10 pt-4">
+          
+          {/* 1. 10th Passed (Left Lower Rainbow Leg) */}
+          <div className="flex flex-col items-center animate-rainbow-1 transition-transform">
+            <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-3xl bg-white/35 backdrop-blur-sm border-2 border-white/70 flex items-center justify-center shadow-lg transform hover:scale-110 transition-transform">
+              <span className="text-3xl sm:text-5xl select-none">🧑‍🎓</span>
+            </div>
+            <span className="text-[10px] sm:text-xs font-black text-slate-950 uppercase tracking-wider mt-2.5 bg-white/60 px-2.5 py-0.5 rounded-full shadow-2xs whitespace-nowrap">
+              10TH PASSED
+            </span>
+          </div>
+
+          {/* 2. 12th Passed (Mid-Left Arch) */}
+          <div className="flex flex-col items-center animate-rainbow-2 transition-transform -translate-y-4 sm:-translate-y-6">
+            <div className="w-16 h-16 sm:w-22 sm:h-22 rounded-3xl bg-white/45 backdrop-blur-sm border-2 border-white/80 flex items-center justify-center shadow-xl transform hover:scale-110 transition-transform">
+              <span className="text-4xl sm:text-6xl select-none">👩‍🎓</span>
+            </div>
+            <span className="text-[10px] sm:text-xs font-black text-slate-950 uppercase tracking-wider mt-2.5 bg-white/70 px-2.5 py-0.5 rounded-full shadow-2xs whitespace-nowrap">
+              12TH PASSED
+            </span>
+          </div>
+
+          {/* 3. Graduation (Peak of Rainbow Arch) */}
+          <div className="flex flex-col items-center animate-rainbow-3 transition-transform -translate-y-7 sm:-translate-y-12">
+            <div className="w-18 h-18 sm:w-24 sm:h-24 rounded-3xl bg-white/70 backdrop-blur-md border-3 border-white flex items-center justify-center shadow-2xl ring-4 ring-white/30 transform hover:scale-110 transition-transform">
+              <span className="text-4xl sm:text-6xl select-none">🎓</span>
+            </div>
+            <span className="text-[10px] sm:text-xs font-black text-slate-950 uppercase tracking-wider mt-2.5 bg-white/90 px-3 py-1 rounded-full shadow-xs whitespace-nowrap">
+              GRADUATION
+            </span>
+          </div>
+
+          {/* 4. Finance & Wealth (Right Lower Rainbow Leg) */}
+          <div className="flex flex-col items-center animate-rainbow-4 transition-transform">
+            <div className="w-14 h-14 sm:w-20 sm:h-20 rounded-3xl bg-white/35 backdrop-blur-sm border-2 border-white/70 flex items-center justify-center shadow-lg transform hover:scale-110 transition-transform">
+              <span className="text-3xl sm:text-5xl select-none">💼</span>
+            </div>
+            <span className="text-[10px] sm:text-xs font-black text-slate-950 uppercase tracking-wider mt-2.5 bg-white/60 px-2.5 py-0.5 rounded-full shadow-2xs whitespace-nowrap">
+              FINANCE & WEALTH
+            </span>
+          </div>
+
+        </div>
+
+        {/* Banner Headline */}
+        <div className="max-w-3xl mx-auto text-slate-950 relative z-10 px-2 space-y-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-950/10 text-slate-950 text-[11px] font-black uppercase tracking-wider">
             <Sparkles className="w-3.5 h-3.5" />
             <span>Structured Learning Pathways for Every Educational Level</span>
           </div>
-
-          <h2 className="text-2xl sm:text-4xl lg:text-5xl font-black tracking-tight leading-tight">
-            THE EDUCA INSTITUTE — <span className="text-amber-300">ACADEMIC PROMISE</span>
+          <h2 className="text-2xl sm:text-4xl font-black tracking-tight leading-tight">
+            THE EDUCA INSTITUTE — <span className="underline decoration-slate-950/30 decoration-wavy">ACADEMIC PROMISE</span>
           </h2>
-
-          <p className="text-xs sm:text-base font-medium text-blue-100 max-w-2xl mx-auto leading-relaxed">
-            Programs and learning pathways structured according to your educational background and career goals — from foundational learning to advanced professional consultancy.
+          <p className="text-xs sm:text-sm font-bold text-slate-900/80 mt-2 max-w-xl mx-auto leading-relaxed">
+            From 10th Passed foundational learning to 12th Passed career programs, Graduate specializations, and Professional Wealth & Naturopathy Consultancy.
           </p>
         </div>
 
       </div>
 
-      {/* Floating Main Box */}
+      {/* Floating White Guarantee Box */}
       <div className="max-w-6xl mx-auto px-4 -mt-20 sm:-mt-24 relative z-10">
-        <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-2xl border border-slate-200 space-y-8">
+        <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-2xl border border-slate-100 text-center space-y-8">
           
-          <div className="text-center space-y-2 max-w-2xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-50 text-emerald-700 text-xs font-black uppercase tracking-wider border border-emerald-200">
+          <div className="space-y-2 max-w-2xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-50 text-emerald-700 text-xs font-black uppercase tracking-wider border border-emerald-200">
               <ShieldCheck className="w-4 h-4 text-emerald-600" />
               <span>Rigorous Pedagogy & Conceptual Clarity</span>
             </div>
-            <h3 className="text-xl sm:text-2xl font-black text-slate-900 leading-snug">
+            <h3 className="text-xl sm:text-3xl font-black text-slate-900 leading-tight">
               Guiding Learners Towards Professional Excellence
             </h3>
-            <p className="text-slate-600 text-xs sm:text-sm font-medium leading-relaxed">
+            <p className="text-slate-600 text-xs sm:text-base leading-relaxed font-medium">
               Under the direct leadership of <strong className="text-slate-900 font-extrabold">Founder & Director S. R. Anand</strong>, we ensure step-by-step conceptual mastery, structured handbooks, dedicated doubt resolution, and practical skill development.
             </p>
           </div>
 
-          {/* 3 Responsive Pathway Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* 4 Responsive Pathway Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 text-left">
             {pathways.map((item, idx) => (
               <div
                 key={idx}
-                className="bg-slate-50/70 hover:bg-white rounded-2xl p-6 border border-slate-200 hover:border-[#0066FF] shadow-sm hover:shadow-card-clean transition-all duration-300 flex flex-col justify-between space-y-4 group"
+                className="bg-slate-50/70 hover:bg-white rounded-2xl p-5 border border-slate-200 hover:border-[#0066FF] shadow-xs hover:shadow-card-clean transition-all duration-300 flex flex-col justify-between space-y-4 group"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between gap-2">
@@ -102,10 +157,10 @@ export const GuaranteeSection: React.FC = () => {
                   </div>
 
                   <div>
-                    <h4 className="text-base font-black text-slate-900 group-hover:text-[#0066FF] transition-colors leading-snug">
+                    <h4 className="text-sm font-black text-slate-900 group-hover:text-[#0066FF] transition-colors leading-snug">
                       {item.level}
                     </h4>
-                    <p className="text-xs font-bold text-[#0B3B95] mt-1 leading-snug">
+                    <p className="text-[11px] font-bold text-[#0B3B95] mt-1 leading-snug">
                       {item.headline}
                     </p>
                   </div>
@@ -114,9 +169,9 @@ export const GuaranteeSection: React.FC = () => {
                     {item.desc}
                   </p>
 
-                  <ul className="space-y-2 pt-2 border-t border-slate-200/80">
+                  <ul className="space-y-1.5 pt-2 border-t border-slate-200/80">
                     {item.points.map((pt, pIdx) => (
-                      <li key={pIdx} className="flex items-start gap-2 text-[11px] text-slate-700 font-medium">
+                      <li key={pIdx} className="flex items-start gap-1.5 text-[11px] text-slate-700 font-medium">
                         <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0 mt-0.5" />
                         <span>{pt}</span>
                       </li>
@@ -152,7 +207,7 @@ export const GuaranteeSection: React.FC = () => {
               rel="noopener noreferrer"
               className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 font-bold text-xs uppercase tracking-wider text-center transition-colors flex items-center justify-center gap-2 cursor-pointer"
             >
-              <span>Consult Academic Desk</span>
+              <span>Talk to S. R. Anand</span>
             </a>
           </div>
 

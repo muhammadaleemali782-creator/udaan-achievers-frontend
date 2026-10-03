@@ -211,7 +211,7 @@ const INITIAL_REVIEWS: Review[] = [
     studentName: 'Rajesh Singhania',
     studentClass: 'Wealth Consultant & Portfolio Advisor (WCFM Batch)',
     rating: 5,
-    comment: 'The corporate valuation and portfolio modeling modules under Prof. Mehta were exceptional. I transitioned from retail banking into high-net-worth wealth advisory within months.',
+    comment: 'The corporate valuation and portfolio modeling modules under A.D. Rao were exceptional. I transitioned from retail banking into high-net-worth wealth advisory within months.',
     status: 'approved',
     date: '2026-08-11'
   },
@@ -255,6 +255,15 @@ const INITIAL_SETTINGS: WebsiteSettings = {
   allowStudentReviews: true,
   maintenanceMode: false,
   razorpayKeyId: 'rzp_live_TbWh7wBlq0NQuz',
+  liveStream: {
+    isLive: false,
+    youtubeUrl: 'https://www.youtube.com/watch?v=kJQP7kiw5Fk',
+    title: 'Live Clinical Naturopathy & Panchakarma Masterclass | S. R. Anand',
+    instructor: 'S. R. Anand',
+    targetClass: 'WCNA & WCFM Scholars',
+    thumbnailUrl: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&auto=format&fit=crop&q=80',
+    startedAt: ''
+  },
   visualOverrides: {
     "section#about-section > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > span:nth-of-type(1)": {
       "selector": "section#about-section > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > span:nth-of-type(1)",

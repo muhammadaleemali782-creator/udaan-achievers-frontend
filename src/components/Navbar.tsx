@@ -108,11 +108,11 @@ export const Navbar: React.FC = () => {
           ) : (
             <button
               onClick={() => setIsAdminAuthModalOpen(true)}
-              className="bg-amber-400 hover:bg-amber-300 text-slate-950 font-black px-2.5 py-0.5 rounded-full flex items-center gap-1 transition-colors whitespace-nowrap cursor-pointer shadow-xs"
-              title="Director Login to Edit/Delete Anything"
+              className="bg-white/15 hover:bg-white/25 text-white font-bold px-2.5 py-0.5 rounded-full flex items-center gap-1 transition-colors whitespace-nowrap cursor-pointer border border-white/20 shadow-xs"
+              title="Director Desk Login"
             >
-              <Shield className="w-3 h-3 text-slate-950" />
-              <span>Director</span>
+              <Shield className="w-3 h-3 text-amber-300" />
+              <span>Director Desk</span>
             </button>
           )}
         </div>
@@ -182,13 +182,17 @@ export const Navbar: React.FC = () => {
         {/* Desktop Navigation Links */}
         <div className="hidden xl:flex items-center gap-1 text-xs font-bold text-white/90">
           {navItems.map(item => {
-            const isActive = activeView === 'home' ? scrollSection === item.view : activeView === item.view;
+            const isActive = activeView === 'home'
+              ? (item.anchor === 'home' ? (!scrollSection || scrollSection === 'home') : scrollSection === item.anchor)
+              : activeView === item.view;
             return (
               <button
                 key={item.label}
                 onClick={() => navigateTo(item.view, item.anchor)}
-                className={`transition-all py-1.5 px-3 rounded-full relative hover:text-amber-300 hover:bg-white/10 cursor-pointer ${
-                  isActive ? 'text-slate-950 bg-amber-400 font-extrabold shadow-xs' : ''
+                className={`transition-all py-1.5 px-3 rounded-full relative cursor-pointer text-xs font-bold ${
+                  isActive
+                    ? 'text-white bg-white/20 shadow-xs ring-1 ring-white/30 font-extrabold'
+                    : 'text-white/80 hover:text-white hover:bg-white/10'
                 }`}
               >
                 {item.label}
@@ -249,10 +253,10 @@ export const Navbar: React.FC = () => {
             ) : (
               <button
                 onClick={() => setIsStudentAuthModalOpen(true)}
-                className="px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 text-[11px] sm:text-xs font-black uppercase tracking-wider shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
-                title="Access Portal"
+                className="px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white hover:bg-blue-50 text-[#0B3B95] text-[11px] sm:text-xs font-black uppercase tracking-wider shadow-sm transition-all flex items-center gap-1.5 cursor-pointer"
+                title="Access Student Portal"
               >
-                <User className="w-3.5 h-3.5 text-slate-950" />
+                <User className="w-3.5 h-3.5 text-[#0066FF]" />
                 <span className="whitespace-nowrap font-black">Portal Login</span>
               </button>
             )}

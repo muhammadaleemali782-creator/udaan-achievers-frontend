@@ -106,7 +106,7 @@ export const INITIAL_ERP_BATCHES: BatchItem[] = [
     duration: '1 Year Executive Diploma',
     courseFee: 22000,
     batchTiming: '09:00 AM - 11:30 AM (Mon - Fri)',
-    faculty: 'Prof. Arvind Mehta (Corporate Advisory Lead)',
+    faculty: 'A.D. Rao (Corporate Wealth Lead)',
     capacity: 30,
     enrolledStudentsCount: 1
   },
@@ -118,7 +118,7 @@ export const INITIAL_ERP_BATCHES: BatchItem[] = [
     duration: '1 Year Executive Diploma',
     courseFee: 22000,
     batchTiming: '10:00 AM - 02:00 PM (Sat - Sun)',
-    faculty: 'CA Priya Verma (Senior Wealth Consultant)',
+    faculty: 'A.D. Rao (Senior Wealth Advisor)',
     capacity: 40,
     enrolledStudentsCount: 1
   }

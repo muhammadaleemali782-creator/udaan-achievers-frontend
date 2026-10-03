@@ -41,7 +41,7 @@ export const INITIAL_COURSES: Course[] = [
     discountFee: 150000,
     rating: 4.9,
     enrolledCount: 188,
-    instructor: 'Prof. Arvind Mehta (CFA, FinOps Advisory)',
+    instructor: 'A.D. Rao (Co-Founder & Wealth Advisory Lead)',
     image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80',
     badge: 'Flagship Wealth',
     features: [
@@ -302,10 +302,10 @@ export const INITIAL_NOTICES: Notice[] = [
   },
   {
     id: 'not-3',
-    title: 'Corporate Financial Modeling & Valuation Masterclass by Prof. Arvind Mehta',
+    title: 'Corporate Financial Modeling & Valuation Masterclass by A.D. Rao',
     date: '2026-08-16',
     category: 'batch',
-    description: 'WCFM scholars are invited to participate in the live DCF and financial modeling lab. Case study materials available in the Study Vault.',
+    description: 'WCFM scholars are invited to participate in the live DCF and financial modeling lab led by A.D. Rao. Case study materials available in the Study Vault.',
     isImportant: false,
     badgeText: 'NEW WORKSHOP'
   }
@@ -328,14 +328,14 @@ export const INITIAL_VIDEOS: VideoLecture[] = [
   },
   {
     id: 'vid-2',
-    title: 'Corporate Valuation & DCF Modeling in Practice | Prof. Arvind Mehta',
+    title: 'Corporate Valuation & DCF Modeling in Practice | A.D. Rao',
     subject: 'Wealth Consultancy (WCFM)',
     targetClass: 'WCFM Scholars',
     duration: '52:15',
     youtubeId: 'kJQP7kiw5Fk',
     youtubeUrl: 'https://www.youtube.com/watch?v=kJQP7kiw5Fk',
     thumbnail: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&auto=format&fit=crop&q=80',
-    instructor: 'Prof. Arvind Mehta',
+    instructor: 'A.D. Rao',
     views: '14.9K views',
     isFeatured: true,
     notesPdfUrl: '#'

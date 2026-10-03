@@ -266,5 +266,17 @@ export interface WebsiteSettings {
   sectionOrder?: string[];
   heroColumnsOrder?: string[];
   headerOrder?: string[];
+  liveStream?: LiveStreamSession;
+}
+
+export interface LiveStreamSession {
+  isLive: boolean;
+  youtubeUrl: string;
+  title: string;
+  instructor: string;
+  targetClass: string;
+  thumbnailUrl?: string;
+  startedAt?: string;
+  endedAt?: string;
 }
 

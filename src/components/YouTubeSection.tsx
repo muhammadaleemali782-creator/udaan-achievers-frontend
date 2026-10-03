@@ -4,7 +4,7 @@ import { Play, Clock, Eye, ExternalLink, Sparkles } from 'lucide-react';
 import { Youtube, Instagram, Facebook } from './SocialIcons';
 
 export const YouTubeSection: React.FC = () => {
-  const { videos, setSelectedVideoForPlayer } = useApp();
+  const { videos, setSelectedVideoForPlayer, websiteSettings } = useApp();
   const [selectedCategory, setSelectedCategory] = React.useState<string>('All');
 
   const categories = [
@@ -18,6 +18,12 @@ export const YouTubeSection: React.FC = () => {
     'Career Development'
   ];
 
+  const extractYouTubeId = (url?: string): string => {
+    if (!url) return '';
+    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/))([\w-]{11})/);
+    return match ? match[1] : '';
+  };
+
   const filteredVideos = videos.filter(vid => {
     if (selectedCategory === 'All') return true;
     const cat = selectedCategory.toLowerCase();
@@ -27,6 +33,10 @@ export const YouTubeSection: React.FC = () => {
       (vid.targetClass || '').toLowerCase().includes(cat)
     );
   });
+
+  const isLive = Boolean(websiteSettings?.liveStream?.isLive);
+  const liveSession = websiteSettings?.liveStream;
+  const liveYtId = extractYouTubeId(liveSession?.youtubeUrl);
 
   return (
     <section id="videos-section" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 border-t border-slate-200/80 dark:border-slate-800 relative transition-colors">
@@ -59,6 +69,106 @@ export const YouTubeSection: React.FC = () => {
             </a>
           </div>
         </div>
+
+        {/* Live Stream Active Player Box (When Class is LIVE) */}
+        {isLive && liveSession && (
+          <div className="mb-12 bg-slate-950 text-white rounded-3xl overflow-hidden border-2 border-red-500/80 shadow-2xl animate-in fade-in duration-300">
+            <div className="bg-gradient-to-r from-red-600 via-rose-600 to-red-700 px-6 py-3.5 flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <span className="flex h-3 w-3 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
+                </span>
+                <span className="text-xs sm:text-sm font-black uppercase tracking-wider text-white">
+                  🔴 LIVE CLASSROOM IN SESSION
+                </span>
+                <span className="hidden sm:inline-block text-[11px] font-bold bg-black/30 px-2.5 py-0.5 rounded-full">
+                  {liveSession.targetClass || 'WCNA & WCFM Scholars'}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <span className="text-xs font-bold text-white/95">
+                  Mentor: <strong className="text-amber-300">{liveSession.instructor || 'S. R. Anand'}</strong>
+                </span>
+                {liveSession.youtubeUrl && (
+                  <a
+                    href={liveSession.youtubeUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3 py-1 rounded-full bg-white text-red-600 hover:bg-red-50 text-[11px] font-black uppercase tracking-wider transition-colors inline-flex items-center gap-1 shadow-xs"
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                    <span>Watch on YouTube</span>
+                  </a>
+                )}
+              </div>
+            </div>
+
+            <div className="p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+              <div className="lg:col-span-8">
+                <div className="relative aspect-video rounded-2xl overflow-hidden bg-black shadow-inner border border-slate-800">
+                  {liveYtId ? (
+                    <iframe
+                      src={`https://www.youtube.com/embed/${liveYtId}?autoplay=1&rel=0`}
+                      title={liveSession.title}
+                      className="w-full h-full border-0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center text-slate-400">
+                      <Youtube className="w-12 h-12 text-red-500 mb-2" />
+                      <p className="text-sm font-bold text-white">Live Broadcast Player Ready</p>
+                      <p className="text-xs text-slate-400 mt-1 max-w-md">The stream link is active. If video does not appear, click the "Watch on YouTube" button above.</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="lg:col-span-4 space-y-4">
+                <div>
+                  <span className="text-[10px] font-black uppercase tracking-wider text-red-400 bg-red-950/80 border border-red-800/80 px-2.5 py-0.5 rounded-full">
+                    Live Stream Feed
+                  </span>
+                  <h3 className="text-lg sm:text-xl font-black text-white mt-2 leading-snug">
+                    {liveSession.title || 'Live Classroom Lecture'}
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-2 leading-relaxed">
+                    Live broadcast from Educa Institute of Consultancy studio. Watch real-time clinical demonstration and lecture.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 space-y-2.5 text-xs">
+                  <div className="flex justify-between text-slate-300">
+                    <span className="text-slate-500 font-bold">Faculty Lead:</span>
+                    <span className="font-bold text-white">{liveSession.instructor || 'S. R. Anand'}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-300">
+                    <span className="text-slate-500 font-bold">Program:</span>
+                    <span className="font-bold text-amber-400">{liveSession.targetClass || 'WCNA & WCFM'}</span>
+                  </div>
+                  <div className="flex justify-between text-slate-300">
+                    <span className="text-slate-500 font-bold">Status:</span>
+                    <span className="font-bold text-emerald-400 flex items-center gap-1.5">
+                      <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                      <span>Streaming Live Now</span>
+                    </span>
+                  </div>
+                </div>
+
+                <a
+                  href={`https://wa.me/919369087032?text=${encodeURIComponent('Hello S. R. Anand, I am attending the live class: ' + (liveSession.title || ''))}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs uppercase tracking-wider transition-colors flex items-center justify-center gap-2 cursor-pointer shadow-md"
+                >
+                  <span>Ask Question to Mentor on WhatsApp</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Category Pills Bar */}
         <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 scrollbar-none select-none">
@@ -98,25 +208,16 @@ export const YouTubeSection: React.FC = () => {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-90"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent" />
-
+                  
+                  {/* Play Button Overlay */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className={`w-14 h-14 rounded-full text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-all ${
-                      platform === 'instagram'
-                        ? 'bg-pink-600/90 group-hover:bg-pink-600'
-                        : platform === 'facebook'
-                        ? 'bg-blue-600/90 group-hover:bg-blue-600'
-                        : 'bg-rose-600/90 group-hover:bg-rose-600'
-                    }`}>
-                      <Play className="w-6 h-6 fill-current ml-0.5" />
+                    <div className="w-12 h-12 rounded-full bg-rose-600/90 text-white flex items-center justify-center shadow-lg group-hover:scale-115 transition-transform">
+                      <Play className="w-5 h-5 fill-white ml-0.5" />
                     </div>
                   </div>
 
-                  <span className="absolute bottom-3 right-3 px-2 py-0.5 rounded-md bg-black/80 text-white text-[11px] font-mono font-bold flex items-center gap-1">
-                    <Clock className="w-3 h-3 text-rose-400" />
-                    {vid.duration}
-                  </span>
-
-                  <div className="absolute top-3 left-3 flex items-center gap-1.5">
+                  {/* Badges on Thumbnail */}
+                  <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
                     <span className="px-2.5 py-1 rounded-lg bg-white dark:bg-slate-900 text-rose-600 dark:text-rose-400 text-xs font-black shadow-sm">
                       {vid.targetClass}
                     </span>

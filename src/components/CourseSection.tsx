@@ -102,18 +102,18 @@ export const CourseSection: React.FC = () => {
                 const elem = document.getElementById('all-courses-grid');
                 elem?.scrollIntoView({ behavior: 'smooth' });
               }}
-              className="px-5 py-2.5 rounded-full bg-[#0066FF] hover:bg-blue-700 text-white text-xs font-black uppercase tracking-wider shadow-md transition-all cursor-pointer"
+              className="px-6 py-3 rounded-full bg-[#0066FF] hover:bg-blue-700 text-white text-xs font-black uppercase tracking-wider shadow-md shadow-blue-500/25 transition-all cursor-pointer"
             >
               Explore All Courses
             </button>
             <button
               onClick={() => navigateTo('study-material', 'study-material-section')}
-              className="px-5 py-2.5 rounded-full bg-blue-50 hover:bg-blue-100 text-[#0066FF] border border-blue-200 text-xs font-black uppercase tracking-wider transition-all cursor-pointer"
+              className="px-6 py-3 rounded-full bg-white hover:bg-blue-50 text-[#0066FF] border border-blue-200 text-xs font-black uppercase tracking-wider transition-all cursor-pointer shadow-2xs"
             >
               Free Study Vault
             </button>
 
-            {isAdminAuthenticated ? (
+            {isAdminAuthenticated && (
               <button
                 onClick={() => setIsAddingCourse(true)}
                 className="px-5 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-black uppercase tracking-wider shadow-md transition-all cursor-pointer flex items-center gap-1.5"
@@ -121,36 +121,27 @@ export const CourseSection: React.FC = () => {
                 <Plus className="w-3.5 h-3.5" />
                 <span>Add New Course</span>
               </button>
-            ) : (
-              <button
-                onClick={() => setIsAdminAuthModalOpen(true)}
-                className="px-5 py-2.5 rounded-full bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-black uppercase tracking-wider shadow-md transition-all cursor-pointer flex items-center gap-1.5"
-                title="Director Login to Edit/Delete Courses"
-              >
-                <ShieldCheck className="w-3.5 h-3.5 text-slate-950" />
-                <span>Director Login (Edit / Delete)</span>
-              </button>
             )}
           </div>
 
-          {/* Key Metrics Strip Matching Photo: 98.6% | 10+ Years | 1:1 Lab | 1500+ Students */}
-          <div className="pt-4 max-w-3xl mx-auto">
-            <div className="bg-[#0B3B95] text-white rounded-2xl p-4 sm:p-6 shadow-md grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-              <div>
-                <span className="text-xl sm:text-2xl font-black text-amber-400 block">98.6%</span>
-                <span className="text-[10px] sm:text-xs text-blue-100 font-medium">Certification Pass Rate</span>
+          {/* Key Metrics Strip - Clean, Modern & Elegant */}
+          <div className="pt-6 max-w-4xl mx-auto">
+            <div className="bg-gradient-to-r from-blue-50/70 via-white to-blue-50/70 rounded-2xl p-5 sm:p-6 border border-blue-100 shadow-sm grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 text-center divide-y sm:divide-y-0 sm:divide-x divide-blue-100/80">
+              <div className="pt-2 sm:pt-0">
+                <span className="text-2xl sm:text-3xl font-black text-[#0066FF] block font-mono">98.6%</span>
+                <span className="text-[11px] sm:text-xs text-slate-600 font-bold mt-1 block">Certification Pass Rate</span>
               </div>
-              <div>
-                <span className="text-xl sm:text-2xl font-black text-amber-400 block">10+ Years</span>
-                <span className="text-[10px] sm:text-xs text-blue-100 font-medium">Academic & Clinical Excellence</span>
+              <div className="pt-2 sm:pt-0">
+                <span className="text-2xl sm:text-3xl font-black text-[#0B3B95] block font-mono">10+ Years</span>
+                <span className="text-[11px] sm:text-xs text-slate-600 font-bold mt-1 block">Academic & Clinical Excellence</span>
               </div>
-              <div>
-                <span className="text-xl sm:text-2xl font-black text-amber-400 block">1:1 Lab</span>
-                <span className="text-[10px] sm:text-xs text-blue-100 font-medium">Clinical & Advisory Labs</span>
+              <div className="pt-2 sm:pt-0">
+                <span className="text-2xl sm:text-3xl font-black text-[#0066FF] block font-mono">1:1 Practical</span>
+                <span className="text-[11px] sm:text-xs text-slate-600 font-bold mt-1 block">Clinical & Advisory Labs</span>
               </div>
-              <div>
-                <span className="text-xl sm:text-2xl font-black text-amber-400 block">1500+</span>
-                <span className="text-[10px] sm:text-xs text-blue-100 font-medium">Certified Scholars</span>
+              <div className="pt-2 sm:pt-0">
+                <span className="text-2xl sm:text-3xl font-black text-[#0B3B95] block font-mono">1500+</span>
+                <span className="text-[11px] sm:text-xs text-slate-600 font-bold mt-1 block">Certified Scholars</span>
               </div>
             </div>
           </div>

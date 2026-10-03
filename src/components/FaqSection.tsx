@@ -17,7 +17,7 @@ const FAQS: FAQItem[] = [
   {
     category: 'Institute & Programs',
     question: 'Who are the lead mentors and faculty members?',
-    answer: 'The wellness programs are directed by Founder & Director S. R. Anand (BAMS, MD Naturopathy with 18+ years of clinical experience), while financial consultancy programs are mentored by Prof. Arvind Mehta (CFA, FinOps Advisory).'
+    answer: 'The wellness programs are directed by Founder & Director S. R. Anand (BAMS, MD Naturopathy with 18+ years of clinical experience), while financial consultancy programs are mentored by Co-Founder & Managing Director A.D. Rao (Corporate Wealth & Financial Advisory Lead).'
   },
   {
     category: 'Courses & Certification',

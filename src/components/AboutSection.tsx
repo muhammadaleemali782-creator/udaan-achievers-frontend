@@ -26,13 +26,6 @@ export const AboutSection: React.FC = () => {
       desc: 'Started with a passionate mission to eliminate rote cramming and provide conceptual education to every student.'
     },
     {
-      year: '2019',
-      title: 'Practical Consultancy Labs',
-      icon: Monitor,
-      color: 'text-emerald-600 bg-emerald-50 border-emerald-200',
-      desc: 'Established clinical diagnostic labs, financial modeling setups, and professional communication studios.'
-    },
-    {
       year: '2022',
       title: 'Specialized Program Launch',
       icon: Trophy,
@@ -316,7 +309,7 @@ export const AboutSection: React.FC = () => {
             <p className="text-xs sm:text-sm text-slate-500 font-medium">6+ Years of inspiring students under {director} & {coFounder}'s leadership</p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
             {milestones.map((item) => {
               const IconComp = item.icon;
               return (
