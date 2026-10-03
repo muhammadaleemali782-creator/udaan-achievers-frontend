@@ -53,7 +53,7 @@ export const GallerySection: React.FC = () => {
         </div>
 
         {/* Filter Pills with Left-to-Right Transition */}
-        <div className="flex items-center justify-center gap-2 overflow-x-auto pb-4 mb-10 scrollbar-none">
+        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-10 scrollbar-none justify-start sm:justify-center px-4 max-w-full">
           {categories.map(cat => (
             <button
               key={cat.id}

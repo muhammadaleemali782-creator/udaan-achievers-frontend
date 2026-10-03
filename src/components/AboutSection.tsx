@@ -246,7 +246,7 @@ export const AboutSection: React.FC = () => {
                 <span className="text-[10px] text-slate-500 font-bold">Years Mentorship</span>
               </div>
               <div className="p-3 rounded-2xl bg-white border border-slate-200/80 shadow-xs">
-                <span className="text-lg sm:text-xl font-black text-[#0066FF] block">5,000+</span>
+                <span className="text-lg sm:text-xl font-black text-[#0066FF] block">2,000+</span>
                 <span className="text-[10px] text-slate-500 font-bold">Students Taught</span>
               </div>
               <div className="p-3 rounded-2xl bg-white border border-slate-200/80 shadow-xs">

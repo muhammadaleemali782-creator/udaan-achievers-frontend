@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { HelpCircle, ChevronDown, Sparkles, MessageCircle, ArrowRight } from 'lucide-react';
+import { HelpCircle, ChevronDown, Sparkles, MessageCircle, Phone, ArrowRight } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 interface FAQItem {
@@ -37,13 +37,17 @@ const FAQS: FAQItem[] = [
   {
     category: 'Admissions & Enrollment',
     question: 'How can students reserve an admission seat?',
-    answer: 'Candidates can reserve their seat directly through the online admission form on this portal or contact the official admissions helpline at +91 98765 43210.'
+    answer: 'Candidates can reserve their seat directly through the online admission form on this portal or contact the official admissions helpline at +91 9369087032.'
   }
 ];
 
 export const FaqSection: React.FC = () => {
-  const { navigateTo } = useApp();
+  const { navigateTo, websiteSettings } = useApp();
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+
+  const phone = websiteSettings?.contactPhone || '+91 9369087032';
+  const cleanPhone = phone.replace(/[^\d+]/g, '');
+  const waPhone = phone.replace(/[^\d]/g, '');
 
   const toggleFAQ = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
@@ -111,25 +115,37 @@ export const FaqSection: React.FC = () => {
           })}
         </div>
 
-        {/* Bottom CTA */}
-        <div className="mt-12 p-6 rounded-3xl bg-slate-50 border border-slate-200 text-center space-y-3">
-          <p className="text-xs sm:text-sm text-slate-700 font-bold">
-            Have more questions about WCNA or WCFM certifications?
+        {/* Bottom CTA — Premium Redesigned Admissions Banner */}
+        <div className="mt-14 p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-blue-50/70 via-white to-indigo-50/40 border border-blue-200/80 shadow-card-clean text-center space-y-4 max-w-2xl mx-auto">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100/80 text-[#0066FF] text-[10px] font-black uppercase tracking-wider">
+            <HelpCircle className="w-3.5 h-3.5" />
+            <span>ADMISSIONS HELPLINE & ADVISORY DESK</span>
+          </div>
+
+          <h3 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
+            Have questions about WCNA or WCFM certifications?
+          </h3>
+          
+          <p className="text-xs sm:text-sm text-slate-600 max-w-lg mx-auto font-medium leading-relaxed">
+            Connect directly with our admissions counselors for batch timings, curriculum details, and fee assistance.
           </p>
-          <div className="flex items-center justify-center gap-3">
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
             <a
-              href="tel:+919876543210"
-              className="px-5 py-2.5 rounded-full bg-[#0066FF] hover:bg-blue-700 text-white text-xs font-black uppercase tracking-wider transition-all"
+              href={`tel:${cleanPhone}`}
+              className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-[#0066FF] hover:bg-blue-700 active:scale-[0.98] text-white text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-md shadow-blue-500/20 transition-all cursor-pointer"
             >
-              Call Admissions: +91 98765 43210
+              <Phone className="w-4 h-4" />
+              <span>Call Admissions ({phone})</span>
             </a>
             <a
-              href="https://wa.me/919876543210"
+              href={`https://wa.me/${waPhone}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-5 py-2.5 rounded-full bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-black uppercase tracking-wider transition-all"
+              className="w-full sm:w-auto px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white text-xs font-black uppercase tracking-wider flex items-center justify-center gap-2.5 shadow-md shadow-emerald-500/20 transition-all cursor-pointer"
             >
-              WhatsApp Us
+              <MessageCircle className="w-4 h-4" />
+              <span>Chat on WhatsApp</span>
             </a>
           </div>
         </div>

@@ -236,13 +236,17 @@ export const CourseSection: React.FC = () => {
         </div>
 
         {/* Course Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+        <div className={`grid gap-6 sm:gap-8 ${
+          filteredCourses.length === 2
+            ? 'grid-cols-1 md:grid-cols-2 max-w-5xl mx-auto'
+            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+        }`}>
           {filteredCourses.map((course, idx) => (
             <div
               key={course.id}
               data-course-id={course.id}
               style={{ animationDelay: `${idx * 80}ms` }}
-              className="bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 rounded-3xl overflow-hidden shadow-card-clean hover:shadow-learner-lg transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col group animate-in fade-in slide-in-from-bottom-4 relative"
+              className="bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 rounded-3xl overflow-hidden shadow-card-clean hover:shadow-learner-lg transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col justify-between group animate-in fade-in slide-in-from-bottom-4 relative h-full"
             >
               {/* Image & Price Badge */}
               <div className="relative h-48 sm:h-52 overflow-hidden bg-slate-900">
@@ -294,21 +298,21 @@ export const CourseSection: React.FC = () => {
                   <h3
                     data-course-id={course.id}
                     data-course-field="title"
-                    className="text-base sm:text-lg font-black text-slate-900 dark:text-white group-hover:text-[#0066FF] transition-colors leading-snug line-clamp-2"
+                    className="text-base sm:text-lg font-black text-slate-900 dark:text-white group-hover:text-[#0066FF] transition-colors leading-snug line-clamp-2 min-h-[3.25rem] flex items-center"
                   >
                     {course.title}
                   </h3>
                   <p
                     data-course-id={course.id}
                     data-course-field="description"
-                    className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium mt-1.5 line-clamp-2"
+                    className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed font-medium mt-1.5 line-clamp-2 min-h-[2.5rem]"
                   >
                     {course.description}
                   </p>
                 </div>
 
                 {/* Features List */}
-                <div className="space-y-1.5 pt-2 border-t border-slate-100 dark:border-slate-800">
+                <div className="space-y-1.5 pt-2 border-t border-slate-100 dark:border-slate-800 min-h-[4.5rem]">
                   {(course.features || []).slice(0, 3).map((feat, i) => (
                     <div key={i} className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-300 font-medium">
                       <CheckCircle2 className="w-3.5 h-3.5 text-[#0066FF] shrink-0" />
@@ -318,7 +322,7 @@ export const CourseSection: React.FC = () => {
                 </div>
 
                 {/* Bottom Enroll & Details */}
-                <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
+                <div className="mt-auto pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3">
                   <div className="flex flex-col">
                     <span
                       data-course-field="fee"

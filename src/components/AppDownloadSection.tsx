@@ -114,11 +114,14 @@ export const AppDownloadSection: React.FC = () => {
               </div>
 
               {/* Phone Screen Canvas (Clean White Minimalist UI matching image) */}
-              <div className="w-full h-full bg-white rounded-[38px] overflow-y-auto overflow-x-hidden pt-8 pb-16 flex flex-col justify-between relative text-slate-800 text-xs scrollbar-none font-sans">
+              <div className="w-full h-full bg-white rounded-[38px] overflow-hidden flex flex-col relative text-slate-800 text-xs font-sans">
                 
-                {/* 1. SCREEN: HOME FEED */}
-                {activeScreen === 'home' && (
-                  <div className="p-4 space-y-4 animate-in fade-in duration-200">
+                {/* Scrollable Screen Content */}
+                <div className="flex-1 overflow-y-auto overflow-x-hidden pt-8 pb-4 scrollbar-none flex flex-col">
+                
+                  {/* 1. SCREEN: HOME FEED */}
+                  {activeScreen === 'home' && (
+                    <div className="p-4 space-y-4 animate-in fade-in duration-200">
                     {/* Header */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
@@ -348,39 +351,41 @@ export const AppDownloadSection: React.FC = () => {
                   </div>
                 )}
 
-                {/* Bottom Navigation Bar inside Phone Mockup */}
-                <div className="absolute bottom-0 left-0 right-0 h-14 bg-white border-t border-slate-100 flex items-center justify-around px-2 text-[9px] font-bold text-slate-400">
+              </div>
+
+                {/* Fixed Bottom Navigation Bar inside Phone Mockup */}
+                <div className="h-14 bg-white/95 backdrop-blur-md border-t border-slate-100 flex items-center justify-around px-2 text-[9px] font-bold text-slate-400 shrink-0 z-20 shadow-xs">
                   <button
                     onClick={() => setActiveScreen('home')}
-                    className={`flex flex-col items-center ${activeScreen === 'home' ? 'text-blue-600' : ''}`}
+                    className={`flex flex-col items-center cursor-pointer transition-colors ${activeScreen === 'home' ? 'text-blue-600 font-black' : 'hover:text-slate-600'}`}
                   >
                     <span>🏠</span>
                     <span>Home</span>
                   </button>
                   <button
                     onClick={() => setActiveScreen('courses')}
-                    className={`flex flex-col items-center ${activeScreen === 'courses' ? 'text-blue-600' : ''}`}
+                    className={`flex flex-col items-center cursor-pointer transition-colors ${activeScreen === 'courses' ? 'text-blue-600 font-black' : 'hover:text-slate-600'}`}
                   >
                     <span>📚</span>
                     <span>Courses</span>
                   </button>
                   <button
                     onClick={() => setActiveScreen('chat')}
-                    className={`flex flex-col items-center ${activeScreen === 'chat' ? 'text-blue-600' : ''}`}
+                    className={`flex flex-col items-center cursor-pointer transition-colors ${activeScreen === 'chat' ? 'text-blue-600 font-black' : 'hover:text-slate-600'}`}
                   >
                     <span>💬</span>
                     <span>Chat</span>
                   </button>
                   <button
                     onClick={() => setActiveScreen('receipt')}
-                    className={`flex flex-col items-center ${activeScreen === 'receipt' ? 'text-blue-600' : ''}`}
+                    className={`flex flex-col items-center cursor-pointer transition-colors ${activeScreen === 'receipt' ? 'text-blue-600 font-black' : 'hover:text-slate-600'}`}
                   >
                     <span>🧾</span>
                     <span>Receipt</span>
                   </button>
                   <button
                     onClick={() => setActiveScreen('profile')}
-                    className={`flex flex-col items-center ${activeScreen === 'profile' ? 'text-blue-600' : ''}`}
+                    className={`flex flex-col items-center cursor-pointer transition-colors ${activeScreen === 'profile' ? 'text-blue-600 font-black' : 'hover:text-slate-600'}`}
                   >
                     <span>👤</span>
                     <span>Profile</span>
@@ -404,7 +409,7 @@ export const AppDownloadSection: React.FC = () => {
             </h3>
 
             <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-              The official <strong>Educa Institute</strong> mobile and tablet app brings high-speed video lectures, daily practice sheets, photo question recognition, and direct mentor chats with Founder S. R. Anand, Akash, and faculty.
+              The official <strong>Educa Institute</strong> mobile and tablet app brings high-speed video lectures, daily practice sheets, photo question recognition, and direct mentor chats with Founder S. R. Anand, A.D. Rao, and faculty.
             </p>
 
 
