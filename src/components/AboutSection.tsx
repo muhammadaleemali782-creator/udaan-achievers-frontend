@@ -27,10 +27,10 @@ export const AboutSection: React.FC = () => {
     },
     {
       year: '2024',
-      title: 'Smart Interactive Classrooms',
+      title: 'Smart Classrooms & Practical Clinical Labs',
       icon: Laptop,
       color: 'text-purple-600 bg-purple-50 border-purple-200',
-      desc: 'Equipped audio-visual smart screens and automated weekly chapter testing with parent progress SMS reports.'
+      desc: 'Equipped audio-visual smart screens, clinical practical labs, and automated weekly chapter testing with progress reports.'
     },
     {
       year: '2026',
@@ -308,7 +308,8 @@ export const AboutSection: React.FC = () => {
               return (
                 <div
                   key={item.year}
-                  className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-card-clean hover:shadow-learner-lg hover:border-[#0066FF]/40 transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between group"
+                  id={`milestone-card-${item.year}`}
+                  className="p-5 rounded-2xl bg-white border border-slate-200/80 shadow-card-clean hover:shadow-learner-lg hover:border-[#0066FF]/40 transition-all duration-300 transform hover:-translate-y-1 flex flex-col justify-between group !block"
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
@@ -319,11 +320,11 @@ export const AboutSection: React.FC = () => {
                         <IconComp className="w-4 h-4" />
                       </div>
                     </div>
-                    <div>
-                      <h4 className="text-xs sm:text-sm font-black text-slate-900 group-hover:text-[#0066FF] transition-colors leading-snug">
+                    <div id={`milestone-content-${item.year}`} className="!block space-y-1.5">
+                      <h4 id={`milestone-title-${item.year}`} className="text-xs sm:text-sm font-black text-slate-900 group-hover:text-[#0066FF] transition-colors leading-snug !block">
                         {item.title}
                       </h4>
-                      <p className="text-[11px] text-slate-500 mt-1.5 leading-relaxed font-medium">
+                      <p id={`milestone-desc-${item.year}`} className="text-[11px] text-slate-500 leading-relaxed font-medium !block">
                         {item.desc}
                       </p>
                     </div>

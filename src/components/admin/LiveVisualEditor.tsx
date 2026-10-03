@@ -458,6 +458,11 @@ export const applyVisualOverrides = (overrides?: Record<string, VisualOverrideIt
 
     let targetEl: HTMLElement | null = null;
     if (item.selector) {
+      // Guard: Never apply visual overrides to milestone cards or milestone containers in about-section
+      const selLower = item.selector.toLowerCase();
+      if (selLower.includes('milestone') || (selLower.includes('about-section') && selLower.includes('div:nth-of-type(3)'))) {
+        return;
+      }
       try {
         targetEl = document.querySelector(item.selector);
       } catch (e) {}

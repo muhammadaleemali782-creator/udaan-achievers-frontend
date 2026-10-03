@@ -350,6 +350,30 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     document.documentElement.classList.remove('dark');
     document.body.classList.remove('dark');
 
+    // Clean up stale milestone overrides from localStorage directly
+    try {
+      localStorage.removeItem('educa_study_materials_v4');
+      const ovKeys = ['educa_visual_overrides', 'lcc_visual_overrides'];
+      ovKeys.forEach(key => {
+        const raw = localStorage.getItem(key);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && typeof parsed === 'object') {
+            let changed = false;
+            Object.keys(parsed).forEach(k => {
+              if (k.toLowerCase().includes('milestone') || (k.includes('about-section') && k.includes('div:nth-of-type(3)'))) {
+                delete parsed[k];
+                changed = true;
+              }
+            });
+            if (changed) {
+              localStorage.setItem(key, JSON.stringify(parsed));
+            }
+          }
+        }
+      });
+    } catch {}
+
     const handlePopState = () => {
       const path = window.location.pathname.toLowerCase();
       const hash = window.location.hash.toLowerCase();
@@ -387,7 +411,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
         setWebsiteSettings(prev => {
           const merged = { ...prev, ...remote };
           if (remote.visualOverrides) {
-            merged.visualOverrides = { ...(prev.visualOverrides || {}), ...remote.visualOverrides };
+            const cleanRemoteOverrides: Record<string, any> = {};
+            Object.entries(remote.visualOverrides).forEach(([k, v]: [string, any]) => {
+              if (k.toLowerCase().includes('milestone') || (k.includes('about-section') && k.includes('div:nth-of-type(3)'))) return;
+              if (v?.selector && (v.selector.toLowerCase().includes('milestone') || (v.selector.includes('about-section') && v.selector.includes('div:nth-of-type(3)')))) return;
+              cleanRemoteOverrides[k] = v;
+            });
+            merged.visualOverrides = { ...(prev.visualOverrides || {}), ...cleanRemoteOverrides };
           }
           // ponytail: director name is permanent — never let MongoDB override it
           merged.directorName = 'S. R. Anand';
@@ -449,7 +479,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       }));
   });
   const [studyMaterials, setStudyMaterials] = useState<StudyMaterial[]>(() => {
-    const saved = loadSaved<StudyMaterial[] | null>('educa_study_materials_v4', null);
+    const saved = loadSaved<StudyMaterial[] | null>('educa_study_materials_v5', null);
     if (saved && Array.isArray(saved) && saved.length > 0) return saved;
     return INITIAL_STUDY_MATERIALS;
   });
@@ -474,10 +504,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       ...(INITIAL_SETTINGS.visualOverrides || {}),
       ...(saved.visualOverrides || {})
     };
-    // Sanitize visual overrides: strip unwanted white boxes and empty card wiping
+    // Sanitize visual overrides: strip unwanted white boxes, empty card wiping, and milestone interference
     const sanitizedOverrides: Record<string, any> = {};
     Object.entries(mergedOverrides).forEach(([k, v]: [string, any]) => {
       if (!v) return;
+      if (k.toLowerCase().includes('milestone') || (k.includes('about-section') && k.includes('div:nth-of-type(3)'))) {
+        return;
+      }
+      if (v.selector && (v.selector.toLowerCase().includes('milestone') || (v.selector.includes('about-section') && v.selector.includes('div:nth-of-type(3)')))) {
+        return;
+      }
       const bg = (v.backgroundColor || '').toLowerCase().trim();
       if (bg === '#ffffff' || bg === '#fff' || bg === 'white' || bg === 'rgb(255, 255, 255)') {
         v.backgroundColor = undefined;
@@ -1089,7 +1125,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     };
     setStudyMaterials(prev => {
       const updated = [newMat, ...prev];
-      saveItem('educa_study_materials_v4', updated);
+      saveItem('educa_study_materials_v5', updated);
       return updated;
     });
     showToast(`Material "${newMat.title}" published!`, 'success');
@@ -1098,7 +1134,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const updateStudyMaterial = (id: string, updatedMat: Partial<StudyMaterial>) => {
     setStudyMaterials(prev => {
       const updated = prev.map(m => m.id === id ? { ...m, ...updatedMat } : m);
-      saveItem('educa_study_materials_v4', updated);
+      saveItem('educa_study_materials_v5', updated);
       return updated;
     });
     showToast('Study handbook updated successfully!', 'success');
@@ -1108,7 +1144,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     api.media.deletePDF(id).catch(() => {});
     setStudyMaterials(prev => {
       const updated = prev.filter(m => m.id !== id);
-      saveItem('educa_study_materials_v4', updated);
+      saveItem('educa_study_materials_v5', updated);
       return updated;
     });
     showToast('Study material deleted.', 'info');

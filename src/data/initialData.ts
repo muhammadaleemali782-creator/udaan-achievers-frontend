@@ -64,39 +64,9 @@ export const INITIAL_COURSES: Course[] = [
 ];
 
 export const INITIAL_STUDY_MATERIALS: StudyMaterial[] = [
-  // Master Course Blueprints
-  {
-    id: 'mat-blueprint-en',
-    title: 'EDUCA Wellness Coaching Master Blueprint (Bilingual)',
-    category: 'formulas',
-    targetClass: 'WCNA Certification',
-    subject: 'Wellness Master Blueprint',
-    chapter: 'Course Blueprint & Student Study Guide: 12 Books | 120 Chapters',
-    pages: 35,
-    downloadUrl: '/documents/EDUCA_Wellness_Coaching_Blueprint.docx',
-    isPremium: false,
-    fileType: 'doc',
-    dateAdded: '2026-09-01',
-    downloadsCount: 2450,
-    previewContent: 'Official master syllabus blueprint and student study roadmap across all 12 modules (120 chapters) in Hindi & English.'
-  },
-  {
-    id: 'mat-blueprint-hi',
-    title: 'EDUCA वेलनेस कोचिंग संपूर्ण ब्लूप्रिंट (हिंदी संस्करण)',
-    category: 'formulas',
-    targetClass: 'WCNA Certification',
-    subject: 'Wellness Master Blueprint (Hindi)',
-    chapter: 'कोर्स ब्लूप्रिंट और विद्यार्थी अध्ययन गाइड: 12 पुस्तकें | 120 अध्याय',
-    pages: 40,
-    downloadUrl: '/documents/EDUCA_Wellness_Coaching_Blueprint_Hindi.docx',
-    isPremium: false,
-    fileType: 'doc',
-    dateAdded: '2026-09-01',
-    downloadsCount: 2280,
-    previewContent: 'एजुका इंस्टीट्यूट ऑफ कंसल्टेंसी की 12 पुस्तकों और 120 अध्यायों की विस्तृत हिंदी अध्ययन मार्गदर्शिका और परीक्षा तैयारी ब्लूप्रिंट।'
-  },
-
-  // Book 1
+  // ==========================================
+  // SECTION 1: 12 CORE COURSE HANDBOOKS (BOOKS 1 - 12)
+  // ==========================================
   {
     id: 'mat-wcna-book-1',
     title: 'Book 1: Wellness Coaching — Introduction',
@@ -113,23 +83,6 @@ export const INITIAL_STUDY_MATERIALS: StudyMaterial[] = [
     previewContent: 'Foundations of Wellness Coaching, Naturopathy and Ayurveda principles, scope of practice, and client consultation model in Hindi & English.'
   },
   {
-    id: 'mat-wcna-qb-1',
-    title: 'Book 1: Question Bank — 100 Q&A',
-    category: 'practice_sets',
-    targetClass: 'WCNA Program',
-    subject: 'Naturopathy & Ayurveda',
-    chapter: 'Book 1 Question Bank: MCQs, Short & Long Answers',
-    pages: 42,
-    downloadUrl: '/documents/Book1_QuestionBank_EDUCA.docx',
-    isPremium: false,
-    fileType: 'doc',
-    dateAdded: '2026-08-16',
-    downloadsCount: 1980,
-    previewContent: '100 Questions & Answers repository covering all 9 chapters of Book 1 with MCQs, short answers, and long clinical questions.'
-  },
-
-  // Book 2
-  {
     id: 'mat-wcna-book-2',
     title: 'Book 2: Naturopathy Basics',
     category: 'pdf_notes',
@@ -144,23 +97,6 @@ export const INITIAL_STUDY_MATERIALS: StudyMaterial[] = [
     downloadsCount: 2840,
     previewContent: 'Pancha Mahabhuta (five elements) theory, vital force principles, hydrotherapy, mud therapy, fasting, and natural detoxification healing.'
   },
-  {
-    id: 'mat-wcna-qb-2',
-    title: 'Book 2: Question Bank — 100 Q&A',
-    category: 'practice_sets',
-    targetClass: 'WCNA Program',
-    subject: 'Naturopathy',
-    chapter: 'Book 2 Question Bank: 100 Q&A Across 10 Chapters',
-    pages: 44,
-    downloadUrl: '/documents/Book2_QuestionBank_EDUCA.docx',
-    isPremium: false,
-    fileType: 'doc',
-    dateAdded: '2026-08-18',
-    downloadsCount: 1720,
-    previewContent: '100 Question evaluation bank testing Naturopathic principles, drugless modalities, safety guidelines, and clinical applications.'
-  },
-
-  // Book 3
   {
     id: 'mat-wcna-book-3',
     title: 'Book 3: Ayurveda Basics',
@@ -177,23 +113,6 @@ export const INITIAL_STUDY_MATERIALS: StudyMaterial[] = [
     previewContent: 'Tridosha analysis (Vata, Pitta, Kapha), Sapta Dhatus, Agni (digestive fire), Prakriti diagnosis, Ritucharya, and Ayurvedic pharmacology.'
   },
   {
-    id: 'mat-wcna-qb-3',
-    title: 'Book 3: Question Bank — 100 Q&A',
-    category: 'practice_sets',
-    targetClass: 'WCNA Program',
-    subject: 'Ayurveda',
-    chapter: 'Book 3 Question Bank: 100 Q&A Across 11 Chapters',
-    pages: 46,
-    downloadUrl: '/documents/Book3_QuestionBank_EDUCA.docx',
-    isPremium: false,
-    fileType: 'doc',
-    dateAdded: '2026-08-20',
-    downloadsCount: 2150,
-    previewContent: '100 Questions & Answers in Hindi & English spanning Doshas, Dhatus, Agni, Prakriti assessment, and seasonal therapeutic diets.'
-  },
-
-  // Book 4
-  {
     id: 'mat-wcna-book-4',
     title: 'Book 4: Human Anatomy Basics',
     category: 'pdf_notes',
@@ -208,23 +127,6 @@ export const INITIAL_STUDY_MATERIALS: StudyMaterial[] = [
     downloadsCount: 2620,
     previewContent: 'Structural overview of organ systems, circulatory and endocrine pathways, nervous system, and physiological mechanisms in holistic health.'
   },
-  {
-    id: 'mat-wcna-qb-4',
-    title: 'Book 4: Question Bank — Anatomy Basics',
-    category: 'practice_sets',
-    targetClass: 'WCNA Program',
-    subject: 'Anatomy & Physiology',
-    chapter: 'Book 4 Question Bank: Organ Systems & Functions',
-    pages: 38,
-    downloadUrl: '/documents/Book4_QuestionBank_EDUCA.docx',
-    isPremium: false,
-    fileType: 'doc',
-    dateAdded: '2026-08-22',
-    downloadsCount: 1640,
-    previewContent: 'Curated anatomy examination questions, organ system identification, physiological explanations, and clinical correlation exercises.'
-  },
-
-  // Book 5
   {
     id: 'mat-wcna-book-5',
     title: 'Book 5: Client Assessment',
@@ -241,23 +143,6 @@ export const INITIAL_STUDY_MATERIALS: StudyMaterial[] = [
     previewContent: 'Standard intake protocols, Nadi Pariksha principles, tongue & eye examination, wellness questionnaire analysis, client records, and goal mapping.'
   },
   {
-    id: 'mat-wcna-qb-5',
-    title: 'Book 5: Question Bank — 100 Q&A',
-    category: 'practice_sets',
-    targetClass: 'WCNA Program',
-    subject: 'Clinical Consultation',
-    chapter: 'Book 5 Question Bank: Intake & Case Studies',
-    pages: 42,
-    downloadUrl: '/documents/Book5_QuestionBank_EDUCA.docx',
-    isPremium: false,
-    fileType: 'doc',
-    dateAdded: '2026-08-24',
-    downloadsCount: 1490,
-    previewContent: '100 Practical case assessment questions, intake evaluation scenarios, client consultation workflows, and record-keeping protocols.'
-  },
-
-  // Book 6
-  {
     id: 'mat-wcna-book-6',
     title: 'Book 6: Diet Planning',
     category: 'pdf_notes',
@@ -272,23 +157,6 @@ export const INITIAL_STUDY_MATERIALS: StudyMaterial[] = [
     downloadsCount: 2980,
     previewContent: 'Pathya-Apathya nutritional plans, caloric balance, seasonal eating (Ritucharya), therapeutic fasting, and individualized dietary blueprints.'
   },
-  {
-    id: 'mat-wcna-qb-6',
-    title: 'Book 6: Question Bank — 100 Q&A',
-    category: 'practice_sets',
-    targetClass: 'WCNA Program',
-    subject: 'Nutrition & Dietetics',
-    chapter: 'Book 6 Question Bank: Nutritional Case Studies',
-    pages: 45,
-    downloadUrl: '/documents/Book6_QuestionBank_EDUCA.docx',
-    isPremium: false,
-    fileType: 'doc',
-    dateAdded: '2026-08-26',
-    downloadsCount: 1810,
-    previewContent: '100 Examination questions covering Dosha-based diets, food combinations, meal timing, seasonal charts, and dietary safety rules.'
-  },
-
-  // Book 7
   {
     id: 'mat-wcna-book-7',
     title: 'Book 7: Lifestyle & Routine Coaching',
@@ -305,23 +173,6 @@ export const INITIAL_STUDY_MATERIALS: StudyMaterial[] = [
     previewContent: 'Dinacharya (daily regimen), Ratricharya (night routine), sleep hygiene, circadian rhythm optimization, exercise science, and sustainable habit coaching.'
   },
   {
-    id: 'mat-wcna-qb-7',
-    title: 'Book 7: Question Bank — 100 Q&A',
-    category: 'practice_sets',
-    targetClass: 'WCNA Program',
-    subject: 'Lifestyle Medicine',
-    chapter: 'Book 7 Question Bank: Lifestyle & Routine Coaching',
-    pages: 44,
-    downloadUrl: '/documents/Book7_QuestionBank_EDUCA.docx',
-    isPremium: false,
-    fileType: 'doc',
-    dateAdded: '2026-08-28',
-    downloadsCount: 1530,
-    previewContent: '100 Question evaluation bank testing sleep routine design, stress reduction strategies, habit tracking techniques, and client adherence coaching.'
-  },
-
-  // Book 8
-  {
     id: 'mat-wcna-book-8',
     title: 'Book 8: Managing Common Lifestyle Diseases',
     category: 'pdf_notes',
@@ -336,23 +187,6 @@ export const INITIAL_STUDY_MATERIALS: StudyMaterial[] = [
     downloadsCount: 3260,
     previewContent: 'Evidence-based lifestyle support protocols for hypertension, type-2 diabetes, obesity, thyroid imbalance, fatty liver, and chronic acidity.'
   },
-  {
-    id: 'mat-wcna-qb-8',
-    title: 'Book 8: Question Bank — 100 Q&A',
-    category: 'practice_sets',
-    targetClass: 'WCNA Program',
-    subject: 'Lifestyle Disorders',
-    chapter: 'Book 8 Question Bank: Therapeutic Lifestyle Cases',
-    pages: 46,
-    downloadUrl: '/documents/Book8_QuestionBank_EDUCA.docx',
-    isPremium: false,
-    fileType: 'doc',
-    dateAdded: '2026-08-30',
-    downloadsCount: 1940,
-    previewContent: '100 Clinical examination questions on metabolic disorder management, lifestyle intervention guidelines, and client progress monitoring.'
-  },
-
-  // Book 9
   {
     id: 'mat-wcna-book-9',
     title: 'Book 9: Herbs & Supplements Guidance',
@@ -369,23 +203,6 @@ export const INITIAL_STUDY_MATERIALS: StudyMaterial[] = [
     previewContent: 'Healing herbs (Ashwagandha, Giloy, Triphala, Brahmi, Shatavari), supplement guidance, extraction principles, safety margins, contraindications, and myth-busting.'
   },
   {
-    id: 'mat-wcna-qb-9',
-    title: 'Book 9: Question Bank — 100 Q&A',
-    category: 'practice_sets',
-    targetClass: 'WCNA Program',
-    subject: 'Herbal Science',
-    chapter: 'Book 9 Question Bank: Herbal Formulations & Safety',
-    pages: 45,
-    downloadUrl: '/documents/Book9_QuestionBank_EDUCA.docx',
-    isPremium: false,
-    fileType: 'doc',
-    dateAdded: '2026-09-01',
-    downloadsCount: 1680,
-    previewContent: '100 Questions on Ayurvedic herb selection, decoction preparation, therapeutic dosages, contraindication checks, and supplement guidelines.'
-  },
-
-  // Book 10
-  {
     id: 'mat-wcna-book-10',
     title: 'Book 10: Client Communication & Counseling Skills',
     category: 'pdf_notes',
@@ -400,23 +217,6 @@ export const INITIAL_STUDY_MATERIALS: StudyMaterial[] = [
     downloadsCount: 2470,
     previewContent: 'Empathetic active listening, motivational interviewing, overcoming client resistance, non-violent communication, feedback delivery, and rapport building.'
   },
-  {
-    id: 'mat-wcna-qb-10',
-    title: 'Book 10: Question Bank — 100 Q&A',
-    category: 'practice_sets',
-    targetClass: 'WCNA Program',
-    subject: 'Communication & Counseling',
-    chapter: 'Book 10 Question Bank: Counseling & Communication',
-    pages: 44,
-    downloadUrl: '/documents/Book10_QuestionBank_EDUCA.docx',
-    isPremium: false,
-    fileType: 'doc',
-    dateAdded: '2026-09-03',
-    downloadsCount: 1590,
-    previewContent: '100 Practical communication exam scenarios covering active listening tests, client negotiation, empathy demonstration, and motivational questioning.'
-  },
-
-  // Book 11
   {
     id: 'mat-wcna-book-11',
     title: 'Book 11: Professional Ethics & Legal Guidelines',
@@ -433,23 +233,6 @@ export const INITIAL_STUDY_MATERIALS: StudyMaterial[] = [
     previewContent: 'Ethical boundaries, legal scope of practice for non-medical wellness coaches, client consent, confidentiality, record keeping, and professional integrity standards.'
   },
   {
-    id: 'mat-wcna-qb-11',
-    title: 'Book 11: Question Bank — 100 Q&A',
-    category: 'practice_sets',
-    targetClass: 'WCNA Program',
-    subject: 'Professional Ethics & Practice',
-    chapter: 'Book 11 Question Bank: Legal & Ethical Dilemmas',
-    pages: 42,
-    downloadUrl: '/documents/Book11_QuestionBank_EDUCA.docx',
-    isPremium: false,
-    fileType: 'doc',
-    dateAdded: '2026-09-05',
-    downloadsCount: 1420,
-    previewContent: '100 Ethical case dilemma evaluations, legal compliance scenarios, consent form administration, and client data protection questions.'
-  },
-
-  // Book 12
-  {
     id: 'mat-wcna-book-12',
     title: 'Book 12: Starting Your Own Wellness Practice',
     category: 'pdf_notes',
@@ -463,6 +246,175 @@ export const INITIAL_STUDY_MATERIALS: StudyMaterial[] = [
     dateAdded: '2026-09-06',
     downloadsCount: 3050,
     previewContent: 'Launching a successful clinic or consultancy, fee structuring, client onboarding systems, branding, digital marketing, ethical practice growth, and finance.'
+  },
+
+  // ==========================================
+  // SECTION 2: 12 QUESTION BANKS (100 Q&A EACH)
+  // ==========================================
+  {
+    id: 'mat-wcna-qb-1',
+    title: 'Book 1: Question Bank — 100 Q&A',
+    category: 'practice_sets',
+    targetClass: 'WCNA Program',
+    subject: 'Naturopathy & Ayurveda',
+    chapter: 'Book 1 Question Bank: MCQs, Short & Long Answers',
+    pages: 42,
+    downloadUrl: '/documents/Book1_QuestionBank_EDUCA.docx',
+    isPremium: false,
+    fileType: 'doc',
+    dateAdded: '2026-08-16',
+    downloadsCount: 1980,
+    previewContent: '100 Questions & Answers repository covering all 9 chapters of Book 1 with MCQs, short answers, and long clinical questions.'
+  },
+  {
+    id: 'mat-wcna-qb-2',
+    title: 'Book 2: Question Bank — 100 Q&A',
+    category: 'practice_sets',
+    targetClass: 'WCNA Program',
+    subject: 'Naturopathy',
+    chapter: 'Book 2 Question Bank: 100 Q&A Across 10 Chapters',
+    pages: 44,
+    downloadUrl: '/documents/Book2_QuestionBank_EDUCA.docx',
+    isPremium: false,
+    fileType: 'doc',
+    dateAdded: '2026-08-18',
+    downloadsCount: 1720,
+    previewContent: '100 Question evaluation bank testing Naturopathic principles, drugless modalities, safety guidelines, and clinical applications.'
+  },
+  {
+    id: 'mat-wcna-qb-3',
+    title: 'Book 3: Question Bank — 100 Q&A',
+    category: 'practice_sets',
+    targetClass: 'WCNA Program',
+    subject: 'Ayurveda',
+    chapter: 'Book 3 Question Bank: 100 Q&A Across 11 Chapters',
+    pages: 46,
+    downloadUrl: '/documents/Book3_QuestionBank_EDUCA.docx',
+    isPremium: false,
+    fileType: 'doc',
+    dateAdded: '2026-08-20',
+    downloadsCount: 2150,
+    previewContent: '100 Questions & Answers in Hindi & English spanning Doshas, Dhatus, Agni, Prakriti assessment, and seasonal therapeutic diets.'
+  },
+  {
+    id: 'mat-wcna-qb-4',
+    title: 'Book 4: Question Bank — Anatomy Basics',
+    category: 'practice_sets',
+    targetClass: 'WCNA Program',
+    subject: 'Anatomy & Physiology',
+    chapter: 'Book 4 Question Bank: Organ Systems & Functions',
+    pages: 38,
+    downloadUrl: '/documents/Book4_QuestionBank_EDUCA.docx',
+    isPremium: false,
+    fileType: 'doc',
+    dateAdded: '2026-08-22',
+    downloadsCount: 1640,
+    previewContent: 'Curated anatomy examination questions, organ system identification, physiological explanations, and clinical correlation exercises.'
+  },
+  {
+    id: 'mat-wcna-qb-5',
+    title: 'Book 5: Question Bank — 100 Q&A',
+    category: 'practice_sets',
+    targetClass: 'WCNA Program',
+    subject: 'Clinical Consultation',
+    chapter: 'Book 5 Question Bank: Intake & Case Studies',
+    pages: 42,
+    downloadUrl: '/documents/Book5_QuestionBank_EDUCA.docx',
+    isPremium: false,
+    fileType: 'doc',
+    dateAdded: '2026-08-24',
+    downloadsCount: 1490,
+    previewContent: '100 Practical case assessment questions, intake evaluation scenarios, client consultation workflows, and record-keeping protocols.'
+  },
+  {
+    id: 'mat-wcna-qb-6',
+    title: 'Book 6: Question Bank — 100 Q&A',
+    category: 'practice_sets',
+    targetClass: 'WCNA Program',
+    subject: 'Nutrition & Dietetics',
+    chapter: 'Book 6 Question Bank: Nutritional Case Studies',
+    pages: 45,
+    downloadUrl: '/documents/Book6_QuestionBank_EDUCA.docx',
+    isPremium: false,
+    fileType: 'doc',
+    dateAdded: '2026-08-26',
+    downloadsCount: 1810,
+    previewContent: '100 Examination questions covering Dosha-based diets, food combinations, meal timing, seasonal charts, and dietary safety rules.'
+  },
+  {
+    id: 'mat-wcna-qb-7',
+    title: 'Book 7: Question Bank — 100 Q&A',
+    category: 'practice_sets',
+    targetClass: 'WCNA Program',
+    subject: 'Lifestyle Medicine',
+    chapter: 'Book 7 Question Bank: Lifestyle & Routine Coaching',
+    pages: 44,
+    downloadUrl: '/documents/Book7_QuestionBank_EDUCA.docx',
+    isPremium: false,
+    fileType: 'doc',
+    dateAdded: '2026-08-28',
+    downloadsCount: 1530,
+    previewContent: '100 Question evaluation bank testing sleep routine design, stress reduction strategies, habit tracking techniques, and client adherence coaching.'
+  },
+  {
+    id: 'mat-wcna-qb-8',
+    title: 'Book 8: Question Bank — 100 Q&A',
+    category: 'practice_sets',
+    targetClass: 'WCNA Program',
+    subject: 'Lifestyle Disorders',
+    chapter: 'Book 8 Question Bank: Therapeutic Lifestyle Cases',
+    pages: 46,
+    downloadUrl: '/documents/Book8_QuestionBank_EDUCA.docx',
+    isPremium: false,
+    fileType: 'doc',
+    dateAdded: '2026-08-30',
+    downloadsCount: 1940,
+    previewContent: '100 Clinical examination questions on metabolic disorder management, lifestyle intervention guidelines, and client progress monitoring.'
+  },
+  {
+    id: 'mat-wcna-qb-9',
+    title: 'Book 9: Question Bank — 100 Q&A',
+    category: 'practice_sets',
+    targetClass: 'WCNA Program',
+    subject: 'Herbal Science',
+    chapter: 'Book 9 Question Bank: Herbal Formulations & Safety',
+    pages: 45,
+    downloadUrl: '/documents/Book9_QuestionBank_EDUCA.docx',
+    isPremium: false,
+    fileType: 'doc',
+    dateAdded: '2026-09-01',
+    downloadsCount: 1680,
+    previewContent: '100 Questions on Ayurvedic herb selection, decoction preparation, therapeutic dosages, contraindication checks, and supplement guidelines.'
+  },
+  {
+    id: 'mat-wcna-qb-10',
+    title: 'Book 10: Question Bank — 100 Q&A',
+    category: 'practice_sets',
+    targetClass: 'WCNA Program',
+    subject: 'Communication & Counseling',
+    chapter: 'Book 10 Question Bank: Counseling & Communication',
+    pages: 44,
+    downloadUrl: '/documents/Book10_QuestionBank_EDUCA.docx',
+    isPremium: false,
+    fileType: 'doc',
+    dateAdded: '2026-09-03',
+    downloadsCount: 1590,
+    previewContent: '100 Practical communication exam scenarios covering active listening tests, client negotiation, empathy demonstration, and motivational questioning.'
+  },
+  {
+    id: 'mat-wcna-qb-11',
+    title: 'Book 11: Question Bank — 100 Q&A',
+    category: 'practice_sets',
+    targetClass: 'WCNA Program',
+    subject: 'Professional Ethics & Practice',
+    chapter: 'Book 11 Question Bank: Legal & Ethical Dilemmas',
+    pages: 42,
+    downloadUrl: '/documents/Book11_QuestionBank_EDUCA.docx',
+    isPremium: false,
+    fileType: 'doc',
+    dateAdded: '2026-09-05',
+    downloadsCount: 1420,
+    previewContent: '100 Ethical case dilemma evaluations, legal compliance scenarios, consent form administration, and client data protection questions.'
   },
   {
     id: 'mat-wcna-qb-12',
@@ -480,7 +432,43 @@ export const INITIAL_STUDY_MATERIALS: StudyMaterial[] = [
     previewContent: '100 Practice management questions covering consultancy launch checklists, financial break-even models, marketing plans, and client retention strategies.'
   },
 
-  // Wealth Management / Finance Section
+  // ==========================================
+  // SECTION 3: MASTER COURSE BLUEPRINTS (ENGLISH)
+  // ==========================================
+  {
+    id: 'mat-blueprint-en',
+    title: 'EDUCA Wellness Coaching Master Blueprint (Bilingual Edition)',
+    category: 'formulas',
+    targetClass: 'WCNA Certification',
+    subject: 'Wellness Master Blueprint',
+    chapter: 'Course Blueprint & Student Study Guide: 12 Books | 120 Chapters',
+    pages: 35,
+    downloadUrl: '/documents/EDUCA_Wellness_Coaching_Blueprint.docx',
+    isPremium: false,
+    fileType: 'doc',
+    dateAdded: '2026-09-01',
+    downloadsCount: 2450,
+    previewContent: 'Official master syllabus blueprint and student study roadmap across all 12 modules (120 chapters) in Hindi & English.'
+  },
+  {
+    id: 'mat-blueprint-hi',
+    title: 'EDUCA Wellness Coaching Master Blueprint (Hindi Student Edition)',
+    category: 'formulas',
+    targetClass: 'WCNA Certification',
+    subject: 'Wellness Master Blueprint',
+    chapter: 'Course Blueprint & Student Study Guide: 12 Books | 120 Chapters (Hindi Edition)',
+    pages: 40,
+    downloadUrl: '/documents/EDUCA_Wellness_Coaching_Blueprint_Hindi.docx',
+    isPremium: false,
+    fileType: 'doc',
+    dateAdded: '2026-09-01',
+    downloadsCount: 2280,
+    previewContent: 'Comprehensive official 12-book and 120-chapter wellness coaching curriculum study guide and examination blueprint translated in student-friendly Hindi edition.'
+  },
+
+  // ==========================================
+  // SECTION 4: CORPORATE WEALTH MANAGEMENT (FINANCE)
+  // ==========================================
   {
     id: 'mat-wcfm-1',
     title: 'WCFM: Corporate Valuation & DCF Financial Modeling Handbook',
