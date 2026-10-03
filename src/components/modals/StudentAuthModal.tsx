@@ -10,7 +10,7 @@ export const StudentAuthModal: React.FC = () => {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [targetClass, setTargetClass] = useState('Class 10');
+  const [targetClass, setTargetClass] = useState('WCNA (Naturopathy & Ayurveda)');
   const [isForgotOpen, setIsForgotOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [needsNewPass, setNeedsNewPass] = useState(false);
@@ -257,20 +257,18 @@ export const StudentAuthModal: React.FC = () => {
                       </div>
 
                       <div>
-                        <label className="text-[11px] font-bold text-slate-700 block mb-1">Target Class / Course *</label>
+                        <label className="text-[11px] font-bold text-slate-700 block mb-1">Target Program / Pathway *</label>
                         <select
                           value={targetClass}
                           onChange={e => setTargetClass(e.target.value)}
                           className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-[#0066FF] font-medium"
                         >
-                          <option>Class 1–5</option>
-                          <option>Class 6–8</option>
-                          <option>Class 9</option>
-                          <option>Class 10 (Board)</option>
-                          <option>Class 11</option>
-                          <option>Class 12 (Board)</option>
-                          <option>Computer DCA / ADCA</option>
-                          <option>Spoken English Masterclass</option>
+                          <option>WCNA (Naturopathy & Ayurveda)</option>
+                          <option>WCFM (Wealth & Finance Management)</option>
+                          <option>10th Passed Foundation Pathway</option>
+                          <option>12th Passed Professional Track</option>
+                          <option>Graduate Specialization Track</option>
+                          <option>Communication & Public Speaking</option>
                         </select>
                       </div>
                     </>

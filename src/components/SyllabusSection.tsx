@@ -41,7 +41,7 @@ export const SyllabusSection: React.FC = () => {
             Official <span className="text-[#0066FF]">Syllabus Blueprint</span>
           </h2>
           <p className="text-slate-600 text-xs sm:text-base leading-relaxed font-medium">
-            Stay aligned with CBSE and State Board requirements with chapter-wise marks distribution, subtopics, and official blueprint downloads.
+            Structured module curriculum with weightage distribution, practical components, and official certification blueprint downloads.
           </p>
         </div>
 
@@ -92,7 +92,7 @@ export const SyllabusSection: React.FC = () => {
                   {activeSyllabus.subject} Comprehensive Blueprint
                 </h3>
                 <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
-                  Complete chapter-wise theoretical concepts, lab practicals, and 10-year board questions distribution.
+                  Complete module-wise theoretical principles, hands-on clinical/financial practicals, and evaluation criteria.
                 </p>
               </div>
             </div>
@@ -175,8 +175,8 @@ export const SyllabusSection: React.FC = () => {
                         <div className="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-200/80 flex items-start gap-3">
                           <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                           <div>
-                            <span className="text-xs font-black text-slate-900 block">Board Examination High-Yield</span>
-                            <span className="text-[11px] text-slate-600">Expected 10-year recurring question patterns with step-marking breakdown.</span>
+                            <span className="text-xs font-black text-slate-900 block">Practitioner Assessment Focus</span>
+                            <span className="text-[11px] text-slate-600">Core practical competency questions and diagnostic/valuation case analysis.</span>
                           </div>
                         </div>
 

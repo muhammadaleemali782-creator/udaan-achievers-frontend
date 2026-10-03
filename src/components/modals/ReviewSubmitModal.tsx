@@ -11,7 +11,7 @@ interface ReviewSubmitModalProps {
 export const ReviewSubmitModal: React.FC<ReviewSubmitModalProps> = ({ isOpen, onClose }) => {
   const { showToast, addReviewLocally } = useApp();
   const [name, setName] = useState('');
-  const [studentClass, setStudentClass] = useState('Class 10 Scholar');
+  const [studentClass, setStudentClass] = useState('WCNA Naturopathy & Ayurveda');
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -96,7 +96,7 @@ export const ReviewSubmitModal: React.FC<ReviewSubmitModalProps> = ({ isOpen, on
             <input
               type="text"
               required
-              placeholder="e.g. Class 10 (Board Topper) or DCA Diploma"
+              placeholder="e.g. WCNA Wellness Consultant or WCFM Wealth Advisor"
               value={studentClass}
               onChange={e => setStudentClass(e.target.value)}
               className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-[#0066FF]"

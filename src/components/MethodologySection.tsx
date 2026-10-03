@@ -8,41 +8,41 @@ export const MethodologySection: React.FC = () => {
   const methods = [
     {
       id: 1,
-      title: 'Diagnostic Test',
-      subtitle: 'Identify Learning Gaps',
+      title: 'Diagnostic Learning Assessment',
+      subtitle: 'Identify Strengths & Learning Goals',
       icon: '🎯',
       badge: 'STAGE 1: EVALUATION',
-      desc: 'Before starting any batch, we conduct a friendly conceptual assessment to understand the student’s current foundation and specific weak areas in mathematics, science, or grammar.',
+      desc: 'Before beginning any program, we assess the learner’s background, career aspirations, and foundational readiness to construct a personalized academic and practical roadmap.',
       points: [
-        'Objective gap mapping in fundamental arithmetic and science laws',
-        'Customized study plan tailored to child’s pace without peer pressure',
-        '100% stress-free diagnostic report shared with parents'
+        'Objective background evaluation in natural health, finance, or communication',
+        'Personalized learning pathway aligned with individual career objectives',
+        'Comprehensive study plan with dedicated mentor allocation'
       ]
     },
     {
       id: 2,
-      title: 'Visual Foundation',
-      subtitle: 'Concept Over Cramming',
+      title: 'Conceptual & Practical Foundation',
+      subtitle: 'Principles Over Rote Memorization',
       icon: '💡',
       badge: 'STAGE 2: MASTERY',
-      desc: 'We use real-world practical examples, diagrammatic breakdowns, and audio-visual demonstrations so that complex formulas and theorems become intuitive and unforgettable.',
+      desc: 'We utilize structured handbooks, diagrammatic breakdowns, real-world case simulations, and audio-visual demonstrations so that complex principles become deeply understood and practically applicable.',
       points: [
-        'Diagram-led theory breakdowns with step-by-step logic',
-        'Relatable real-life analogies for chemistry reactions & physics laws',
-        'Formula derivation cheat-sheets provided for permanent memory'
+        'Framework-led conceptual breakdowns with step-by-step logic',
+        'Authentic clinical case studies in Naturopathy & Ayurvedic wellness',
+        'Hands-on valuation, financial modeling & corporate portfolio exercises'
       ]
     },
     {
       id: 3,
-      title: 'Doubt Clinics',
-      subtitle: '1-on-1 Daily Solutions',
+      title: 'Mentorship & Resolution Clinics',
+      subtitle: '1-on-1 Dedicated Guidance',
       icon: '🤝',
       badge: 'STAGE 3: RESOLUTION',
-      desc: 'Special dedicated 30-minute doubt clearance sessions after every class ensure no child goes home with an unresolved question or lingering confusion.',
+      desc: 'Dedicated doubt resolution clinics after every lecture ensure that complex case studies, practitioner queries, and coursework concepts are thoroughly resolved.',
       points: [
-        'Direct 1:1 interaction with S. R. Anand & senior faculty',
-        'No question is considered silly — warm and encouraging classroom vibe',
-        'Daily homework and DPP checking with personalized feedback'
+        'Direct 1:1 interaction with S. R. Anand and senior advisory faculty',
+        'Open, supportive environment encouraging intellectual inquiry',
+        'Regular module assessments with personalized practitioner feedback'
       ]
     }
   ];
@@ -58,10 +58,10 @@ export const MethodologySection: React.FC = () => {
         {/* Section Header with Mission Block Matching Reference */}
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <h2 className="text-3xl sm:text-5xl font-black text-[#0B3B95] tracking-tight">
-            Mission
+            Learning Methodology
           </h2>
           <p className="text-base sm:text-xl font-extrabold text-slate-800 leading-snug">
-            Empowering students with deep conceptual clarity, board exam excellence, and modern digital career skills.
+            Empowering learners with deep conceptual clarity, practical case mastery, and industry-oriented consultancy expertise.
           </p>
 
           <div className="flex items-center justify-center gap-2 pt-1">
@@ -154,7 +154,7 @@ export const MethodologySection: React.FC = () => {
                     </div>
 
                     <p className="text-[11px] text-slate-400 font-medium italic">
-                      "Our teachers at Educa Institute are rigorously trained to provide a warm, motivating, and personalized environment."
+                      "At Educa Institute of Consultancy, our faculty ensures a supportive, practical, and highly engaging professional learning environment."
                     </p>
                   </div>
                 )}

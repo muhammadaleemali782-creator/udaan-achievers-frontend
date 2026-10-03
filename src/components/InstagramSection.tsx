@@ -33,7 +33,7 @@ export const InstagramSection: React.FC = () => {
             Follow Us on <span className="text-[#0066FF]">Instagram</span>
           </h2>
           <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-medium">
-            Daily classroom activities, topper ceremonies, English speech snippets, and student celebrations.
+            Clinical practical highlights, financial modeling seminars, student presentations, and campus events.
           </p>
         </div>
 

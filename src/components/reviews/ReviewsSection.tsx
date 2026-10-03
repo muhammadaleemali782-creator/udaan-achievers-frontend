@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { useApp } from '../../context/AppContext';
 import { Star, MessageSquarePlus, Quote, CheckCircle2, Award } from 'lucide-react';
 import { ReviewSubmitModal } from '../modals/ReviewSubmitModal';
@@ -25,7 +25,7 @@ export const ReviewsSection: React.FC = () => {
               What Our <span className="text-[#0066FF]">Students & Parents</span> Say
             </h2>
             <p className="text-xs sm:text-base text-slate-600 font-medium">
-              Verified testimonials from board toppers, computer diploma scholars, and spoken English achievers.
+              Genuine feedback from certified consultants, practitioners, and scholars across our programs.
             </p>
           </div>
 

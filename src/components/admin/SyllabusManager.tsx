@@ -8,19 +8,19 @@ export const SyllabusManager: React.FC = () => {
   const [isAdding, setIsAdding] = useState(false);
 
   const [newSyllabus, setNewSyllabus] = useState<Partial<SyllabusItem>>({
-    targetClass: 'Class 10',
-    subject: 'Science',
-    examBoard: 'CBSE & State Board',
+    targetClass: 'WCNA Program',
+    subject: 'Naturopathy & Ayurveda',
+    examBoard: 'Educa Institute Board',
     totalMarks: 100,
     academicYear: '2026-2027',
     chapters: [
-      { name: 'Chemical Reactions and Equations', subtopics: ['Types of Reactions', 'Balancing Equations'], weightage: '6 Marks', estimatedHours: 12 }
+      { name: 'Foundations of Naturopathy & Philosophy', subtopics: ['Vital Economy', 'Five Elements & Toxemia'], weightage: '20 Marks', estimatedHours: 15 }
     ]
   });
 
   const [newChapterName, setNewChapterName] = useState('');
-  const [newChapterWeightage, setNewChapterWeightage] = useState('6 Marks');
-  const [newChapterSubtopics, setNewChapterSubtopics] = useState('Types of Reactions, Balancing Equations');
+  const [newChapterWeightage, setNewChapterWeightage] = useState('20 Marks');
+  const [newChapterSubtopics, setNewChapterSubtopics] = useState('Vital Economy, Five Elements & Toxemia');
 
   const handleAdd = (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,15 +33,15 @@ export const SyllabusManager: React.FC = () => {
       id: `syl-${Date.now()}`,
       targetClass: newSyllabus.targetClass,
       subject: newSyllabus.subject,
-      examBoard: newSyllabus.examBoard || 'CBSE & State Board',
+      examBoard: newSyllabus.examBoard || 'Educa Institute Board',
       totalMarks: Number(newSyllabus.totalMarks) || 100,
       academicYear: newSyllabus.academicYear || '2026-2027',
       pdfUrl: '#',
       chapters: [
         {
-          name: newChapterName || 'Chapter 1: Fundamentals',
+          name: newChapterName || 'Module 1: Core Principles',
           subtopics: newChapterSubtopics ? newChapterSubtopics.split(',').map(s => s.trim()) : ['Core Concepts'],
-          weightage: newChapterWeightage || '6 Marks',
+          weightage: newChapterWeightage || '20 Marks',
           estimatedHours: 10
         }
       ]
@@ -65,9 +65,9 @@ export const SyllabusManager: React.FC = () => {
         <div>
           <h2 className="text-xl font-black text-white flex items-center gap-2">
             <BookOpen className="w-6 h-6 text-emerald-400" />
-            <span>Syllabus & Marks Weightage Manager</span>
+            <span>Syllabus & Curriculum Weightage Manager</span>
           </h2>
-          <p className="text-xs text-slate-400">Configure board chapters, subtopic breakdowns, and question weightage marks.</p>
+          <p className="text-xs text-slate-400">Configure program modules, subtopic blueprints, and examination weightage.</p>
         </div>
 
         <button
@@ -86,11 +86,11 @@ export const SyllabusManager: React.FC = () => {
           
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="text-xs font-bold text-slate-300 block mb-1">Target Class *</label>
+              <label className="text-xs font-bold text-slate-300 block mb-1">Target Class / Program *</label>
               <input
                 type="text"
                 required
-                placeholder="e.g. Class 10 / Class 12"
+                placeholder="e.g. WCNA / WCFM / Executive Track"
                 value={newSyllabus.targetClass}
                 onChange={e => setNewSyllabus({ ...newSyllabus, targetClass: e.target.value })}
                 className="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500"
@@ -98,11 +98,11 @@ export const SyllabusManager: React.FC = () => {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-300 block mb-1">Subject *</label>
+              <label className="text-xs font-bold text-slate-300 block mb-1">Subject / Domain *</label>
               <input
                 type="text"
                 required
-                placeholder="e.g. Science / Mathematics / Physics"
+                placeholder="e.g. Naturopathy / Wealth Management / Public Speaking"
                 value={newSyllabus.subject}
                 onChange={e => setNewSyllabus({ ...newSyllabus, subject: e.target.value })}
                 className="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500"
@@ -110,10 +110,10 @@ export const SyllabusManager: React.FC = () => {
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-300 block mb-1">Exam Board</label>
+              <label className="text-xs font-bold text-slate-300 block mb-1">Exam / Certifying Board</label>
               <input
                 type="text"
-                placeholder="e.g. CBSE & State Board"
+                placeholder="e.g. Educa Institute Board / Professional Council"
                 value={newSyllabus.examBoard}
                 onChange={e => setNewSyllabus({ ...newSyllabus, examBoard: e.target.value })}
                 className="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500"
@@ -121,11 +121,11 @@ export const SyllabusManager: React.FC = () => {
             </div>
 
             <div className="sm:col-span-2">
-              <label className="text-xs font-bold text-slate-300 block mb-1">Chapter Name *</label>
+              <label className="text-xs font-bold text-slate-300 block mb-1">Module / Chapter Name *</label>
               <input
                 type="text"
                 required
-                placeholder="e.g. Chemical Reactions and Equations"
+                placeholder="e.g. Foundations of Naturopathy & Philosophy"
                 value={newChapterName}
                 onChange={e => setNewChapterName(e.target.value)}
                 className="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-emerald-500"

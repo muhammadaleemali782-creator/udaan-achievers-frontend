@@ -93,7 +93,7 @@ export const InstagramManager: React.FC = () => {
               <textarea
                 rows={2}
                 required
-                placeholder="Celebration of District Toppers at Educa Institute Annual Felicitation Day!..."
+                placeholder="Hands-on clinical workshop at Educa Institute: Ayurvedic pulse diagnosis & Naturopathy detox protocols in practice!..."
                 value={newPost.caption}
                 onChange={e => setNewPost({ ...newPost, caption: e.target.value })}
                 className="w-full p-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-pink-500"

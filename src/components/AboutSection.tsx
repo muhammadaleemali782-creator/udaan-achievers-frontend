@@ -27,17 +27,17 @@ export const AboutSection: React.FC = () => {
     },
     {
       year: '2019',
-      title: 'Modern 1:1 Computer Lab',
+      title: 'Practical Consultancy Labs',
       icon: Monitor,
       color: 'text-emerald-600 bg-emerald-50 border-emerald-200',
-      desc: 'Launched air-conditioned computer center offering DCA, ADCA, and Tally Prime with GST accounting diplomas.'
+      desc: 'Established clinical diagnostic labs, financial modeling setups, and professional communication studios.'
     },
     {
       year: '2022',
-      title: 'State & District Toppers',
+      title: 'Specialized Program Launch',
       icon: Trophy,
       color: 'text-amber-600 bg-amber-50 border-amber-200',
-      desc: 'Educa Institute students secured 98.6% top ranks in Class 10 & 12 board examinations across Science and Commerce.'
+      desc: 'Launched comprehensive certifications in Naturopathy & Ayurveda (WCNA) and Corporate Wealth Consultancy (WCFM).'
     },
     {
       year: '2024',
@@ -162,7 +162,7 @@ export const AboutSection: React.FC = () => {
               </div>
 
               <div className="p-3 rounded-2xl bg-white border border-blue-100 shadow-xs text-xs text-slate-700 italic leading-relaxed">
-                "Har student me ek topper chupa hota hai. Bas use sahi guidance, daily practice aur self-belief ki zaroorat hoti hai. Educa Institute me hum har ek bachhe par personally focus karte hain."
+                "Har learner me ek successful professional chupa hota hai. Bas use sahi guidance, practical training aur self-belief ki zaroorat hoti hai. Educa Institute of Consultancy me hum har student par personally focus karte hain."
               </div>
             </div>
 
@@ -265,7 +265,7 @@ export const AboutSection: React.FC = () => {
               </div>
               <div className="p-3 rounded-2xl bg-white border border-slate-200/80 shadow-xs">
                 <span className="text-lg sm:text-xl font-black text-[#0066FF] block">98.6%</span>
-                <span className="text-[10px] text-slate-500 font-bold">Board Success</span>
+                <span className="text-[10px] text-slate-500 font-bold">Satisfaction Rate</span>
               </div>
             </div>
 
@@ -279,7 +279,7 @@ export const AboutSection: React.FC = () => {
                 <span className="text-[#0066FF]">confidence and modern skills</span>
               </h3>
               <p className="text-slate-600 text-xs sm:text-sm leading-relaxed font-medium">
-                At <strong className="text-slate-900 font-extrabold">{institute}</strong>, education is beyond exams. We emphasize strong logical foundations in mathematics and science, practical computer literacy, and stage-speaking charisma.
+                At <strong className="text-slate-900 font-extrabold">{institute}</strong>, we bridge theory and practice. We emphasize comprehensive professional training in Naturopathy, Ayurveda, Wealth Management, and executive communication skills.
               </p>
             </div>
 
@@ -287,7 +287,7 @@ export const AboutSection: React.FC = () => {
               {[
                 { title: 'Personalized 1-on-1 Attention', desc: 'Small batch sizes (15–25 students) so every question is heard and resolved.' },
                 { title: 'Air-Conditioned  classroom ', desc: 'With peaceful students and best environment, culture, decipline, and many more facilities. ' },
-                { title: 'Complete Chapter Vault & DPPs', desc: 'Point-wise solved notes, worksheets, and 10-year past papers for top scores.' }
+                { title: 'Complete Study Vault & Handbooks', desc: 'Modular handbooks, reference blueprints, and structured clinical/financial study guides.' }
               ].map((item, idx) => (
                 <div key={idx} className="p-3.5 rounded-2xl bg-[#F8FAFC] border border-slate-200/80 flex items-start gap-3">
                   <div className="p-2 rounded-xl bg-blue-100 text-[#0066FF] shrink-0 mt-0.5">

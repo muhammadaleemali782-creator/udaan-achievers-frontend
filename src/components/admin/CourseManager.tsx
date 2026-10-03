@@ -12,17 +12,17 @@ export const CourseManager: React.FC = () => {
 
   const [newCourse, setNewCourse] = useState<Partial<Course>>({
     title: '',
-    category: 'secondary',
-    targetClass: 'Class 9–10',
-    duration: 'Full Academic Year',
-    fee: 9500,
-    discountFee: 6999,
+    category: 'wellness',
+    targetClass: 'WCNA Program',
+    duration: '1 Year Certification',
+    fee: 25000,
+    discountFee: 18500,
     rating: 5.0,
     instructor: 'S. R. Anand',
-    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&auto=format&fit=crop&q=80',
-    badge: 'Toppers Choice',
-    features: ['10-Year PYQs Solved', 'Weekly Board Mocks', '1:1 Doubt Solving', 'Printed Theory Modules'],
-    description: 'Comprehensive consultancy with focus on step-by-step formula derivations and high-yield questions.',
+    image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&auto=format&fit=crop&q=80',
+    badge: 'Flagship Program',
+    features: ['Clinical Internship Included', '10 Modular Handbooks', '1:1 Practitioner Mentorship', 'Case Study Blueprints'],
+    description: 'Comprehensive professional training in Naturopathy, Panchakarma principles, and practical wellness consultancy.',
     whatsappRedirectUrl: '',
     privatePlaylistUrl: ''
   });
@@ -37,17 +37,17 @@ export const CourseManager: React.FC = () => {
     setIsAdding(false);
     setNewCourse({
       title: '',
-      category: 'secondary',
-      targetClass: 'Class 9–10',
-      duration: 'Full Academic Year',
-      fee: 9500,
-      discountFee: 6999,
+      category: 'wellness',
+      targetClass: 'WCNA Program',
+      duration: '1 Year Certification',
+      fee: 25000,
+      discountFee: 18500,
       rating: 5.0,
       instructor: 'S. R. Anand',
-      image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&auto=format&fit=crop&q=80',
-      badge: 'Toppers Choice',
-      features: ['10-Year PYQs Solved', 'Weekly Board Mocks', '1:1 Doubt Solving'],
-      description: 'Comprehensive consultancy with focus on step-by-step formula derivations.',
+      image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&auto=format&fit=crop&q=80',
+      badge: 'Flagship Program',
+      features: ['Clinical Internship Included', '10 Modular Handbooks', '1:1 Practitioner Mentorship'],
+      description: 'Comprehensive professional training in Naturopathy, Panchakarma principles, and practical wellness consultancy.',
       whatsappRedirectUrl: '',
       privatePlaylistUrl: ''
     });
@@ -100,20 +100,20 @@ export const CourseManager: React.FC = () => {
                 onChange={e => setNewCourse({ ...newCourse, category: e.target.value as CourseCategory })}
                 className="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
               >
-                <option value="primary">Class 1–5 (Primary)</option>
-                <option value="middle">Class 6–8 (Middle)</option>
-                <option value="secondary">Class 9–10 (Secondary)</option>
-                <option value="senior">Class 11–12 (Senior)</option>
-                <option value="computer">Computer DCA / Tally</option>
-                <option value="spoken">Spoken English</option>
+                <option value="wellness">Wellness & Ayurveda (WCNA)</option>
+                <option value="wealth">Wealth Management (WCFM)</option>
+                <option value="executive">Executive Skills & Speaking</option>
+                <option value="secondary">Foundation (10th Passed)</option>
+                <option value="senior">Advanced Foundation (12th Passed)</option>
+                <option value="competitive">Graduate Specialization</option>
               </select>
             </div>
 
             <div>
-              <label className="text-xs font-bold text-slate-300 block mb-1">Target Class *</label>
+              <label className="text-xs font-bold text-slate-300 block mb-1">Target Audience / Program *</label>
               <input
                 type="text"
-                placeholder="e.g. Class 10"
+                placeholder="e.g. WCNA / WCFM / 10th Passed"
                 value={newCourse.targetClass}
                 onChange={e => setNewCourse({ ...newCourse, targetClass: e.target.value })}
                 className="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
@@ -153,7 +153,7 @@ export const CourseManager: React.FC = () => {
               <label className="text-xs font-bold text-slate-300 block mb-1">Badge Tag</label>
               <input
                 type="text"
-                placeholder="e.g. Popular Foundation / Toppers Choice"
+                placeholder="e.g. Flagship Program / Professional Masterclass"
                 value={newCourse.badge}
                 onChange={e => setNewCourse({ ...newCourse, badge: e.target.value })}
                 className="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"

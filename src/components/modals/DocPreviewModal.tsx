@@ -152,15 +152,15 @@ export const DocPreviewModal: React.FC = () => {
                   <ul className="space-y-1.5 text-xs text-slate-600 dark:text-slate-400">
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-[#0066FF]" />
-                      <span>Step-by-step NCERT + Exemplar numerical derivations solved.</span>
+                      <span>Step-by-step foundational principles and clinical/financial theory.</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-[#0066FF]" />
-                      <span>Last 10 years frequently repeated Board Examination questions marked.</span>
+                      <span>Structured case studies, practitioner frameworks, and diagnostic notes.</span>
                     </li>
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-3.5 h-3.5 text-[#0066FF]" />
-                      <span>Quick formula summary chart attached at the end of the chapter.</span>
+                      <span>Executive summary and handbook reference charts included.</span>
                     </li>
                   </ul>
                 </div>

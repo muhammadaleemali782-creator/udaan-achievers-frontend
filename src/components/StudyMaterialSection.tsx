@@ -26,11 +26,10 @@ export const StudyMaterialSection: React.FC = () => {
 
   const categories: { id: string; label: string; icon: React.FC<{ className?: string }> }[] = [
     { id: 'all', label: 'All Resources', icon: Layers },
-    { id: 'pdf_notes', label: 'PDF Notes', icon: FileText },
-    { id: 'formulas', label: 'Formula Books', icon: FileCheck },
-    { id: 'cheat_sheets', label: 'Cheat Sheets', icon: BookOpen },
-    { id: 'worksheets', label: 'Worksheets', icon: HelpCircle },
-    { id: 'pyq', label: 'Past Papers', icon: Clock }
+    { id: 'pdf_notes', label: 'Course Handbooks', icon: BookOpen },
+    { id: 'formulas', label: 'Reference Blueprints', icon: FileCheck },
+    { id: 'cheat_sheets', label: 'Revision Notes', icon: FileText },
+    { id: 'worksheets', label: 'Case Studies', icon: HelpCircle }
   ];
 
   const classFilters = ['all', 'WCNA Program', 'WCFM Program', 'Wellness Coaching', 'Ayurveda', 'Naturopathy', 'Diet & Lifestyle'];
@@ -52,7 +51,7 @@ export const StudyMaterialSection: React.FC = () => {
     showToast(`Downloading: ${mat.title}`, 'success');
     
     const element = document.createElement('a');
-    const file = new Blob([`Educa Institute (Educa Institute of Consultancy) Study Material\n\nTitle: ${mat.title}\nClass: ${mat.targetClass}\nSubject: ${mat.subject}\nChapter: ${mat.chapter}\nPages: ${mat.pages}\n\nNotes Summary:\n${mat.previewContent || 'Official verified notes from Educa Institute Academic Mentors.'}\n\nWebsite: https://lcc.edu\nHelpline: +91 98765 43210`], { type: 'text/plain' });
+    const file = new Blob([`Educa Institute of Consultancy Study Material\n\nTitle: ${mat.title}\nProgram: ${mat.targetClass}\nSubject: ${mat.subject}\nChapter: ${mat.chapter}\nPages: ${mat.pages}\n\nNotes Summary:\n${mat.previewContent || 'Official verified educational handbook from Educa Institute Academic Mentors.'}\n\nWebsite: https://educainstitute.vercel.app/\nHelpline: +91 9369087032`], { type: 'text/plain' });
     element.href = URL.createObjectURL(file);
     element.download = `${mat.title.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.txt`;
     document.body.appendChild(element);
@@ -71,10 +70,10 @@ export const StudyMaterialSection: React.FC = () => {
             <span>Digital Study Material & PDF Vault</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
-            Free Revision <span className="text-[#0066FF]">Notes & Handbooks</span>
+            FREE REVISION <span className="text-[#0066FF]">NOTES & HANDBOOKS</span>
           </h2>
           <p className="text-slate-600 text-xs sm:text-base leading-relaxed font-medium">
-            Download verified formula sheets, handwritten notes, sample question banks, and computer shortcut cards.
+            Access official course handbooks, modular revision notes, practitioner blueprints, and educational study materials curated by academic mentors.
           </p>
         </div>
 
@@ -133,7 +132,7 @@ export const StudyMaterialSection: React.FC = () => {
                 </h3>
 
                 <p className="text-xs text-slate-500 line-clamp-2 leading-relaxed font-medium">
-                  {mat.previewContent || 'Comprehensive theory, derivations, and board examination highlights.'}
+                  {mat.previewContent || 'Comprehensive theory, clinical frameworks, and practitioner study highlights.'}
                 </p>
               </div>
 

@@ -56,15 +56,12 @@ export const Navbar: React.FC = () => {
 
   const navItems = [
     { label: 'Home', view: 'home' as const, anchor: 'home' },
-    { label: 'Courses', view: 'courses' as const, anchor: 'courses-section' },
-    { label: 'Study Vault', view: 'study-material' as const, anchor: 'study-material-section' },
-    { label: 'Syllabus', view: 'syllabus' as const, anchor: 'syllabus-section' },
-    { label: 'Batches', view: 'batches' as const, anchor: 'batches-section' },
-    { label: 'Lectures', view: 'videos' as const, anchor: 'videos-section' },
+    { label: 'About Us', view: 'home' as const, anchor: 'about-section' },
+    { label: 'Programs', view: 'courses' as const, anchor: 'courses-section' },
+    { label: 'Academic Promise', view: 'home' as const, anchor: 'academic-promise-section' },
+    { label: 'Learning Resources', view: 'study-material' as const, anchor: 'study-material-section' },
+    { label: 'Career Skills', view: 'home' as const, anchor: 'what-we-do-section' },
     { label: 'Reviews', view: 'reviews' as const, anchor: 'reviews-section' },
-    { label: 'Gallery', view: 'gallery' as const, anchor: 'gallery-section' },
-    { label: 'Notices', view: 'notices' as const, anchor: 'notices-section' },
-    { label: 'Admission', view: 'admission' as const, anchor: 'admission-section' },
     { label: 'Contact', view: 'contact' as const, anchor: 'contact-section' }
   ];
 
@@ -195,7 +192,7 @@ export const Navbar: React.FC = () => {
                 }`}
               >
                 {item.label}
-                {item.view === 'notices' && importantNoticesCount > 0 && (
+                {(item.view as string) === 'notices' && importantNoticesCount > 0 && (
                   <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-amber-400 rounded-full border-2 border-[#0B3B95]" />
                 )}
               </button>

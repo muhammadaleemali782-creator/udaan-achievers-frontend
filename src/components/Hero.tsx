@@ -27,31 +27,31 @@ export const Hero: React.FC = () => {
   const defaultSlides = [
     {
       id: 'slide-1',
-      imageUrl: websiteSettings?.heroPosterUrl || 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1600&auto=format&fit=crop&q=80',
-      title: 'Annual Felicitation & District Rankers Gala 2026',
-      subtitle: 'Celebrating Board Examination Toppers & Merit Scholars at Educa Institute Auditorium',
-      tag: 'ANNUAL FUNCTION & AWARDS'
+      imageUrl: websiteSettings?.heroPosterUrl || 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1600&auto=format&fit=crop&q=80',
+      title: 'WCNA: Naturopathy & Ayurveda Certification Program',
+      subtitle: 'Holistic Health Principles, Pulse Diagnosis, and Clinical Naturopathy Mentorship with S. R. Anand',
+      tag: 'NATUROPATHY & AYURVEDA'
     },
     {
       id: 'slide-2',
-      imageUrl: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?w=1600&auto=format&fit=crop&q=80',
-      title: 'Inter-School Stage Debate & Public Speaking Championship',
-      subtitle: 'Nurturing Fearless Communicators, Critical Thinkers & Tomorrow’s Leaders',
-      tag: 'DEBATE & SPOKEN ENGLISH'
+      imageUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600&auto=format&fit=crop&q=80',
+      title: 'WCFM: Wealth Management & Financial Advisory',
+      subtitle: 'Corporate Valuation, Portfolio Strategy, and Executive Wealth Consultancy Training',
+      tag: 'WEALTH MANAGEMENT'
     },
     {
       id: 'slide-3',
-      imageUrl: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1600&auto=format&fit=crop&q=80',
-      title: '1:1 Hi-Tech Computer Laboratory (DCA / ADCA / Tally Prime)',
-      subtitle: 'Hands-on Software, Accounting, Coding & Practical Digital Skills Training',
-      tag: 'COMPUTER LAB SESSIONS'
+      imageUrl: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?w=1600&auto=format&fit=crop&q=80',
+      title: 'Professional Communication & Public Speaking Masterclass',
+      subtitle: 'Stage Charisma, Leadership Presentations, and Executive Management Skills',
+      tag: 'COMMUNICATION & LEADERSHIP'
     },
     {
       id: 'slide-4',
-      imageUrl: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1600&auto=format&fit=crop&q=80',
-      title: 'Smart Digital Classroom & Chapter Doubt Clinics',
-      subtitle: 'Personal Mentorship for Classes 1 to 12 with Comprehensive Chapter Notes',
-      tag: 'ACADEMIC EXCELLENCE'
+      imageUrl: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=1600&auto=format&fit=crop&q=80',
+      title: 'Structured Learning Resources & Course Handbooks',
+      subtitle: '10 Modular WCNA Handbooks and Comprehensive WCFM Financial Blueprints',
+      tag: 'LEARNING RESOURCES'
     }
   ];
 
@@ -148,7 +148,7 @@ export const Hero: React.FC = () => {
                         className="w-full text-left px-2.5 py-2 rounded-lg hover:bg-blue-50 hover:text-[#0B3B95] transition-colors flex items-center gap-2 border border-slate-100"
                       >
                         <span className="text-amber-600 text-sm">🗣️</span>
-                        <span className="truncate">Weekend Executive Pro Track</span>
+                        <span className="truncate">Communication & Leadership Track</span>
                       </button>
                     </li>
                     <li>
@@ -157,7 +157,7 @@ export const Hero: React.FC = () => {
                         className="w-full text-left px-2.5 py-2 rounded-lg hover:bg-blue-50 hover:text-[#0B3B95] transition-colors flex items-center gap-2 border border-slate-100"
                       >
                         <span className="text-rose-600 text-sm">📥</span>
-                        <span className="truncate">Free Notes & Syllabus Blueprint</span>
+                        <span className="truncate">Free Revision Notes & Handbooks</span>
                       </button>
                     </li>
                   </ul>

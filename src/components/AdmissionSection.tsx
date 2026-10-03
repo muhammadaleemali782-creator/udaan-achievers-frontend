@@ -9,8 +9,8 @@ export const AdmissionSection: React.FC = () => {
     parentName: '',
     phone: '',
     email: '',
-    currentClass: 'Class 10',
-    targetCourse: 'Board Toppers Batch',
+    currentClass: '12th Passed',
+    targetCourse: 'WCNA Certification',
     message: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -27,7 +27,7 @@ export const AdmissionSection: React.FC = () => {
 
   const handleWhatsApp = () => {
     const text = `Hello Educa Institute Admissions, I want to inquire about admission for student ${formData.studentName || 'Student'} in ${formData.currentClass}. Phone: ${formData.phone || ''}`;
-    window.open(`https://wa.me/919876543210?text=${encodeURIComponent(text)}`, '_blank');
+    window.open(`https://wa.me/919369087032?text=${encodeURIComponent(text)}`, '_blank');
   };
 
   return (
@@ -57,14 +57,14 @@ export const AdmissionSection: React.FC = () => {
               Educa Institute Admission Benefits
             </span>
             <h3 className="text-2xl font-black text-slate-900 leading-tight">
-              Begin your child's journey with trusted mentors
+              Begin your professional journey with trusted mentors
             </h3>
 
             <div className="space-y-4">
               {[
-                { title: 'Free Diagnostic Assessment', desc: 'Complimentary foundation assessment test to pinpoint learning gaps.' },
-                { title: '3-Day Trial Lectures', desc: 'Experience classroom teaching, notes, and lab before fee confirmation.' },
-                { title: 'Merit Scholarship Up to 50%', desc: 'Special fee concessions for top ranking school scholars.' }
+                { title: 'Free Diagnostic Counseling', desc: 'Complimentary foundation assessment to map your learning pathway.' },
+                { title: 'Modular Study Handbooks', desc: 'Comprehensive curriculum handbooks and clinical/financial blueprints.' },
+                { title: 'Direct Faculty Mentorship', desc: 'Personalized guidance from S. R. Anand & corporate finance advisors.' }
               ].map((item, idx) => (
                 <div key={idx} className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
@@ -150,18 +150,18 @@ export const AdmissionSection: React.FC = () => {
                   </div>
 
                   <div>
-                    <label className="text-xs font-bold text-slate-700 block mb-1">Current Class</label>
+                    <label className="text-xs font-bold text-slate-700 block mb-1">Educational Background / Pathway</label>
                     <select
                       value={formData.currentClass}
                       onChange={e => setFormData({ ...formData, currentClass: e.target.value })}
                       className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-[#0066FF] font-medium"
                     >
-                      <option>Class 1–5 (Primary)</option>
-                      <option>Class 6–8 (Middle)</option>
-                      <option>Class 9–10 (Board Target)</option>
-                      <option>Class 11–12 (Science/PCM)</option>
-                      <option>Computer (DCA/ADCA)</option>
-                      <option>Spoken English</option>
+                      <option>10th Passed – Foundation & Skill Development</option>
+                      <option>12th Passed – Advanced Foundation & Professional Programs</option>
+                      <option>Graduate – Professional Specialization & Consultancy</option>
+                      <option>WCNA – Naturopathy & Ayurveda Certification</option>
+                      <option>WCFM – Wealth Management Certification</option>
+                      <option>Executive Communication & Public Speaking</option>
                     </select>
                   </div>
                 </div>

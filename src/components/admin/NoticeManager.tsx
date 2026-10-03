@@ -83,7 +83,7 @@ export const NoticeManager: React.FC = () => {
               >
                 <option value="admission">Admissions Alert</option>
                 <option value="exam">Exam Schedule</option>
-                <option value="result">Topper Results</option>
+                <option value="result">Certification Results</option>
                 <option value="holiday">Holiday Notice</option>
               </select>
             </div>

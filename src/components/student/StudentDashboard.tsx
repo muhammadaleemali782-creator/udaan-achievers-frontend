@@ -84,20 +84,20 @@ export const StudentDashboard: React.FC = () => {
   const enrolledCourseList = courses.filter(c => (currentStudent?.enrolledCourses || []).includes(c.id));
   const fallbackCourse = {
     id: 'batch-foundation',
-    title: 'Comprehensive Board & Consultancy Training',
-    category: 'secondary' as const,
-    targetClass: currentStudent?.targetClass || currentStudent?.classEnrolled || 'Class 10',
-    duration: 'Full Academic Session',
-    fee: 3999,
-    discountFee: 2999,
+    title: 'WCNA: Naturopathy & Ayurveda Certification',
+    category: 'wellness' as const,
+    targetClass: currentStudent?.targetClass || currentStudent?.classEnrolled || 'WCNA Scholars',
+    duration: '6 Months Professional Certification',
+    fee: 25000,
+    discountFee: 18500,
     rating: 5,
-    enrolledCount: 150,
+    enrolledCount: 142,
     instructor: 'Founder & Director S. R. Anand',
     image: '/logo.jpg',
     badge: 'Premier',
-    features: ['Daily Live Classes', 'Notes PDF Vault', 'Weekly Tests'],
-    description: 'Premier curriculum batch designed for academic excellence.',
-    syllabusHighlights: ['Complete NCERT & State Board syllabus', 'PYQ Mastery'],
+    features: ['Clinical Case Studies', 'Notes PDF Vault', 'Mentorship Clinics'],
+    description: 'Premier professional curriculum designed for clinical consultancy excellence.',
+    syllabusHighlights: ['Foundations of Naturopathy & Ayurveda', 'Pulse Diagnosis & Dietetics'],
     isPaid: true
   };
   const activeCourse = enrolledCourseList[0] || courses[0] || fallbackCourse;
@@ -195,7 +195,7 @@ export const StudentDashboard: React.FC = () => {
                   Welcome Back, {currentStudent.name || 'Student'}!
                 </h2>
                 <span className="px-2.5 py-0.5 rounded-full bg-blue-100 text-[#0066FF] font-bold text-xs">
-                  {currentStudent.targetClass || currentStudent.classEnrolled || 'Class 10'}
+                  {currentStudent.targetClass || currentStudent.classEnrolled || 'WCNA Scholar'}
                 </span>
               </div>
               <p className="text-xs text-slate-500 font-medium mt-1">

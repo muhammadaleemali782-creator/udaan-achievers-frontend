@@ -9,10 +9,10 @@ export const GallerySection: React.FC = () => {
 
   const categories = [
     { id: 'all', label: 'All Photos' },
-    { id: 'toppers', label: 'Toppers & Awards' },
+    { id: 'toppers', label: 'Convocations & Awards' },
     { id: 'classroom', label: 'Smart Classrooms & Labs' },
     { id: 'event', label: 'Events & Functions' },
-    { id: 'students', label: 'Student Activities & Debates' }
+    { id: 'students', label: 'Student Activities & Speaking' }
   ];
 
   const verifiedGalleryItems: GalleryItem[] = galleryItems.map(item => {
@@ -20,7 +20,7 @@ export const GallerySection: React.FC = () => {
     if (item.category === 'students' || item.id === 'gal-5' || item.title?.includes('Debate') || item.imageUrl?.includes('moss') || item.imageUrl?.includes('forest')) {
       return {
         ...item,
-        title: 'Inter-School Stage Debate & Speech Competition',
+        title: 'Stage Debate & Public Speaking Championship',
         category: 'students',
         imageUrl: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&auto=format&fit=crop&q=80',
         description: 'Students passionately defending arguments on stage, building public speaking charisma and critical thinking.'

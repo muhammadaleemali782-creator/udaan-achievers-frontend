@@ -21,8 +21,8 @@ export const YouTubeManager: React.FC = () => {
     videoUrl: '',
     platform: 'youtube',
     duration: '15:00',
-    subject: 'Mathematics',
-    targetClass: 'Class 10',
+    subject: 'Ayurveda & Naturopathy',
+    targetClass: 'WCNA Program',
     instructor: 'S. R. Anand'
   });
 
@@ -94,8 +94,8 @@ export const YouTubeManager: React.FC = () => {
       videoUrl: '',
       platform: 'youtube',
       duration: '15:00',
-      subject: 'Mathematics',
-      targetClass: 'Class 10',
+      subject: 'Ayurveda & Naturopathy',
+      targetClass: 'WCNA Program',
       instructor: 'S. R. Anand'
     });
     showToast(`${newVideo.platform.toUpperCase()} video lecture published!`, 'success');
@@ -166,7 +166,7 @@ export const YouTubeManager: React.FC = () => {
               <input
                 type="text"
                 required
-                placeholder="e.g. Class 10 Trigonometry Marathon"
+                placeholder="e.g. Panchakarma Principles / Wealth Portfolio Strategy"
                 value={newVideo.title}
                 onChange={e => setNewVideo({ ...newVideo, title: e.target.value })}
                 className="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
@@ -178,7 +178,7 @@ export const YouTubeManager: React.FC = () => {
               <input
                 type="text"
                 required
-                placeholder="e.g. Class 10 / DCA / Spoken English"
+                placeholder="e.g. WCNA / WCFM / Executive Communication"
                 value={newVideo.targetClass}
                 onChange={e => setNewVideo({ ...newVideo, targetClass: e.target.value })}
                 className="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
@@ -190,7 +190,7 @@ export const YouTubeManager: React.FC = () => {
               <input
                 type="text"
                 required
-                placeholder="e.g. Mathematics / Science / English"
+                placeholder="e.g. Ayurveda / Naturopathy / Wealth Management / Public Speaking"
                 value={newVideo.subject}
                 onChange={e => setNewVideo({ ...newVideo, subject: e.target.value })}
                 className="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"

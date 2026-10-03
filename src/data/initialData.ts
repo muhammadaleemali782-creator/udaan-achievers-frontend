@@ -19,7 +19,7 @@ export const INITIAL_COURSES: Course[] = [
       'Clinical Naturopathy & Hydrotherapy Protocols',
       'Panchakarma Therapies & Detox Procedures',
       'Nadi Pariksha (Pulse Diagnosis) & Patient Counseling',
-      'Verifiable Government Recognized Certification'
+      'Professional Institute Certification & Clinical Training'
     ],
     description: 'Complete professional certification covering fundamental principles of Ayurveda, Panchakarma therapy, pulse diagnosis, and holistic health consultation with live clinical internship.',
     syllabusHighlights: [

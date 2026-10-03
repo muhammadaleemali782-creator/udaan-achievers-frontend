@@ -55,7 +55,7 @@ export const GalleryManager: React.FC = () => {
             <Image className="w-6 h-6 text-purple-400" />
             <span>Campus Photo Gallery Manager</span>
           </h2>
-          <p className="text-xs text-slate-400">Upload and curate felicitation day photos, digital lab pictures, topper ceremonies, and events.</p>
+          <p className="text-xs text-slate-400">Upload and curate convocation day photos, practical lab pictures, awards ceremonies, and professional events.</p>
         </div>
 
         <button
@@ -78,7 +78,7 @@ export const GalleryManager: React.FC = () => {
               <input
                 type="text"
                 required
-                placeholder="e.g. Annual Felicitation & Merit Award Ceremony 2026"
+                placeholder="e.g. Annual Convocation & Merit Award Ceremony 2026"
                 value={newItem.title}
                 onChange={e => setNewItem({ ...newItem, title: e.target.value })}
                 className="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-purple-500"
@@ -92,9 +92,9 @@ export const GalleryManager: React.FC = () => {
                 onChange={e => setNewItem({ ...newItem, category: e.target.value as any })}
                 className="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-purple-500"
               >
-                <option value="toppers">🏆 Toppers & Awards</option>
+                <option value="toppers">🏆 Convocations & Awards</option>
                 <option value="classroom">📚 Classroom in Session</option>
-                <option value="lab">💻 Computer & Science Lab</option>
+                <option value="lab">💻 Practical & Consultancy Labs</option>
                 <option value="events">🎉 Events & Seminars</option>
               </select>
             </div>
@@ -216,9 +216,9 @@ export const GalleryManager: React.FC = () => {
                     onChange={e => setEditingItem({ ...editingItem, category: e.target.value as any })}
                     className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-purple-500"
                   >
-                    <option value="toppers">🏆 Toppers & Awards</option>
+                    <option value="toppers">🏆 Convocations & Awards</option>
                     <option value="classroom">📚 Classroom in Session</option>
-                    <option value="lab">💻 Computer & Science Lab</option>
+                    <option value="lab">💻 Practical & Consultancy Labs</option>
                     <option value="events">🎉 Events & Seminars</option>
                   </select>
                 </div>

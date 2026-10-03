@@ -15,15 +15,15 @@ export const BooksPdfManager: React.FC = () => {
   const [newPdf, setNewPdf] = useState<Partial<StudyMaterial>>({
     title: '',
     category: 'pdf_notes',
-    targetClass: 'Class 10',
-    subject: 'Science',
-    chapter: 'Chapter 1',
-    pages: 15,
+    targetClass: 'WCNA – Naturopathy & Ayurveda',
+    subject: 'Ayurveda & Naturopathy',
+    chapter: 'Module 1',
+    pages: 25,
     downloadUrl: '',
     googleDriveUrl: '',
     isGoogleDrive: false,
     isPremium: false,
-    previewContent: 'Comprehensive theoretical notes, formula derivations, and board sample questions.'
+    previewContent: 'Official module handbook, clinical protocols, and practical case studies.'
   });
 
   // Convert Google Drive share link to clean direct download and preview links
@@ -181,14 +181,13 @@ export const BooksPdfManager: React.FC = () => {
                 onChange={e => setNewPdf({ ...newPdf, targetClass: e.target.value })}
                 className="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"
               >
-                <option>Class 1–5</option>
-                <option>Class 6–8</option>
-                <option>Class 9</option>
-                <option>Class 10</option>
-                <option>Class 11</option>
-                <option>Class 12</option>
-                <option>Computer / DCA</option>
-                <option>Spoken English</option>
+                <option>WCNA – Naturopathy & Ayurveda</option>
+                <option>WCFM – Wealth Management</option>
+                <option>Communication & Public Speaking</option>
+                <option>Management & Career Development</option>
+                <option>Foundation (10th Passed)</option>
+                <option>Advanced Foundation (12th Passed)</option>
+                <option>Graduate Specialization</option>
               </select>
             </div>
 
@@ -197,7 +196,7 @@ export const BooksPdfManager: React.FC = () => {
               <input
                 type="text"
                 required
-                placeholder="e.g. Physics / Mathematics / Tally"
+                placeholder="e.g. Naturopathy / Wealth Management / Public Speaking"
                 value={newPdf.subject}
                 onChange={e => setNewPdf({ ...newPdf, subject: e.target.value })}
                 className="w-full px-3.5 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"

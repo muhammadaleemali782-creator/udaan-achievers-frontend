@@ -5,23 +5,45 @@ import { Youtube, Instagram, Facebook } from './SocialIcons';
 
 export const YouTubeSection: React.FC = () => {
   const { videos, setSelectedVideoForPlayer } = useApp();
+  const [selectedCategory, setSelectedCategory] = React.useState<string>('All');
+
+  const categories = [
+    'All',
+    'Ayurveda',
+    'Naturopathy',
+    'Wealth Management',
+    'Communication Skills',
+    'Public Speaking',
+    'Management Skills',
+    'Career Development'
+  ];
+
+  const filteredVideos = videos.filter(vid => {
+    if (selectedCategory === 'All') return true;
+    const cat = selectedCategory.toLowerCase();
+    return (
+      (vid.subject || '').toLowerCase().includes(cat) ||
+      (vid.title || '').toLowerCase().includes(cat) ||
+      (vid.targetClass || '').toLowerCase().includes(cat)
+    );
+  });
 
   return (
     <section id="videos-section" className="py-16 sm:py-20 px-4 sm:px-6 lg:px-8 bg-white dark:bg-slate-950 border-t border-slate-200/80 dark:border-slate-800 relative transition-colors">
       <div className="max-w-7xl mx-auto">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-12">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 sm:mb-10">
           <div>
             <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-rose-50 dark:bg-rose-950/50 border border-rose-200 dark:border-rose-800 text-rose-600 dark:text-rose-400 text-xs font-black uppercase tracking-wider mb-3">
               <Youtube className="w-3.5 h-3.5" />
-              <span>Video Lectures & Viral Reels</span>
+              <span>Video Lectures & Educational Reels</span>
             </div>
             <h2 className="text-2xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-              Watch <span className="text-rose-600">Lectures & Short Concept Reels</span>
+              WATCH <span className="text-rose-600">LECTURES & SHORT CONCEPT REELS</span>
             </h2>
-            <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-base mt-2 font-medium">
-              Watch chapter concept boosters, derivation marathons, and reels by Founder & Director S. R. Anand across YouTube, Instagram, and Facebook.
+            <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-base mt-2 font-medium max-w-2xl leading-relaxed">
+              Learn through short concept videos, lectures and educational reels designed to make complex topics easier to understand and revise.
             </p>
           </div>
 
@@ -38,9 +60,29 @@ export const YouTubeSection: React.FC = () => {
           </div>
         </div>
 
+        {/* Category Pills Bar */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-4 mb-8 scrollbar-none select-none">
+          {categories.map(cat => {
+            const isSelected = selectedCategory === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-4 py-2 rounded-xl text-xs font-black whitespace-nowrap transition-all cursor-pointer border ${
+                  isSelected
+                    ? 'bg-rose-600 text-white border-rose-600 shadow-md shadow-rose-500/20'
+                    : 'bg-slate-50 dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-rose-300 hover:bg-rose-50/50'
+                }`}
+              >
+                {cat}
+              </button>
+            );
+          })}
+        </div>
+
         {/* Video Cards Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {videos.map(vid => {
+          {(filteredVideos.length > 0 ? filteredVideos : videos).map(vid => {
             const platform = vid.platform || (vid.youtubeUrl?.includes('instagram') ? 'instagram' : vid.youtubeUrl?.includes('facebook') ? 'facebook' : 'youtube');
 
             return (

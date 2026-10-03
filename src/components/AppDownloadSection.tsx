@@ -139,23 +139,23 @@ export const AppDownloadSection: React.FC = () => {
                     {/* Search Bar */}
                     <div className="p-2.5 bg-slate-50 border border-slate-100 rounded-xl flex items-center gap-2 text-slate-400 text-[11px]">
                       <Search className="w-3.5 h-3.5" />
-                      <span>Search for physics, maths, notes...</span>
+                      <span>Search for Ayurveda, Wealth, Handbooks...</span>
                     </div>
 
                     {/* Today's Special Promo Banner Matching Reference Image */}
                     <div className="bg-gradient-to-r from-blue-600 to-blue-500 rounded-2xl p-4 text-white space-y-2 relative overflow-hidden shadow-md shadow-blue-500/20">
                       <div className="flex items-center justify-between">
                         <span className="text-[9px] font-black uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded-full">
-                          TODAY'S SPECIAL
+                          FEATURED PROGRAM
                         </span>
-                        <span className="text-xl font-black text-amber-300">75% OFF</span>
+                        <span className="text-xl font-black text-amber-300">ADMISSIONS OPEN</span>
                       </div>
                       <h4 className="font-extrabold text-sm leading-tight">
-                        Class 10 Board Topper Batch 2026-27
+                        WCNA Wellness & Naturopathy Batch 2026-27
                       </h4>
-                      <p className="text-[10px] text-blue-100">Daily live classes, DPPs & 1-on-1 doubt clearing.</p>
+                      <p className="text-[10px] text-blue-100">Daily clinical modules, handbooks & mentor clinics.</p>
                       <button className="px-3 py-1 bg-white text-blue-600 rounded-lg font-bold text-[10px] shadow-sm">
-                        Join Now
+                        Enroll Now
                       </button>
                     </div>
 
@@ -167,10 +167,10 @@ export const AppDownloadSection: React.FC = () => {
                       </div>
                       <div className="grid grid-cols-4 gap-2 text-center text-[10px]">
                         {[
-                          { name: 'Primary', icon: '🎒' },
-                          { name: 'Class 9-10', icon: '📐' },
-                          { name: 'Class 11-12', icon: '🔬' },
-                          { name: 'Computer', icon: '💻' }
+                          { name: 'Naturopathy', icon: '🌿' },
+                          { name: 'Ayurveda', icon: '🪷' },
+                          { name: 'Wealth', icon: '💼' },
+                          { name: 'Speaking', icon: '🗣️' }
                         ].map((c, i) => (
                           <div key={i} className="p-2 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
                             <span className="text-base block">{c.icon}</span>
@@ -226,24 +226,24 @@ export const AppDownloadSection: React.FC = () => {
                 {activeScreen === 'courses' && (
                   <div className="p-4 space-y-4 animate-in fade-in duration-200">
                     <div className="relative h-32 rounded-2xl overflow-hidden bg-slate-900">
-                      <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&auto=format&fit=crop&q=80" alt="Course Cover" className="w-full h-full object-cover filter brightness-90" />
+                      <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&auto=format&fit=crop&q=80" alt="Course Cover" className="w-full h-full object-cover filter brightness-90" />
                       <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-blue-600 text-white font-bold text-[9px]">
-                        ₹5,999
+                        ₹18,500
                       </span>
                     </div>
 
                     <div>
-                      <span className="text-[10px] text-blue-600 font-bold uppercase">Class 10 Board Master</span>
-                      <h4 className="font-extrabold text-slate-900 text-sm">Complete Science & Maths Mastery</h4>
-                      <p className="text-[10px] text-slate-500 mt-1">120+ Video Lectures, 45 Solved DPPs, Chapter PYQ Vault.</p>
+                      <span className="text-[10px] text-blue-600 font-bold uppercase">WCNA Flagship Program</span>
+                      <h4 className="font-extrabold text-slate-900 text-sm">Naturopathy & Ayurvedic Wellness</h4>
+                      <p className="text-[10px] text-slate-500 mt-1">10-Book Curriculum, Clinical Case Vault, Pulse Diagnosis.</p>
                     </div>
 
                     <div className="space-y-2">
                       <span className="font-bold text-slate-900 text-xs block">Course Modules</span>
                       {[
-                        { title: '1. Chemical Reactions & Equations', dur: '45 mins', status: 'Completed' },
-                        { title: '2. Electricity & Circuits Logic', dur: '60 mins', status: 'Locked' },
-                        { title: '3. Quadratic Equations Master', dur: '50 mins', status: 'Locked' }
+                        { title: '1. Foundations of Naturopathy', dur: '45 mins', status: 'Completed' },
+                        { title: '2. Ayurvedic Tridosha Principles', dur: '60 mins', status: 'Locked' },
+                        { title: '3. Nadi Pariksha & Pulse Assessment', dur: '50 mins', status: 'Locked' }
                       ].map((mod, i) => (
                         <div key={i} className="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between text-[11px]">
                           <span className="font-bold text-slate-800 truncate max-w-[180px]">{mod.title}</span>
@@ -269,10 +269,10 @@ export const AppDownloadSection: React.FC = () => {
 
                     <div className="space-y-2 text-[10px]">
                       <div className="p-2.5 rounded-xl bg-slate-100 text-slate-700 max-w-[200px] leading-relaxed">
-                        Sir, I have a doubt in Physics Ohm's law numerical from yesterday's DPP.
+                        Sir, I have a doubt in Panchakarma detox protocols from Book 3.
                       </div>
                       <div className="p-2.5 rounded-xl bg-blue-600 text-white ml-auto max-w-[200px] leading-relaxed">
-                        Sure Aarav! Remember: V = I × R. When resistors are in series, add resistances directly.
+                        Sure Aarav! Remember the Purva Karma phase: Snehana and Swedana must precede the primary treatment.
                       </div>
                     </div>
 
