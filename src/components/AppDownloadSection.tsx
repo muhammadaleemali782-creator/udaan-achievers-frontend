@@ -210,7 +210,7 @@ export const AppDownloadSection: React.FC = () => {
                     <div>
                       <span className="font-bold text-slate-900 text-xs block mb-2">Top Mentors</span>
                       <div className="flex items-center gap-2 p-2 rounded-xl bg-slate-50 border border-slate-100">
-                        <img src="/assets/founder.png" alt="S. R. Anand" className="w-9 h-9 rounded-full object-cover border border-blue-500" />
+                        <img src="/logo.jpg" alt="S. R. Anand" className="w-9 h-9 rounded-full object-cover border border-blue-500" />
                         <div className="flex-1">
                           <span className="font-bold text-slate-900 text-[11px] block">S. R. Anand</span>
                           <span className="text-[9px] text-slate-400">Founder & Academic Director</span>
@@ -259,7 +259,7 @@ export const AppDownloadSection: React.FC = () => {
                 {activeScreen === 'chat' && (
                   <div className="p-4 space-y-3 animate-in fade-in duration-200">
                     <div className="flex items-center gap-2 pb-2 border-b border-slate-100">
-                      <img src="/assets/founder.png" alt="S. R. Anand" className="w-8 h-8 rounded-full object-cover" />
+                      <img src="/logo.jpg" alt="S. R. Anand" className="w-8 h-8 rounded-full object-cover" />
                       <div>
                         <h5 className="font-bold text-slate-900 text-xs">S. R. Anand (Mentor)</h5>
                         <span className="text-[9px] text-emerald-500 font-bold flex items-center gap-1">

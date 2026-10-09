@@ -75,14 +75,14 @@ export const AboutSection: React.FC = () => {
                     )}
                     <img
                       id="about-director-photo"
-                      src={websiteSettings?.aboutDirectorPhotoUrl || websiteSettings?.directorPhotoUrl || "/assets/founder.png"}
+                      src={websiteSettings?.aboutDirectorPhotoUrl || websiteSettings?.directorPhotoUrl || "/logo.jpg"}
                       alt={`${director} - Founder & Director`}
                       className={`w-full h-full object-cover object-top hover:scale-105 transition-all duration-300 cursor-pointer ${aboutPhotoLoaded ? 'opacity-100' : 'opacity-0'}`}
                       onLoad={() => setAboutPhotoLoaded(true)}
                       onError={(e: any) => {
                         setAboutPhotoLoaded(true);
-                        if (e.target.src !== window.location.origin + '/assets/founder.png') {
-                          e.target.src = '/assets/founder.png';
+                        if (e.target.src !== window.location.origin + '/logo.jpg') {
+                          e.target.src = '/logo.jpg';
                         }
                       }}
                     />
@@ -161,14 +161,14 @@ export const AboutSection: React.FC = () => {
                       <div className="absolute inset-0 bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 animate-pulse" />
                     )}
                     <img
-                      src={websiteSettings?.coFounderPhotoUrl || "/assets/founder.png"}
+                      src={websiteSettings?.coFounderPhotoUrl || "/logo.jpg"}
                       alt={`${coFounder} - ${coFounderRole}`}
                       className={`w-full h-full object-cover object-top hover:scale-105 transition-all duration-300 cursor-pointer ${coPhotoLoaded ? 'opacity-100' : 'opacity-0'}`}
                       onLoad={() => setCoPhotoLoaded(true)}
                       onError={(e: any) => {
                         setCoPhotoLoaded(true);
-                        if (e.target.src !== window.location.origin + '/assets/founder.png') {
-                          e.target.src = '/assets/founder.png';
+                        if (e.target.src !== window.location.origin + '/logo.jpg') {
+                          e.target.src = '/logo.jpg';
                         }
                       }}
                     />

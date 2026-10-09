@@ -257,14 +257,14 @@ export const Hero: React.FC = () => {
                       )}
                       <img
                         id="hero-director-photo"
-                        src={websiteSettings?.heroDirectorPhotoUrl || websiteSettings?.directorPhotoUrl || "/assets/founder.png"}
+                        src={websiteSettings?.heroDirectorPhotoUrl || websiteSettings?.directorPhotoUrl || "/logo.jpg"}
                         alt={directorName}
                         className={`w-full h-full object-cover object-top cursor-pointer transition-opacity duration-300 ${dirPhotoLoaded ? 'opacity-100' : 'opacity-0'}`}
                         onLoad={() => setDirPhotoLoaded(true)}
                         onError={(e: any) => {
                           setDirPhotoLoaded(true);
-                          if (e.target.src !== window.location.origin + '/assets/founder.png') {
-                            e.target.src = '/assets/founder.png';
+                          if (e.target.src !== window.location.origin + '/logo.jpg') {
+                            e.target.src = '/logo.jpg';
                           }
                         }}
                       />

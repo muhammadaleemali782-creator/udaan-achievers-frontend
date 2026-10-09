@@ -245,7 +245,7 @@ const INITIAL_SETTINGS: WebsiteSettings = {
   founderRole: 'Founder & Managing Director',
   coFounderName: 'A.D. Rao',
   coFounderRole: 'Co-Founder & Managing Director',
-  coFounderPhotoUrl: '/assets/founder.png',
+  coFounderPhotoUrl: '/logo.jpg',
   mapEmbedUrl: 'https://maps.google.com/maps?q=VIHAR+GALI+NO.+3+UTTHAN+ROAD+JHALWA+PRAYAGRAJ&t=&z=15&ie=UTF8&iwloc=&output=embed',
   contactPhone: '+91 9369087032',
   contactEmail: 'admissions@educa.com',
@@ -426,6 +426,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           if (merged.instituteHindiName) {
             merged.instituteHindiName = merged.instituteHindiName.replaceAll('एडुका', 'एजुका');
           }
+          if (merged.coFounderPhotoUrl === '/assets/founder.png' || !merged.coFounderPhotoUrl) merged.coFounderPhotoUrl = '/logo.jpg';
+          if (merged.directorPhotoUrl === '/assets/founder.png') merged.directorPhotoUrl = '/logo.jpg';
+          if (merged.aboutDirectorPhotoUrl === '/assets/founder.png') merged.aboutDirectorPhotoUrl = '/logo.jpg';
+          if (merged.heroDirectorPhotoUrl === '/assets/founder.png') merged.heroDirectorPhotoUrl = '/logo.jpg';
           saveItem('educa_website_settings', merged);
           return merged;
         });
@@ -509,6 +513,10 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     if (saved.instituteHindiName) {
       saved.instituteHindiName = saved.instituteHindiName.replaceAll('एडुका', 'एजुका');
     }
+    if (saved.coFounderPhotoUrl === '/assets/founder.png' || !saved.coFounderPhotoUrl) saved.coFounderPhotoUrl = '/logo.jpg';
+    if (saved.directorPhotoUrl === '/assets/founder.png' || !saved.directorPhotoUrl) saved.directorPhotoUrl = '/logo.jpg';
+    if (saved.aboutDirectorPhotoUrl === '/assets/founder.png' || !saved.aboutDirectorPhotoUrl) saved.aboutDirectorPhotoUrl = '/logo.jpg';
+    if (saved.heroDirectorPhotoUrl === '/assets/founder.png' || !saved.heroDirectorPhotoUrl) saved.heroDirectorPhotoUrl = '/logo.jpg';
     const mergedOverrides = {
       ...(INITIAL_SETTINGS.visualOverrides || {}),
       ...(saved.visualOverrides || {})
