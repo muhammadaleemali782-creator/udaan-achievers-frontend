@@ -65,7 +65,7 @@ export const ReceiptModal: React.FC<ReceiptModalProps> = ({ feeRecord, transacti
               Educa Institute of Consultancy
             </h1>
             <p className="text-xs font-bold text-indigo-700">
-              एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज
+              एजुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज
             </p>
             <p className="text-[10px] text-slate-500">
               VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ | Phone: +91 98765 43210 | admissions@educa.com

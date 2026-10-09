@@ -8,7 +8,7 @@ export const WebsiteSettings: React.FC = () => {
   const { websiteSettings, updateWebsiteSettings, showToast } = useApp();
   const [form, setForm] = useState({
     instituteName: websiteSettings.instituteName || 'Educa Institute of Consultancy',
-    instituteHindiName: websiteSettings.instituteHindiName || 'एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज',
+    instituteHindiName: websiteSettings.instituteHindiName || 'एजुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज',
     instituteSubtitle: websiteSettings.instituteSubtitle || '(A Premier Institute for Naturopathy, Ayurveda & Wealth Management Consultancy)',
     shortName: websiteSettings.shortName || 'Educa Institute',
     instituteTagline: websiteSettings.instituteTagline || 'Educa Institute of Consultancy',
@@ -41,7 +41,7 @@ export const WebsiteSettings: React.FC = () => {
   useEffect(() => {
     setForm({
       instituteName: websiteSettings.instituteName || 'Educa Institute of Consultancy',
-      instituteHindiName: websiteSettings.instituteHindiName || 'एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज',
+      instituteHindiName: websiteSettings.instituteHindiName || 'एजुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज',
       instituteSubtitle: websiteSettings.instituteSubtitle || '(A Premier Institute for Naturopathy, Ayurveda & Wealth Management Consultancy)',
       shortName: websiteSettings.shortName || 'Educa Institute',
       instituteTagline: websiteSettings.instituteTagline || 'Educa Institute of Consultancy',
@@ -140,7 +140,7 @@ export const WebsiteSettings: React.FC = () => {
                   <input
                     type="text"
                     required
-                    placeholder="e.g. एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज"
+                    placeholder="e.g. एजुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज"
                     value={form.instituteHindiName}
                     onChange={e => setForm({ ...form, instituteHindiName: e.target.value })}
                     className="w-full px-3.5 py-2.5 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white focus:outline-none focus:border-[#0066FF]"

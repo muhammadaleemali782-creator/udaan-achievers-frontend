@@ -981,7 +981,7 @@ export const LiveVisualEditor: React.FC = () => {
       if (elId === 'header-brand-title' || orig === websiteSettings.instituteName?.trim() || clickedTarget.elementRef?.closest('#header-brand-banner')) {
         updatedSettings.instituteName = val;
       }
-      if (elId === 'header-brand-hindi' || orig === (websiteSettings.instituteHindiName || 'एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज').trim()) {
+      if (elId === 'header-brand-hindi' || orig === (websiteSettings.instituteHindiName || 'एजुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज').trim()) {
         updatedSettings.instituteHindiName = val;
       }
       if (elId === 'header-brand-subtitle' || orig === (websiteSettings.instituteSubtitle || '(A Premier Institute for Naturopathy, Ayurveda & Wealth Management Consultancy)').trim()) {

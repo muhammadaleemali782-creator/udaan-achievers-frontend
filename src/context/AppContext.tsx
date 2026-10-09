@@ -200,7 +200,7 @@ const INITIAL_ADS: Advertisement[] = [
 const INITIAL_REVIEWS: Review[] = [
   {
     id: 'rev-1',
-    studentName: 'Dr. Sneha Kulkarni',
+    studentName: 'Priyanka Nishad',
     studentClass: 'Certified Naturopath & Wellness Consultant (WCNA Batch)',
     rating: 5,
     comment: 'S. R. Anand’s pulse diagnosis clinics and hands-on panchakarma training gave me the exact clinical confidence required to establish my private wellness consultancy practice.',
@@ -236,7 +236,7 @@ const INITIAL_SOCIALS: SocialLink[] = [
 
 const INITIAL_SETTINGS: WebsiteSettings = {
   instituteName: 'Educa Institute of Consultancy',
-  instituteHindiName: 'एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज',
+  instituteHindiName: 'एजुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज',
   instituteSubtitle: '(A Premier Institute for Naturopathy, Ayurveda & Wealth Management Consultancy)',
   logoUrl: '/logo.jpg',
   shortName: 'EDUCA',
@@ -423,6 +423,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
           merged.directorName = 'S. R. Anand';
           merged.founderName = 'S. R. Anand';
           merged.coFounderName = 'A.D. Rao';
+          if (merged.instituteHindiName) {
+            merged.instituteHindiName = merged.instituteHindiName.replaceAll('एडुका', 'एजुका');
+          }
           saveItem('educa_website_settings', merged);
           return merged;
         });
@@ -493,12 +496,18 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [inquiries, setInquiries] = useState<AdmissionInquiry[]>(() => loadSaved('lcc_inquiries', []));
   const [mockTests, setMockTests] = useState<MockTest[]>(INITIAL_MOCK_TESTS);
   const [ads, setAds] = useState<Advertisement[]>(() => loadSaved('lcc_ads', INITIAL_ADS));
-  const [reviews, setReviews] = useState<Review[]>(() => loadSaved('lcc_reviews', INITIAL_REVIEWS));
+  const [reviews, setReviews] = useState<Review[]>(() => {
+    const raw = loadSaved<Review[]>('educa_reviews_v2', loadSaved<Review[]>('lcc_reviews', INITIAL_REVIEWS));
+    return raw.map(r => (r.studentName === 'Dr. Sneha Kulkarni' || r.studentName === 'Sneha Kulkarni') ? { ...r, studentName: 'Priyanka Nishad' } : r);
+  });
   const [socialLinks, setSocialLinks] = useState<SocialLink[]>(() => loadSaved('lcc_social_links', INITIAL_SOCIALS));
   const [websiteSettings, setWebsiteSettings] = useState<WebsiteSettings>(() => {
     const saved = loadSaved<WebsiteSettings>('educa_website_settings', loadSaved<WebsiteSettings>('lcc_website_settings', INITIAL_SETTINGS));
     if (!saved.contactAddress) {
       saved.contactAddress = 'VIHAR GALI NO. 3 UTTHAN ROAD JHALWA PRAYAGRAJ';
+    }
+    if (saved.instituteHindiName) {
+      saved.instituteHindiName = saved.instituteHindiName.replaceAll('एडुका', 'एजुका');
     }
     const mergedOverrides = {
       ...(INITIAL_SETTINGS.visualOverrides || {}),
@@ -845,16 +854,31 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   // Review Operations
   const addReviewLocally = (review: Review) => {
-    setReviews(prev => [review, ...prev]);
+    setReviews(prev => {
+      const updated = [review, ...prev];
+      saveItem('educa_reviews_v2', updated);
+      saveItem('lcc_reviews', updated);
+      return updated;
+    });
   };
 
   const moderateReview = async (id: string, status: 'approved' | 'rejected') => {
     try {
       await api.reviews.moderate(id, status);
-      setReviews(prev => prev.map(r => r.id === id ? { ...r, status } : r));
+      setReviews(prev => {
+        const updated = prev.map(r => r.id === id ? { ...r, status } : r);
+        saveItem('educa_reviews_v2', updated);
+        saveItem('lcc_reviews', updated);
+        return updated;
+      });
       showToast(`Review marked as ${status}.`, 'success');
     } catch (e) {
-      setReviews(prev => prev.map(r => r.id === id ? { ...r, status } : r));
+      setReviews(prev => {
+        const updated = prev.map(r => r.id === id ? { ...r, status } : r);
+        saveItem('educa_reviews_v2', updated);
+        saveItem('lcc_reviews', updated);
+        return updated;
+      });
       showToast(`Review marked as ${status}.`, 'success');
     }
   };
@@ -862,10 +886,20 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const deleteReview = async (id: string) => {
     try {
       await api.reviews.delete(id);
-      setReviews(prev => prev.filter(r => r.id !== id));
+      setReviews(prev => {
+        const updated = prev.filter(r => r.id !== id);
+        saveItem('educa_reviews_v2', updated);
+        saveItem('lcc_reviews', updated);
+        return updated;
+      });
       showToast('Review removed.', 'info');
     } catch (e) {
-      setReviews(prev => prev.filter(r => r.id !== id));
+      setReviews(prev => {
+        const updated = prev.filter(r => r.id !== id);
+        saveItem('educa_reviews_v2', updated);
+        saveItem('lcc_reviews', updated);
+        return updated;
+      });
     }
   };
 
@@ -888,6 +922,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     } catch (e) {}
     setWebsiteSettings(prev => {
       const updated = { ...prev, ...settings };
+      if (updated.instituteHindiName) {
+        updated.instituteHindiName = updated.instituteHindiName.replaceAll('एडुका', 'एजुका');
+      }
       saveItem('educa_website_settings', updated);
       saveItem('lcc_website_settings', updated);
       if (updated.visualOverrides) {

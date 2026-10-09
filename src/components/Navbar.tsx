@@ -156,7 +156,7 @@ export const Navbar: React.FC = () => {
             {websiteSettings?.instituteName || 'EDUCA INSTITUTE OF CONSULTANCY'}
           </h1>
           <h2 id="header-brand-hindi" className="text-sm sm:text-xl lg:text-2xl font-black text-[#D32F2F] tracking-wide leading-tight">
-            {websiteSettings?.instituteHindiName || 'एडुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज'}
+            {(websiteSettings?.instituteHindiName || 'एजुका इंस्टीट्यूट ऑफ कंसल्टेंसी • प्रयागराज').replaceAll('एडुका', 'एजुका')}
           </h2>
           <p id="header-brand-subtitle" className="text-[10px] sm:text-xs font-bold text-slate-600 hidden sm:block">
             {websiteSettings?.instituteSubtitle || '(A Premier Institute for Naturopathy, Ayurveda & Wealth Management Consultancy)'}

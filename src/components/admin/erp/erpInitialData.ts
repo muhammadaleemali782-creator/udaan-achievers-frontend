@@ -46,9 +46,9 @@ export const INITIAL_ERP_STUDENTS: Student[] = [
   {
     id: 'std-4',
     studentId: 'EDU-2026-004',
-    name: 'Sneha Kulkarni',
+    name: 'Priyanka Nishad',
     mobile: '+91 99333 44556',
-    email: 'sneha.k@educa.com',
+    email: 'priyanka.n@educa.com',
     address: 'Sector 62, Noida, Uttar Pradesh - 201309',
     course: 'WCFM [ WEALTH CONSULTANCY IN FINANCE MANAGEMENT ]',
     batch: 'WCFM Weekend Pro Batch',
@@ -185,7 +185,7 @@ export const INITIAL_ERP_ADMISSIONS: Admission[] = [
   {
     id: 'adm-104',
     studentId: 'EDU-2026-004',
-    studentName: 'Sneha Kulkarni',
+    studentName: 'Priyanka Nishad',
     mobile: '+91 99333 44556',
     address: 'Sector 62, Noida, Uttar Pradesh',
     course: 'WCFM [ WEALTH CONSULTANCY IN FINANCE MANAGEMENT ]',
@@ -286,7 +286,7 @@ export const INITIAL_ERP_FEES: FeeRecord[] = [
   {
     id: 'fee-4',
     studentId: 'EDU-2026-004',
-    studentName: 'Sneha Kulkarni',
+    studentName: 'Priyanka Nishad',
     courseName: 'WCFM [ WEALTH CONSULTANCY IN FINANCE MANAGEMENT ]',
     totalCourseFee: 22000,
     paidAmount: 22000,

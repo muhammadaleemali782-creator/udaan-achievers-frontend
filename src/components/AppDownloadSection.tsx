@@ -125,9 +125,7 @@ export const AppDownloadSection: React.FC = () => {
                     {/* Header */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold text-xs">
-                          AA
-                        </div>
+                        <img src="/logo.jpg" alt="Educa Logo" className="w-8 h-8 rounded-full object-cover border border-slate-200 shadow-xs shrink-0" />
                         <div>
                           <span className="text-[10px] text-slate-400 block font-medium">Welcome Back 👋</span>
                           <span className="font-bold text-slate-900 text-xs">Aarav Patel</span>
@@ -417,10 +415,15 @@ export const AppDownloadSection: React.FC = () => {
             {/* Mobile Number APK Download Box */}
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
               <div className="flex items-center justify-between">
-                <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                  <Download className="w-4 h-4 text-blue-600" />
-                  <span>Download Educa Institute Android APK</span>
-                </h4>
+                <div className="flex items-center gap-3">
+                  <img src="/logo.jpg" alt="Educa App Icon" className="w-10 h-10 rounded-2xl object-cover border border-slate-200 shadow-xs shrink-0" />
+                  <div>
+                    <h4 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                      <span>Download Educa Institute Android APK</span>
+                    </h4>
+                    <span className="text-[11px] text-slate-500 font-medium">Official Mobile & Tablet App</span>
+                  </div>
+                </div>
                 <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700">
                   v1.0.0 • 28 MB
                 </span>
