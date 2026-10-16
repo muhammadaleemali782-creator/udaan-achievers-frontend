@@ -143,7 +143,7 @@ export const MobileAppHome: React.FC<MobileAppHomeProps> = ({
           <img
             src="/logo.jpg"
             alt="Educa Institute Logo"
-            className="w-8 h-8 rounded-full object-contain bg-white border border-amber-300 p-0.5 shrink-0 shadow-xs"
+            className="w-8 h-8 rounded-full object-contain bg-white border border-amber-300 p-0.5 shrink-0 shadow-xs aspect-square"
             onError={(e: any) => {
               e.currentTarget.onerror = null;
               e.currentTarget.src = '/logo.jpg';

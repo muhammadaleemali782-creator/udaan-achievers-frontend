@@ -125,7 +125,7 @@ export const AppDownloadSection: React.FC = () => {
                     {/* Header */}
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <img src="/logo.jpg" alt="Educa Logo" className="w-8 h-8 rounded-full object-cover border border-slate-200 shadow-xs shrink-0" />
+                        <img src="/logo.jpg" alt="Educa Logo" className="w-8 h-8 rounded-full object-contain p-0.5 bg-white border border-slate-200 shadow-xs shrink-0 aspect-square" />
                         <div>
                           <span className="text-[10px] text-slate-400 block font-medium">Welcome Back 👋</span>
                           <span className="font-bold text-slate-900 text-xs">Aarav Patel</span>
@@ -416,7 +416,7 @@ export const AppDownloadSection: React.FC = () => {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-4">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <img src="/logo.jpg" alt="Educa App Icon" className="w-10 h-10 rounded-2xl object-cover border border-slate-200 shadow-xs shrink-0" />
+                  <img src="/logo.jpg" alt="Educa App Icon" className="w-10 h-10 rounded-2xl object-contain p-1 bg-white border border-slate-200 shadow-xs shrink-0 aspect-square" />
                   <div>
                     <h4 className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
                       <span>Download Educa Institute Android APK</span>

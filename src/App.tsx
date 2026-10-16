@@ -174,8 +174,8 @@ const MainContent: React.FC = () => {
   if (isInitialLoading) {
     return (
       <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center space-y-4">
-        <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 p-0.5 shadow-xl shadow-blue-500/20 flex items-center justify-center animate-pulse">
-          <img src="/logo.jpg" alt="Educa" className="w-full h-full rounded-2xl object-cover" />
+        <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 p-1 shadow-xl shadow-blue-500/20 flex items-center justify-center animate-pulse">
+          <img src="/logo.jpg" alt="Educa" className="w-full h-full rounded-xl object-contain bg-white aspect-square" />
         </div>
         <div className="flex items-center gap-2 text-white/80 text-sm font-semibold tracking-wide">
           <div className="w-2 h-2 rounded-full bg-blue-500 animate-ping" />

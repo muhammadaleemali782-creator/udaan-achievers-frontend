@@ -483,18 +483,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const [courses, setCourses] = useState<Course[]>(() => {
-    const deleted = Array.from(new Set([
-      ...loadSaved<string[]>('educa_deleted_courses', []),
-      ...loadSaved<string[]>('lcc_deleted_courses', [])
-    ]));
-    const loaded = loadSaved<Course[]>('educa_courses_v3', loadSaved<Course[]>('lcc_courses', INITIAL_COURSES));
-    return loaded
-      .filter(c => !deleted.includes(c.id))
-      .map(c => ({
-        ...c,
-        fee: Number(c.fee) > 10000000 ? 200000 : c.fee,
-        discountFee: Number(c.discountFee) > 10000000 ? 150000 : c.discountFee
-      }));
+    const loaded = loadSaved<Course[]>('educa_courses_v5', INITIAL_COURSES);
+    const validIds = ['c-wcna', 'c-wcfm'];
+    const validCourses = (Array.isArray(loaded) ? loaded : []).filter(c => validIds.includes(c.id));
+    if (validCourses.length === 2) {
+      return validCourses;
+    }
+    return INITIAL_COURSES;
   });
   const [studyMaterials, setStudyMaterials] = useState<StudyMaterial[]>(() => {
     const saved = loadSaved<StudyMaterial[] | null>('educa_study_materials_v5', null);

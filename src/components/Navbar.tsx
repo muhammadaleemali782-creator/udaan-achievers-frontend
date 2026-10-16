@@ -142,7 +142,7 @@ export const Navbar: React.FC = () => {
             <img
               src={websiteSettings?.logoUrl || '/logo.jpg'}
               alt={websiteSettings?.instituteName || 'Educa Institute Official Seal'}
-              className="w-full h-full object-contain rounded-full"
+              className="w-full h-full object-contain rounded-full aspect-square"
               onError={(e: any) => { e.target.src = '/logo.jpg'; }}
             />
           </div>
