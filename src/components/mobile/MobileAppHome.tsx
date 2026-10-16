@@ -58,7 +58,23 @@ export const MobileAppHome: React.FC<MobileAppHomeProps> = ({
 
   const t = getTranslation(language);
   const studentGoal = currentStudent?.targetClass || currentStudent?.classEnrolled || '12th Pass / Graduate (WCNA & WCFM)';
-  const studentSubjects = currentStudent?.selectedSubjects || ['WCNA Naturopathy', 'WCFM Wealth Mgmt'];
+  const SUBJECT_MAP: Record<string, string> = {
+    'naturopathy-cure': 'Naturopathy (Book 2)',
+    'ayurveda-tridosha': 'Ayurveda (Book 3)',
+    'anatomy-physiology': 'Anatomy (Book 4)',
+    'client-assessment': 'Assessment (Book 5)',
+    'diet-nutrition': 'Diet Planning (Book 6)',
+    'lifestyle-routine': 'Lifestyle (Book 7)',
+    'disease-management': 'Disease Mgmt (Book 8)',
+    'herbs-supplements': 'Herbs (Book 9)',
+    'counseling-psychology': 'Counseling (Book 10)',
+    'professional-ethics': 'Ethics (Book 11)',
+    'corporate-valuation': 'Corporate Valuation',
+    'portfolio-advisory': 'Portfolio Advisory',
+    'tax-optimization': 'Tax Optimization'
+  };
+  const rawSubjects = currentStudent?.selectedSubjects || ['naturopathy-cure', 'ayurveda-tridosha'];
+  const studentSubjects = rawSubjects.map(s => SUBJECT_MAP[s] || s);
   const contactPhone = (websiteSettings?.contactPhone || '9876543210').replace(/[^0-9]/g, '');
 
   const [searchQuery, setSearchQuery] = useState('');

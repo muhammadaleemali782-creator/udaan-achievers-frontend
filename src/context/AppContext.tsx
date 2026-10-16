@@ -483,12 +483,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   };
 
   const [courses, setCourses] = useState<Course[]>(() => {
-    const loaded = loadSaved<Course[]>('educa_courses_v5', INITIAL_COURSES);
-    const validIds = ['c-wcna', 'c-wcfm'];
-    const validCourses = (Array.isArray(loaded) ? loaded : []).filter(c => validIds.includes(c.id));
-    if (validCourses.length === 2) {
-      return validCourses;
-    }
+    try {
+      ['educa_courses', 'educa_courses_v2', 'educa_courses_v3', 'educa_courses_v4', 'educa_courses_v5', 'lcc_courses'].forEach(k => localStorage.removeItem(k));
+    } catch {}
     return INITIAL_COURSES;
   });
   const [studyMaterials, setStudyMaterials] = useState<StudyMaterial[]>(() => {

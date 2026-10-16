@@ -229,7 +229,7 @@ export const AppDownloadSection: React.FC = () => {
                     <div className="relative h-32 rounded-2xl overflow-hidden bg-slate-900">
                       <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&auto=format&fit=crop&q=80" alt="Course Cover" className="w-full h-full object-cover filter brightness-90" />
                       <span className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-blue-600 text-white font-bold text-[9px]">
-                        ₹18,500
+                        ₹1,49,999
                       </span>
                     </div>
 

@@ -57,7 +57,23 @@ export const MobileAppDrawer: React.FC<MobileAppDrawerProps> = ({
 
   const studentAvatar = currentStudent?.avatar || '🎓';
   const studentGoal = currentStudent?.targetClass || currentStudent?.classEnrolled || '12th Pass / Graduate (WCNA & WCFM)';
-  const studentSubjects = currentStudent?.selectedSubjects?.join(', ') || 'WCNA, WCFM';
+  const SUBJECT_MAP: Record<string, string> = {
+    'naturopathy-cure': 'Naturopathy (Book 2)',
+    'ayurveda-tridosha': 'Ayurveda (Book 3)',
+    'anatomy-physiology': 'Anatomy (Book 4)',
+    'client-assessment': 'Assessment (Book 5)',
+    'diet-nutrition': 'Diet Planning (Book 6)',
+    'lifestyle-routine': 'Lifestyle (Book 7)',
+    'disease-management': 'Disease Mgmt (Book 8)',
+    'herbs-supplements': 'Herbs (Book 9)',
+    'counseling-psychology': 'Counseling (Book 10)',
+    'professional-ethics': 'Ethics (Book 11)',
+    'corporate-valuation': 'Corporate Valuation',
+    'portfolio-advisory': 'Portfolio Advisory',
+    'tax-optimization': 'Tax Optimization'
+  };
+  const rawSubjects = currentStudent?.selectedSubjects || ['naturopathy-cure', 'ayurveda-tridosha'];
+  const studentSubjects = rawSubjects.map(s => SUBJECT_MAP[s] || s).join(', ');
 
   return (
     <div

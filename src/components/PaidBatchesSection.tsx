@@ -107,7 +107,7 @@ export const PaidBatchesSection: React.FC = () => {
                   <div className="flex items-baseline justify-between gap-2 flex-wrap">
                     <div className="flex items-baseline gap-2">
                       <span className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                        ₹{Number(course.discountFee || 150000).toLocaleString('en-IN')}
+                        ₹{Number(course.discountFee || 149999).toLocaleString('en-IN')}
                       </span>
                       {Number(course.fee) > Number(course.discountFee) && (
                         <span className="text-xs text-slate-400 line-through font-medium">

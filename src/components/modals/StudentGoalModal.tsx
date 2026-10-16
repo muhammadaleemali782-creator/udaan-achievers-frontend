@@ -9,32 +9,57 @@ interface StudentGoalModalProps {
 }
 
 const CLASS_OPTIONS = [
-  { id: '12th Pass (WCNA / WCFM)', label: '12th Pass (Intermediate)', tag: 'Eligible: WCNA & WCFM', icon: '🎓' },
-  { id: 'Graduate Passed (WCNA / WCFM)', label: 'Graduate Passed (Any Stream)', tag: 'Direct Consultant Track', icon: '💼' },
-  { id: '10th Pass (WCNA Foundation)', label: '10th Pass (High School)', tag: 'Foundation & Diploma', icon: '🎯' },
-  { id: 'Post-Graduate / Professional', label: 'Post-Graduate / Doctor', tag: 'Executive Practice', icon: '🔬' },
-  { id: 'WCNA Naturopathy Track', label: 'WCNA Naturopathy & Ayurveda', tag: 'Clinical Practitioner', icon: '🌿' },
-  { id: 'WCFM Wealth Advisory Track', label: 'WCFM Wealth Management', tag: 'Corporate & Portfolio', icon: '💰' }
+  {
+    id: '12th Pass (WCNA / WCFM)',
+    label: '12th Pass (Intermediate)',
+    tag: 'ELIGIBLE FOR WCNA & WCFM',
+    stream: 'Any Stream: Arts, Science or Commerce',
+    icon: '🎓'
+  },
+  {
+    id: 'Graduate Passed (WCNA / WCFM)',
+    label: 'Graduate Passed (Any Stream)',
+    tag: 'ELIGIBLE FOR WCNA & WCFM',
+    stream: 'Any Stream: Arts, Science or Commerce',
+    icon: '💼'
+  },
+  {
+    id: '10th Pass (WCNA Foundation)',
+    label: '10th Pass (High School)',
+    tag: 'ELIGIBLE FOR WCNA & WCFM',
+    stream: 'Any Stream / Recognized Board',
+    icon: '🎯'
+  },
+  {
+    id: 'Post-Graduate / Professional',
+    label: 'Post-Graduate / Doctor',
+    tag: 'ELIGIBLE FOR WCNA & WCFM',
+    stream: 'Any Stream: Arts, Science or Commerce',
+    icon: '🔬'
+  }
 ];
 
 const CLASS_SUBJECT_DEFAULTS: Record<string, string[]> = {
-  '12th Pass (WCNA / WCFM)': ['WCNA Naturopathy', 'WCFM Wealth Mgmt', 'Diet & Nutrition'],
-  'Graduate Passed (WCNA / WCFM)': ['WCFM Wealth Mgmt', 'Corporate Valuation', 'Client Advisory'],
-  '10th Pass (WCNA Foundation)': ['WCNA Naturopathy', 'Computer DCA', 'Diet & Nutrition'],
-  'Post-Graduate / Professional': ['Clinical Naturopathy', 'Corporate Valuation', 'Portfolio Strategy'],
-  'WCNA Naturopathy Track': ['WCNA Naturopathy', 'Clinical Naturopathy', 'Diet & Nutrition'],
-  'WCFM Wealth Advisory Track': ['WCFM Wealth Mgmt', 'Corporate Valuation', 'Portfolio Strategy']
+  '12th Pass (WCNA / WCFM)': ['naturopathy-cure', 'ayurveda-tridosha', 'diet-nutrition', 'corporate-valuation'],
+  'Graduate Passed (WCNA / WCFM)': ['corporate-valuation', 'portfolio-advisory', 'tax-optimization', 'client-assessment'],
+  '10th Pass (WCNA Foundation)': ['naturopathy-cure', 'ayurveda-tridosha', 'lifestyle-routine'],
+  'Post-Graduate / Professional': ['client-assessment', 'disease-management', 'corporate-valuation', 'portfolio-advisory']
 };
 
 const SUBJECT_OPTIONS = [
-  { id: 'WCNA Naturopathy', label: 'WCNA Naturopathy & Ayurveda', icon: '🌿' },
-  { id: 'WCFM Wealth Mgmt', label: 'WCFM Wealth Management', icon: '💰' },
-  { id: 'Clinical Naturopathy', label: 'Pulse Diagnosis & Panchakarma', icon: '🩺' },
-  { id: 'Diet & Nutrition', label: 'Dietetics & Herbal Formulations', icon: '🥗' },
-  { id: 'Corporate Valuation', label: 'Corporate Valuation & Tax', icon: '📊' },
-  { id: 'Portfolio Strategy', label: 'Portfolio & Wealth Advisory', icon: '📈' },
-  { id: 'Computer DCA', label: 'Computer Applications (DCA)', icon: '💻' },
-  { id: 'Client Advisory', label: 'Executive Client Consulting', icon: '🗣️' }
+  { id: 'naturopathy-cure', label: 'Naturopathy & Nature Cure (Book 2)', icon: '🌿' },
+  { id: 'ayurveda-tridosha', label: 'Ayurveda & Tridosha Science (Book 3)', icon: '🍃' },
+  { id: 'anatomy-physiology', label: 'Human Anatomy & Physiology (Book 4)', icon: '🫀' },
+  { id: 'client-assessment', label: 'Pulse Diagnosis & Assessment (Book 5)', icon: '🩺' },
+  { id: 'diet-nutrition', label: 'Therapeutic Diet & Nutrition (Book 6)', icon: '🥗' },
+  { id: 'lifestyle-routine', label: 'Lifestyle & Dinacharya Routine (Book 7)', icon: '☀️' },
+  { id: 'disease-management', label: 'Lifestyle Disease Management (Book 8)', icon: '⚕️' },
+  { id: 'herbs-supplements', label: 'Medicinal Herbs & Supplements (Book 9)', icon: '🌱' },
+  { id: 'counseling-psychology', label: 'Client Counseling & Psychology (Book 10)', icon: '🗣️' },
+  { id: 'professional-ethics', label: 'Professional Ethics & Practice (Book 11)', icon: '⚖️' },
+  { id: 'corporate-valuation', label: 'Corporate Valuation & DCF Modeling (WCFM)', icon: '📊' },
+  { id: 'portfolio-advisory', label: 'Portfolio & Wealth Advisory (WCFM)', icon: '📈' },
+  { id: 'tax-optimization', label: 'Corporate Tax & Compliance (WCFM)', icon: '📑' }
 ];
 
 const AVATAR_OPTIONS = [
@@ -51,7 +76,7 @@ export const StudentGoalModal: React.FC<StudentGoalModalProps> = ({ isOpen, onCl
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>(
     currentStudent?.selectedSubjects && currentStudent.selectedSubjects.length > 0
       ? currentStudent.selectedSubjects
-      : ['WCNA Naturopathy', 'WCFM Wealth Mgmt']
+      : ['naturopathy-cure', 'ayurveda-tridosha', 'diet-nutrition', 'corporate-valuation']
   );
   const [selectedAvatar, setSelectedAvatar] = useState<string>(
     currentStudent?.avatar || '🎓'
@@ -164,8 +189,11 @@ export const StudentGoalModal: React.FC<StudentGoalModalProps> = ({ isOpen, onCl
                     </div>
                     <div>
                       <div className="text-xs font-bold text-slate-900 leading-tight">{opt.label}</div>
-                      <span className="text-[9px] font-bold text-blue-600 uppercase tracking-wide block mt-0.5">
+                      <span className="text-[9px] font-black text-blue-600 uppercase tracking-wide block mt-1">
                         {opt.tag}
+                      </span>
+                      <span className="text-[8.5px] font-semibold text-slate-500 block leading-tight mt-0.5">
+                        {opt.stream}
                       </span>
                     </div>
                   </button>
@@ -178,10 +206,10 @@ export const StudentGoalModal: React.FC<StudentGoalModalProps> = ({ isOpen, onCl
           <div className="space-y-2.5">
             <label className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
               <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-[10px] font-black">2</span>
-              <span>Select Key Subjects</span>
+              <span>Select Key Subjects (Official Books & Modules)</span>
             </label>
 
-            <div className="flex flex-wrap gap-1.5">
+            <div className="space-y-1.5 max-h-60 overflow-y-auto pr-1">
               {SUBJECT_OPTIONS.map(subj => {
                 const isSelected = selectedSubjects.includes(subj.id);
                 return (
@@ -189,15 +217,21 @@ export const StudentGoalModal: React.FC<StudentGoalModalProps> = ({ isOpen, onCl
                     key={subj.id}
                     type="button"
                     onClick={() => toggleSubject(subj.id)}
-                    className={`px-3 py-1.5 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                    className={`w-full px-3.5 py-2.5 rounded-xl border text-xs font-bold flex items-center justify-between transition-all cursor-pointer text-left ${
                       isSelected
                         ? 'bg-blue-600 text-white border-blue-600 shadow-xs'
                         : 'bg-slate-50 text-slate-700 border-slate-200 hover:border-slate-300'
                     }`}
                   >
-                    <span>{subj.icon}</span>
-                    <span>{subj.label}</span>
-                    {isSelected && <Check className="w-3 h-3 ml-0.5" />}
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <span className="text-sm shrink-0">{subj.icon}</span>
+                      <span className="truncate">{subj.label}</span>
+                    </div>
+                    {isSelected ? (
+                      <Check className="w-3.5 h-3.5 shrink-0 text-white" />
+                    ) : (
+                      <span className="w-3.5 h-3.5 rounded-full border border-slate-300 shrink-0" />
+                    )}
                   </button>
                 );
               })}

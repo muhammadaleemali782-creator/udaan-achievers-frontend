@@ -34,8 +34,8 @@ export const CourseSection: React.FC = () => {
     category: 'wellness',
     targetClass: 'Aspiring Consultants & Practitioners',
     duration: '6 Months Certification',
-    fee: 25000,
-    discountFee: 18500,
+    fee: 200000,
+    discountFee: 149999,
     instructor: 'S. R. Anand',
     image: '/assets/debate.jpg',
     badge: 'New Program',
@@ -274,7 +274,7 @@ export const CourseSection: React.FC = () => {
                   data-course-field="discountFee"
                   className="absolute top-3.5 right-3.5 px-3 py-1 rounded-full bg-[#0066FF] text-white text-xs font-black shadow-sm"
                 >
-                  ₹{Number(course.discountFee || 150000).toLocaleString('en-IN')}
+                  ₹{Number(course.discountFee || 149999).toLocaleString('en-IN')}
                 </div>
 
                 <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between text-white text-xs font-medium">
@@ -348,7 +348,7 @@ export const CourseSection: React.FC = () => {
                       className="text-base sm:text-lg font-black text-slate-900 dark:text-white cursor-pointer hover:text-[#0066FF] py-0.5 px-1 rounded transition-colors select-none"
                       title={isAdminAuthenticated ? "Click to edit offer price" : undefined}
                     >
-                      ₹{Number(course.discountFee || 150000).toLocaleString('en-IN')}
+                      ₹{Number(course.discountFee || 149999).toLocaleString('en-IN')}
                     </span>
                   </div>
 
