@@ -30,6 +30,7 @@ import {
   INITIAL_MOCK_TESTS
 } from '../data/initialData';
 import { api } from '../api/client';
+import { AppLanguage } from '../utils/i18n';
 
 export type ActiveView = 
   | 'home'
@@ -98,6 +99,16 @@ export interface AppContextType {
   setIsStudentAuthModalOpen: (open: boolean) => void;
   isAdminAuthModalOpen: boolean;
   setIsAdminAuthModalOpen: (open: boolean) => void;
+
+  language: AppLanguage;
+  setLanguage: (lang: AppLanguage) => void;
+  isGoalModalOpen: boolean;
+  setIsGoalModalOpen: (open: boolean) => void;
+  isDrawerOpen: boolean;
+  setIsDrawerOpen: (open: boolean) => void;
+  isOfflineVaultOpen: boolean;
+  setIsOfflineVaultOpen: (open: boolean) => void;
+  updateStudentGoal: (targetClass: string, selectedSubjects: string[], avatar: string) => Promise<boolean>;
 
   currentStudent: Student | null;
   isAdminAuthenticated: boolean;
@@ -553,6 +564,45 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const [selectedVideoForPlayer, setSelectedVideoForPlayer] = useState<VideoLecture | null>(null);
   const [isStudentAuthModalOpen, setIsStudentAuthModalOpen] = useState(false);
   const [isAdminAuthModalOpen, setIsAdminAuthModalOpen] = useState(false);
+
+  // Mobile App & Multilingual States
+  const [language, setLanguageState] = useState<AppLanguage>(() => {
+    return (localStorage.getItem('educa_app_language') as AppLanguage) || 'en';
+  });
+  const setLanguage = (lang: AppLanguage) => {
+    setLanguageState(lang);
+    localStorage.setItem('educa_app_language', lang);
+  };
+
+  const [isGoalModalOpen, setIsGoalModalOpen] = useState<boolean>(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const [isOfflineVaultOpen, setIsOfflineVaultOpen] = useState<boolean>(false);
+
+  const updateStudentGoal = async (targetClass: string, selectedSubjects: string[], avatar: string): Promise<boolean> => {
+    if (!currentStudent) {
+      localStorage.setItem('educa_guest_goal', JSON.stringify({ targetClass, selectedSubjects, avatar }));
+      showToast('Study preferences updated!', 'success');
+      return true;
+    }
+    try {
+      const updatedStudent: Student = {
+        ...currentStudent,
+        targetClass,
+        classEnrolled: targetClass,
+        selectedSubjects,
+        avatar
+      };
+      setCurrentStudent(updatedStudent);
+      saveItem('educa_current_student', updatedStudent);
+      localStorage.setItem('lcc_student_session', JSON.stringify(updatedStudent));
+      setStudents(prev => prev.map(s => s.id === currentStudent.id ? updatedStudent : s));
+      showToast('Academic goal & subjects saved!', 'success');
+      return true;
+    } catch {
+      showToast('Failed to save academic goal', 'error');
+      return false;
+    }
+  };
 
   const [currentStudent, setCurrentStudent] = useState<Student | null>(() => {
     try {
@@ -1382,6 +1432,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     setIsStudentAuthModalOpen,
     isAdminAuthModalOpen,
     setIsAdminAuthModalOpen,
+    language,
+    setLanguage,
+    isGoalModalOpen,
+    setIsGoalModalOpen,
+    isDrawerOpen,
+    setIsDrawerOpen,
+    isOfflineVaultOpen,
+    setIsOfflineVaultOpen,
+    updateStudentGoal,
     currentStudent,
     isAdminAuthenticated,
     loginStudent,
@@ -1434,6 +1493,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     inquiries, mockTests, ads, reviews, socialLinks,
     websiteSettings, selectedCourseForPayment, selectedDocForPreview,
     selectedVideoForPlayer, isStudentAuthModalOpen, isAdminAuthModalOpen,
+    language, isGoalModalOpen, isDrawerOpen, isOfflineVaultOpen,
     currentStudent, isAdminAuthenticated, toasts, isInitialLoading,
     showToast, removeToast
   ]);

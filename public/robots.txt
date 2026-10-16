@@ -17,4 +17,4 @@ Allow: /
 User-agent: Googlebot
 Allow: /
 
-Sitemap: https://lcc-edu.vercel.app/sitemap.xml
+Sitemap: https://educainstitute.vercel.app/sitemap.xml

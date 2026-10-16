@@ -10,6 +10,7 @@ export interface Course {
   duration: string;
   fee: number;
   discountFee: number;
+  originalFee?: number;
   rating: number;
   enrolledCount: number;
   instructor: string;
@@ -122,8 +123,11 @@ export interface Student {
   name: string;
   email: string;
   phone: string;
+  rollNumber?: string;
   targetClass?: string;
   classEnrolled?: string;
+  selectedSubjects?: string[];
+  avatar?: string;
   avatarUrl?: string;
   enrolledCourses: string[];
   completedLessons?: string[];

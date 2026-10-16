@@ -36,8 +36,28 @@ import { applyVisualOverrides, DEFAULT_SECTION_ORDER } from './components/admin/
 const LiveVisualEditor = React.lazy(() => import('./components/admin/LiveVisualEditor').then(m => ({ default: m.LiveVisualEditor })));
 import { ToastContainer } from './components/Toast';
 
+// Mobile EdTech App Components
+import { MobileAppHome } from './components/mobile/MobileAppHome';
+import { MobileAppDrawer } from './components/mobile/MobileAppDrawer';
+import { StudentGoalModal } from './components/modals/StudentGoalModal';
+import { OfflineVaultModal } from './components/common/OfflineVaultModal';
+
 const MainContent: React.FC = () => {
-  const { activeView, isAdminAuthenticated, theme, websiteSettings, notices, navigateTo, isInitialLoading } = useApp();
+  const {
+    activeView,
+    isAdminAuthenticated,
+    theme,
+    websiteSettings,
+    notices,
+    navigateTo,
+    isInitialLoading,
+    isGoalModalOpen,
+    setIsGoalModalOpen,
+    isDrawerOpen,
+    setIsDrawerOpen,
+    isOfflineVaultOpen,
+    setIsOfflineVaultOpen
+  } = useApp();
 
   // Apply visual overrides smoothly without heavy DOM tree MutationObserver
   React.useEffect(() => {
@@ -95,12 +115,28 @@ const MainContent: React.FC = () => {
       theme === 'dark' ? 'bg-slate-950 text-slate-100 dark' : 'bg-white text-slate-900'
     }`}>
       <div>
-        {activeView !== 'admin-panel' && <Navbar />}
+        {activeView !== 'admin-panel' && (
+          <div className="hidden lg:block">
+            <Navbar />
+          </div>
+        )}
 
-        <main className={activeView !== 'admin-panel' ? 'pb-32 xl:pb-16' : ''}>
+        <main className={activeView !== 'admin-panel' ? 'pb-0 lg:pb-16' : ''}>
           {activeView === 'home' && (
             <>
-              {currentSectionOrder.map(secKey => sectionMap[secKey] || null)}
+              {/* Mobile View: Dedicated EdTech Mobile App Experience */}
+              <div className="block lg:hidden w-full max-w-full overflow-x-hidden">
+                <MobileAppHome
+                  onOpenDrawer={() => setIsDrawerOpen(true)}
+                  onOpenGoalModal={() => setIsGoalModalOpen(true)}
+                  onOpenOfflineVault={() => setIsOfflineVaultOpen(true)}
+                />
+              </div>
+
+              {/* Desktop View: Grand Educational Institute Web Experience */}
+              <div className="hidden lg:block">
+                {currentSectionOrder.map(secKey => sectionMap[secKey] || null)}
+              </div>
             </>
           )}
 
@@ -235,7 +271,11 @@ const MainContent: React.FC = () => {
         </main>
       </div>
 
-      {activeView !== 'admin-panel' && <Footer />}
+      {activeView !== 'admin-panel' && (
+        <div className="hidden lg:block">
+          <Footer />
+        </div>
+      )}
 
       {/* Global Modals */}
       <PaymentModal />
@@ -244,6 +284,22 @@ const MainContent: React.FC = () => {
       <StudentAuthModal />
       <AdminAuthModal />
       <ToastContainer />
+
+      {/* Mobile EdTech App Drawer & Modals */}
+      <MobileAppDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+        onOpenGoalModal={() => setIsGoalModalOpen(true)}
+        onOpenOfflineVault={() => setIsOfflineVaultOpen(true)}
+      />
+      <StudentGoalModal
+        isOpen={isGoalModalOpen}
+        onClose={() => setIsGoalModalOpen(false)}
+      />
+      <OfflineVaultModal
+        isOpen={isOfflineVaultOpen}
+        onClose={() => setIsOfflineVaultOpen(false)}
+      />
 
       {/* Admin On-Page Live Visual Editor with Time-Machine Undo/Redo & Reshuffle */}
       {isAdminAuthenticated && activeView !== 'admin-panel' && (
