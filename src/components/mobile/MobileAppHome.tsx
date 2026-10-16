@@ -57,8 +57,8 @@ export const MobileAppHome: React.FC<MobileAppHomeProps> = ({
   } = useApp();
 
   const t = getTranslation(language);
-  const studentGoal = currentStudent?.targetClass || currentStudent?.classEnrolled || 'Class 9-10';
-  const studentSubjects = currentStudent?.selectedSubjects || ['Mathematics', 'Science', 'English'];
+  const studentGoal = currentStudent?.targetClass || currentStudent?.classEnrolled || '12th Pass / Graduate (WCNA & WCFM)';
+  const studentSubjects = currentStudent?.selectedSubjects || ['WCNA Naturopathy', 'WCFM Wealth Mgmt'];
   const contactPhone = (websiteSettings?.contactPhone || '9876543210').replace(/[^0-9]/g, '');
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -68,8 +68,8 @@ export const MobileAppHome: React.FC<MobileAppHomeProps> = ({
   const slides = [
     {
       id: 'slide-1',
-      title: 'Target 2026-27 Board & Professional Programs',
-      subtitle: 'Class 9-12, WCNA & WCFM Financial Certifications',
+      title: 'WCNA & WCFM Professional Certifications 2026-27',
+      subtitle: 'Open for 10th Pass, 12th Pass & Graduates with Clinical Training',
       tag: 'NEW BATCH',
       img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&auto=format&fit=crop&q=80'
     },

@@ -56,8 +56,8 @@ export const MobileAppDrawer: React.FC<MobileAppDrawerProps> = ({
   ];
 
   const studentAvatar = currentStudent?.avatar || '🎓';
-  const studentGoal = currentStudent?.targetClass || currentStudent?.classEnrolled || 'Class 9-10';
-  const studentSubjects = currentStudent?.selectedSubjects?.join(', ') || 'Maths, Science';
+  const studentGoal = currentStudent?.targetClass || currentStudent?.classEnrolled || '12th Pass / Graduate (WCNA & WCFM)';
+  const studentSubjects = currentStudent?.selectedSubjects?.join(', ') || 'WCNA, WCFM';
 
   return (
     <div

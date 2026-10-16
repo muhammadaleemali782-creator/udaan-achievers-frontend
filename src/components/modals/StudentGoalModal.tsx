@@ -9,31 +9,32 @@ interface StudentGoalModalProps {
 }
 
 const CLASS_OPTIONS = [
-  { id: 'Class 9-10', label: 'Class 9 & 10 (Board)', tag: 'Target 95%+', icon: '🎯' },
-  { id: 'Class 11-12', label: 'Class 11 & 12 (Science/Commerce)', tag: 'Board Excellence', icon: '🔬' },
-  { id: 'WCNA / WCFM', label: 'WCNA & WCFM Certification', tag: 'Specialized Track', icon: '💼' },
-  { id: 'Commerce & Finance', label: 'Commerce, Accounts & Finance', tag: 'Professional', icon: '📊' },
-  { id: 'Computer DCA', label: 'Computer DCA / ADCA', tag: 'Govt Certified', icon: '💻' },
-  { id: 'Spoken English', label: 'Spoken English Masterclass', tag: 'Fluency & Skills', icon: '🗣️' }
+  { id: '12th Pass (WCNA / WCFM)', label: '12th Pass (Intermediate)', tag: 'Eligible: WCNA & WCFM', icon: '🎓' },
+  { id: 'Graduate Passed (WCNA / WCFM)', label: 'Graduate Passed (Any Stream)', tag: 'Direct Consultant Track', icon: '💼' },
+  { id: '10th Pass (WCNA Foundation)', label: '10th Pass (High School)', tag: 'Foundation & Diploma', icon: '🎯' },
+  { id: 'Post-Graduate / Professional', label: 'Post-Graduate / Doctor', tag: 'Executive Practice', icon: '🔬' },
+  { id: 'WCNA Naturopathy Track', label: 'WCNA Naturopathy & Ayurveda', tag: 'Clinical Practitioner', icon: '🌿' },
+  { id: 'WCFM Wealth Advisory Track', label: 'WCFM Wealth Management', tag: 'Corporate & Portfolio', icon: '💰' }
 ];
 
 const CLASS_SUBJECT_DEFAULTS: Record<string, string[]> = {
-  'Class 9-10': ['Mathematics', 'Science', 'English'],
-  'Class 11-12': ['Science', 'Mathematics', 'Commerce'],
-  'WCNA / WCFM': ['Finance', 'Management'],
-  'Commerce & Finance': ['Finance', 'Economics', 'Accounts'],
-  'Computer DCA': ['Computer'],
-  'Spoken English': ['English']
+  '12th Pass (WCNA / WCFM)': ['WCNA Naturopathy', 'WCFM Wealth Mgmt', 'Diet & Nutrition'],
+  'Graduate Passed (WCNA / WCFM)': ['WCFM Wealth Mgmt', 'Corporate Valuation', 'Client Advisory'],
+  '10th Pass (WCNA Foundation)': ['WCNA Naturopathy', 'Computer DCA', 'Diet & Nutrition'],
+  'Post-Graduate / Professional': ['Clinical Naturopathy', 'Corporate Valuation', 'Portfolio Strategy'],
+  'WCNA Naturopathy Track': ['WCNA Naturopathy', 'Clinical Naturopathy', 'Diet & Nutrition'],
+  'WCFM Wealth Advisory Track': ['WCFM Wealth Mgmt', 'Corporate Valuation', 'Portfolio Strategy']
 };
 
 const SUBJECT_OPTIONS = [
-  { id: 'Mathematics', label: 'Mathematics', icon: '📐' },
-  { id: 'Science', label: 'Science / Physics', icon: '🔬' },
-  { id: 'Finance', label: 'Finance & Banking', icon: '💰' },
-  { id: 'Commerce', label: 'Commerce & Accounts', icon: '📊' },
-  { id: 'Computer', label: 'Computer & IT', icon: '💻' },
-  { id: 'English', label: 'English & Grammar', icon: '🗣️' },
-  { id: 'Management', label: 'Consultancy & Management', icon: '📈' }
+  { id: 'WCNA Naturopathy', label: 'WCNA Naturopathy & Ayurveda', icon: '🌿' },
+  { id: 'WCFM Wealth Mgmt', label: 'WCFM Wealth Management', icon: '💰' },
+  { id: 'Clinical Naturopathy', label: 'Pulse Diagnosis & Panchakarma', icon: '🩺' },
+  { id: 'Diet & Nutrition', label: 'Dietetics & Herbal Formulations', icon: '🥗' },
+  { id: 'Corporate Valuation', label: 'Corporate Valuation & Tax', icon: '📊' },
+  { id: 'Portfolio Strategy', label: 'Portfolio & Wealth Advisory', icon: '📈' },
+  { id: 'Computer DCA', label: 'Computer Applications (DCA)', icon: '💻' },
+  { id: 'Client Advisory', label: 'Executive Client Consulting', icon: '🗣️' }
 ];
 
 const AVATAR_OPTIONS = [
@@ -45,12 +46,12 @@ export const StudentGoalModal: React.FC<StudentGoalModalProps> = ({ isOpen, onCl
   const t = getTranslation(language);
 
   const [selectedClass, setSelectedClass] = useState<string>(
-    currentStudent?.targetClass || currentStudent?.classEnrolled || 'Class 9-10'
+    currentStudent?.targetClass || currentStudent?.classEnrolled || '12th Pass (WCNA / WCFM)'
   );
   const [selectedSubjects, setSelectedSubjects] = useState<string[]>(
     currentStudent?.selectedSubjects && currentStudent.selectedSubjects.length > 0
       ? currentStudent.selectedSubjects
-      : ['Mathematics', 'Science', 'English']
+      : ['WCNA Naturopathy', 'WCFM Wealth Mgmt']
   );
   const [selectedAvatar, setSelectedAvatar] = useState<string>(
     currentStudent?.avatar || '🎓'
@@ -134,7 +135,7 @@ export const StudentGoalModal: React.FC<StudentGoalModalProps> = ({ isOpen, onCl
             <div className="flex items-center justify-between">
               <label className="text-xs font-bold text-slate-800 flex items-center gap-1.5">
                 <span className="w-5 h-5 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-[10px] font-black">1</span>
-                <span>Select Your Target Program</span>
+                <span>Select Qualification (10th/12th/Graduate)</span>
               </label>
               <span className="text-[10px] text-blue-600 font-bold">Recommended</span>
             </div>

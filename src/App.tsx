@@ -56,8 +56,83 @@ const MainContent: React.FC = () => {
     isDrawerOpen,
     setIsDrawerOpen,
     isOfflineVaultOpen,
-    setIsOfflineVaultOpen
+    setIsOfflineVaultOpen,
+    isStudentAuthModalOpen,
+    setIsStudentAuthModalOpen,
+    isAdminAuthModalOpen,
+    setIsAdminAuthModalOpen,
+    selectedCourseForPayment,
+    setSelectedCourseForPayment,
+    selectedDocForPreview,
+    setSelectedDocForPreview,
+    selectedVideoForPlayer,
+    setSelectedVideoForPlayer
   } = useApp();
+
+  // Android APK Hardware Back Button & Modal Dismiss Handler
+  React.useEffect(() => {
+    (window as any).__handleAppBack = () => {
+      // 1. Close open popups/modals
+      if (isDrawerOpen) {
+        setIsDrawerOpen(false);
+        return true;
+      }
+      if (isGoalModalOpen) {
+        setIsGoalModalOpen(false);
+        return true;
+      }
+      if (isOfflineVaultOpen) {
+        setIsOfflineVaultOpen(false);
+        return true;
+      }
+      if (isStudentAuthModalOpen) {
+        setIsStudentAuthModalOpen(false);
+        return true;
+      }
+      if (isAdminAuthModalOpen) {
+        setIsAdminAuthModalOpen(false);
+        return true;
+      }
+      if (selectedCourseForPayment) {
+        setSelectedCourseForPayment(null);
+        return true;
+      }
+      if (selectedDocForPreview) {
+        setSelectedDocForPreview(null);
+        return true;
+      }
+      if (selectedVideoForPlayer) {
+        setSelectedVideoForPlayer(null);
+        return true;
+      }
+      // 2. If inside a sub-screen, go back to home screen
+      if (activeView !== 'home') {
+        navigateTo('home');
+        return true;
+      }
+      // 3. Already on home with no modals open
+      return false;
+    };
+  }, [
+    isDrawerOpen,
+    isGoalModalOpen,
+    isOfflineVaultOpen,
+    isStudentAuthModalOpen,
+    isAdminAuthModalOpen,
+    selectedCourseForPayment,
+    selectedDocForPreview,
+    selectedVideoForPlayer,
+    activeView,
+    navigateTo,
+    setIsDrawerOpen,
+    setIsGoalModalOpen,
+    setIsOfflineVaultOpen,
+    setIsStudentAuthModalOpen,
+    setIsAdminAuthModalOpen,
+    setSelectedCourseForPayment,
+    setSelectedDocForPreview,
+    setSelectedVideoForPlayer
+  ]);
 
   // Apply visual overrides smoothly without heavy DOM tree MutationObserver
   React.useEffect(() => {
