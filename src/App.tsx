@@ -31,8 +31,8 @@ import { StudentAuthModal } from './components/modals/StudentAuthModal';
 import { AdminAuthModal } from './components/modals/AdminAuthModal';
 import { StudentDashboard } from './components/student/StudentDashboard';
 import { AdminPanel } from './components/admin/AdminPanel';
-import { applyVisualOverrides, DEFAULT_SECTION_ORDER } from './components/admin/LiveVisualEditor';
-// ponytail: lazy-load the 84KB visual editor — only admins need it
+import { applyVisualOverrides, DEFAULT_SECTION_ORDER } from './utils/visualOverrides';
+// ponytail: lazy-load the visual editor — only admins need it
 const LiveVisualEditor = React.lazy(() => import('./components/admin/LiveVisualEditor').then(m => ({ default: m.LiveVisualEditor })));
 import { ToastContainer } from './components/Toast';
 
@@ -66,23 +66,55 @@ const MainContent: React.FC = () => {
     selectedDocForPreview,
     setSelectedDocForPreview,
     selectedVideoForPlayer,
-    setSelectedVideoForPlayer
+    setSelectedVideoForPlayer,
+    language,
+    showToast
   } = useApp();
 
-  // Android APK Hardware Back Button & Modal Dismiss Handler
+  const hasOpenModal = Boolean(
+    isDrawerOpen ||
+    isGoalModalOpen ||
+    isOfflineVaultOpen ||
+    isStudentAuthModalOpen ||
+    isAdminAuthModalOpen ||
+    selectedCourseForPayment ||
+    selectedDocForPreview ||
+    selectedVideoForPlayer
+  );
+
+  const modalPushedRef = React.useRef(false);
+  const closingViaPopstateRef = React.useRef(false);
+  const isProgrammaticBackRef = React.useRef(false);
+  const lastBackPressRef = React.useRef(0);
+
+  // Only render desktop sections if screen is large enough, avoiding mounting 19 sections on mobile
+  const [isDesktop, setIsDesktop] = React.useState<boolean>(() => {
+    return typeof window !== 'undefined' ? window.innerWidth >= 1024 : false;
+  });
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      const desktop = window.innerWidth >= 1024;
+      setIsDesktop(prev => prev !== desktop ? desktop : prev);
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Hardware & Web Back Button: Dismiss open modals/sub-views
   React.useEffect(() => {
     (window as any).__handleAppBack = () => {
-      // 1. Close open popups/modals
-      if (isDrawerOpen) {
-        setIsDrawerOpen(false);
+      // 1. Close open popups/modals in priority order
+      if (selectedVideoForPlayer) {
+        setSelectedVideoForPlayer(null);
         return true;
       }
-      if (isGoalModalOpen) {
-        setIsGoalModalOpen(false);
+      if (selectedDocForPreview) {
+        setSelectedDocForPreview(null);
         return true;
       }
-      if (isOfflineVaultOpen) {
-        setIsOfflineVaultOpen(false);
+      if (selectedCourseForPayment) {
+        setSelectedCourseForPayment(null);
         return true;
       }
       if (isStudentAuthModalOpen) {
@@ -93,16 +125,16 @@ const MainContent: React.FC = () => {
         setIsAdminAuthModalOpen(false);
         return true;
       }
-      if (selectedCourseForPayment) {
-        setSelectedCourseForPayment(null);
+      if (isGoalModalOpen) {
+        setIsGoalModalOpen(false);
         return true;
       }
-      if (selectedDocForPreview) {
-        setSelectedDocForPreview(null);
+      if (isOfflineVaultOpen) {
+        setIsOfflineVaultOpen(false);
         return true;
       }
-      if (selectedVideoForPlayer) {
-        setSelectedVideoForPlayer(null);
+      if (isDrawerOpen) {
+        setIsDrawerOpen(false);
         return true;
       }
       // 2. If inside a sub-screen, go back to home screen
@@ -133,6 +165,92 @@ const MainContent: React.FC = () => {
     setSelectedDocForPreview,
     setSelectedVideoForPlayer
   ]);
+
+  // Sync open modal state with browser history stack
+  React.useEffect(() => {
+    if (hasOpenModal) {
+      if (!modalPushedRef.current) {
+        modalPushedRef.current = true;
+        try {
+          window.history.pushState({ modalOpen: true }, '');
+        } catch {}
+      }
+    } else {
+      if (modalPushedRef.current) {
+        modalPushedRef.current = false;
+        // Modal was dismissed via UI button/click, pop the modal history entry cleanly
+        if (!closingViaPopstateRef.current && !(window as any).__isNavigating) {
+          isProgrammaticBackRef.current = true;
+          try {
+            window.history.back();
+          } catch {}
+        }
+      }
+    }
+  }, [hasOpenModal]);
+
+  // Root history trap to prevent accidental browser exit on mobile web
+  React.useEffect(() => {
+    try {
+      if (!window.history.state?.appRoot) {
+        window.history.replaceState({ appRoot: 'base' }, '', window.location.pathname);
+        window.history.pushState({ appRoot: 'active' }, '', window.location.pathname);
+      }
+    } catch {}
+  }, []);
+
+  // Web Browser Back Button & Swipe-Back Event Listener
+  React.useEffect(() => {
+    const onPopState = (e: PopStateEvent) => {
+      // 0. If programmatic back was triggered by closing modal via UI, ignore
+      if (isProgrammaticBackRef.current) {
+        isProgrammaticBackRef.current = false;
+        return;
+      }
+
+      // 1. If any modal is open, dismiss the modal and stay on the current page
+      if (modalPushedRef.current || hasOpenModal) {
+        closingViaPopstateRef.current = true;
+        modalPushedRef.current = false;
+        if ((window as any).__handleAppBack) {
+          (window as any).__handleAppBack();
+        }
+        closingViaPopstateRef.current = false;
+        return;
+      }
+
+      // 2. If inside a sub-screen, return to home
+      if (activeView !== 'home') {
+        if ((window as any).__handleAppBack) {
+          (window as any).__handleAppBack();
+        }
+        return;
+      }
+
+      // 3. Root screen (Home with no modals): Double-press back within 2 seconds to exit
+      const now = Date.now();
+      if (now - lastBackPressRef.current < 2000) {
+        // User confirmed exit by pressing back twice
+        try {
+          window.history.back();
+        } catch {}
+        return;
+      }
+
+      // First back press: protect user from being abruptly booted out of the website
+      lastBackPressRef.current = now;
+      try {
+        window.history.pushState({ appRoot: 'active' }, '', window.location.pathname);
+      } catch {}
+      const exitMsg = language === 'hi' 
+        ? 'वेबसाइट से बाहर निकलने के लिए दोबारा बैक दबाएं' 
+        : 'Press back again to exit Educa Institute';
+      showToast(exitMsg, 'info');
+    };
+
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, [hasOpenModal, activeView, language, showToast]);
 
   // Apply visual overrides smoothly without heavy DOM tree MutationObserver
   React.useEffect(() => {
@@ -209,9 +327,11 @@ const MainContent: React.FC = () => {
               </div>
 
               {/* Desktop View: Grand Educational Institute Web Experience */}
-              <div className="hidden lg:block">
-                {currentSectionOrder.map(secKey => sectionMap[secKey] || null)}
-              </div>
+              {isDesktop && (
+                <div className="hidden lg:block">
+                  {currentSectionOrder.map(secKey => sectionMap[secKey] || null)}
+                </div>
+              )}
             </>
           )}
 

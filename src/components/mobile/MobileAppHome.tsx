@@ -498,7 +498,7 @@ export const MobileAppHome: React.FC<MobileAppHomeProps> = ({
         {/* Home */}
         <button
           type="button"
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onClick={() => window.scrollTo(0, 0)}
           className="flex flex-col items-center justify-center gap-0.5 cursor-pointer py-1"
         >
           <Home className="w-5 h-5 text-blue-600" />

@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
   };
 
   const yt = socialLinks.find(s => s.platform === 'youtube')?.url || 'https://youtube.com';
-  const ig = socialLinks.find(s => s.platform === 'instagram')?.url || 'https://instagram.com';
+  const ig = socialLinks.find(s => s.platform === 'instagram')?.url || 'https://www.instagram.com/educainstituteofconsultancy/';
 
   return (
     <footer className="bg-white border-t border-slate-200/90 pt-16 pb-32 sm:pb-16 px-4 sm:px-6 lg:px-8 text-slate-600 relative">
@@ -109,7 +109,7 @@ export const Footer: React.FC = () => {
             <a
               href={ig}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="me noopener noreferrer"
               className="w-10 h-10 rounded-full bg-slate-50 hover:bg-pink-50 hover:text-pink-600 border border-slate-200 flex items-center justify-center transition-colors"
               title="Instagram"
             >

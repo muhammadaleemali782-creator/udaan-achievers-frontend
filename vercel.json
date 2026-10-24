@@ -17,6 +17,8 @@
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "https://udaan-achievers-backend.onrender.com/api/$1" },
+    { "source": "/wcna", "destination": "/wcna.html" },
+    { "source": "/wcfm", "destination": "/wcfm.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }

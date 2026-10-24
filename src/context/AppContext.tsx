@@ -240,7 +240,7 @@ const INITIAL_REVIEWS: Review[] = [
 
 const INITIAL_SOCIALS: SocialLink[] = [
   { id: 'soc-yt', platform: 'youtube', label: 'YouTube Channel', url: 'https://youtube.com/@educaveda', isEnabled: true },
-  { id: 'soc-ig', platform: 'instagram', label: 'Instagram Handle', url: 'https://instagram.com/educaveda_official', isEnabled: true },
+  { id: 'soc-ig', platform: 'instagram', label: 'Instagram Handle', url: 'https://www.instagram.com/educainstituteofconsultancy/', isEnabled: true },
   { id: 'soc-wa', platform: 'whatsapp', label: 'WhatsApp Official Helpdesk', url: 'https://wa.me/919876543210', isEnabled: true },
   { id: 'soc-fb', platform: 'facebook', label: 'Facebook Page', url: 'https://facebook.com/educaveda', isEnabled: true }
 ];
@@ -340,6 +340,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       if (path.includes('/student') || hash.includes('#student')) {
         return 'student-portal';
       }
+      if (path.includes('/courses')) return 'courses';
+      if (path.includes('/study-material')) return 'study-material';
+      if (path.includes('/syllabus')) return 'syllabus';
+      if (path.includes('/batches')) return 'batches';
+      if (path.includes('/videos')) return 'videos';
+      if (path.includes('/reviews')) return 'reviews';
+      if (path.includes('/gallery')) return 'gallery';
+      if (path.includes('/notices')) return 'notices';
+      if (path.includes('/admission')) return 'admission';
+      if (path.includes('/contact')) return 'contact';
     } catch {}
     return 'home';
   };
@@ -385,13 +395,41 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
       });
     } catch {}
 
-    const handlePopState = () => {
+    const handlePopState = (e: PopStateEvent) => {
+      // If modal was dismissed, do not change active view
+      if (e.state?.modalOpen || (e.state && 'modalOpen' in e.state)) {
+        return;
+      }
+      if (e.state?.view) {
+        setActiveView(e.state.view);
+        return;
+      }
       const path = window.location.pathname.toLowerCase();
       const hash = window.location.hash.toLowerCase();
       if (path.includes('/admin') || hash.includes('#admin')) {
         setActiveView('admin-panel');
       } else if (path.includes('/student') || hash.includes('#student')) {
         setActiveView('student-portal');
+      } else if (path.includes('/courses')) {
+        setActiveView('courses');
+      } else if (path.includes('/study-material')) {
+        setActiveView('study-material');
+      } else if (path.includes('/syllabus')) {
+        setActiveView('syllabus');
+      } else if (path.includes('/batches')) {
+        setActiveView('batches');
+      } else if (path.includes('/videos')) {
+        setActiveView('videos');
+      } else if (path.includes('/reviews')) {
+        setActiveView('reviews');
+      } else if (path.includes('/gallery')) {
+        setActiveView('gallery');
+      } else if (path.includes('/notices')) {
+        setActiveView('notices');
+      } else if (path.includes('/admission')) {
+        setActiveView('admission');
+      } else if (path.includes('/contact')) {
+        setActiveView('contact');
       } else {
         setActiveView('home');
       }
@@ -507,7 +545,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     const raw = loadSaved<Review[]>('educa_reviews_v2', loadSaved<Review[]>('lcc_reviews', INITIAL_REVIEWS));
     return raw.map(r => (r.studentName === 'Dr. Sneha Kulkarni' || r.studentName === 'Sneha Kulkarni') ? { ...r, studentName: 'Priyanka Nishad' } : r);
   });
-  const [socialLinks, setSocialLinks] = useState<SocialLink[]>(() => loadSaved('lcc_social_links', INITIAL_SOCIALS));
+  const [socialLinks, setSocialLinks] = useState<SocialLink[]>(() => {
+    const raw = loadSaved<SocialLink[]>('lcc_social_links', INITIAL_SOCIALS);
+    return raw.map(s => {
+      if (s.platform === 'instagram' && (!s.url || s.url.includes('educaveda') || s.url === 'https://instagram.com')) {
+        return { ...s, url: 'https://www.instagram.com/educainstituteofconsultancy/' };
+      }
+      return s;
+    });
+  });
   const [websiteSettings, setWebsiteSettings] = useState<WebsiteSettings>(() => {
     const saved = loadSaved<WebsiteSettings>('educa_website_settings', loadSaved<WebsiteSettings>('lcc_website_settings', INITIAL_SETTINGS));
     if (!saved.contactAddress) {
@@ -639,24 +685,39 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
   const navigateTo = (view: ActiveView, anchorId?: string) => {
     setActiveView(view);
     try {
-      if (view === 'admin-panel') {
-        window.history.pushState(null, '', '/admin');
-      } else if (view === 'student-portal') {
-        window.history.pushState(null, '', '/student');
-      } else if (view === 'home') {
-        window.history.pushState(null, '', '/');
+      (window as any).__isNavigating = true;
+      setTimeout(() => { (window as any).__isNavigating = false; }, 250);
+
+      const pathMap: Record<ActiveView, string> = {
+        'home': '/',
+        'admin-panel': '/admin',
+        'student-portal': '/student',
+        'courses': '/courses',
+        'study-material': '/study-material',
+        'syllabus': '/syllabus',
+        'batches': '/batches',
+        'videos': '/videos',
+        'reviews': '/reviews',
+        'gallery': '/gallery',
+        'notices': '/notices',
+        'admission': '/admission',
+        'contact': '/contact'
+      };
+      const targetPath = pathMap[view] || '/';
+      if (window.location.pathname.toLowerCase() !== targetPath.toLowerCase()) {
+        window.history.pushState({ view }, '', targetPath);
       }
     } catch {}
 
     if (anchorId) {
       setScrollSection(view);
-      setTimeout(() => {
+      requestAnimationFrame(() => {
         const elem = document.getElementById(anchorId);
-        if (elem) elem.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+        if (elem) elem.scrollIntoView();
+      });
     } else {
       setScrollSection(view);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo(0, 0);
     }
   };
 

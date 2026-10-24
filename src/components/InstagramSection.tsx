@@ -6,7 +6,7 @@ import { Instagram } from './SocialIcons';
 export const InstagramSection: React.FC = () => {
   const { instagramPosts, socialLinks } = useApp();
 
-  const igUrl = socialLinks.find(s => s.platform === 'instagram')?.url || 'https://instagram.com';
+  const igUrl = socialLinks.find(s => s.platform === 'instagram')?.url || 'https://www.instagram.com/educainstituteofconsultancy/';
 
   const enrichedPosts = instagramPosts.map(post => {
     if (!post) return post;
@@ -44,7 +44,7 @@ export const InstagramSection: React.FC = () => {
               key={post.id}
               href={post.postUrl || igUrl}
               target="_blank"
-              rel="noopener noreferrer"
+              rel="me noopener noreferrer"
               className="bg-white rounded-3xl border border-slate-200/90 overflow-hidden shadow-card-clean hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1.5 flex flex-col group cursor-pointer"
             >
               <div className="relative aspect-square overflow-hidden bg-slate-900">
@@ -95,7 +95,7 @@ export const InstagramSection: React.FC = () => {
             id="instagram-follow-btn"
             href={igUrl}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="me noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 text-white font-black text-xs uppercase tracking-wider shadow-lg hover:opacity-95 transition-all"
           >
             <Instagram className="w-4 h-4 text-white shrink-0 !bg-transparent" />

@@ -604,7 +604,7 @@ export const INITIAL_INSTAGRAM_POSTS: InstagramPost[] = [
     likes: '1,840',
     comments: '94',
     imageUrl: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&auto=format&fit=crop&q=80',
-    postUrl: 'https://instagram.com',
+    postUrl: 'https://www.instagram.com/educainstituteofconsultancy/',
     type: 'post',
     date: '2 days ago'
   },
@@ -614,7 +614,7 @@ export const INITIAL_INSTAGRAM_POSTS: InstagramPost[] = [
     likes: '4,120',
     comments: '240',
     imageUrl: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&auto=format&fit=crop&q=80',
-    postUrl: 'https://instagram.com',
+    postUrl: 'https://www.instagram.com/educainstituteofconsultancy/',
     type: 'reel',
     date: '4 days ago'
   }
